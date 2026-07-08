@@ -16,14 +16,19 @@
         "ai matching",
         "gamifikasi",
         "real-time chat",
-        "forum"
+        "forum",
+        "panel admin",
+        "fitur cari skill",
+        "store",
+        "leaderboard",
+        "point   payment"
       ],
       "thumbnail": "images/products/tukarskill-thumb.png",
       "gallery": [
         "images/products/tukarskill-thumb.png"
       ],
       "liveUrl": "https://tukarskill.com",
-      "whatsappMessage": "Halo, saya mau pesan TukarSkill",
+      "whatsappMessage": "Halo, saya mau pesan dan tanya terkait TukarSkill",
       "createdAt": "2026-07-08"
     }
   ],
