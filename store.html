@@ -194,84 +194,88 @@
   </div>
 </section>
 
-<div class="filter-bar lowercase">
-  <div class="chip active">semua</div>
-  <div class="chip">landing page</div>
-  <div class="chip">company profile</div>
-  <div class="chip">portfolio</div>
-  <div class="chip">platform &amp; marketplace</div>
+<div class="filter-bar lowercase" id="filterBar">
+  <div class="chip active" data-cat="all">semua</div>
 </div>
 
 <div class="grid" id="katalog">
-
-  <!-- TukarSkill - featured real product -->
-  <a href="tukarskill.html" class="card featured" style="display:block; color:inherit;">
-    <div class="card-thumb">
-      <div class="tag-punch lowercase">platform</div>
-      <img src="https://raw.githubusercontent.com/anthropics/placeholder/main/tukarskill-hero.png" alt="TukarSkill" onerror="this.parentElement.innerHTML='<div class=&quot;placeholder-thumb&quot;><div class=&quot;dot-icon&quot;>◐</div>screenshot tukarskill.com</div>'">
-    </div>
-    <div class="card-body">
-      <div class="card-cat lowercase">platform &amp; marketplace</div>
-      <div class="card-title">TukarSkill</div>
-      <div class="card-desc lowercase">platform skill-barter lengkap: matching otomatis, gamifikasi, chat, dan forum komunitas. tinggal rebrand, siap jalan.</div>
-      <div class="feature-tags lowercase">
-        <span>ai matching</span>
-        <span>gamifikasi</span>
-        <span>real-time chat</span>
-        <span>forum</span>
-      </div>
-      <div class="card-footer">
-        <div class="price lowercase">Rp 12.000.000<small>mulai dari</small></div>
-        <span class="view-btn lowercase">lihat detail</span>
-      </div>
-    </div>
-  </a>
-
-  <!-- Placeholder product 2 -->
-  <div class="card">
-    <div class="card-thumb">
-      <div class="tag-punch lowercase">landing page</div>
-      <div class="placeholder-thumb lowercase"><div class="dot-icon">◐</div>coming soon</div>
-    </div>
-    <div class="card-body">
-      <div class="card-cat lowercase">landing page</div>
-      <div class="card-title">Starter: Coffee Shop</div>
-      <div class="card-desc lowercase">satu halaman buat validasi ide, ganti logo warna teks, langsung tampil profesional.</div>
-      <div class="feature-tags lowercase">
-        <span>1 halaman</span>
-        <span>responsive</span>
-      </div>
-      <div class="card-footer">
-        <div class="price lowercase">Rp 1.800.000<small>mulai dari</small></div>
-        <a href="#" class="view-btn lowercase">lihat detail</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Placeholder product 3 -->
-  <div class="card">
-    <div class="card-thumb">
-      <div class="tag-punch lowercase">company profile</div>
-      <div class="placeholder-thumb lowercase"><div class="dot-icon">◐</div>coming soon</div>
-    </div>
-    <div class="card-body">
-      <div class="card-cat lowercase">company profile</div>
-      <div class="card-title">Company Profile: Basic</div>
-      <div class="card-desc lowercase">3-5 halaman, animasi ringan, cocok buat usaha yang udah jalan dan butuh kredibilitas.</div>
-      <div class="feature-tags lowercase">
-        <span>3-5 halaman</span>
-        <span>animasi</span>
-      </div>
-      <div class="card-footer">
-        <div class="price lowercase">Rp 3.500.000<small>mulai dari</small></div>
-        <a href="#" class="view-btn lowercase">lihat detail</a>
-      </div>
-    </div>
-  </div>
-
+  <div style="grid-column:1/-1; text-align:center; padding:60px 0; color:var(--ink-soft); font-size:14px;" id="loadingState" class="lowercase">memuat katalog...</div>
 </div>
 
 <footer class="lowercase">founderku · semua bisa jadi founder</footer>
+
+<script>
+(async function(){
+  const grid = document.getElementById('katalog');
+  const filterBar = document.getElementById('filterBar');
+  let allProducts = [];
+  let categories = [];
+  let activeCategory = 'all';
+
+  function money(n){
+    return 'Rp ' + Number(n).toLocaleString('id-ID');
+  }
+
+  function cardHTML(p){
+    const catLabel = p.categoryLabel || p.category;
+    const thumbInner = p.thumbnail && !p.thumbnail.includes('placeholder')
+      ? `<img src="${p.thumbnail}" alt="${p.name}" onerror="this.parentElement.innerHTML='<div class=&quot;placeholder-thumb&quot;><div class=&quot;dot-icon&quot;>◐</div>coming soon</div>'">`
+      : `<div class="placeholder-thumb"><div class="dot-icon">◐</div>coming soon</div>`;
+    const featClass = p.featured ? ' featured' : '';
+    const tags = (p.featureTags || []).slice(0,4).map(t => `<span>${t}</span>`).join('');
+    return `
+    <a href="product.html?slug=${encodeURIComponent(p.slug)}" class="card${featClass}" style="display:block; color:inherit;">
+      <div class="card-thumb">
+        <div class="tag-punch lowercase">${catLabel}</div>
+        ${thumbInner}
+      </div>
+      <div class="card-body">
+        <div class="card-cat lowercase">${catLabel}</div>
+        <div class="card-title">${p.name}</div>
+        <div class="card-desc lowercase">${p.shortDescription || ''}</div>
+        <div class="feature-tags lowercase">${tags}</div>
+        <div class="card-footer">
+          <div class="price lowercase">${p.priceLabel || money(p.price)}<small>${p.priceNote || 'mulai dari'}</small></div>
+          <span class="view-btn lowercase">lihat detail</span>
+        </div>
+      </div>
+    </a>`;
+  }
+
+  function render(){
+    const filtered = activeCategory === 'all'
+      ? allProducts
+      : allProducts.filter(p => p.category === activeCategory);
+    grid.innerHTML = filtered.length
+      ? filtered.map(cardHTML).join('')
+      : `<div style="grid-column:1/-1; text-align:center; padding:60px 0; color:var(--ink-soft); font-size:14px;" class="lowercase">belum ada produk di kategori ini.</div>`;
+  }
+
+  function renderFilters(){
+    filterBar.innerHTML = `<div class="chip lowercase${activeCategory==='all' ? ' active' : ''}" data-cat="all">semua</div>` +
+      categories.map(c => `<div class="chip lowercase${activeCategory===c.id ? ' active' : ''}" data-cat="${c.id}">${c.label}</div>`).join('');
+    filterBar.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        activeCategory = chip.dataset.cat;
+        renderFilters();
+        render();
+      });
+    });
+  }
+
+  try {
+    const res = await fetch('data/products.json', { cache: 'no-store' });
+    const data = await res.json();
+    allProducts = data.products || [];
+    categories = data.categories || [];
+    renderFilters();
+    render();
+  } catch (err) {
+    grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:60px 0; color:var(--ink-soft); font-size:14px;" class="lowercase">gagal memuat katalog. coba refresh halaman ini.</div>`;
+    console.error(err);
+  }
+})();
+</script>
 
 </body>
 </html>
