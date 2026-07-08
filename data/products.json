@@ -12,7 +12,12 @@
       "featured": true,
       "shortDescription": "platform skill-barter lengkap: matching otomatis, gamifikasi, chat, dan forum komunitas. tinggal rebrand, siap jalan.",
       "fullDescription": "TukarSkill adalah platform marketplace dan komunitas yang sudah terbukti jalan, dibangun lengkap dengan sistem matching berbasis AI, gamifikasi biar user betah, chat real-time, dan forum diskusi. Cocok buat founder yang mau bangun platform sejenis: skill exchange, marketplace jasa, atau komunitas berbasis kolaborasi. Semua fitur tinggal disesuaikan nama, warna, dan konten sesuai brand kamu.",
-      "featureTags": ["ai matching", "gamifikasi", "real-time chat", "forum"],
+      "featureTags": [
+        "ai matching",
+        "gamifikasi",
+        "real-time chat",
+        "forum"
+      ],
       "thumbnail": "images/products/tukarskill-thumb.png",
       "gallery": [
         "images/products/tukarskill-thumb.png"
@@ -24,18 +29,25 @@
     {
       "id": "starter-coffee-shop",
       "slug": "starter-coffee-shop",
-      "name": "Starter: Coffee Shop",
-      "category": "landing-page",
-      "categoryLabel": "landing page",
-      "price": 1800000,
-      "priceLabel": "Rp 1.800.000",
+      "name": "Efeksains",
+      "category": "company-profile",
+      "categoryLabel": "company profile",
+      "price": 150000,
+      "priceLabel": "Rp 150.000",
       "priceNote": "mulai dari",
       "featured": false,
       "shortDescription": "satu halaman buat validasi ide, ganti logo warna teks, langsung tampil profesional.",
-      "fullDescription": "",
-      "featureTags": ["1 halaman", "responsive"],
+      "fullDescription": "ini website",
+      "featureTags": [
+        "1 halaman",
+        "responsive",
+        "animasi",
+        "bagus"
+      ],
       "thumbnail": "images/products/placeholder.png",
-      "gallery": [],
+      "gallery": [
+        "images/products/placeholder.png"
+      ],
       "liveUrl": "",
       "whatsappMessage": "Halo, saya mau pesan Starter Coffee Shop",
       "createdAt": "2026-07-08"
@@ -52,7 +64,10 @@
       "featured": false,
       "shortDescription": "3-5 halaman, animasi ringan, cocok buat usaha yang sudah jalan dan butuh kredibilitas.",
       "fullDescription": "",
-      "featureTags": ["3-5 halaman", "animasi"],
+      "featureTags": [
+        "3-5 halaman",
+        "animasi"
+      ],
       "thumbnail": "images/products/placeholder.png",
       "gallery": [],
       "liveUrl": "",
@@ -61,9 +76,21 @@
     }
   ],
   "categories": [
-    { "id": "landing-page", "label": "landing page" },
-    { "id": "company-profile", "label": "company profile" },
-    { "id": "portfolio", "label": "portfolio" },
-    { "id": "platform-marketplace", "label": "platform & marketplace" }
+    {
+      "id": "landing-page",
+      "label": "landing page"
+    },
+    {
+      "id": "company-profile",
+      "label": "company profile"
+    },
+    {
+      "id": "portfolio",
+      "label": "portfolio"
+    },
+    {
+      "id": "platform-marketplace",
+      "label": "platform & marketplace"
+    }
   ]
 }
