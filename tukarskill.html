@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TukarSkill · founderku</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --krem: #FBF6EE;
+    --krem-2: #F2ECDD;
+    --indigo: #7A78C4;
+    --indigo-deep: #1C1B33;
+    --amber: #F2A623;
+    --coral: #E15C3E;
+    --ink: #1C1B33;
+    --ink-soft: #1C1B3399;
+    --line: rgba(44,42,99,0.12);
+    --dot: rgba(44,42,99,0.16);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Manrope', sans-serif;
+    background: radial-gradient(var(--dot) 1.4px, transparent 1.4px);
+    background-size: 22px 22px;
+    background-color: var(--krem);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,h2,h3,.serif{ font-family:'Fraunces', serif; }
+  a{ text-decoration:none; color:inherit; }
+  .lowercase{ text-transform:lowercase; }
+
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 22px 56px;
+    background: rgba(247,242,231,0.85);
+    backdrop-filter: blur(8px);
+    position: sticky; top:0; z-index:50;
+    border-bottom: 1px solid var(--line);
+  }
+  .logo{ font-family:'Fraunces', serif; font-weight:600; font-size:22px; color:var(--indigo-deep); }
+  .logo span{ color:var(--coral); }
+  .nav-cta{
+    background: var(--indigo-deep); color: var(--krem);
+    padding: 10px 22px; border-radius: 30px; font-size:14px; font-weight:700;
+  }
+
+  .breadcrumb{
+    max-width: 1080px; margin: 28px auto 0; padding: 0 56px;
+    font-size:13px; color:var(--ink-soft); font-weight:600;
+  }
+  .breadcrumb a{ color:var(--ink-soft); }
+  .breadcrumb a:hover{ color:var(--indigo-deep); }
+  .breadcrumb .sep{ margin:0 6px; opacity:.5; }
+  .breadcrumb .current{ color:var(--indigo-deep); }
+
+  .detail-wrap{
+    max-width: 1080px; margin: 24px auto 100px;
+    padding: 0 56px;
+    display:grid; grid-template-columns: 1.15fr 0.85fr; gap: 48px;
+  }
+
+  /* LEFT: gallery */
+  .gallery-main{
+    border-radius:18px; overflow:hidden; border:1px solid var(--line);
+    height: 380px; position:relative;
+  }
+  .gallery-main img{ width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
+  .gallery-main .tag-punch{
+    position:absolute; top:16px; left:16px;
+    background: var(--indigo-deep); color:var(--krem);
+    font-size:11.5px; font-weight:700; letter-spacing:0.04em;
+    padding:7px 14px 7px 22px; border-radius: 3px 14px 14px 3px;
+  }
+  .gallery-main .tag-punch::before{
+    content:''; position:absolute; left:7px; top:50%; transform:translateY(-50%);
+    width:6px; height:6px; border-radius:50%; background: var(--krem);
+  }
+  .thumb-row{ display:flex; gap:10px; margin-top:10px; }
+  .thumb-row div{
+    width: 76px; height: 58px; border-radius:10px; border:1px solid var(--line);
+    background: var(--krem-2); display:flex; align-items:center; justify-content:center;
+    font-size:10px; color:var(--ink-soft); font-weight:600; cursor:pointer;
+  }
+  .thumb-row div.active{ border-color: var(--amber); border-width:2px; }
+
+  .section-block{ margin-top:36px; }
+  .section-block h3{ font-size:19px; font-weight:600; color:var(--indigo-deep); }
+  .section-block p{ margin-top:10px; font-size:14.5px; line-height:1.7; color:var(--ink-soft); }
+
+  .feature-grid{
+    display:grid; grid-template-columns: repeat(2, 1fr); gap:10px; margin-top:14px;
+  }
+  .feature-item{
+    display:flex; align-items:center; gap:10px;
+    background: var(--krem-2); border-radius:12px; padding:12px 14px;
+    font-size:13.5px; font-weight:600; color:var(--indigo-deep);
+  }
+  .feature-item .dot{
+    width:8px; height:8px; border-radius:50%; background: var(--coral); flex-shrink:0;
+  }
+
+  /* RIGHT: purchase card */
+  .buy-card{
+    background: var(--krem); border:1px solid var(--line); border-radius:18px;
+    padding: 28px; height: fit-content; position:sticky; top: 104px;
+  }
+  .buy-cat{ font-size:11.5px; font-weight:700; color:var(--coral); text-transform:uppercase; letter-spacing:0.05em; }
+  .buy-title{ font-size:26px; font-weight:600; color:var(--indigo-deep); margin-top:8px; }
+  .buy-desc{ font-size:13.5px; color:var(--ink-soft); margin-top:10px; line-height:1.6; }
+
+  .buy-price-block{
+    margin-top:22px; padding-top:20px; border-top:1px dashed var(--line);
+  }
+  .buy-price-block small{ font-size:11.5px; font-weight:600; color:var(--ink-soft); display:block; }
+  .buy-price{ font-family:'Fraunces', serif; font-size:32px; font-weight:600; color:var(--indigo-deep); margin-top:4px; }
+
+  .buy-actions{ margin-top:22px; display:flex; flex-direction:column; gap:10px; }
+  .btn-order{
+    background: var(--amber); color:var(--indigo-deep); font-weight:700; font-size:14.5px;
+    padding: 15px; border-radius:14px; text-align:center;
+    box-shadow: 0 4px 0 rgba(29,27,69,0.15);
+  }
+  .btn-visit{
+    border: 1.5px solid var(--indigo-deep); color:var(--indigo-deep); font-weight:700; font-size:14.5px;
+    padding: 13.5px; border-radius:14px; text-align:center;
+  }
+
+  .buy-note{
+    margin-top:18px; font-size:12px; color:var(--ink-soft);
+    display:flex; gap:8px; align-items:flex-start; line-height:1.5;
+  }
+  .buy-note .dot-icon{
+    width:16px; height:16px; border-radius:50%; border:1.5px dashed var(--ink-soft);
+    flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:9px; margin-top:2px;
+  }
+
+  @media(max-width: 860px){
+    .detail-wrap{ grid-template-columns: 1fr; padding:0 24px; }
+    nav{ padding:18px 24px; }
+    .breadcrumb{ padding:0 24px; }
+    .buy-card{ position:static; }
+    .gallery-main{ height:260px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">founder<span>ku</span></a>
+  <a href="index.html#cta" class="nav-cta lowercase">mulai proyek</a>
+</nav>
+
+<div class="breadcrumb lowercase">
+  <a href="store.html">store</a><span class="sep">/</span><a href="store.html#katalog">platform &amp; marketplace</a><span class="sep">/</span><span class="current">tukarskill</span>
+</div>
+
+<div class="detail-wrap">
+
+  <div class="detail-left">
+    <div class="gallery-main">
+      <div class="tag-punch lowercase">platform</div>
+      <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--krem-2);color:var(--ink-soft);font-size:13px;font-weight:600;">
+        screenshot tukarskill.com (home)
+      </div>
+    </div>
+    <div class="thumb-row">
+      <div class="active lowercase">home</div>
+      <div class="lowercase">matching</div>
+      <div class="lowercase">forum</div>
+    </div>
+
+    <div class="section-block">
+      <h3 class="lowercase">tentang produk ini</h3>
+      <p class="lowercase">TukarSkill adalah platform marketplace dan komunitas yang sudah terbukti jalan, dibangun lengkap dengan sistem matching berbasis AI, gamifikasi biar user betah, chat real-time, dan forum diskusi. Cocok buat founder yang mau bangun platform sejenis: skill exchange, marketplace jasa, atau komunitas berbasis kolaborasi. Semua fitur tinggal disesuaikan nama, warna, dan konten sesuai brand kamu.</p>
+    </div>
+
+    <div class="section-block">
+      <h3 class="lowercase">fitur yang termasuk</h3>
+      <div class="feature-grid">
+        <div class="feature-item lowercase"><div class="dot"></div>ai-powered matching</div>
+        <div class="feature-item lowercase"><div class="dot"></div>sistem gamifikasi</div>
+        <div class="feature-item lowercase"><div class="dot"></div>real-time chat</div>
+        <div class="feature-item lowercase"><div class="dot"></div>forum komunitas</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="buy-card">
+    <div class="buy-cat lowercase">platform & marketplace</div>
+    <div class="buy-title">TukarSkill</div>
+    <div class="buy-desc lowercase">platform skill-barter lengkap, tinggal rebrand sesuai konsep kamu, siap jalan.</div>
+
+    <div class="buy-price-block">
+      <small class="lowercase">mulai dari</small>
+      <div class="buy-price">Rp 12.000.000</div>
+    </div>
+
+    <div class="buy-actions">
+      <a href="https://wa.me/6285710477257?text=Halo%2C%20saya%20mau%20pesan%20TukarSkill" class="btn-order lowercase" target="_blank">pesan sekarang</a>
+      <a href="https://tukarskill.com" class="btn-visit lowercase" target="_blank">visit website ↗</a>
+    </div>
+
+    <div class="buy-note lowercase">
+      <div class="dot-icon">i</div>
+      <div>klik pesan sekarang, kamu bakal diarahkan ke whatsapp buat ngobrol langsung soal rebranding dan setup.</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
