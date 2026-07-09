@@ -90,6 +90,9 @@
   .section-block{ margin-top:36px; }
   .section-block h3{ font-size:19px; font-weight:600; color:var(--indigo-deep); }
   .section-block p{ margin-top:10px; font-size:14.5px; line-height:1.7; color:var(--ink-soft); }
+  .desc-list{ margin-top:12px; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px; }
+  .desc-list li{ font-size:14.5px; line-height:1.6; color:var(--ink-soft); padding-left:18px; position:relative; }
+  .desc-list li::before{ content:''; position:absolute; left:0; top:8px; width:6px; height:6px; border-radius:50%; background:var(--coral); }
 
   .feature-grid{
     display:grid; grid-template-columns: repeat(2, 1fr); gap:10px; margin-top:14px;
@@ -171,7 +174,7 @@
 
     <div class="section-block">
       <h3 class="lowercase">tentang produk ini</h3>
-      <p class="lowercase" id="fullDesc"></p>
+      <div id="fullDesc"></div>
     </div>
 
     <div class="section-block" id="featureBlock">
@@ -183,7 +186,7 @@
   <div class="buy-card">
     <div class="buy-cat lowercase" id="buyCat"></div>
     <div class="buy-title" id="buyTitle"></div>
-    <div class="buy-desc lowercase" id="buyDesc"></div>
+    <div class="buy-desc" id="buyDesc"></div>
 
     <div class="buy-price-block">
       <small class="lowercase" id="buyPriceNote">mulai dari</small>
@@ -246,12 +249,22 @@
       thumbRow.innerHTML = p.gallery.map((g, i) => `<div class="${i===0?'active ':''}lowercase">foto ${i+1}</div>`).join('');
     }
 
-    document.getElementById('fullDesc').textContent = p.fullDescription || p.shortDescription || '';
+    const fullDescText = p.fullDescription || p.shortDescription || '';
+    const descParts = fullDescText.split(/\s+-\s+/).map(s => s.trim()).filter(Boolean);
+    const escapeHtml = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const fullDescEl = document.getElementById('fullDesc');
+    if (descParts.length > 1) {
+      const intro = descParts[0];
+      const items = descParts.slice(1);
+      fullDescEl.innerHTML = `<p>${escapeHtml(intro)}</p><ul class="desc-list">${items.map(i => `<li>${escapeHtml(i)}</li>`).join('')}</ul>`;
+    } else {
+      fullDescEl.innerHTML = `<p>${escapeHtml(fullDescText)}</p>`;
+    }
 
     const featureGrid = document.getElementById('featureGrid');
     const featureBlock = document.getElementById('featureBlock');
     if (p.featureTags && p.featureTags.length) {
-      featureGrid.innerHTML = p.featureTags.map(f => `<div class="feature-item lowercase"><div class="dot"></div>${f}</div>`).join('');
+      featureGrid.innerHTML = p.featureTags.map(f => `<div class="feature-item"><div class="dot"></div>${f}</div>`).join('');
     } else {
       featureBlock.style.display = 'none';
     }
