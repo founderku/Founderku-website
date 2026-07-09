@@ -10,25 +10,24 @@
       "priceLabel": "Rp 12.000.000",
       "priceNote": "mulai dari",
       "featured": true,
-      "shortDescription": "platform skill-barter lengkap: matching otomatis, gamifikasi, chat, dan forum komunitas. tinggal rebrand, siap jalan.",
-      "fullDescription": "TukarSkill adalah platform marketplace dan komunitas yang sudah terbukti jalan, dibangun lengkap dengan sistem matching berbasis AI, gamifikasi biar user betah, chat real-time, dan forum diskusi. Cocok buat founder yang mau bangun platform sejenis: skill exchange, marketplace jasa, atau komunitas berbasis kolaborasi. Semua fitur tinggal disesuaikan nama, warna, dan konten sesuai brand kamu.",
+      "shortDescription": "platform barter skill yang sudah terbukti jalan dengan AI matching, gamifikasi, chat real-time, dan forum komunitas. tinggal rebrand, langsung pakai.",
+      "fullDescription": "TukarSkill adalah platform marketplace skill-barter yang sudah live dan punya pengguna aktif nyata dan bukan sekadar konsep di atas kertas. Orang saling tukar keahlian secara gratis: desainer belajar coding, videographer belajar bahasa, dan seterusnya, difasilitasi lewat sistem matching berbasis AI.\n\npaket ini termasuk:\n- source code lengkap platform (matching AI, gamifikasi & poin, chat real-time, forum diskusi, panel admin)\n- sudah terbukti jalan sebagai bukti konsep — tinggal di-rebrand jadi brand kamu sendiri\n- struktur bisnis dan model monetisasi yang bisa dikembangkan lebih lanjut\n\ncocok buat kamu yang mau punya platform komunitas atau marketplace sendiri tanpa mulai coding dari nol. tinggal ganti nama, logo, dan warna — sistemnya udah jalan duluan.\n\ndetail teknis dan proses handover bisa didiskusikan langsung — chat kami di whatsapp kalau tertarik.",
       "featureTags": [
-        "ai matching",
-        "gamifikasi",
-        "real-time chat",
-        "forum",
+        "AI matching",
+        "gamifikasi & poin",
+        "chat real-time",
+        "forum komunitas",
         "panel admin",
-        "fitur cari skill",
-        "store",
-        "login register leaderboard",
-        "point   payment"
+        "pencarian skill canggih",
+        "rating & ulasan",
+        "verifikasi keamanan"
       ],
       "thumbnail": "images/products/tukarskill-thumb.png",
       "gallery": [
         "images/products/tukarskill-thumb.png"
       ],
       "liveUrl": "https://tukarskill.com",
-      "whatsappMessage": "Halo, saya mau pesan dan tanya terkait TukarSkill",
+      "whatsappMessage": "Halo, saya tertarik dengan paket TukarSkill. Boleh cerita lebih lanjut soal cara kerja dan proses handover-nya?",
       "createdAt": "2026-07-08"
     },
     {
