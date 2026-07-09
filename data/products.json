@@ -30,6 +30,33 @@
       "liveUrl": "https://tukarskill.com",
       "whatsappMessage": "Halo, saya mau pesan dan tanya terkait TukarSkill",
       "createdAt": "2026-07-08"
+    },
+    {
+      "id": "motifa",
+      "slug": "motifa",
+      "name": "motifa",
+      "category": "landing-page",
+      "categoryLabel": "landing page",
+      "price": 500000,
+      "priceLabel": "Rp 500.000",
+      "priceNote": "mulai dari",
+      "featured": false,
+      "shortDescription": "Paket bisnis siap jalan: website generator motif personal nusantara, dicetak on-demand ke kaos, totebag, dan mug. modal kecil, tinggal eksekusi.",
+      "fullDescription": "Motifa adalah paket ide bisnis lengkap: website yang mengubah nama dan asal daerah pengunjung jadi motif personal bergaya nusantara, lalu dicetak on-demand ke kaos, totebag, atau mug.\n\npaket ini termasuk:\n- konsep bisnis dan positioning brand\n- website generator siap pakai (sudah live, tinggal isi nomor whatsapp kamu)\n- panduan produksi print-on-demand — tanpa perlu modal stok di awal\n- panduan menjalankan dan mengembangkan bisnisnya\n\ncocok buat kamu yang mau mulai usaha sendiri tapi belum punya ide, atau yang mau nambah lini produk baru tanpa mulai dari nol.\n\ndetail teknis cara kerja sistem generator bisa didiskusikan langsung — chat kami di whatsapp kalau tertarik.",
+      "featureTags": [
+        "generator motif personal",
+        "print-on-demand",
+        "tanpa modal stok",
+        "brand & panduan bisnis lengkap",
+        "siap jalan dalam sehari"
+      ],
+      "thumbnail": "images/products/motifa.jpg",
+      "gallery": [
+        "images/products/motifa.jpg"
+      ],
+      "liveUrl": "https://founderku.github.io/Motifa/",
+      "whatsappMessage": "Halo, saya tertarik dengan paket Motifa. Boleh cerita lebih lanjut soal cara kerja sistemnya?",
+      "createdAt": "2026-07-09"
     }
   ],
   "categories": [
