@@ -49,6 +49,25 @@
       "linkLabel": "Kunjungi Kelasin",
       "external": true,
       "order": 3
+    },
+    {
+      "id": "motifa",
+      "name": "Motifa",
+      "logo": "images/case-studies/motifa-logo.png",
+      "roundLogo": true,
+      "description": "motifa adalah paket ide bisnis lengkap: website yang mengubah nama dan asal daerah pengunjung jadi motif personal bergaya nusantara, lalu dicetak on-demand ke kaos, totebag, atau mug.\n\npaket ini termasuk:\n- konsep bisnis dan positioning brand\n- website generator siap pakai (sudah live, tinggal isi nomor whatsapp kamu)\n- panduan produksi print-on-demand — tanpa perlu modal stok di awal\n- panduan menjalankan dan mengembangkan bisnisnya\n\ncocok buat kamu yang mau mulai usaha sendiri tapi belum punya ide, atau yang mau nambah lini produk baru tanpa mulai dari nol.\n\ndetail teknis cara kerja sistem generator bisa didiskusikan langsung — chat kami di whatsapp kalau tertarik.",
+      "tags": [
+        "generator motif personal",
+        "print-on-demand",
+        "tanpa modal stok",
+        "brand & panduan bisnis lengkap",
+        "siap jalan dalam sehari"
+      ],
+      "note": "motifa adalah paket ide bisnis lengkap: website yang mengubah nama dan asal daerah pengunjung jadi motif personal bergaya nusantara, lalu dicetak on-demand ke kaos, totebag, atau mug.",
+      "linkUrl": "https://founderku.github.io/Motifa/",
+      "linkLabel": "Kunjungi Motifa",
+      "external": true,
+      "order": 4
     }
   ]
 }
