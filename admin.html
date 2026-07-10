@@ -100,6 +100,14 @@
 
   .empty-state{ text-align:center; padding:60px 20px; color:var(--ink-soft); font-size:14px; }
 
+  .tab-nav{ display:flex; gap:6px; margin-bottom:24px; border-bottom:1px solid var(--line); }
+  .tab-btn{
+    padding:10px 18px; font-size:14px; font-weight:700; color:var(--ink-soft); cursor:pointer;
+    border-bottom:2px solid transparent; margin-bottom:-1px;
+  }
+  .tab-btn.active{ color:var(--indigo-deep); border-bottom-color:var(--amber); }
+  .product-row .tags-meta{ font-size:11.5px; color:var(--ink-soft); margin-top:2px; }
+
   /* FORM MODAL */
   .modal-overlay{
     display:none; position:fixed; inset:0; background:rgba(28,27,51,0.55); z-index:100;
@@ -170,12 +178,28 @@
     <span class="logout-btn lowercase" onclick="doLogout()">keluar</span>
   </nav>
   <div class="wrap">
-    <div class="dash-header">
-      <h1 class="lowercase">produk store</h1>
-      <button class="btn btn-primary lowercase" onclick="openForm()">+ tambah produk</button>
+    <div class="tab-nav">
+      <div class="tab-btn active lowercase" id="tabBtnProducts" onclick="switchTab('products')">produk store</div>
+      <div class="tab-btn lowercase" id="tabBtnCaseStudies" onclick="switchTab('caseStudies')">studi kasus</div>
     </div>
-    <div id="statusBanner" class="status-msg"></div>
-    <div id="productList"></div>
+
+    <div id="panelProducts">
+      <div class="dash-header">
+        <h1 class="lowercase">produk store</h1>
+        <button class="btn btn-primary lowercase" onclick="openForm()">+ tambah produk</button>
+      </div>
+      <div id="statusBanner" class="status-msg"></div>
+      <div id="productList"></div>
+    </div>
+
+    <div id="panelCaseStudies" style="display:none;">
+      <div class="dash-header">
+        <h1 class="lowercase">studi kasus</h1>
+        <button class="btn btn-primary lowercase" onclick="openCsForm()">+ tambah studi kasus</button>
+      </div>
+      <div id="csStatusBanner" class="status-msg"></div>
+      <div id="csList"></div>
+    </div>
   </div>
 </div>
 
@@ -255,6 +279,71 @@
   </div>
 </div>
 
+<!-- CASE STUDY FORM MODAL -->
+<div class="modal-overlay" id="csFormModal">
+  <div class="modal">
+    <span class="modal-close" onclick="closeCsForm()">&times;</span>
+    <h2 class="lowercase" id="csFormTitle">tambah studi kasus</h2>
+
+    <div class="thumb-preview" id="csLogoPreview" style="height:90px;">belum ada logo</div>
+    <div class="field">
+      <label class="lowercase">logo</label>
+      <input type="file" id="csLogo" accept="image/*" onchange="onCsLogoChange(event)">
+      <small class="lowercase">logo otomatis dikompres sebelum diupload.</small>
+    </div>
+    <div class="checkbox-row">
+      <input type="checkbox" id="csRoundLogo">
+      <label for="csRoundLogo" class="lowercase">tampilkan logo bulat (buat logo icon/foto)</label>
+    </div>
+
+    <div class="form-row">
+      <div class="field">
+        <label class="lowercase">nama project</label>
+        <input type="text" id="csName" oninput="csAutoSlug()">
+      </div>
+      <div class="field">
+        <label class="lowercase">urutan tampil (angka, kecil = duluan)</label>
+        <input type="number" id="csOrder" value="1">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="lowercase">deskripsi</label>
+      <textarea id="csDescription"></textarea>
+    </div>
+    <div class="field">
+      <label class="lowercase">tags (pisahin pakai koma)</label>
+      <input type="text" id="csTags" placeholder="Branding, MVP, Landing Page">
+    </div>
+    <div class="field">
+      <label class="lowercase">catatan kecil (di bawah tags)</label>
+      <input type="text" id="csNote" placeholder="Dikerjakan lewat proses 4 langkah Founderku...">
+    </div>
+
+    <div class="form-row">
+      <div class="field">
+        <label class="lowercase">link tujuan</label>
+        <input type="text" id="csLinkUrl" placeholder="https://... atau product.html?slug=...">
+      </div>
+      <div class="field">
+        <label class="lowercase">label tombol</label>
+        <input type="text" id="csLinkLabel" placeholder="Kunjungi website">
+      </div>
+    </div>
+    <div class="checkbox-row">
+      <input type="checkbox" id="csExternal">
+      <label for="csExternal" class="lowercase">link keluar (buka tab baru)</label>
+    </div>
+
+    <div id="csFormStatus" class="status-msg"></div>
+
+    <div class="modal-actions">
+      <button class="btn btn-ghost lowercase" onclick="closeCsForm()">batal</button>
+      <button class="btn btn-primary lowercase" id="csSaveBtn" onclick="saveCaseStudy()">simpan studi kasus</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const LS_KEY = 'fk_admin_config';
 let config = null;
@@ -263,6 +352,13 @@ let productsSha = null;
 let editingId = null;
 let pendingImageBase64 = null;
 let pendingImageExt = null;
+
+let caseStudiesData = { caseStudies: [] };
+let caseStudiesSha = null;
+let csEditingId = null;
+let csPendingLogoBase64 = null;
+let csPendingLogoExt = null;
+let csLoaded = false;
 
 function loadConfig(){
   try {
@@ -324,6 +420,17 @@ async function showDashboard(){
   document.getElementById('setupScreen').style.display = 'none';
   document.getElementById('dashScreen').style.display = 'block';
   await loadProducts();
+}
+
+function switchTab(tab){
+  document.getElementById('tabBtnProducts').classList.toggle('active', tab === 'products');
+  document.getElementById('tabBtnCaseStudies').classList.toggle('active', tab === 'caseStudies');
+  document.getElementById('panelProducts').style.display = tab === 'products' ? 'block' : 'none';
+  document.getElementById('panelCaseStudies').style.display = tab === 'caseStudies' ? 'block' : 'none';
+  if (tab === 'caseStudies' && !csLoaded){
+    csLoaded = true;
+    loadCaseStudies();
+  }
 }
 
 async function loadProducts(){
@@ -471,6 +578,220 @@ function setFormStatus(type, msg){
   const el = document.getElementById('formStatus');
   el.className = 'status-msg ' + type;
   el.textContent = msg;
+}
+
+async function loadCaseStudies(){
+  const banner = document.getElementById('csStatusBanner');
+  banner.className = 'status-msg info';
+  banner.textContent = 'memuat studi kasus...';
+  try {
+    const res = await ghGetFile('data/case-studies.json');
+    if (!res){
+      caseStudiesData = { caseStudies: [] };
+      caseStudiesSha = null;
+    } else {
+      caseStudiesSha = res.sha;
+      const decoded = decodeURIComponent(escape(atob(res.content.replace(/\n/g, ''))));
+      caseStudiesData = JSON.parse(decoded);
+      if (!caseStudiesData.caseStudies) caseStudiesData.caseStudies = [];
+    }
+    banner.style.display = 'none';
+    renderCsList();
+  } catch(err){
+    banner.className = 'status-msg error';
+    banner.textContent = 'error: ' + err.message;
+  }
+}
+
+function renderCsList(){
+  const list = document.getElementById('csList');
+  const items = (caseStudiesData.caseStudies || []).slice().sort((a, b) => (a.order || 0) - (b.order || 0));
+  if (!items.length){
+    list.innerHTML = `<div class="empty-state lowercase">belum ada studi kasus. klik "tambah studi kasus" buat mulai.</div>`;
+    return;
+  }
+  list.innerHTML = items.map(cs => `
+    <div class="product-row">
+      ${cs.logo ? `<img src="${cs.logo}?t=${Date.now()}">` : `<div class="no-img lowercase">no logo</div>`}
+      <div class="info">
+        <div class="name">${cs.name}</div>
+        <div class="meta lowercase">urutan ${cs.order || 0} &middot; ${cs.external ? 'link keluar' : 'link internal'}</div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-ghost btn-sm lowercase" onclick="editCaseStudy('${cs.id}')">edit</button>
+        <button class="btn btn-danger btn-sm lowercase" onclick="deleteCaseStudy('${cs.id}')">hapus</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function csAutoSlug(){
+  // slug is derived silently from name only when adding new (id assigned on save)
+}
+
+function openCsForm(cs){
+  csEditingId = cs ? cs.id : null;
+  csPendingLogoBase64 = null;
+  csPendingLogoExt = null;
+  document.getElementById('csFormTitle').textContent = cs ? 'edit studi kasus' : 'tambah studi kasus';
+  document.getElementById('csName').value = cs ? cs.name : '';
+  document.getElementById('csOrder').value = cs ? (cs.order || 1) : (caseStudiesData.caseStudies.length + 1);
+  document.getElementById('csDescription').value = cs ? (cs.description || '') : '';
+  document.getElementById('csTags').value = cs && cs.tags ? cs.tags.join(', ') : '';
+  document.getElementById('csNote').value = cs ? (cs.note || '') : '';
+  document.getElementById('csLinkUrl').value = cs ? (cs.linkUrl || '') : '';
+  document.getElementById('csLinkLabel').value = cs ? (cs.linkLabel || '') : '';
+  document.getElementById('csExternal').checked = cs ? !!cs.external : false;
+  document.getElementById('csRoundLogo').checked = cs ? !!cs.roundLogo : false;
+  document.getElementById('csFormStatus').style.display = 'none';
+
+  const preview = document.getElementById('csLogoPreview');
+  if (cs && cs.logo){
+    preview.innerHTML = `<img src="${cs.logo}?t=${Date.now()}">`;
+  } else {
+    preview.innerHTML = 'belum ada logo';
+  }
+
+  document.getElementById('csFormModal').classList.add('open');
+}
+function closeCsForm(){
+  document.getElementById('csFormModal').classList.remove('open');
+}
+function editCaseStudy(id){
+  const cs = caseStudiesData.caseStudies.find(x => x.id === id);
+  if (cs) openCsForm(cs);
+}
+
+function onCsLogoChange(e){
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    const img = new Image();
+    img.onload = function(){
+      const maxW = 500;
+      const scale = Math.min(1, maxW / img.width);
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width * scale;
+      canvas.height = img.height * scale;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const dataUrl = canvas.toDataURL('image/png');
+      csPendingLogoBase64 = dataUrl.split(',')[1];
+      csPendingLogoExt = 'png';
+      document.getElementById('csLogoPreview').innerHTML = `<img src="${dataUrl}">`;
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function setCsFormStatus(type, msg){
+  const el = document.getElementById('csFormStatus');
+  el.className = 'status-msg ' + type;
+  el.textContent = msg;
+}
+
+async function saveCaseStudy(){
+  const name = document.getElementById('csName').value.trim();
+  const order = parseInt(document.getElementById('csOrder').value || '0', 10);
+  const description = document.getElementById('csDescription').value.trim();
+  const tags = document.getElementById('csTags').value.split(',').map(s => s.trim()).filter(Boolean);
+  const note = document.getElementById('csNote').value.trim();
+  const linkUrl = document.getElementById('csLinkUrl').value.trim();
+  const linkLabel = document.getElementById('csLinkLabel').value.trim() || 'Lihat detail';
+  const external = document.getElementById('csExternal').checked;
+  const roundLogo = document.getElementById('csRoundLogo').checked;
+
+  if (!name){
+    setCsFormStatus('error', 'nama project wajib diisi.');
+    return;
+  }
+
+  const slug = name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const id = csEditingId || slug;
+
+  const saveBtn = document.getElementById('csSaveBtn');
+  saveBtn.disabled = true;
+  saveBtn.innerHTML = '<span class="spinner"></span> menyimpan...';
+  setCsFormStatus('info', 'menyimpan studi kasus...');
+
+  try {
+    let logoPath = null;
+    if (csEditingId){
+      const existing = caseStudiesData.caseStudies.find(x => x.id === csEditingId);
+      logoPath = existing ? existing.logo : null;
+    }
+
+    if (csPendingLogoBase64){
+      setCsFormStatus('info', 'mengupload logo...');
+      const imgPath = `images/case-studies/${slug}-logo.${csPendingLogoExt}`;
+      const existingImg = await ghGetFile(imgPath);
+      await ghPutFile(imgPath, csPendingLogoBase64, `Update logo for ${name}`, existingImg ? existingImg.sha : null);
+      logoPath = imgPath;
+    }
+
+    const csObj = {
+      id,
+      name,
+      logo: logoPath,
+      roundLogo,
+      description,
+      tags,
+      note,
+      linkUrl,
+      linkLabel,
+      external,
+      order
+    };
+
+    if (csEditingId){
+      const idx = caseStudiesData.caseStudies.findIndex(x => x.id === csEditingId);
+      caseStudiesData.caseStudies[idx] = csObj;
+    } else {
+      caseStudiesData.caseStudies.push(csObj);
+    }
+
+    setCsFormStatus('info', 'menyimpan data studi kasus...');
+    const jsonStr = JSON.stringify(caseStudiesData, null, 2);
+    const base64Content = btoa(unescape(encodeURIComponent(jsonStr)));
+    const result = await ghPutFile('data/case-studies.json', base64Content, `${csEditingId ? 'Update' : 'Add'} case study: ${name}`, caseStudiesSha);
+    caseStudiesSha = result.content.sha;
+
+    setCsFormStatus('success', 'studi kasus berhasil disimpan.');
+    renderCsList();
+    setTimeout(() => { closeCsForm(); }, 700);
+  } catch(err){
+    setCsFormStatus('error', 'gagal: ' + err.message);
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.innerHTML = 'simpan studi kasus';
+  }
+}
+
+async function deleteCaseStudy(id){
+  const cs = caseStudiesData.caseStudies.find(x => x.id === id);
+  if (!cs) return;
+  if (!confirm(`Yakin mau hapus "${cs.name}"? Tindakan ini tidak bisa dibatalkan.`)) return;
+
+  const banner = document.getElementById('csStatusBanner');
+  banner.className = 'status-msg info';
+  banner.textContent = 'menghapus studi kasus...';
+
+  try {
+    caseStudiesData.caseStudies = caseStudiesData.caseStudies.filter(x => x.id !== id);
+    const jsonStr = JSON.stringify(caseStudiesData, null, 2);
+    const base64Content = btoa(unescape(encodeURIComponent(jsonStr)));
+    const result = await ghPutFile('data/case-studies.json', base64Content, `Delete case study: ${cs.name}`, caseStudiesSha);
+    caseStudiesSha = result.content.sha;
+    banner.className = 'status-msg success';
+    banner.textContent = 'studi kasus dihapus.';
+    renderCsList();
+    setTimeout(() => { banner.style.display = 'none'; }, 2000);
+  } catch(err){
+    banner.className = 'status-msg error';
+    banner.textContent = 'gagal hapus: ' + err.message;
+  }
 }
 
 async function saveProduct(){
