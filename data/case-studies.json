@@ -5,7 +5,11 @@
       "name": "TukarSkill",
       "logo": "images/case-studies/tukarskill-logo.png",
       "description": "TukarSkill adalah platform buat saling tukar skill antar sesama. Dari ide, kami bantu bangun identitas brand dan MVP yang siap dicoba user pertama.",
-      "tags": ["Branding", "MVP", "Landing Page"],
+      "tags": [
+        "Branding",
+        "MVP",
+        "Landing Page"
+      ],
       "note": "Dikerjakan lewat proses 4 langkah Founderku — dari ngobrol ide sampai produk jalan.",
       "linkUrl": "product.html?slug=tukarskill",
       "linkLabel": "Lihat produk jadi & detailnya",
@@ -17,12 +21,34 @@
       "name": "Say Cheese",
       "logo": "images/case-studies/say-cheese-logo.png",
       "description": "Say Cheese adalah brand handcrafted cheesecake & chiffon cake made-to-order di Şişli, Istanbul. Kami bangun ulang website-nya dari Wix jadi custom website lengkap dengan animasi interaktif dan domain sendiri.",
-      "tags": ["Custom Website", "Brand Identity", "Domain & Deployment"],
+      "tags": [
+        "Custom Website",
+        "Brand Identity",
+        "Domain & Deployment"
+      ],
       "note": "4 halaman custom, animasi interaktif, dan setup domain dari nol sampai online.",
       "linkUrl": "https://saycheese.cfd",
       "linkLabel": "Kunjungi website",
       "external": true,
       "order": 2
+    },
+    {
+      "id": "kelasin",
+      "name": "Kelasin",
+      "logo": "images/case-studies/kelasin-logo.png",
+      "roundLogo": true,
+      "description": "Kelasin adalah paket starter platform belajar skill harian, dua sisi: pembelajar yang butuh solusi cepat (servis motor, jahit, masak, dll) dan pengajar orang biasa yang punya skill tapi belum punya cara monetisasi. Beda dari platform kursus formal, kelas di sini pendek (15-30 menit), murah (mulai Rp 5.000), dan direkam pengajar langsung pake HP.\n\nYang udah termasuk: dua halaman fungsional (landing page dan katalog lengkap), identitas visual sticky-note/corkboard yang khas, search dan filter kategori, modal detail tiap kelas lengkap dengan preview video contoh, serta alur pembelian dan pendaftaran pengajar yang langsung terhubung ke WhatsApp. Data kelas udah terstruktur rapi lewat JSON, siap dikembangin ke admin panel atau sistem pembayaran otomatis begitu ada traksi nyata. Cocok buat validasi ide dulu sebelum investasi ke sistem yang lebih kompleks.",
+      "tags": [
+        "katalog interaktif",
+        "search & filter kategori",
+        "preview video contoh",
+        "alur pesan via whatsapp"
+      ],
+      "note": "platform kelas mikro 15-30 menit buat skill harian, direkam pengajar biasa pake HP. desain sticky-note khas, katalog interaktif, alur pesan via whatsapp.",
+      "linkUrl": "https://founderku.github.io/Kelasin/index",
+      "linkLabel": "Kunjungi Kelasin",
+      "external": true,
+      "order": 3
     }
   ]
 }
