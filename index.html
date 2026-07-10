@@ -865,14 +865,15 @@
     var prefersReducedChar = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var html = '<span aria-hidden="true">';
     var delayIndex = 0;
-    for (var i = 0; i < text.length; i++) {
-      var ch = text[i];
-      if (ch === ' ') {
-        html += ' ';
-      } else {
-        html += '<span class="fk-char" style="transition-delay:' + (delayIndex * 0.03) + 's;">' + ch + '</span>';
+    var words = text.split(' ');
+    for (var w = 0; w < words.length; w++) {
+      html += '<span style="display:inline-block; white-space:nowrap;">';
+      for (var i = 0; i < words[w].length; i++) {
+        html += '<span class="fk-char" style="transition-delay:' + (delayIndex * 0.03) + 's;">' + words[w][i] + '</span>';
         delayIndex++;
       }
+      html += '</span>';
+      if (w < words.length - 1) html += ' ';
     }
     html += '</span>';
     titleEl.innerHTML = html;
