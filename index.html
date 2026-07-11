@@ -77,9 +77,21 @@
   }
   .fk-proj-slider::-webkit-scrollbar{ display:none; }
   .fk-proj-slider .fk-proj-card{ flex:0 0 min(420px, 88vw); scroll-snap-align:start; }
-  @media(min-width:860px){
-    #fkCsPrev, #fkCsNext{ display:flex !important; }
+  .fk-proj-slider{
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
   }
+  .fk-cs-nav-btn{
+    width: 46px; height: 46px; border-radius: 50%; border: 1px solid #FBF6EE22;
+    background: linear-gradient(155deg, #FBF6EE14, #FBF6EE05);
+    backdrop-filter: blur(6px);
+    color: #FBF6EE; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: transform .25s cubic-bezier(.34,1.56,.64,1), background .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .fk-cs-nav-btn:hover{ background: linear-gradient(155deg, #F2A623, #E08A1C); border-color: #F2A623; color: #1C1B33; transform: translateY(-2px) scale(1.06); box-shadow: 0 10px 24px -8px #F2A62366; }
+  .fk-cs-nav-btn:active{ transform: translateY(0) scale(0.96); }
+  .fk-cs-dot{ width: 7px; height: 7px; border-radius: 50%; background: #FBF6EE33; transition: all .3s ease; }
+  .fk-cs-dot.is-active{ background: #F2A623; width: 22px; border-radius: 4px; }
   @media (prefers-reduced-motion: reduce) {
     .fk-magnetic, .fk-spot { transition: none !important; }
     .fk-floating-bg { animation: none !important; }
@@ -452,15 +464,23 @@
       <div style="max-width:620px; margin:0 auto 56px; text-align:center;">
         <div style="font-size:13px; font-weight:700; color:#FBF6EE99; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px;">Studi Kasus</div>
         <h2 class="fk-section-h2" style="font-family:'Fraunces',serif; font-weight:700; font-size:36px; letter-spacing:-0.015em; margin:0 0 14px; color:#FBF6EE;">Project yang udah kelar bareng Founderku</h2>
-        <p style="font-size:16px; line-height:1.6; color:#FBF6EEAA; margin:0;">Bukan mockup doang &mdash; ini produk yang beneran jalan.</p>
+        <p style="font-size:16px; line-height:1.6; color:#FBF6EEAA; margin:0;">Bukan mockup doang. Ini produk yang beneran jalan.</p>
       </div>
 
       <div style="position:relative;">
-        <div class="fk-proj-slider" id="fkCaseStudyGrid" style="display:flex; gap:22px; overflow-x:auto; scroll-snap-type:x mandatory; padding:6px 6px 20px; margin:0 -6px; -webkit-overflow-scrolling:touch; scrollbar-width:none;">
+        <div class="fk-proj-slider" id="fkCaseStudyGrid" style="display:flex; gap:22px; overflow-x:auto; scroll-snap-type:x proximity; touch-action:pan-y; padding:6px 6px 20px; margin:0 -6px; -webkit-overflow-scrolling:touch; scrollbar-width:none;">
           <div class="empty-state" style="color:#FBF6EE99; font-size:14px; padding:40px;">memuat studi kasus...</div>
         </div>
-        <button type="button" id="fkCsPrev" aria-label="sebelumnya" style="display:none; position:absolute; left:-8px; top:40%; transform:translateY(-50%); width:44px; height:44px; border-radius:50%; background:#FBF6EE; border:none; color:#1C1B33; font-size:18px; cursor:pointer; box-shadow:0 8px 20px -6px #00000055; align-items:center; justify-content:center;">&larr;</button>
-        <button type="button" id="fkCsNext" aria-label="berikutnya" style="display:none; position:absolute; right:-8px; top:40%; transform:translateY(-50%); width:44px; height:44px; border-radius:50%; background:#FBF6EE; border:none; color:#1C1B33; font-size:18px; cursor:pointer; box-shadow:0 8px 20px -6px #00000055; align-items:center; justify-content:center;">&rarr;</button>
+      </div>
+
+      <div style="display:flex; align-items:center; justify-content:center; gap:14px; margin-top:8px;">
+        <button type="button" id="fkCsPrev" aria-label="sebelumnya" class="fk-cs-nav-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div id="fkCsDots" style="display:flex; gap:7px;"></div>
+        <button type="button" id="fkCsNext" aria-label="berikutnya" class="fk-cs-nav-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
 
       <div style="text-align:center; margin-top:36px;">
@@ -550,7 +570,7 @@
       <div style="max-width:620px; margin:0 auto 52px; text-align:center;">
         <div style="font-size:13px; font-weight:700; color:#1C1B3399; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px;">Generator</div>
         <h2 class="fk-section-h2" style="font-family:'Fraunces',serif; font-weight:700; font-size:36px; letter-spacing:-0.015em; margin:0 0 14px; color:#1C1B33;">Coba generate brand kamu</h2>
-        <p style="font-size:16px; line-height:1.6; color:#1C1B3399; margin:0;">Pilih industri, ceritain target user kamu, klik generate. Nama, tagline, sama warna langsung muncul &mdash; gratis, buat pancing ide.</p>
+        <p style="font-size:16px; line-height:1.6; color:#1C1B3399; margin:0;">Pilih industri, ceritain target user kamu, klik generate. Nama, tagline, sama warna langsung muncul. Gratis, buat pancing ide.</p>
       </div>
 
       <div class="fk-glow-card fk-tilt-l" style="max-width:760px; margin:0 auto 44px; border-radius:22px;">
@@ -593,7 +613,7 @@
       </div>
 
       <div id="fk-gen-results" class="fk-grid-3" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; max-width:1000px; margin:0 auto;" aria-live="polite"></div>
-      <p id="fk-gen-hint" style="display:none; text-align:center; font-size:14px; color:#1C1B3380; margin:28px 0 0;">Belum sreg? Klik generate lagi &mdash; hasilnya beda terus. Atau langsung aja ngobrol bareng kita.</p>
+      <p id="fk-gen-hint" style="display:none; text-align:center; font-size:14px; color:#1C1B3380; margin:28px 0 0;">Belum sreg? Klik generate lagi. Hasilnya beda terus. Atau langsung aja ngobrol bareng kita.</p>
     </div>
   </div>
 
@@ -1202,6 +1222,28 @@
 
         var prevBtn = document.getElementById('fkCsPrev');
         var nextBtn = document.getElementById('fkCsNext');
+        var dotsWrap = document.getElementById('fkCsDots');
+        var cards = Array.prototype.slice.call(grid.querySelectorAll('.fk-proj-card'));
+
+        if (dotsWrap && cards.length > 1) {
+          dotsWrap.innerHTML = cards.map(function (_, i) {
+            return '<div class="fk-cs-dot' + (i === 0 ? ' is-active' : '') + '" data-idx="' + i + '"></div>';
+          }).join('');
+        }
+        var dots = dotsWrap ? Array.prototype.slice.call(dotsWrap.querySelectorAll('.fk-cs-dot')) : [];
+
+        function updateActiveDot() {
+          if (!dots.length) return;
+          var gridLeft = grid.getBoundingClientRect().left;
+          var closestIdx = 0;
+          var closestDist = Infinity;
+          cards.forEach(function (card, i) {
+            var dist = Math.abs(card.getBoundingClientRect().left - gridLeft);
+            if (dist < closestDist) { closestDist = dist; closestIdx = i; }
+          });
+          dots.forEach(function (d, i) { d.classList.toggle('is-active', i === closestIdx); });
+        }
+
         if (prevBtn && nextBtn) {
           var scrollByCard = function (dir) {
             var card = grid.querySelector('.fk-proj-card');
@@ -1211,6 +1253,19 @@
           prevBtn.addEventListener('click', function () { scrollByCard(-1); });
           nextBtn.addEventListener('click', function () { scrollByCard(1); });
         }
+        dots.forEach(function (d) {
+          d.addEventListener('click', function () {
+            var idx = parseInt(d.dataset.idx, 10);
+            var target = cards[idx];
+            if (target) grid.scrollTo({ left: target.offsetLeft - grid.offsetLeft, behavior: 'smooth' });
+          });
+        });
+
+        var scrollTimer;
+        grid.addEventListener('scroll', function () {
+          clearTimeout(scrollTimer);
+          scrollTimer = setTimeout(updateActiveDot, 80);
+        });
       })
       .catch(function (err) {
         grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1; text-align:center; color:#FBF6EE99; font-size:14px; padding:40px;">gagal memuat studi kasus.</div>';

@@ -9,53 +9,97 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,600&family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
-  body { margin: 0; background: #FBF6EE; font-family: 'Manrope', sans-serif; color: #1C1B33; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; font-family: 'Manrope', sans-serif; color: #FBF6EE;
+    background: radial-gradient(1100px 600px at 50% -10%, #33305F 0%, #1C1B33 45%, #100F1E 100%);
+    min-height: 100vh; position: relative; overflow-x: hidden;
+  }
+
+  /* cinematic grain + vignette */
+  body::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 2; opacity: .05; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  body::after {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 1;
+    background: radial-gradient(ellipse at center, transparent 40%, #0A0914CC 100%);
+  }
+
+  .fk-glow { position: fixed; border-radius: 50%; filter: blur(90px); z-index: 0; pointer-events: none; opacity: .5; }
+  .fk-glow-1 { width: 420px; height: 420px; background: #7A78C4; top: -120px; left: -80px; }
+  .fk-glow-2 { width: 380px; height: 380px; background: #F2A623; bottom: -140px; right: -100px; opacity: .25; }
 
   nav {
-    position: sticky; top: 0; z-index: 20; background: #FBF6EEEE; backdrop-filter: blur(8px);
+    position: sticky; top: 0; z-index: 20; background: #1C1B3399; backdrop-filter: blur(10px);
     display: flex; align-items: center; justify-content: space-between;
-    padding: 18px 26px; border-bottom: 1px solid #1C1B331A;
+    padding: 18px 26px; border-bottom: 1px solid #FBF6EE1A;
   }
-  .fk-nav-brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 16px; text-decoration: none; color: #1C1B33; }
+  .fk-nav-brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 16px; text-decoration: none; color: #FBF6EE; }
   .fk-nav-brand img { width: 28px; height: 28px; border-radius: 8px; object-fit: cover; }
   .fk-back {
-    text-decoration: none; color: #1C1B33; font-weight: 700; font-size: 14px;
-    display: inline-flex; align-items: center; gap: 6px;
+    text-decoration: none; color: #FBF6EECC; font-weight: 700; font-size: 14px;
+    display: inline-flex; align-items: center; gap: 6px; transition: color .2s ease, transform .2s ease;
   }
+  .fk-back:hover { color: #F2A623; transform: translateX(-3px); }
 
-  header {
-    padding: 70px 26px 40px; text-align: center; max-width: 720px; margin: 0 auto;
+  header { position: relative; z-index: 5; padding: 90px 26px 50px; text-align: center; max-width: 720px; margin: 0 auto; }
+  header .eyebrow {
+    display: inline-block; font-size: 12.5px; font-weight: 700; color: #F2A623; text-transform: uppercase;
+    letter-spacing: 0.1em; margin-bottom: 18px; padding: 7px 16px; border: 1px solid #F2A62355; border-radius: 999px;
+    background: #F2A62311;
   }
-  header .eyebrow { font-size: 13px; font-weight: 700; color: #1C1B3399; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
-  header h1 { font-family: 'Fraunces', serif; font-weight: 700; font-size: 42px; letter-spacing: -0.015em; margin: 0 0 14px; }
-  header p { font-size: 16px; line-height: 1.6; color: #1C1B3399; margin: 0; }
+  header h1 { font-family: 'Fraunces', serif; font-weight: 700; font-size: 46px; letter-spacing: -0.015em; margin: 0 0 16px; line-height: 1.12; }
+  header p { font-size: 16.5px; line-height: 1.6; color: #FBF6EEAA; margin: 0; }
 
-  main { max-width: 1120px; margin: 0 auto; padding: 20px 26px 100px; }
-  .cs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
-  @media (max-width: 760px) { .cs-grid { grid-template-columns: 1fr; } }
+  main { position: relative; z-index: 5; max-width: 1120px; margin: 0 auto; padding: 20px 26px 120px; }
+  .cs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; }
+  @media (max-width: 760px) { .cs-grid { grid-template-columns: 1fr; } header h1 { font-size: 32px; } }
 
   .cs-card {
-    background: #FFFFFF; border-radius: 22px; padding: 40px; position: relative;
-    border: 1px solid #1C1B331A; transition: transform .25s ease, box-shadow .25s ease;
+    background: linear-gradient(155deg, #FBF6EE12, #FBF6EE05);
+    border: 1px solid #FBF6EE1F; border-radius: 22px; padding: 40px; position: relative; overflow: hidden;
+    backdrop-filter: blur(8px);
+    transition: transform .3s cubic-bezier(.22,1,.36,1), border-color .3s ease, box-shadow .3s ease;
   }
-  .cs-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -16px #1C1B3322; }
-  .cs-card .logo-row { display: flex; align-items: center; gap: 18px; margin-bottom: 24px; flex-wrap: wrap; min-height: 48px; }
-  .cs-card .logo-row img { height: 44px; width: auto; }
-  .cs-card p.desc { font-size: 15.5px; line-height: 1.7; color: #1C1B3399; margin: 0 0 24px; }
+  .cs-card::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+    background: linear-gradient(140deg, #F2A62300, #F2A62300 40%, #F2A62366 60%, #F2A62300 80%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    opacity: 0; transition: opacity .3s ease; pointer-events: none;
+  }
+  .cs-card:hover { transform: translateY(-6px); border-color: #F2A62355; box-shadow: 0 24px 50px -20px #00000088; }
+  .cs-card:hover::before { opacity: 1; }
+
+  .cs-card .logo-chip {
+    display: inline-flex; align-items: center; min-height: 48px; margin-bottom: 26px;
+    background: #FBF6EE; border-radius: 12px; padding: 10px 16px;
+  }
+  .cs-card .logo-chip img { height: 30px; width: auto; display: block; }
+  .cs-card .logo-chip strong { color: #1C1B33; font-size: 16px; }
+
+  .cs-card p.desc { font-size: 15.5px; line-height: 1.75; color: #FBF6EEB3; margin: 0 0 24px; }
   .cs-card .tags { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 26px; }
   .cs-card .tag {
-    background: #1C1B330D; padding: 7px 14px; border-radius: 999px; font-size: 12.5px; font-weight: 700; color: #1C1B33;
+    background: #FBF6EE14; border: 1px solid #FBF6EE22; padding: 7px 14px; border-radius: 999px;
+    font-size: 12.5px; font-weight: 700; color: #FBF6EEDD;
   }
-  .cs-card .note { font-size: 13.5px; color: #1C1B3399; margin-bottom: 22px; }
+  .cs-card .note { font-size: 13.5px; color: #FBF6EE88; margin-bottom: 24px; line-height: 1.6; }
   .cs-card a.cta {
     text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
-    color: #1C1B33; font-weight: 700; font-size: 14px; border-bottom: 2px solid #F2A623; padding-bottom: 2px;
+    color: #FBF6EE; font-weight: 700; font-size: 14px; border-bottom: 2px solid #F2A623; padding-bottom: 2px;
+    transition: gap .2s ease, color .2s ease;
   }
+  .cs-card a.cta:hover { gap: 12px; color: #F2A623; }
 
-  .empty-state, .error-state { grid-column: 1/-1; text-align: center; color: #1C1B3399; font-size: 14.5px; padding: 60px 20px; }
+  .empty-state, .error-state { grid-column: 1/-1; text-align: center; color: #FBF6EE88; font-size: 14.5px; padding: 60px 20px; }
 </style>
 </head>
 <body>
+
+<div class="fk-glow fk-glow-1"></div>
+<div class="fk-glow fk-glow-2"></div>
 
 <nav>
   <a href="index.html" class="fk-nav-brand">
@@ -68,7 +112,7 @@
 <header>
   <div class="eyebrow">Studi Kasus</div>
   <h1>Semua project yang udah kelar bareng Founderku</h1>
-  <p>Bukan mockup doang &mdash; ini semua produk yang beneran jalan, dari ide sampai online.</p>
+  <p>Bukan mockup doang. Ini semua produk yang beneran jalan, dari ide sampai online.</p>
 </header>
 
 <main>
@@ -103,15 +147,15 @@
           return '<span class="tag">' + escapeHtml(tag) + '</span>';
         }).join('');
 
-        var logoHtml = item.logo
+        var logoInner = item.logo
           ? '<img src="' + escapeHtml(item.logo) + '" alt="' + escapeHtml(item.name) + ' logo" loading="lazy" decoding="async"' + (item.roundLogo ? ' style="border-radius:50%;"' : '') + '>'
-          : '<strong style="font-size:17px;">' + escapeHtml(item.name) + '</strong>';
+          : '<strong>' + escapeHtml(item.name) + '</strong>';
 
         var linkAttrs = item.external ? 'target="_blank" rel="noopener"' : '';
 
         return (
           '<div class="cs-card">' +
-            '<div class="logo-row">' + logoHtml + '</div>' +
+            '<div class="logo-chip">' + logoInner + '</div>' +
             '<p class="desc">' + escapeHtml(item.description) + '</p>' +
             '<div class="tags">' + tagsHtml + '</div>' +
             '<div class="note">' + escapeHtml(item.note) + '</div>' +
