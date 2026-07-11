@@ -10,60 +10,122 @@
       "priceLabel": "Rp 12.000.000",
       "priceNote": "mulai dari",
       "featured": true,
-      "shortDescription": "platform skill-barter yang udah jalan beneran: matching otomatis, gamifikasi bikin betah, chat real-time, dan forum komunitas rame. tinggal rebrand, langsung tancap gas.",
-      "fullDescription": "TukarSkill bukan konsep di atas kertas, ini platform marketplace dan komunitas yang sudah terbukti jalan. Di dalamnya ada sistem matching berbasis AI biar user ketemu partner skill yang pas, gamifikasi biar mereka betah balik lagi, chat real-time buat ngobrol langsung, dan forum diskusi buat komunitas berkembang sendiri. - Cocok banget buat kamu yang mau bangun platform skill exchange, marketplace jasa, atau komunitas berbasis kolaborasi, tanpa mulai coding dari nol. - Tinggal sesuaikan nama, warna, dan konten sesuai brand kamu, dan kamu udah punya produk yang siap dipamerin ke user pertama. - Semua sistem intinya udah jalan, jadi kamu bisa fokus ke growth dan komunitas, bukan sibuk bangun fondasi dari kosong.",
-      "featureTags": ["ai matching", "gamifikasi", "real-time chat", "forum"],
+      "shortDescription": "platform barter skill yang sudah terbukti jalan dengan AI matching, gamifikasi, chat real-time, dan forum komunitas. tinggal rebrand, langsung pakai.",
+      "fullDescription": "TukarSkill adalah platform marketplace skill-barter yang sudah live dan punya pengguna aktif nyata dan bukan sekadar konsep di atas kertas. Orang saling tukar keahlian secara gratis: desainer belajar coding, videographer belajar bahasa, dan seterusnya, difasilitasi lewat sistem matching berbasis AI.\n\npaket ini termasuk:\n- source code lengkap platform (matching AI, gamifikasi & poin, chat real-time, forum diskusi, panel admin)\n- sudah terbukti jalan sebagai bukti konsep, tinggal di-rebrand jadi brand kamu sendiri\n- struktur bisnis dan model monetisasi yang bisa dikembangkan lebih lanjut\n\ncocok buat kamu yang mau punya platform komunitas atau marketplace sendiri tanpa mulai coding dari nol. tinggal ganti nama, logo, dan warna, sistemnya udah jalan duluan.\n\ndetail teknis dan proses handover bisa didiskusikan langsung, chat kami di whatsapp kalau tertarik.",
+      "featureTags": [
+        "AI matching",
+        "gamifikasi & poin",
+        "chat real-time",
+        "forum komunitas",
+        "panel admin",
+        "pencarian skill canggih",
+        "rating & ulasan",
+        "verifikasi keamanan",
+        "Instagram"
+      ],
       "thumbnail": "images/products/tukarskill-thumb.png",
       "gallery": [
         "images/products/tukarskill-thumb.png"
       ],
       "liveUrl": "https://tukarskill.com",
-      "whatsappMessage": "Halo Founderku, saya mau pesan TukarSkill",
+      "whatsappMessage": "Halo, saya tertarik dengan paket TukarSkill. Boleh cerita lebih lanjut soal cara kerja dan proses handover-nya?",
       "createdAt": "2026-07-08"
     },
     {
-      "id": "starter-coffee-shop",
-      "slug": "starter-coffee-shop",
-      "name": "Starter: Coffee Shop",
+      "id": "motifa",
+      "slug": "motifa",
+      "name": "motifa",
       "category": "landing-page",
       "categoryLabel": "landing page",
+      "price": 500000,
+      "priceLabel": "Rp 500.000",
+      "priceNote": "mulai dari",
+      "featured": false,
+      "shortDescription": "Paket bisnis siap jalan: website generator motif personal nusantara, dicetak on-demand ke kaos, totebag, dan mug. modal kecil, tinggal eksekusi.",
+      "fullDescription": "Motifa adalah paket ide bisnis lengkap: website yang mengubah nama dan asal daerah pengunjung jadi motif personal bergaya nusantara, lalu dicetak on-demand ke kaos, totebag, atau mug.\n\npaket ini termasuk:\n- konsep bisnis dan positioning brand\n- website generator siap pakai (sudah live, tinggal isi nomor whatsapp kamu)\n- panduan produksi print-on-demand, tanpa perlu modal stok di awal\n- panduan menjalankan dan mengembangkan bisnisnya\n\ncocok buat kamu yang mau mulai usaha sendiri tapi belum punya ide, atau yang mau nambah lini produk baru tanpa mulai dari nol.\n\ndetail teknis cara kerja sistem generator bisa didiskusikan langsung, chat kami di whatsapp kalau tertarik.",
+      "featureTags": [
+        "generator motif personal",
+        "print-on-demand",
+        "tanpa modal stok",
+        "brand & panduan bisnis lengkap",
+        "siap jalan dalam sehari"
+      ],
+      "thumbnail": "images/products/motifa.jpg",
+      "gallery": [
+        "images/products/motifa.jpg"
+      ],
+      "liveUrl": "https://founderku.github.io/Motifa/",
+      "whatsappMessage": "Halo, saya tertarik dengan paket Motifa. Boleh cerita lebih lanjut soal cara kerja sistemnya?",
+      "createdAt": "2026-07-09"
+    },
+    {
+      "id": "kelasin",
+      "slug": "kelasin",
+      "name": "Kelasin",
+      "category": "platform-marketplace",
+      "categoryLabel": "platform & marketplace",
       "price": 1800000,
       "priceLabel": "Rp 1.800.000",
       "priceNote": "mulai dari",
       "featured": false,
-      "shortDescription": "satu halaman yang udah didesain rapi buat validasi ide coffee shop kamu. ganti logo, warna, teks, langsung tampil profesional dan siap dibagi ke calon pelanggan.",
-      "fullDescription": "Starter: Coffee Shop dibuat buat kamu yang punya ide bikin coffee shop atau usaha F&B sejenis dan butuh landing page yang langsung kelihatan niat, tanpa nunggu berminggu-minggu. - Satu halaman ini sudah lengkap dengan struktur yang biasa dipakai brand F&B buat kenalan produk, tampilin menu andalan, dan ngarahin orang buat datang atau follow. - Tinggal ganti logo, warna, dan teksnya sesuai brand kamu, langsung siap dipakai buat validasi ide sebelum kamu invest lebih jauh ke tempat fisik atau stok.",
-      "featureTags": ["1 halaman", "responsive"],
-      "thumbnail": "images/products/placeholder.png",
-      "gallery": [],
-      "liveUrl": "",
-      "whatsappMessage": "Halo Founderku, saya mau pesan Starter Coffee Shop",
-      "createdAt": "2026-07-08"
+      "shortDescription": "platform kelas mikro 15-30 menit buat skill harian, direkam pengajar biasa pake HP. desain sticky-note khas, katalog interaktif, alur pesan via whatsapp.",
+      "fullDescription": "Kelasin adalah paket starter platform belajar skill harian, dua sisi: pembelajar yang butuh solusi cepat (servis motor, jahit, masak, dll) dan pengajar orang biasa yang punya skill tapi belum punya cara monetisasi. Beda dari platform kursus formal, kelas di sini pendek (15-30 menit), murah (mulai Rp 5.000), dan direkam pengajar langsung pake HP.\n\nYang udah termasuk: dua halaman fungsional (landing page dan katalog lengkap), identitas visual sticky-note/corkboard yang khas, search dan filter kategori, modal detail tiap kelas lengkap dengan preview video contoh, serta alur pembelian dan pendaftaran pengajar yang langsung terhubung ke WhatsApp. Data kelas udah terstruktur rapi lewat JSON, siap dikembangin ke admin panel atau sistem pembayaran otomatis begitu ada traksi nyata. Cocok buat validasi ide dulu sebelum investasi ke sistem yang lebih kompleks.",
+      "featureTags": [
+        "katalog interaktif",
+        "search & filter kategori",
+        "preview video contoh",
+        "alur pesan via whatsapp"
+      ],
+      "thumbnail": "images/products/kelasin.jpg",
+      "gallery": [
+        "images/products/kelasin.jpg"
+      ],
+      "liveUrl": "https://founderku.github.io/Kelasin/index",
+      "whatsappMessage": "Halo, saya mau pesan Kelasin",
+      "createdAt": "2026-07-10"
     },
     {
-      "id": "company-profile-basic",
-      "slug": "company-profile-basic",
-      "name": "Company Profile: Basic",
-      "category": "company-profile",
-      "categoryLabel": "company profile",
-      "price": 3500000,
-      "priceLabel": "Rp 3.500.000",
+      "id": "lahirku",
+      "slug": "lahirku",
+      "name": "Lahirku",
+      "category": "platform-marketplace",
+      "categoryLabel": "platform & marketplace",
+      "price": 800000,
+      "priceLabel": "Rp 800.000",
       "priceNote": "mulai dari",
       "featured": false,
-      "shortDescription": "3 sampai 5 halaman dengan animasi ringan yang bikin usahamu kelihatan kredibel di mata klien atau partner baru, cocok buat bisnis yang udah jalan dan butuh naik kelas.",
-      "fullDescription": "Company Profile: Basic cocok buat usaha yang udah beneran jalan tapi belum punya wajah digital yang mencerminkan seriusnya bisnis kamu. - Terdiri dari 3 sampai 5 halaman dengan animasi ringan yang bikin websitenya kerasa hidup tanpa berlebihan, pas buat ditunjukin ke klien, partner, atau investor yang lagi menilai kredibilitas kamu. - Strukturnya sudah dirancang biar informasi bisnis kamu tersampaikan jelas, tinggal isi konten dan sesuaikan brand-nya, langsung siap dipakai buat presentasi atau ditaruh di kartu nama digital.",
-      "featureTags": ["3-5 halaman", "animasi"],
-      "thumbnail": "images/products/placeholder.png",
-      "gallery": [],
-      "liveUrl": "",
-      "whatsappMessage": "Halo Founderku, saya mau pesan Company Profile Basic",
-      "createdAt": "2026-07-08"
+      "shortDescription": "Generator kartu kelahiran bayi berbasis weton (tradisi Jawa). Orang tua tinggal isi nama dan tanggal lahir bayi, sistem otomatis hitung hari-pasaran, neptu, dan watak, lalu disusun jadi kartu kelahiran bergaya heirloom yang bisa dipajang atau dijadiin kado kelahiran.",
+      "fullDescription": "Generator kartu kelahiran bayi berbasis weton (tradisi Jawa). Orang tua tinggal isi nama dan tanggal lahir bayi, sistem otomatis hitung hari-pasaran, neptu, dan watak, lalu disusun jadi kartu kelahiran bergaya heirloom yang bisa dipajang atau dijadiin kado kelahiran. Bukan cuma kalkulator teks kayak situs weton lainnya.",
+      "featureTags": [
+        "Kalkulator Weton",
+        "Kado Kelahiran",
+        "Digital Product"
+      ],
+      "thumbnail": "images/products/lahirku.jpg",
+      "gallery": [
+        "images/products/lahirku.jpg"
+      ],
+      "liveUrl": "https://founderku.github.io/Lahirku/",
+      "whatsappMessage": "Halo, saya mau pesan Lahirku",
+      "createdAt": "2026-07-11"
     }
   ],
   "categories": [
-    { "id": "landing-page", "label": "landing page" },
-    { "id": "company-profile", "label": "company profile" },
-    { "id": "portfolio", "label": "portfolio" },
-    { "id": "platform-marketplace", "label": "platform & marketplace" }
+    {
+      "id": "landing-page",
+      "label": "landing page"
+    },
+    {
+      "id": "company-profile",
+      "label": "company profile"
+    },
+    {
+      "id": "portfolio",
+      "label": "portfolio"
+    },
+    {
+      "id": "platform-marketplace",
+      "label": "platform & marketplace"
+    }
   ]
 }
