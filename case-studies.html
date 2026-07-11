@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Semua Studi Kasus · Founderku</title>
+<link rel="icon" type="image/jpeg" href="images/logo-founderku.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,600&family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #FBF6EE; font-family: 'Manrope', sans-serif; color: #1C1B33; }
+
+  nav {
+    position: sticky; top: 0; z-index: 20; background: #FBF6EEEE; backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 26px; border-bottom: 1px solid #1C1B331A;
+  }
+  .fk-nav-brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 16px; text-decoration: none; color: #1C1B33; }
+  .fk-nav-brand img { width: 28px; height: 28px; border-radius: 8px; object-fit: cover; }
+  .fk-back {
+    text-decoration: none; color: #1C1B33; font-weight: 700; font-size: 14px;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+
+  header {
+    padding: 70px 26px 40px; text-align: center; max-width: 720px; margin: 0 auto;
+  }
+  header .eyebrow { font-size: 13px; font-weight: 700; color: #1C1B3399; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+  header h1 { font-family: 'Fraunces', serif; font-weight: 700; font-size: 42px; letter-spacing: -0.015em; margin: 0 0 14px; }
+  header p { font-size: 16px; line-height: 1.6; color: #1C1B3399; margin: 0; }
+
+  main { max-width: 1120px; margin: 0 auto; padding: 20px 26px 100px; }
+  .cs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+  @media (max-width: 760px) { .cs-grid { grid-template-columns: 1fr; } }
+
+  .cs-card {
+    background: #FFFFFF; border-radius: 22px; padding: 40px; position: relative;
+    border: 1px solid #1C1B331A; transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .cs-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -16px #1C1B3322; }
+  .cs-card .logo-row { display: flex; align-items: center; gap: 18px; margin-bottom: 24px; flex-wrap: wrap; min-height: 48px; }
+  .cs-card .logo-row img { height: 44px; width: auto; }
+  .cs-card p.desc { font-size: 15.5px; line-height: 1.7; color: #1C1B3399; margin: 0 0 24px; }
+  .cs-card .tags { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 26px; }
+  .cs-card .tag {
+    background: #1C1B330D; padding: 7px 14px; border-radius: 999px; font-size: 12.5px; font-weight: 700; color: #1C1B33;
+  }
+  .cs-card .note { font-size: 13.5px; color: #1C1B3399; margin-bottom: 22px; }
+  .cs-card a.cta {
+    text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    color: #1C1B33; font-weight: 700; font-size: 14px; border-bottom: 2px solid #F2A623; padding-bottom: 2px;
+  }
+
+  .empty-state, .error-state { grid-column: 1/-1; text-align: center; color: #1C1B3399; font-size: 14.5px; padding: 60px 20px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="fk-nav-brand">
+    <img src="images/logo-founderku.jpg" alt="Founderku">
+    Founderku
+  </a>
+  <a href="index.html" class="fk-back">&larr; kembali ke beranda</a>
+</nav>
+
+<header>
+  <div class="eyebrow">Studi Kasus</div>
+  <h1>Semua project yang udah kelar bareng Founderku</h1>
+  <p>Bukan mockup doang &mdash; ini semua produk yang beneran jalan, dari ide sampai online.</p>
+</header>
+
+<main>
+  <div class="cs-grid" id="csFullGrid">
+    <div class="empty-state">memuat studi kasus...</div>
+  </div>
+</main>
+
+<script>
+(function () {
+  var grid = document.getElementById('csFullGrid');
+
+  function escapeHtml(str) {
+    return String(str == null ? '' : str).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  fetch('data/case-studies.json')
+    .then(function (res) { if (!res.ok) throw new Error('gagal memuat data'); return res.json(); })
+    .then(function (data) {
+      var items = (data.caseStudies || []).slice().sort(function (a, b) {
+        return (a.order || 0) - (b.order || 0);
+      });
+      if (!items.length) {
+        grid.innerHTML = '<div class="empty-state">belum ada studi kasus.</div>';
+        return;
+      }
+
+      grid.innerHTML = items.map(function (item) {
+        var tagsHtml = (item.tags || []).map(function (tag) {
+          return '<span class="tag">' + escapeHtml(tag) + '</span>';
+        }).join('');
+
+        var logoHtml = item.logo
+          ? '<img src="' + escapeHtml(item.logo) + '" alt="' + escapeHtml(item.name) + ' logo" loading="lazy" decoding="async"' + (item.roundLogo ? ' style="border-radius:50%;"' : '') + '>'
+          : '<strong style="font-size:17px;">' + escapeHtml(item.name) + '</strong>';
+
+        var linkAttrs = item.external ? 'target="_blank" rel="noopener"' : '';
+
+        return (
+          '<div class="cs-card">' +
+            '<div class="logo-row">' + logoHtml + '</div>' +
+            '<p class="desc">' + escapeHtml(item.description) + '</p>' +
+            '<div class="tags">' + tagsHtml + '</div>' +
+            '<div class="note">' + escapeHtml(item.note) + '</div>' +
+            '<a href="' + escapeHtml(item.linkUrl) + '" ' + linkAttrs + ' class="cta">' + escapeHtml(item.linkLabel || 'Lihat detail') + ' &rarr;</a>' +
+          '</div>'
+        );
+      }).join('');
+    })
+    .catch(function (err) {
+      grid.innerHTML = '<div class="error-state">gagal memuat studi kasus.</div>';
+      console.error('case studies fetch error:', err);
+    });
+})();
+</script>
+
+</body>
+</html>
