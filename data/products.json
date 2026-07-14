@@ -128,20 +128,46 @@
       "priceLabel": "Rp 1.800.000",
       "priceNote": "mulai dari",
       "featured": false,
-      "shortDescription": "platform kelas mikro 15-30 menit buat skill harian, direkam pengajar biasa pake HP. desain sticky-note khas, katalog interaktif, alur pesan via whatsapp.",
-      "fullDescription": "Kelasin adalah paket starter platform belajar skill harian, dua sisi: pembelajar yang butuh solusi cepat (servis motor, jahit, masak, dll) dan pengajar orang biasa yang punya skill tapi belum punya cara monetisasi. Beda dari platform kursus formal, kelas di sini pendek (15-30 menit), murah (mulai Rp 5.000), dan direkam pengajar langsung pake HP.\n\nYang udah termasuk: dua halaman fungsional (landing page dan katalog lengkap), identitas visual sticky-note/corkboard yang khas, search dan filter kategori, modal detail tiap kelas lengkap dengan preview video contoh, serta alur pembelian dan pendaftaran pengajar yang langsung terhubung ke WhatsApp. Data kelas udah terstruktur rapi lewat JSON, siap dikembangin ke admin panel atau sistem pembayaran otomatis begitu ada traksi nyata. Cocok buat validasi ide dulu sebelum investasi ke sistem yang lebih kompleks.",
-      "featureTags": [
-        "katalog interaktif",
-        "search & filter kategori",
-        "preview video contoh",
-        "alur pesan via whatsapp"
-      ],
+      "shortDescription": {
+        "id": "platform kelas mikro 15-30 menit buat skill harian, direkam pengajar biasa pake HP. desain sticky-note khas, katalog interaktif, alur pesan via whatsapp.",
+        "en": "A micro-learning platform for 15-30 minute daily skill classes, recorded by regular instructors using their phones. Features a distinctive sticky-note design, interactive catalog, and WhatsApp messaging workflow.",
+        "tr": "15-30 dakikalık günlük beceri sınıfları için mikro öğrenme platformu, normal eğitmenler tarafından telefonlarıyla kaydedilir. Ayırt edici not kağıdı tasarımı, etkileşimli katalog ve WhatsApp mesajlaşma akışıyla gelir."
+      },
+      "fullDescription": {
+        "id": "Kelasin adalah paket starter platform belajar skill harian, dua sisi: pembelajar yang butuh solusi cepat (servis motor, jahit, masak, dll) dan pengajar orang biasa yang punya skill tapi belum punya cara monetisasi. Beda dari platform kursus formal, kelas di sini pendek (15-30 menit), murah (mulai Rp 5.000), dan direkam pengajar langsung pake HP.\n\nYang udah termasuk: dua halaman fungsional (landing page dan katalog lengkap), identitas visual sticky-note/corkboard yang khas, search dan filter kategori, modal detail tiap kelas lengkap dengan preview video contoh, serta alur pembelian dan pendaftaran pengajar yang langsung terhubung ke WhatsApp. Data kelas udah terstruktur rapi lewat JSON, siap dikembangin ke admin panel atau sistem pembayaran otomatis begitu ada traksi nyata. Cocok buat validasi ide dulu sebelum investasi ke sistem yang lebih kompleks.",
+        "en": "Kelasin is a starter package for a daily skill-learning platform with two sides: learners looking for quick solutions (motorcycle repair, sewing, cooking, etc.) and regular instructors with skills but no monetization path yet. Unlike formal course platforms, classes here are short (15-30 minutes), affordable (starting from Rp 5,000), and recorded directly by instructors using their phones. What's included: two functional pages (landing page and full catalog), a distinctive sticky-note and corkboard visual identity, search and category filtering, detailed class modals with sample video previews, plus a purchase and instructor registration flow that connects directly to WhatsApp. Class data is cleanly structured via JSON and ready to scale to an admin panel or automated payment system once you have real traction. Perfect for validating your idea before investing in more complex systems.",
+        "tr": "Kelasin, günlük beceri öğrenme platformu için başlangıç paketi olup iki tarafı vardır: hızlı çözüm arayan öğrenenler (motosiklet tamiri, dikiş, yemek pişirme vb.) ve beceriye sahip ama para kazanma yolu olmayan sıradan eğitmenler. Resmi kurs platformlarının aksine, buradaki sınıflar kısa (15-30 dakika), uygun fiyatlı (5.000 Rp'den başlayan) ve eğitmenler tarafından telefonlarıyla doğrudan kaydedilir. Dahil olanlar: iki işlevsel sayfa (açılış sayfası ve tam katalog), ayırt edici not kağıdı ve tahta panosu görsel kimliği, arama ve kategori filtreleme, örnek video önizlemeleriyle birlikte detaylı sınıf modalları, ayrıca doğrudan WhatsApp'a bağlanan satın alma ve eğitmen kayıt akışı. Sınıf verileri JSON aracılığıyla temiz bir şekilde yapılandırılmış ve gerçek traction olduğunda yönetici paneline veya otomatik ödeme sistemine ölçeklemeye hazır. Daha karmaşık sistemlere yatırım yapmadan önce fikrinizi doğrulamak için mükemmeldir."
+      },
+      "featureTags": {
+        "id": [
+          "katalog interaktif",
+          "search & filter kategori",
+          "preview video contoh",
+          "alur pesan via whatsapp"
+        ],
+        "en": [
+          "interactive catalog",
+          "search and category filtering",
+          "sample video previews",
+          "WhatsApp messaging workflow"
+        ],
+        "tr": [
+          "etkileşimli katalog",
+          "arama ve kategori filtreleme",
+          "örnek video önizlemeleri",
+          "WhatsApp mesajlaşma akışı"
+        ]
+      },
       "thumbnail": "images/products/kelasin.jpg",
       "gallery": [
         "images/products/kelasin.jpg"
       ],
       "liveUrl": "https://founderku.github.io/Kelasin/index",
-      "whatsappMessage": "Halo, saya mau pesan Kelasin",
+      "whatsappMessage": {
+        "id": "Halo, saya mau pesan Kelasin",
+        "en": "Hey, I want to order Kelasin",
+        "tr": "Merhaba, Kelasin sipariş etmek istiyorum"
+      },
       "createdAt": "2026-07-10"
     },
     {
