@@ -178,15 +178,39 @@
       "name": "Lahirku",
       "logo": "images/case-studies/lahirku-logo.png",
       "roundLogo": true,
-      "description": "Generator kartu kelahiran bayi berbasis weton (tradisi Jawa). Orang tua tinggal isi nama dan tanggal lahir bayi, sistem otomatis hitung hari-pasaran, neptu, dan watak, lalu disusun jadi kartu kelahiran bergaya heirloom yang bisa dipajang atau dijadiin kado kelahiran. Bukan cuma kalkulator teks kayak situs weton lainnya.",
-      "tags": [
-        "Kalkulator Weton",
-        "Kado Kelahiran",
-        "Digital Product"
-      ],
-      "note": "Dikerjakan lewat proses 4 langkah Founderku — dari riset kompetitor sampai landing page + generator jadi.",
+      "description": {
+        "id": "Generator kartu kelahiran bayi berbasis weton (tradisi Jawa). Orang tua tinggal isi nama dan tanggal lahir bayi, sistem otomatis hitung hari-pasaran, neptu, dan watak, lalu disusun jadi kartu kelahiran bergaya heirloom yang bisa dipajang atau dijadiin kado kelahiran. Bukan cuma kalkulator teks kayak situs weton lainnya.",
+        "en": "A baby birth card generator based on weton, a Javanese tradition. Parents simply enter their baby's name and birth date, and the system automatically calculates the day-market, neptu, and character traits, then arranges them into a beautifully designed heirloom-style birth card that can be displayed or given as a birth gift. It's not just another text calculator like other weton sites out there.",
+        "tr": "Jawa geleneği olan weton'a dayanan bir bebek doğum kartı oluşturucu. Ebeveynler sadece bebeklerinin adını ve doğum tarihini girerek sistemi harekete geçirir, sistem otomatik olarak gün-pazar, neptu ve kişilik özelliklerini hesaplar, ardından bunları sergilenebilecek veya doğum hediyesi olarak verilebilecek güzel tasarlanmış bir miras tarzı doğum kartına dönüştürür. Diğer weton sitelerindeki gibi sadece bir metin hesaplayıcı değildir."
+      },
+      "tags": {
+        "id": [
+          "Kalkulator Weton",
+          "Kado Kelahiran",
+          "Digital Product"
+        ],
+        "en": [
+          "Weton Calculator",
+          "Birth Gift",
+          "Digital Product"
+        ],
+        "tr": [
+          "Weton Hesaplayıcı",
+          "Doğum Hediyesi",
+          "Dijital Ürün"
+        ]
+      },
+      "note": {
+        "id": "Dikerjakan lewat proses 4 langkah Founderku — dari riset kompetitor sampai landing page + generator jadi.",
+        "en": "Built through Founderku's 4-step process, from competitor research all the way to a fully functional landing page and generator.",
+        "tr": "Founderku'nun 4 adımlı süreciyle geliştirildi, rakip araştırmasından tam işlevli bir açılış sayfası ve oluşturucuya kadar."
+      },
       "linkUrl": "https://founderku.github.io/Lahirku/",
-      "linkLabel": "Lihat Lahirku disini",
+      "linkLabel": {
+        "id": "Lihat Lahirku disini",
+        "en": "Check out Lahirku here",
+        "tr": "Lahirku'yu buradan görüntüleyin"
+      },
       "external": true,
       "order": 5
     }
