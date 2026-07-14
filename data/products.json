@@ -21,8 +21,7 @@
         "pencarian skill canggih",
         "rating & ulasan",
         "verifikasi keamanan",
-        "Instagram",
-        "legalitas Indonesia"
+        "Instagram"
       ],
       "thumbnail": "images/products/tukarskill-thumb.png",
       "gallery": [
@@ -89,8 +88,8 @@
       "id": "lahirku",
       "slug": "lahirku",
       "name": "Lahirku",
-      "category": "landing-page",
-      "categoryLabel": "landing page",
+      "category": "platform-marketplace",
+      "categoryLabel": "platform & marketplace",
       "price": 800000,
       "priceLabel": "Rp 800.000",
       "priceNote": "mulai dari",
