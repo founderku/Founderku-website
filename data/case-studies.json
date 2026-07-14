@@ -131,17 +131,45 @@
       "name": "Motifa",
       "logo": "images/case-studies/motifa-logo.png",
       "roundLogo": true,
-      "description": "Motifa merupakan website yang mengubah nama dan asal daerah pengunjung jadi motif personal bergaya nusantara, lalu dicetak on-demand ke kaos, totebag, atau mug.",
-      "tags": [
-        "generator motif personal",
-        "print-on-demand",
-        "tanpa modal stok",
-        "brand & panduan bisnis lengkap",
-        "siap jalan dalam sehari"
-      ],
-      "note": "motifa adalah paket ide bisnis lengkap: website yang mengubah nama dan asal daerah pengunjung jadi motif personal bergaya nusantara, lalu dicetak on-demand ke kaos, totebag, atau mug.",
+      "description": {
+        "id": "Motifa merupakan website yang mengubah nama dan asal daerah pengunjung jadi motif personal bergaya nusantara, lalu dicetak on-demand ke kaos, totebag, atau mug.",
+        "en": "Motifa is a website that transforms visitors' names and regions into personalized nusantara-style motifs, then prints them on-demand onto t-shirts, totebags, or mugs.",
+        "tr": "Motifa, ziyaretçilerin adlarını ve bölgelerini kişiselleştirilmiş nusantara tarzı motiflere dönüştüren ve bunları talep üzerine t-shirt, alışveriş çantası veya kupa üzerine basan bir web sitesidir."
+      },
+      "tags": {
+        "id": [
+          "generator motif personal",
+          "print-on-demand",
+          "tanpa modal stok",
+          "brand & panduan bisnis lengkap",
+          "siap jalan dalam sehari"
+        ],
+        "en": [
+          "personalized motif generator",
+          "print-on-demand",
+          "zero stock investment",
+          "complete brand and business guide",
+          "ready to launch in one day"
+        ],
+        "tr": [
+          "kişiselleştirilmiş motif üreticisi",
+          "talep üzerine baskı",
+          "stok yatırımı yok",
+          "tam marka ve iş rehberi",
+          "bir gün içinde başlamaya hazır"
+        ]
+      },
+      "note": {
+        "id": "motifa adalah paket ide bisnis lengkap: website yang mengubah nama dan asal daerah pengunjung jadi motif personal bergaya nusantara, lalu dicetak on-demand ke kaos, totebag, atau mug.",
+        "en": "Motifa is a complete business idea package: a website that transforms visitors' names and regions into personalized nusantara-style motifs, then prints them on-demand onto t-shirts, totebags, or mugs.",
+        "tr": "Motifa tam bir iş fikri paketidir: ziyaretçilerin adlarını ve bölgelerini kişiselleştirilmiş nusantara tarzı motiflere dönüştüren ve bunları talep üzerine t-shirt, alışveriş çantası veya kupa üzerine basan bir web sitesi."
+      },
       "linkUrl": "https://founderku.github.io/Motifa/",
-      "linkLabel": "Kunjungi Motifa",
+      "linkLabel": {
+        "id": "Kunjungi Motifa",
+        "en": "Visit Motifa",
+        "tr": "Motifa'yı Ziyaret Edin"
+      },
       "external": true,
       "order": 4
     },
