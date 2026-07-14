@@ -278,6 +278,10 @@
         <label class="lowercase">fitur (pisahin pakai koma) · english</label>
         <input type="text" id="fFeaturesEn">
       </div>
+      <div class="field">
+        <label class="lowercase">pesan pembuka whatsapp · english</label>
+        <input type="text" id="fWaMsgEn">
+      </div>
     </details>
 
     <details style="margin-bottom:22px;">
@@ -293,6 +297,10 @@
       <div class="field">
         <label class="lowercase">fitur (pisahin pakai koma) · türkçe</label>
         <input type="text" id="fFeaturesTr">
+      </div>
+      <div class="field">
+        <label class="lowercase">pesan pembuka whatsapp · türkçe</label>
+        <input type="text" id="fWaMsgTr">
       </div>
     </details>
     <div class="form-row">
@@ -573,7 +581,9 @@ function openForm(product){
   document.getElementById('fFullDescTr').value = product ? langText(product.fullDescription, 'tr') : '';
   document.getElementById('fFeaturesTr').value = product ? langFeatures(product.featureTags, 'tr').join(', ') : '';
   document.getElementById('fLiveUrl').value = product ? (product.liveUrl || '') : '';
-  document.getElementById('fWaMsg').value = product ? (product.whatsappMessage || '') : '';
+  document.getElementById('fWaMsg').value = product ? langText(product.whatsappMessage, 'id') : '';
+  document.getElementById('fWaMsgEn').value = product ? langText(product.whatsappMessage, 'en') : '';
+  document.getElementById('fWaMsgTr').value = product ? langText(product.whatsappMessage, 'tr') : '';
   document.getElementById('fWaMsg').dataset.touched = product ? '1' : '';
   document.getElementById('fFeatured').checked = product ? !!product.featured : false;
   document.getElementById('formStatus').style.display = 'none';
@@ -612,6 +622,7 @@ async function translateProductFields(){
   const shortDescription = document.getElementById('fShortDesc').value.trim();
   const fullDescription = document.getElementById('fFullDesc').value.trim();
   const featureTags = document.getElementById('fFeatures').value.split(',').map(s => s.trim()).filter(Boolean);
+  const whatsappMessage = document.getElementById('fWaMsg').value.trim() || ('Halo, saya mau pesan ' + name);
 
   if (!shortDescription && !fullDescription){
     statusEl.style.display = 'block';
@@ -630,7 +641,7 @@ async function translateProductFields(){
     const res = await fetch(workerUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, shortDescription, fullDescription, featureTags })
+      body: JSON.stringify({ name, shortDescription, fullDescription, featureTags, whatsappMessage })
     });
     const data = await res.json();
     if (!res.ok || !data.en || !data.tr){
@@ -640,9 +651,11 @@ async function translateProductFields(){
     document.getElementById('fShortDescEn').value = data.en.shortDescription || '';
     document.getElementById('fFullDescEn').value = data.en.fullDescription || '';
     document.getElementById('fFeaturesEn').value = (data.en.featureTags || []).join(', ');
+    document.getElementById('fWaMsgEn').value = data.en.whatsappMessage || '';
     document.getElementById('fShortDescTr').value = data.tr.shortDescription || '';
     document.getElementById('fFullDescTr').value = data.tr.fullDescription || '';
     document.getElementById('fFeaturesTr').value = (data.tr.featureTags || []).join(', ');
+    document.getElementById('fWaMsgTr').value = data.tr.whatsappMessage || '';
 
     statusEl.className = 'status-msg success';
     statusEl.textContent = 'berhasil, versi english dan türkçe udah keisi. cek dulu di bagian "lihat / edit" di bawah sebelum simpan.';
@@ -952,7 +965,10 @@ async function saveProduct(){
   const featureTags = (featuresEn.length || featuresTr.length) ? { id: featuresId, en: featuresEn, tr: featuresTr } : featuresId;
 
   const liveUrl = document.getElementById('fLiveUrl').value.trim();
-  const whatsappMessage = document.getElementById('fWaMsg').value.trim() || ('Halo, saya mau pesan ' + name);
+  const waMsgId = document.getElementById('fWaMsg').value.trim() || ('Halo, saya mau pesan ' + name);
+  const waMsgEn = document.getElementById('fWaMsgEn').value.trim();
+  const waMsgTr = document.getElementById('fWaMsgTr').value.trim();
+  const whatsappMessage = (waMsgEn || waMsgTr) ? { id: waMsgId, en: waMsgEn, tr: waMsgTr } : waMsgId;
   const featured = document.getElementById('fFeatured').checked;
 
   if (!name || !slug){

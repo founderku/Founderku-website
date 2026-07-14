@@ -327,6 +327,9 @@ function applyProductStaticI18n() {
     }
 
     document.getElementById('buyDesc').textContent = pickLangText(p.shortDescription) || '';
+
+    const waMsg = pickLangText(p.whatsappMessage) || ('Halo, saya mau pesan ' + p.name);
+    document.getElementById('btnOrder').href = `https://wa.me/6285710477257?text=${encodeURIComponent(waMsg)}`;
   }
 
   document.querySelectorAll('.fk-lang-btn').forEach(function (btn) {
@@ -380,9 +383,6 @@ function applyProductStaticI18n() {
     document.getElementById('buyCat').textContent = catLabel;
     document.getElementById('buyTitle').textContent = p.name;
     document.getElementById('buyPrice').textContent = p.priceLabel || ('Rp ' + Number(p.price).toLocaleString('id-ID'));
-
-    const waMsg = p.whatsappMessage || ('Halo, saya mau pesan ' + p.name);
-    document.getElementById('btnOrder').href = `https://wa.me/6285710477257?text=${encodeURIComponent(waMsg)}`;
 
     const btnVisit = document.getElementById('btnVisit');
     if (p.liveUrl) {
