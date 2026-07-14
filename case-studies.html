@@ -190,6 +190,17 @@ function applyCsStaticI18n() {
     });
   }
 
+  function pickLangText(field){
+    if (field == null) return '';
+    if (typeof field === 'string') return field;
+    return field[fkCurrentLang] || field.id || field.en || '';
+  }
+  function pickLangArray(field){
+    if (!field) return [];
+    if (Array.isArray(field)) return field;
+    return field[fkCurrentLang] || field.id || field.en || [];
+  }
+
   function renderGrid() {
     var dict = fkCsDict();
     if (!caseStudiesData) return;
@@ -202,7 +213,7 @@ function applyCsStaticI18n() {
     }
 
     grid.innerHTML = items.map(function (item) {
-      var tagsHtml = (item.tags || []).map(function (tag) {
+      var tagsHtml = pickLangArray(item.tags).map(function (tag) {
         return '<span class="tag">' + escapeHtml(tag) + '</span>';
       }).join('');
 
@@ -215,10 +226,10 @@ function applyCsStaticI18n() {
       return (
         '<div class="cs-card">' +
           '<div class="logo-chip">' + logoInner + '</div>' +
-          '<p class="desc">' + escapeHtml(item.description) + '</p>' +
+          '<p class="desc">' + escapeHtml(pickLangText(item.description)) + '</p>' +
           '<div class="tags">' + tagsHtml + '</div>' +
-          '<div class="note">' + escapeHtml(item.note) + '</div>' +
-          '<a href="' + escapeHtml(item.linkUrl) + '" ' + linkAttrs + ' class="cta">' + escapeHtml(item.linkLabel || dict.linkLabel) + ' &rarr;</a>' +
+          '<div class="note">' + escapeHtml(pickLangText(item.note)) + '</div>' +
+          '<a href="' + escapeHtml(item.linkUrl) + '" ' + linkAttrs + ' class="cta">' + escapeHtml(pickLangText(item.linkLabel) || dict.linkLabel) + ' &rarr;</a>' +
         '</div>'
       );
     }).join('');

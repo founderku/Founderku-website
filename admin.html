@@ -356,28 +356,74 @@
     </div>
 
     <div class="field">
-      <label class="lowercase">deskripsi</label>
+      <label class="lowercase">deskripsi · bahasa indonesia</label>
       <textarea id="csDescription"></textarea>
     </div>
     <div class="field">
-      <label class="lowercase">tags (pisahin pakai koma)</label>
+      <label class="lowercase">tags (pisahin pakai koma) · bahasa indonesia</label>
       <input type="text" id="csTags" placeholder="Branding, MVP, Landing Page">
     </div>
     <div class="field">
-      <label class="lowercase">catatan kecil (di bawah tags)</label>
+      <label class="lowercase">catatan kecil (di bawah tags) · bahasa indonesia</label>
       <input type="text" id="csNote" placeholder="Dikerjakan lewat proses 4 langkah Founderku...">
     </div>
+    <div class="field">
+      <label class="lowercase">label tombol · bahasa indonesia</label>
+      <input type="text" id="csLinkLabel" placeholder="Kunjungi website">
+    </div>
+
+    <div style="margin:18px 0 22px; padding:16px; border:1px dashed rgba(28,27,51,0.25); border-radius:12px;">
+      <button type="button" class="btn btn-ghost lowercase" id="csTranslateBtn" onclick="translateCaseStudyFields()" style="width:100%;">translate otomatis (en + tr)</button>
+      <div id="csTranslateStatus" class="status-msg" style="margin-top:10px;"></div>
+    </div>
+
+    <details style="margin-bottom:22px;">
+      <summary class="lowercase" style="cursor:pointer; font-weight:700; font-size:13px; color:var(--ink-soft, #6b6880); margin-bottom:12px;">lihat / edit versi english</summary>
+      <div class="field">
+        <label class="lowercase">deskripsi · english</label>
+        <textarea id="csDescriptionEn"></textarea>
+      </div>
+      <div class="field">
+        <label class="lowercase">tags (pisahin pakai koma) · english</label>
+        <input type="text" id="csTagsEn">
+      </div>
+      <div class="field">
+        <label class="lowercase">catatan kecil · english</label>
+        <input type="text" id="csNoteEn">
+      </div>
+      <div class="field">
+        <label class="lowercase">label tombol · english</label>
+        <input type="text" id="csLinkLabelEn">
+      </div>
+    </details>
+
+    <details style="margin-bottom:22px;">
+      <summary class="lowercase" style="cursor:pointer; font-weight:700; font-size:13px; color:var(--ink-soft, #6b6880); margin-bottom:12px;">lihat / edit versi türkçe</summary>
+      <div class="field">
+        <label class="lowercase">deskripsi · türkçe</label>
+        <textarea id="csDescriptionTr"></textarea>
+      </div>
+      <div class="field">
+        <label class="lowercase">tags (pisahin pakai koma) · türkçe</label>
+        <input type="text" id="csTagsTr">
+      </div>
+      <div class="field">
+        <label class="lowercase">catatan kecil · türkçe</label>
+        <input type="text" id="csNoteTr">
+      </div>
+      <div class="field">
+        <label class="lowercase">label tombol · türkçe</label>
+        <input type="text" id="csLinkLabelTr">
+      </div>
+    </details>
 
     <div class="form-row">
       <div class="field">
         <label class="lowercase">link tujuan</label>
         <input type="text" id="csLinkUrl" placeholder="https://... atau product.html?slug=...">
       </div>
-      <div class="field">
-        <label class="lowercase">label tombol</label>
-        <input type="text" id="csLinkLabel" placeholder="Kunjungi website">
-      </div>
     </div>
+
     <div class="checkbox-row">
       <input type="checkbox" id="csExternal">
       <label for="csExternal" class="lowercase">link keluar (buka tab baru)</label>
@@ -606,17 +652,26 @@ function editProduct(id){
   if (p) openForm(p);
 }
 
+async function callTranslateWorker(name, textFields, arrayFields){
+  const workerUrl = config && config.workerUrl ? config.workerUrl.trim() : '';
+  if (!workerUrl){
+    throw new Error('worker url belum diisi. klik "pengaturan translate" di pojok kanan atas dulu.');
+  }
+  const res = await fetch(workerUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, textFields, arrayFields })
+  });
+  const data = await res.json();
+  if (!res.ok || !data.en || !data.tr){
+    throw new Error(data.error || 'respons worker nggak lengkap');
+  }
+  return data;
+}
+
 async function translateProductFields(){
   const btn = document.getElementById('translateBtn');
   const statusEl = document.getElementById('translateStatus');
-  const workerUrl = config && config.workerUrl ? config.workerUrl.trim() : '';
-
-  if (!workerUrl){
-    statusEl.style.display = 'block';
-    statusEl.className = 'status-msg error';
-    statusEl.textContent = 'worker url belum diisi. klik "pengaturan translate" di pojok kanan atas dulu.';
-    return;
-  }
 
   const name = document.getElementById('fName').value.trim();
   const shortDescription = document.getElementById('fShortDesc').value.trim();
@@ -638,24 +693,20 @@ async function translateProductFields(){
   statusEl.textContent = 'lagi manggil ai buat translate, tunggu sebentar...';
 
   try {
-    const res = await fetch(workerUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, shortDescription, fullDescription, featureTags, whatsappMessage })
-    });
-    const data = await res.json();
-    if (!res.ok || !data.en || !data.tr){
-      throw new Error(data.error || 'respons worker nggak lengkap');
-    }
+    const data = await callTranslateWorker(
+      name,
+      { shortDescription, fullDescription, whatsappMessage },
+      { featureTags }
+    );
 
-    document.getElementById('fShortDescEn').value = data.en.shortDescription || '';
-    document.getElementById('fFullDescEn').value = data.en.fullDescription || '';
-    document.getElementById('fFeaturesEn').value = (data.en.featureTags || []).join(', ');
-    document.getElementById('fWaMsgEn').value = data.en.whatsappMessage || '';
-    document.getElementById('fShortDescTr').value = data.tr.shortDescription || '';
-    document.getElementById('fFullDescTr').value = data.tr.fullDescription || '';
-    document.getElementById('fFeaturesTr').value = (data.tr.featureTags || []).join(', ');
-    document.getElementById('fWaMsgTr').value = data.tr.whatsappMessage || '';
+    document.getElementById('fShortDescEn').value = data.en.textFields.shortDescription || '';
+    document.getElementById('fFullDescEn').value = data.en.textFields.fullDescription || '';
+    document.getElementById('fFeaturesEn').value = (data.en.arrayFields.featureTags || []).join(', ');
+    document.getElementById('fWaMsgEn').value = data.en.textFields.whatsappMessage || '';
+    document.getElementById('fShortDescTr').value = data.tr.textFields.shortDescription || '';
+    document.getElementById('fFullDescTr').value = data.tr.textFields.fullDescription || '';
+    document.getElementById('fFeaturesTr').value = (data.tr.arrayFields.featureTags || []).join(', ');
+    document.getElementById('fWaMsgTr').value = data.tr.textFields.whatsappMessage || '';
 
     statusEl.className = 'status-msg success';
     statusEl.textContent = 'berhasil, versi english dan türkçe udah keisi. cek dulu di bagian "lihat / edit" di bawah sebelum simpan.';
@@ -785,14 +836,23 @@ function openCsForm(cs){
   document.getElementById('csFormTitle').textContent = cs ? 'edit studi kasus' : 'tambah studi kasus';
   document.getElementById('csName').value = cs ? cs.name : '';
   document.getElementById('csOrder').value = cs ? (cs.order || 1) : (caseStudiesData.caseStudies.length + 1);
-  document.getElementById('csDescription').value = cs ? (cs.description || '') : '';
-  document.getElementById('csTags').value = cs && cs.tags ? cs.tags.join(', ') : '';
-  document.getElementById('csNote').value = cs ? (cs.note || '') : '';
+  document.getElementById('csDescription').value = cs ? langText(cs.description, 'id') : '';
+  document.getElementById('csTags').value = cs ? langFeatures(cs.tags, 'id').join(', ') : '';
+  document.getElementById('csNote').value = cs ? langText(cs.note, 'id') : '';
+  document.getElementById('csLinkLabel').value = cs ? langText(cs.linkLabel, 'id') : '';
+  document.getElementById('csDescriptionEn').value = cs ? langText(cs.description, 'en') : '';
+  document.getElementById('csTagsEn').value = cs ? langFeatures(cs.tags, 'en').join(', ') : '';
+  document.getElementById('csNoteEn').value = cs ? langText(cs.note, 'en') : '';
+  document.getElementById('csLinkLabelEn').value = cs ? langText(cs.linkLabel, 'en') : '';
+  document.getElementById('csDescriptionTr').value = cs ? langText(cs.description, 'tr') : '';
+  document.getElementById('csTagsTr').value = cs ? langFeatures(cs.tags, 'tr').join(', ') : '';
+  document.getElementById('csNoteTr').value = cs ? langText(cs.note, 'tr') : '';
+  document.getElementById('csLinkLabelTr').value = cs ? langText(cs.linkLabel, 'tr') : '';
   document.getElementById('csLinkUrl').value = cs ? (cs.linkUrl || '') : '';
-  document.getElementById('csLinkLabel').value = cs ? (cs.linkLabel || '') : '';
   document.getElementById('csExternal').checked = cs ? !!cs.external : false;
   document.getElementById('csRoundLogo').checked = cs ? !!cs.roundLogo : false;
   document.getElementById('csFormStatus').style.display = 'none';
+  document.getElementById('csTranslateStatus').style.display = 'none';
 
   const preview = document.getElementById('csLogoPreview');
   if (cs && cs.logo){
@@ -809,6 +869,56 @@ function closeCsForm(){
 function editCaseStudy(id){
   const cs = caseStudiesData.caseStudies.find(x => x.id === id);
   if (cs) openCsForm(cs);
+}
+
+async function translateCaseStudyFields(){
+  const btn = document.getElementById('csTranslateBtn');
+  const statusEl = document.getElementById('csTranslateStatus');
+
+  const name = document.getElementById('csName').value.trim();
+  const description = document.getElementById('csDescription').value.trim();
+  const tags = document.getElementById('csTags').value.split(',').map(s => s.trim()).filter(Boolean);
+  const note = document.getElementById('csNote').value.trim();
+  const linkLabel = document.getElementById('csLinkLabel').value.trim() || 'Lihat detail';
+
+  if (!description){
+    statusEl.style.display = 'block';
+    statusEl.className = 'status-msg error';
+    statusEl.textContent = 'isi deskripsi bahasa indonesia dulu sebelum translate.';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> lagi translate...';
+  statusEl.style.display = 'block';
+  statusEl.className = 'status-msg info';
+  statusEl.textContent = 'lagi manggil ai buat translate, tunggu sebentar...';
+
+  try {
+    const data = await callTranslateWorker(
+      name,
+      { description, note, linkLabel },
+      { tags }
+    );
+
+    document.getElementById('csDescriptionEn').value = data.en.textFields.description || '';
+    document.getElementById('csNoteEn').value = data.en.textFields.note || '';
+    document.getElementById('csLinkLabelEn').value = data.en.textFields.linkLabel || '';
+    document.getElementById('csTagsEn').value = (data.en.arrayFields.tags || []).join(', ');
+    document.getElementById('csDescriptionTr').value = data.tr.textFields.description || '';
+    document.getElementById('csNoteTr').value = data.tr.textFields.note || '';
+    document.getElementById('csLinkLabelTr').value = data.tr.textFields.linkLabel || '';
+    document.getElementById('csTagsTr').value = (data.tr.arrayFields.tags || []).join(', ');
+
+    statusEl.className = 'status-msg success';
+    statusEl.textContent = 'berhasil, versi english dan türkçe udah keisi. cek dulu di bagian "lihat / edit" di bawah sebelum simpan.';
+  } catch(err){
+    statusEl.className = 'status-msg error';
+    statusEl.textContent = 'gagal translate: ' + err.message;
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = 'translate otomatis (en + tr)';
+  }
 }
 
 function onCsLogoChange(e){
@@ -844,11 +954,28 @@ function setCsFormStatus(type, msg){
 async function saveCaseStudy(){
   const name = document.getElementById('csName').value.trim();
   const order = parseInt(document.getElementById('csOrder').value || '0', 10);
-  const description = document.getElementById('csDescription').value.trim();
-  const tags = document.getElementById('csTags').value.split(',').map(s => s.trim()).filter(Boolean);
-  const note = document.getElementById('csNote').value.trim();
+
+  const descId = document.getElementById('csDescription').value.trim();
+  const descEn = document.getElementById('csDescriptionEn').value.trim();
+  const descTr = document.getElementById('csDescriptionTr').value.trim();
+  const description = (descEn || descTr) ? { id: descId, en: descEn, tr: descTr } : descId;
+
+  const tagsId = document.getElementById('csTags').value.split(',').map(s => s.trim()).filter(Boolean);
+  const tagsEn = document.getElementById('csTagsEn').value.split(',').map(s => s.trim()).filter(Boolean);
+  const tagsTr = document.getElementById('csTagsTr').value.split(',').map(s => s.trim()).filter(Boolean);
+  const tags = (tagsEn.length || tagsTr.length) ? { id: tagsId, en: tagsEn, tr: tagsTr } : tagsId;
+
+  const noteId = document.getElementById('csNote').value.trim();
+  const noteEn = document.getElementById('csNoteEn').value.trim();
+  const noteTr = document.getElementById('csNoteTr').value.trim();
+  const note = (noteEn || noteTr) ? { id: noteId, en: noteEn, tr: noteTr } : noteId;
+
+  const linkLabelId = document.getElementById('csLinkLabel').value.trim() || 'Lihat detail';
+  const linkLabelEn = document.getElementById('csLinkLabelEn').value.trim();
+  const linkLabelTr = document.getElementById('csLinkLabelTr').value.trim();
+  const linkLabel = (linkLabelEn || linkLabelTr) ? { id: linkLabelId, en: linkLabelEn, tr: linkLabelTr } : linkLabelId;
+
   const linkUrl = document.getElementById('csLinkUrl').value.trim();
-  const linkLabel = document.getElementById('csLinkLabel').value.trim() || 'Lihat detail';
   const external = document.getElementById('csExternal').checked;
   const roundLogo = document.getElementById('csRoundLogo').checked;
 
