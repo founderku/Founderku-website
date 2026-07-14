@@ -299,6 +299,17 @@ function applyStoreStaticI18n() {
     return 'Rp ' + Number(n).toLocaleString('id-ID');
   }
 
+  function pickLangText(field){
+    if (field == null) return '';
+    if (typeof field === 'string') return field;
+    return field[fkCurrentLang] || field.id || field.en || '';
+  }
+  function pickLangArray(field){
+    if (!field) return [];
+    if (Array.isArray(field)) return field;
+    return field[fkCurrentLang] || field.id || field.en || [];
+  }
+
   function cardHTML(p){
     var dict = fkStoreDict();
     const catLabel = fkCatLabel(p.category, p.categoryLabel || p.category);
@@ -306,7 +317,7 @@ function applyStoreStaticI18n() {
       ? `<img src="${p.thumbnail}" alt="${p.name}" onerror="this.parentElement.innerHTML='<div class=&quot;placeholder-thumb&quot;><div class=&quot;dot-icon&quot;>◐</div>${dict.comingSoon}</div>'">`
       : `<div class="placeholder-thumb"><div class="dot-icon">◐</div>${dict.comingSoon}</div>`;
     const featClass = p.featured ? ' featured' : '';
-    const tags = (p.featureTags || []).slice(0,4).map(t => `<span>${t}</span>`).join('');
+    const tags = pickLangArray(p.featureTags).slice(0,4).map(t => `<span>${t}</span>`).join('');
     return `
     <a href="product.html?slug=${encodeURIComponent(p.slug)}" class="card${featClass}" style="display:block; color:inherit;">
       <div class="card-thumb">
@@ -316,7 +327,7 @@ function applyStoreStaticI18n() {
       <div class="card-body">
         <div class="card-cat lowercase">${catLabel}</div>
         <div class="card-title">${p.name}</div>
-        <div class="card-desc lowercase">${p.shortDescription || ''}</div>
+        <div class="card-desc lowercase">${pickLangText(p.shortDescription)}</div>
         <div class="feature-tags lowercase">${tags}</div>
         <div class="card-footer">
           <div class="price lowercase">${p.priceLabel || money(p.price)}<small>${p.priceNote || dict.priceNote}</small></div>

@@ -283,6 +283,20 @@ function applyProductStaticI18n() {
     notFoundState.style.display = 'block';
   }
 
+  function pickLangText(field){
+    if (field == null) return '';
+    if (typeof field === 'string') return field;
+    return field[fkCurrentLang] || field.id || field.en || '';
+  }
+  function pickLangArray(field){
+    if (!field) return [];
+    if (Array.isArray(field)) return field;
+    return field[fkCurrentLang] || field.id || field.en || [];
+  }
+  function escapeHtml(s){
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
   function renderProductText(){
     if (!currentProduct) return;
     var dict = fkProductDict();
@@ -290,6 +304,29 @@ function applyProductStaticI18n() {
     const catLabel = p.categoryLabel || p.category;
     breadcrumb.innerHTML = `<a href="store.html">${dict['breadcrumb.store']}</a><span class="sep">/</span><a href="store.html">${catLabel}</a><span class="sep">/</span><span class="current" style="text-transform:none;">${p.name}</span>`;
     document.getElementById('buyPriceNote').textContent = p.priceNote || dict['buy.priceNote'];
+
+    const fullDescText = pickLangText(p.fullDescription) || pickLangText(p.shortDescription) || '';
+    const descParts = fullDescText.split(/\s+-\s+/).map(s => s.trim()).filter(Boolean);
+    const fullDescEl = document.getElementById('fullDesc');
+    if (descParts.length > 1) {
+      const intro = descParts[0];
+      const items = descParts.slice(1);
+      fullDescEl.innerHTML = `<p>${escapeHtml(intro)}</p><ul class="desc-list">${items.map(i => `<li>${escapeHtml(i)}</li>`).join('')}</ul>`;
+    } else {
+      fullDescEl.innerHTML = `<p>${escapeHtml(fullDescText)}</p>`;
+    }
+
+    const featureGrid = document.getElementById('featureGrid');
+    const featureBlock = document.getElementById('featureBlock');
+    const langFeatures = pickLangArray(p.featureTags);
+    if (langFeatures && langFeatures.length) {
+      featureBlock.style.display = '';
+      featureGrid.innerHTML = langFeatures.map(f => `<div class="feature-item"><div class="dot"></div>${f}</div>`).join('');
+    } else {
+      featureBlock.style.display = 'none';
+    }
+
+    document.getElementById('buyDesc').textContent = pickLangText(p.shortDescription) || '';
   }
 
   document.querySelectorAll('.fk-lang-btn').forEach(function (btn) {
@@ -340,29 +377,8 @@ function applyProductStaticI18n() {
       });
     }
 
-    const fullDescText = p.fullDescription || p.shortDescription || '';
-    const descParts = fullDescText.split(/\s+-\s+/).map(s => s.trim()).filter(Boolean);
-    const escapeHtml = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    const fullDescEl = document.getElementById('fullDesc');
-    if (descParts.length > 1) {
-      const intro = descParts[0];
-      const items = descParts.slice(1);
-      fullDescEl.innerHTML = `<p>${escapeHtml(intro)}</p><ul class="desc-list">${items.map(i => `<li>${escapeHtml(i)}</li>`).join('')}</ul>`;
-    } else {
-      fullDescEl.innerHTML = `<p>${escapeHtml(fullDescText)}</p>`;
-    }
-
-    const featureGrid = document.getElementById('featureGrid');
-    const featureBlock = document.getElementById('featureBlock');
-    if (p.featureTags && p.featureTags.length) {
-      featureGrid.innerHTML = p.featureTags.map(f => `<div class="feature-item"><div class="dot"></div>${f}</div>`).join('');
-    } else {
-      featureBlock.style.display = 'none';
-    }
-
     document.getElementById('buyCat').textContent = catLabel;
     document.getElementById('buyTitle').textContent = p.name;
-    document.getElementById('buyDesc').textContent = p.shortDescription || '';
     document.getElementById('buyPrice').textContent = p.priceLabel || ('Rp ' + Number(p.price).toLocaleString('id-ID'));
 
     const waMsg = p.whatsappMessage || ('Halo, saya mau pesan ' + p.name);

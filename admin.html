@@ -175,7 +175,10 @@
 <div id="dashScreen" style="display:none;">
   <nav>
     <div><span class="logo">founder<span>ku</span></span><span class="nav-tag lowercase">admin</span></div>
-    <span class="logout-btn lowercase" onclick="doLogout()">keluar</span>
+    <div style="display:flex; align-items:center; gap:18px;">
+      <span class="logout-btn lowercase" onclick="openTranslateSettings()">pengaturan translate</span>
+      <span class="logout-btn lowercase" onclick="doLogout()">keluar</span>
+    </div>
   </nav>
   <div class="wrap">
     <div class="tab-nav">
@@ -244,17 +247,54 @@
     </div>
 
     <div class="field">
-      <label class="lowercase">deskripsi singkat (buat card)</label>
+      <label class="lowercase">deskripsi singkat (buat card) · bahasa indonesia</label>
       <textarea id="fShortDesc"></textarea>
     </div>
     <div class="field">
-      <label class="lowercase">deskripsi lengkap (buat halaman detail)</label>
+      <label class="lowercase">deskripsi lengkap (buat halaman detail) · bahasa indonesia</label>
       <textarea id="fFullDesc"></textarea>
     </div>
     <div class="field">
-      <label class="lowercase">fitur (pisahin pakai koma)</label>
+      <label class="lowercase">fitur (pisahin pakai koma) · bahasa indonesia</label>
       <input type="text" id="fFeatures" placeholder="ai matching, gamifikasi, forum">
     </div>
+
+    <div style="margin:18px 0 22px; padding:16px; border:1px dashed rgba(28,27,51,0.25); border-radius:12px;">
+      <button type="button" class="btn btn-ghost lowercase" id="translateBtn" onclick="translateProductFields()" style="width:100%;">translate otomatis (en + tr)</button>
+      <div id="translateStatus" class="status-msg" style="margin-top:10px;"></div>
+    </div>
+
+    <details style="margin-bottom:22px;">
+      <summary class="lowercase" style="cursor:pointer; font-weight:700; font-size:13px; color:var(--ink-soft, #6b6880); margin-bottom:12px;">lihat / edit versi english</summary>
+      <div class="field">
+        <label class="lowercase">deskripsi singkat · english</label>
+        <textarea id="fShortDescEn"></textarea>
+      </div>
+      <div class="field">
+        <label class="lowercase">deskripsi lengkap · english</label>
+        <textarea id="fFullDescEn"></textarea>
+      </div>
+      <div class="field">
+        <label class="lowercase">fitur (pisahin pakai koma) · english</label>
+        <input type="text" id="fFeaturesEn">
+      </div>
+    </details>
+
+    <details style="margin-bottom:22px;">
+      <summary class="lowercase" style="cursor:pointer; font-weight:700; font-size:13px; color:var(--ink-soft, #6b6880); margin-bottom:12px;">lihat / edit versi türkçe</summary>
+      <div class="field">
+        <label class="lowercase">deskripsi singkat · türkçe</label>
+        <textarea id="fShortDescTr"></textarea>
+      </div>
+      <div class="field">
+        <label class="lowercase">deskripsi lengkap · türkçe</label>
+        <textarea id="fFullDescTr"></textarea>
+      </div>
+      <div class="field">
+        <label class="lowercase">fitur (pisahin pakai koma) · türkçe</label>
+        <input type="text" id="fFeaturesTr">
+      </div>
+    </details>
     <div class="form-row">
       <div class="field">
         <label class="lowercase">link live demo (opsional)</label>
@@ -409,6 +449,25 @@ async function doLogin(){
   }
 }
 
+function openTranslateSettings(){
+  document.getElementById('fWorkerUrl').value = (config && config.workerUrl) ? config.workerUrl : '';
+  document.getElementById('translateSettingsStatus').style.display = 'none';
+  document.getElementById('translateSettingsModal').classList.add('open');
+}
+function closeTranslateSettings(){
+  document.getElementById('translateSettingsModal').classList.remove('open');
+}
+function saveTranslateSettings(){
+  const url = document.getElementById('fWorkerUrl').value.trim();
+  config = config || {};
+  config.workerUrl = url;
+  saveConfig();
+  const statusEl = document.getElementById('translateSettingsStatus');
+  statusEl.className = 'status-msg success';
+  statusEl.textContent = 'tersimpan.';
+  setTimeout(() => { closeTranslateSettings(); }, 500);
+}
+
 function doLogout(){
   localStorage.removeItem(LS_KEY);
   config = null;
@@ -484,6 +543,17 @@ function autoSlug(){
   if (!waField.dataset.touched) waField.value = 'Halo, saya mau pesan ' + name;
 }
 
+function langText(field, lang){
+  if (field == null) return '';
+  if (typeof field === 'string') return lang === 'id' ? field : '';
+  return field[lang] || '';
+}
+function langFeatures(field, lang){
+  if (!field) return [];
+  if (Array.isArray(field)) return lang === 'id' ? field : [];
+  return field[lang] || [];
+}
+
 function openForm(product){
   editingId = product ? product.id : null;
   pendingImageBase64 = null;
@@ -493,14 +563,21 @@ function openForm(product){
   document.getElementById('fSlug').value = product ? product.slug : '';
   document.getElementById('fCategory').value = product ? product.category : 'landing-page';
   document.getElementById('fPrice').value = product ? product.price : '';
-  document.getElementById('fShortDesc').value = product ? (product.shortDescription || '') : '';
-  document.getElementById('fFullDesc').value = product ? (product.fullDescription || '') : '';
-  document.getElementById('fFeatures').value = product && product.featureTags ? product.featureTags.join(', ') : '';
+  document.getElementById('fShortDesc').value = product ? langText(product.shortDescription, 'id') : '';
+  document.getElementById('fFullDesc').value = product ? langText(product.fullDescription, 'id') : '';
+  document.getElementById('fFeatures').value = product ? langFeatures(product.featureTags, 'id').join(', ') : '';
+  document.getElementById('fShortDescEn').value = product ? langText(product.shortDescription, 'en') : '';
+  document.getElementById('fFullDescEn').value = product ? langText(product.fullDescription, 'en') : '';
+  document.getElementById('fFeaturesEn').value = product ? langFeatures(product.featureTags, 'en').join(', ') : '';
+  document.getElementById('fShortDescTr').value = product ? langText(product.shortDescription, 'tr') : '';
+  document.getElementById('fFullDescTr').value = product ? langText(product.fullDescription, 'tr') : '';
+  document.getElementById('fFeaturesTr').value = product ? langFeatures(product.featureTags, 'tr').join(', ') : '';
   document.getElementById('fLiveUrl').value = product ? (product.liveUrl || '') : '';
   document.getElementById('fWaMsg').value = product ? (product.whatsappMessage || '') : '';
   document.getElementById('fWaMsg').dataset.touched = product ? '1' : '';
   document.getElementById('fFeatured').checked = product ? !!product.featured : false;
   document.getElementById('formStatus').style.display = 'none';
+  document.getElementById('translateStatus').style.display = 'none';
 
   const preview = document.getElementById('thumbPreview');
   if (product && product.thumbnail && !product.thumbnail.includes('placeholder')){
@@ -517,6 +594,65 @@ function closeForm(){
 function editProduct(id){
   const p = productsData.products.find(x => x.id === id);
   if (p) openForm(p);
+}
+
+async function translateProductFields(){
+  const btn = document.getElementById('translateBtn');
+  const statusEl = document.getElementById('translateStatus');
+  const workerUrl = config && config.workerUrl ? config.workerUrl.trim() : '';
+
+  if (!workerUrl){
+    statusEl.style.display = 'block';
+    statusEl.className = 'status-msg error';
+    statusEl.textContent = 'worker url belum diisi. klik "pengaturan translate" di pojok kanan atas dulu.';
+    return;
+  }
+
+  const name = document.getElementById('fName').value.trim();
+  const shortDescription = document.getElementById('fShortDesc').value.trim();
+  const fullDescription = document.getElementById('fFullDesc').value.trim();
+  const featureTags = document.getElementById('fFeatures').value.split(',').map(s => s.trim()).filter(Boolean);
+
+  if (!shortDescription && !fullDescription){
+    statusEl.style.display = 'block';
+    statusEl.className = 'status-msg error';
+    statusEl.textContent = 'isi deskripsi bahasa indonesia dulu sebelum translate.';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> lagi translate...';
+  statusEl.style.display = 'block';
+  statusEl.className = 'status-msg info';
+  statusEl.textContent = 'lagi manggil ai buat translate, tunggu sebentar...';
+
+  try {
+    const res = await fetch(workerUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, shortDescription, fullDescription, featureTags })
+    });
+    const data = await res.json();
+    if (!res.ok || !data.en || !data.tr){
+      throw new Error(data.error || 'respons worker nggak lengkap');
+    }
+
+    document.getElementById('fShortDescEn').value = data.en.shortDescription || '';
+    document.getElementById('fFullDescEn').value = data.en.fullDescription || '';
+    document.getElementById('fFeaturesEn').value = (data.en.featureTags || []).join(', ');
+    document.getElementById('fShortDescTr').value = data.tr.shortDescription || '';
+    document.getElementById('fFullDescTr').value = data.tr.fullDescription || '';
+    document.getElementById('fFeaturesTr').value = (data.tr.featureTags || []).join(', ');
+
+    statusEl.className = 'status-msg success';
+    statusEl.textContent = 'berhasil, versi english dan türkçe udah keisi. cek dulu di bagian "lihat / edit" di bawah sebelum simpan.';
+  } catch(err){
+    statusEl.className = 'status-msg error';
+    statusEl.textContent = 'gagal translate: ' + err.message;
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = 'translate otomatis (en + tr)';
+  }
 }
 
 function onImageChange(e){
@@ -800,9 +936,21 @@ async function saveProduct(){
   const category = document.getElementById('fCategory').value;
   const categoryLabel = document.getElementById('fCategory').selectedOptions[0].textContent;
   const price = parseInt(document.getElementById('fPrice').value || '0', 10);
-  const shortDescription = document.getElementById('fShortDesc').value.trim();
-  const fullDescription = document.getElementById('fFullDesc').value.trim();
-  const featureTags = document.getElementById('fFeatures').value.split(',').map(s => s.trim()).filter(Boolean);
+
+  const shortDescId = document.getElementById('fShortDesc').value.trim();
+  const shortDescEn = document.getElementById('fShortDescEn').value.trim();
+  const shortDescTr = document.getElementById('fShortDescTr').value.trim();
+  const fullDescId = document.getElementById('fFullDesc').value.trim();
+  const fullDescEn = document.getElementById('fFullDescEn').value.trim();
+  const fullDescTr = document.getElementById('fFullDescTr').value.trim();
+  const featuresId = document.getElementById('fFeatures').value.split(',').map(s => s.trim()).filter(Boolean);
+  const featuresEn = document.getElementById('fFeaturesEn').value.split(',').map(s => s.trim()).filter(Boolean);
+  const featuresTr = document.getElementById('fFeaturesTr').value.split(',').map(s => s.trim()).filter(Boolean);
+
+  const shortDescription = (shortDescEn || shortDescTr) ? { id: shortDescId, en: shortDescEn, tr: shortDescTr } : shortDescId;
+  const fullDescription = (fullDescEn || fullDescTr) ? { id: fullDescId, en: fullDescEn, tr: fullDescTr } : fullDescId;
+  const featureTags = (featuresEn.length || featuresTr.length) ? { id: featuresId, en: featuresEn, tr: featuresTr } : featuresId;
+
   const liveUrl = document.getElementById('fLiveUrl').value.trim();
   const whatsappMessage = document.getElementById('fWaMsg').value.trim() || ('Halo, saya mau pesan ' + name);
   const featured = document.getElementById('fFeatured').checked;
@@ -912,6 +1060,25 @@ if (config && config.token){
   showDashboard();
 }
 </script>
+
+<div class="modal-overlay" id="translateSettingsModal">
+  <div class="modal" style="max-width:480px;">
+    <span class="modal-close" onclick="closeTranslateSettings()">&times;</span>
+    <h2 class="lowercase">pengaturan translate otomatis</h2>
+    <p class="lowercase" style="font-size:13px; color:var(--ink-soft, #6b6880); margin:-8px 0 18px; line-height:1.6;">
+      isi url worker cloudflare kamu di sini sekali aja, biar tombol "translate otomatis" di form produk bisa jalan. kosongin kalau belum mau pakai fitur ini.
+    </p>
+    <div class="field">
+      <label class="lowercase">worker url</label>
+      <input type="text" id="fWorkerUrl" placeholder="https://founderku-translate.andiawury.workers.dev">
+    </div>
+    <div id="translateSettingsStatus" class="status-msg"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost lowercase" onclick="closeTranslateSettings()">batal</button>
+      <button class="btn btn-primary lowercase" onclick="saveTranslateSettings()">simpan</button>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
