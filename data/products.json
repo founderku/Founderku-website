@@ -79,13 +79,13 @@
       "featured": false,
       "shortDescription": {
         "id": "Paket bisnis siap jalan: website generator motif personal nusantara, dicetak on-demand ke kaos, totebag, dan mug. modal kecil, tinggal eksekusi.",
-        "en": "Ready-to-go business package: personal nusantara motif website generator, printed on-demand to t-shirts, totebags, and mugs. small capital, just execute.",
-        "tr": "Hazır iş paketi: kişisel nusantara motif web sitesi üreticisi, t-shirtler, bez çantalar ve kupaların üzerine isteğe bağlı basılı. küçük sermaye, sadece uygulamaya geç."
+        "en": "Ready-to-launch business package: personal motif website generator with nusantara style, printed on-demand to t-shirts, totebags, and mugs. Small capital, just execute.",
+        "tr": "Hemen başlatılabilir iş paketi: nusantara tarzında kişisel motif web sitesi oluşturucu, t-shirt, çanta ve kupa üzerine talep üzerine basılı. Küçük sermaye, sadece uygula."
       },
       "fullDescription": {
         "id": "Motifa adalah paket ide bisnis lengkap: website yang mengubah nama dan asal daerah pengunjung jadi motif personal bergaya nusantara, lalu dicetak on-demand ke kaos, totebag, atau mug.\n\npaket ini termasuk:\n- konsep bisnis dan positioning brand\n- website generator siap pakai (sudah live, tinggal isi nomor whatsapp kamu)\n- panduan produksi print-on-demand, tanpa perlu modal stok di awal\n- panduan menjalankan dan mengembangkan bisnisnya\n\ncocok buat kamu yang mau mulai usaha sendiri tapi belum punya ide, atau yang mau nambah lini produk baru tanpa mulai dari nol.\n\ndetail teknis cara kerja sistem generator bisa didiskusikan langsung, chat kami di whatsapp kalau tertarik.",
-        "en": "Motifa is a complete business idea package: a website that transforms visitors' names and regions into personalized nusantara-style motifs, then prints them on-demand to t-shirts, totebags, or mugs.\n\nthis package includes:\n- business concept and brand positioning\n- ready-to-use generator website (already live, just add your whatsapp number)\n- print-on-demand production guide, no need for upfront inventory capital\n- guide to running and scaling your business\n\nperfect for you who want to start your own venture but don't have an idea yet, or who want to add a new product line without starting from scratch.\n\ntechnical details about how the generator system works can be discussed directly, chat us on whatsapp if interested.",
-        "tr": "Motifa tam bir iş fikri paketidir: ziyaretçilerin adlarını ve bölgelerini kişiselleştirilmiş nusantara tarzı motiflere dönüştüren bir web sitesi, ardından bunları isteğe bağlı olarak t-shirtler, bez çantalar veya kupaların üzerine baskı yapar.\n\nbu paket şunları içerir:\n- iş konsepti ve marka konumlandırması\n- kullanıma hazır üretici web sitesi (zaten canlı, sadece whatsapp numaranızı ekleyin)\n- isteğe bağlı baskı üretim rehberi, önceden stok için sermaye gerekli değil\n- işletmenizi yürütme ve büyütme rehberi\n\nkendi işinizi başlatmak isteyen ancak henüz bir fikri olmayan veya sıfırdan başlamadan yeni bir ürün hattı eklemek isteyen kişiler için mükemmeldir.\n\nüreteç sisteminin nasıl çalıştığına ilişkin teknik ayrıntılar doğrudan tartışılabilir, ilgileniyorsanız whatsapp üzerinden bize yazın."
+        "en": "motifa is a complete business idea package: a website that transforms visitor names and regional origins into personalized motifs with nusantara style, then prints them on-demand to t-shirts, totebags, or mugs.\n\nthis package includes:\n- business concept and brand positioning\n- ready-to-use website generator (already live, just add your whatsapp number)\n- print-on-demand production guide, no need for stock capital upfront\n- guide to running and growing your business\n\nperfect for you who want to start your own business but don't have an idea yet, or who want to add a new product line without starting from scratch.\n\ntechnical details on how the generator system works can be discussed directly, chat us on whatsapp if you're interested.",
+        "tr": "motifa tam bir iş fikri paketidir: ziyaretçi isimlerini ve bölgesel kökenlerini nusantara tarzında kişiselleştirilmiş motiflere dönüştüren bir web sitesi, ardından bunları talep üzerine t-shirt, çanta veya kupa üzerine basılı.\n\nbu paket şunları içerir:\n- işletme konsepti ve marka konumlandırması\n- kullanıma hazır web sitesi oluşturucu (zaten canlı, sadece whatsapp numaranızı ekleyin)\n- talep üzerine baskı üretim kılavuzu, başlangıçta stok sermayesi gerekmez\n- işletmeyi yönetme ve geliştirme kılavuzu\n\nfikirleri olmayan kendi işinizi başlatmak isteyen veya sıfırdan başlamadan yeni bir ürün hattı eklemek isteyen siz için mükemmeldir.\n\noluşturucu sisteminin nasıl çalıştığına ilişkin teknik detaylar doğrudan tartışılabilir, ilgileniyorsanız bize whatsapp üzerinden yazın."
       },
       "featureTags": {
         "id": [
@@ -98,16 +98,16 @@
         "en": [
           "personal motif generator",
           "print-on-demand",
-          "zero inventory capital",
+          "zero stock capital",
           "complete brand and business guide",
-          "ready to launch in one day"
+          "launch-ready in one day"
         ],
         "tr": [
-          "kişisel motif üreticisi",
-          "isteğe bağlı baskı",
-          "sıfır envanter sermayesi",
-          "tam marka ve iş rehberi",
-          "bir gün içinde başlatmaya hazır"
+          "kişisel motif oluşturucu",
+          "talep üzerine baskı",
+          "sıfır stok sermayesi",
+          "tam marka ve işletme kılavuzu",
+          "bir gün içinde başlat"
         ]
       },
       "thumbnail": "images/products/motifa.jpg",
@@ -115,7 +115,11 @@
         "images/products/motifa.jpg"
       ],
       "liveUrl": "https://founderku.github.io/Motifa/",
-      "whatsappMessage": "Halo, saya tertarik dengan paket Motifa. Boleh cerita lebih lanjut soal cara kerja sistemnya?",
+      "whatsappMessage": {
+        "id": "Halo, saya tertarik dengan paket Motifa. Boleh cerita lebih lanjut soal cara kerja sistemnya?",
+        "en": "Hi, I'm interested in the motifa package. Can you tell me more about how the system works?",
+        "tr": "Merhaba, motifa paketine ilgiliyim. Sistem nasıl çalışıyor biraz daha anlatabilir misin?"
+      },
       "createdAt": "2026-07-09"
     },
     {
