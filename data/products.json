@@ -184,19 +184,43 @@
       "priceLabel": "Rp 800.000",
       "priceNote": "mulai dari",
       "featured": false,
-      "shortDescription": "Generator kartu kelahiran bayi berbasis weton (tradisi Jawa). Orang tua tinggal isi nama dan tanggal lahir bayi, sistem otomatis hitung hari-pasaran, neptu, dan watak, lalu disusun jadi kartu kelahiran bergaya heirloom yang bisa dipajang atau dijadiin kado kelahiran.",
-      "fullDescription": "Generator kartu kelahiran bayi berbasis weton (tradisi Jawa). Orang tua tinggal isi nama dan tanggal lahir bayi, sistem otomatis hitung hari-pasaran, neptu, dan watak, lalu disusun jadi kartu kelahiran bergaya heirloom yang bisa dipajang atau dijadiin kado kelahiran. Bukan cuma kalkulator teks kayak situs weton lainnya.",
-      "featureTags": [
-        "Kalkulator Weton",
-        "Kado Kelahiran",
-        "Digital Product"
-      ],
+      "shortDescription": {
+        "id": "Generator kartu kelahiran bayi berbasis weton (tradisi Jawa). Orang tua tinggal isi nama dan tanggal lahir bayi, sistem otomatis hitung hari-pasaran, neptu, dan watak, lalu disusun jadi kartu kelahiran bergaya heirloom yang bisa dipajang atau dijadiin kado kelahiran.",
+        "en": "A baby birth certificate generator based on Javanese weton tradition. Parents simply enter their baby's name and birth date, and the system automatically calculates the day-pasaran, neptu, and character traits, then arranges them into a beautiful heirloom-style birth card perfect for display or as a newborn gift.",
+        "tr": "Javas weton geleneğine dayanan bir bebek doğum sertifikası üreticisi. Ebeveynler sadece bebeğin adını ve doğum tarihini girer, sistem otomatik olarak gün-pasaran, neptu ve karakter özelliklerini hesaplar, ardından bunları sergilemeye veya yeni doğan hediyesi olarak vermeye uygun güzel bir miras tarzı doğum kartına dönüştürür."
+      },
+      "fullDescription": {
+        "id": "Generator kartu kelahiran bayi berbasis weton (tradisi Jawa). Orang tua tinggal isi nama dan tanggal lahir bayi, sistem otomatis hitung hari-pasaran, neptu, dan watak, lalu disusun jadi kartu kelahiran bergaya heirloom yang bisa dipajang atau dijadiin kado kelahiran. Bukan cuma kalkulator teks kayak situs weton lainnya.",
+        "en": "A baby birth certificate generator based on Javanese weton tradition. Parents simply enter their baby's name and birth date, and the system automatically calculates the day-pasaran, neptu, and character traits, then arranges them into a beautiful heirloom-style birth card perfect for display or as a newborn gift. This isn't just a text calculator like other weton websites out there.",
+        "tr": "Javas weton geleneğine dayanan bir bebek doğum sertifikası üreticisi. Ebeveynler sadece bebeğin adını ve doğum tarihini girer, sistem otomatik olarak gün-pasaran, neptu ve karakter özelliklerini hesaplar, ardından bunları sergilemeye veya yeni doğan hediyesi olarak vermeye uygun güzel bir miras tarzı doğum kartına dönüştürür. Bu, diğer weton web sitelerinin sunduğu basit bir metin hesaplayıcısı değildir."
+      },
+      "featureTags": {
+        "id": [
+          "Kalkulator Weton",
+          "Kado Kelahiran",
+          "Digital Product"
+        ],
+        "en": [
+          "Weton Calculator",
+          "Birth Gift",
+          "Digital Product"
+        ],
+        "tr": [
+          "Weton Hesaplayıcısı",
+          "Doğum Hediyesi",
+          "Dijital Ürün"
+        ]
+      },
       "thumbnail": "images/products/lahirku.jpg",
       "gallery": [
         "images/products/lahirku.jpg"
       ],
       "liveUrl": "https://founderku.github.io/Lahirku/",
-      "whatsappMessage": "Halo, saya mau pesan Lahirku",
+      "whatsappMessage": {
+        "id": "Halo, saya mau pesan Lahirku",
+        "en": "Hi, I want to order Lahirku",
+        "tr": "Merhaba, Lahirku sipariş etmek istiyorum"
+      },
       "createdAt": "2026-07-11"
     }
   ],
