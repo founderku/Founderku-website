@@ -10,25 +10,61 @@
       "priceLabel": "Rp 12.000.000",
       "priceNote": "mulai dari",
       "featured": true,
-      "shortDescription": "platform barter skill yang sudah terbukti jalan dengan AI matching, gamifikasi, chat real-time, dan forum komunitas. tinggal rebrand, langsung pakai.",
-      "fullDescription": "TukarSkill adalah platform marketplace skill-barter yang sudah live dan punya pengguna aktif nyata dan bukan sekadar konsep di atas kertas. Orang saling tukar keahlian secara gratis: desainer belajar coding, videographer belajar bahasa, dan seterusnya, difasilitasi lewat sistem matching berbasis AI.\n\npaket ini termasuk:\n- source code lengkap platform (matching AI, gamifikasi & poin, chat real-time, forum diskusi, panel admin)\n- sudah terbukti jalan sebagai bukti konsep, tinggal di-rebrand jadi brand kamu sendiri\n- struktur bisnis dan model monetisasi yang bisa dikembangkan lebih lanjut\n\ncocok buat kamu yang mau punya platform komunitas atau marketplace sendiri tanpa mulai coding dari nol. tinggal ganti nama, logo, dan warna, sistemnya udah jalan duluan.\n\ndetail teknis dan proses handover bisa didiskusikan langsung, chat kami di whatsapp kalau tertarik.",
-      "featureTags": [
-        "AI matching",
-        "gamifikasi & poin",
-        "chat real-time",
-        "forum komunitas",
-        "panel admin",
-        "pencarian skill canggih",
-        "rating & ulasan",
-        "verifikasi keamanan",
-        "Instagram"
-      ],
+      "shortDescription": {
+        "id": "platform barter skill yang sudah terbukti jalan dengan AI matching, gamifikasi, chat real-time, dan forum komunitas. tinggal rebrand, langsung pakai.",
+        "en": "A proven skill-bartering platform with AI matching, gamification, real-time chat, and community forum. Just rebrand it and you're ready to go.",
+        "tr": "AI eşleştirme, oyunlaştırma, gerçek zamanlı sohbet ve topluluk forumu olan kanıtlanmış bir beceri takas platformu. Sadece yeniden markalaştırın ve hemen başlayın."
+      },
+      "fullDescription": {
+        "id": "TukarSkill adalah platform marketplace skill-barter yang sudah live dan punya pengguna aktif nyata dan bukan sekadar konsep di atas kertas. Orang saling tukar keahlian secara gratis: desainer belajar coding, videographer belajar bahasa, dan seterusnya, difasilitasi lewat sistem matching berbasis AI.\n\npaket ini termasuk:\n- source code lengkap platform (matching AI, gamifikasi & poin, chat real-time, forum diskusi, panel admin)\n- sudah terbukti jalan sebagai bukti konsep, tinggal di-rebrand jadi brand kamu sendiri\n- struktur bisnis dan model monetisasi yang bisa dikembangkan lebih lanjut\n\ncocok buat kamu yang mau punya platform komunitas atau marketplace sendiri tanpa mulai coding dari nol. tinggal ganti nama, logo, dan warna, sistemnya udah jalan duluan.\n\ndetail teknis dan proses handover bisa didiskusikan langsung, chat kami di whatsapp kalau tertarik.",
+        "en": "TukarSkill is a live skill-bartering marketplace with real active users, not just a concept on paper. People exchange expertise for free: designers learn coding, videographers learn languages, and so on, all facilitated through an AI-powered matching system.\n\nThis package includes:\n- Complete platform source code (AI matching, gamification and points system, real-time chat, discussion forum, admin panel)\n- Already proven to work as a working proof of concept, just rebrand it as your own\n- Business structure and monetization model ready for further development\n\nPerfect for you if you want to own a community platform or marketplace without starting from zero on coding. Just change the name, logo, and colors, the system is already running. Technical details and handover process can be discussed directly, hit us up on WhatsApp if you're interested.",
+        "tr": "TukarSkill, sadece kağıt üzerinde bir konsept değil, gerçek aktif kullanıcıları olan canlı bir beceri takas pazarıdır. İnsanlar uzmanlıklarını ücretsiz takas ederler: tasarımcılar kodlamayı öğrenir, videograflar dil öğrenir ve benzeri şekilde, hepsi AI tabanlı eşleştirme sistemi tarafından kolaylaştırılır.\n\nBu paket şunları içerir:\n- Tam platform kaynak kodu (AI eşleştirme, oyunlaştırma ve puan sistemi, gerçek zamanlı sohbet, tartışma forumu, yönetim paneli)\n- Çalışan bir kanıt konsepti olarak zaten kanıtlanmış, sadece kendi markanız olarak yeniden markalaştırın\n- İş yapısı ve parasal hale getirme modeli daha ileri geliştirilmeye hazır\n\nSıfırdan kodlamaya başlamadan kendi topluluk platformunuza veya pazarınıza sahip olmak istiyorsanız sizin için mükemmeldir. Sadece adı, logoyu ve renkleri değiştirin, sistem zaten çalışıyor. Teknik detaylar ve devir süreci doğrudan tartışılabilir, ilgileniyorsanız WhatsApp'tan bize ulaşın."
+      },
+      "featureTags": {
+        "id": [
+          "AI matching",
+          "gamifikasi & poin",
+          "chat real-time",
+          "forum komunitas",
+          "panel admin",
+          "pencarian skill canggih",
+          "rating & ulasan",
+          "verifikasi keamanan",
+          "Instagram"
+        ],
+        "en": [
+          "AI matching",
+          "gamification and points",
+          "real-time chat",
+          "community forum",
+          "admin panel",
+          "advanced skill search",
+          "ratings and reviews",
+          "security verification",
+          "Instagram integration"
+        ],
+        "tr": [
+          "AI eşleştirme",
+          "oyunlaştırma ve puan",
+          "gerçek zamanlı sohbet",
+          "topluluk forumu",
+          "yönetim paneli",
+          "gelişmiş beceri arama",
+          "derecelendirmeler ve yorumlar",
+          "güvenlik doğrulaması",
+          "Instagram entegrasyonu"
+        ]
+      },
       "thumbnail": "images/products/tukarskill-thumb.png",
       "gallery": [
         "images/products/tukarskill-thumb.png"
       ],
       "liveUrl": "https://tukarskill.com",
-      "whatsappMessage": "Halo, saya tertarik dengan paket TukarSkill. Boleh cerita lebih lanjut soal cara kerja dan proses handover-nya?",
+      "whatsappMessage": {
+        "id": "Halo, saya tertarik dengan paket TukarSkill. Boleh cerita lebih lanjut soal cara kerja dan proses handover-nya?",
+        "en": "Hey, I'm interested in the TukarSkill package. Can you tell me more about how it works and the handover process?",
+        "tr": "Merhaba, TukarSkill paketine ilgi duydum. Nasıl çalıştığı ve devir sürecesi hakkında daha fazla bilgi verebilir misiniz?"
+      },
       "createdAt": "2026-07-08"
     },
     {
