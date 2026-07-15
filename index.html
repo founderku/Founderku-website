@@ -254,7 +254,7 @@
     </div>
   </div>
 
-  <div id="fkLangSwitch" style="position:fixed; bottom:20px; right:20px; z-index:9999; display:flex; align-items:center; gap:4px; background:#FBF6EE; border-radius:999px; padding:5px; box-shadow:0 10px 30px -8px #1C1B334D, 0 2px 8px -2px #1C1B3326; border:1px solid #1C1B331A;">
+  <div id="fkLangSwitch" style="position:fixed; bottom:20px; right:20px; z-index:999999; display:flex; align-items:center; gap:4px; background:#FBF6EE; border-radius:999px; padding:5px; box-shadow:0 10px 30px -8px #1C1B334D, 0 2px 8px -2px #1C1B3326; border:1px solid #1C1B331A;">
     <button type="button" class="fk-lang-btn" data-lang="id" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:#1C1B3399; padding:7px 12px; border-radius:999px; transition:all .2s ease;">ID</button>
     <button type="button" class="fk-lang-btn" data-lang="en" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:#1C1B3399; padding:7px 12px; border-radius:999px; transition:all .2s ease;">EN</button>
     <button type="button" class="fk-lang-btn" data-lang="tr" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:#1C1B3399; padding:7px 12px; border-radius:999px; transition:all .2s ease;">TR</button>
@@ -348,7 +348,7 @@
     </div>
     <div style="position:relative;">
       <div class="fk-prod-slider" id="produkPreviewGrid" style="display:flex; gap:22px; overflow-x:auto; scroll-snap-type:x mandatory; touch-action:pan-y; padding:6px 6px 20px; margin:0 -6px; -webkit-overflow-scrolling:touch; scrollbar-width:none;">
-        <div style="text-align:center; padding:30px 0; color:#1C1B3399; font-size:14px;">memuat produk...</div>
+        <div style="text-align:center; padding:30px 0; color:#1C1B3399; font-size:14px;" data-i18n="produk.loading">memuat produk...</div>
       </div>
       <button type="button" id="fkPpPrev" aria-label="sebelumnya" class="fk-prod-nav-btn fk-prod-nav-side fk-prod-nav-left">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -573,7 +573,7 @@
 
       <div style="position:relative;">
         <div class="fk-proj-slider" id="fkCaseStudyGrid" style="display:flex; gap:22px; overflow-x:auto; scroll-snap-type:x mandatory; touch-action:pan-y; padding:6px 6px 20px; margin:0 -6px; -webkit-overflow-scrolling:touch; scrollbar-width:none;">
-          <div class="empty-state" style="color:#FBF6EE99; font-size:14px; padding:40px;">memuat studi kasus...</div>
+          <div class="empty-state" style="color:#FBF6EE99; font-size:14px; padding:40px;" data-i18n="proyek.loading">memuat studi kasus...</div>
         </div>
         <button type="button" id="fkCsPrev" aria-label="sebelumnya" class="fk-cs-nav-btn fk-cs-nav-side fk-cs-nav-left">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1276,20 +1276,36 @@
         return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
       });
     }
+    function pickLangText(field){
+      if (field == null) return '';
+      if (typeof field === 'string') return field;
+      return field[fkCurrentLang] || field.id || field.en || '';
+    }
+    function pickLangArray(field){
+      if (!field) return [];
+      if (Array.isArray(field)) return field;
+      return field[fkCurrentLang] || field.id || field.en || [];
+    }
+    var csMsg = {
+      id: { empty: 'belum ada studi kasus.', error: 'gagal memuat studi kasus.', linkLabel: 'Lihat detail' },
+      en: { empty: 'no case studies yet.', error: 'failed to load case studies.', linkLabel: 'View details' },
+      tr: { empty: 'henüz vaka analizi yok.', error: 'vaka analizleri yüklenemedi.', linkLabel: 'Detayları gör' }
+    };
+    function csDict(){ return csMsg[fkCurrentLang] || csMsg.id; }
 
     fetch('data/case-studies.json')
-      .then(function (res) { if (!res.ok) throw new Error('gagal memuat data'); return res.json(); })
+      .then(function (res) { if (!res.ok) throw new Error('failed to load data'); return res.json(); })
       .then(function (data) {
         var items = (data.caseStudies || []).slice().sort(function (a, b) {
           return (a.order || 0) - (b.order || 0);
         });
         if (!items.length) {
-          grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1; text-align:center; color:#FBF6EE99; font-size:14px; padding:40px;">belum ada studi kasus.</div>';
+          grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1; text-align:center; color:#FBF6EE99; font-size:14px; padding:40px;">' + csDict().empty + '</div>';
           return;
         }
 
         grid.innerHTML = items.map(function (item) {
-          var tagsHtml = (item.tags || []).map(function (tag, i) {
+          var tagsHtml = pickLangArray(item.tags).map(function (tag, i) {
             return '<span class="fk-tag" style="animation-delay:' + (i * 0.15) + 's;">' + escapeHtml(tag) + '</span>';
           }).join('');
 
@@ -1308,12 +1324,12 @@
                   '<line x1="0" y1="1" x2="720" y2="1" stroke="#F2A623" stroke-width="2" stroke-dasharray="720" stroke-dashoffset="720"></line>' +
                 '</svg>' +
                 '<div style="display:flex; align-items:center; gap:18px; margin-bottom:28px; flex-wrap:wrap;">' + logoHtml + '</div>' +
-                '<p style="font-size:16px; line-height:1.7; color:#1C1B3399; margin:0 0 26px;">' + escapeHtml(item.description) + '</p>' +
+                '<p style="font-size:16px; line-height:1.7; color:#1C1B3399; margin:0 0 26px;">' + escapeHtml(pickLangText(item.description)) + '</p>' +
                 '<div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:30px;">' + tagsHtml + '</div>' +
-                '<div style="font-size:14px; color:#1C1B3399; margin-bottom:24px;">' + escapeHtml(item.note) + '</div>' +
+                '<div style="font-size:14px; color:#1C1B3399; margin-bottom:24px;">' + escapeHtml(pickLangText(item.note)) + '</div>' +
                 '<a href="' + escapeHtml(item.linkUrl) + '" ' + linkAttrs + ' class="fk-magnetic" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px; color:#1C1B33; font-weight:700; font-size:14px; border-bottom:2px solid #F2A623; padding-bottom:2px; position:relative;">' +
                   '<span class="fk-spot" style="position:absolute; inset:0; border-radius:inherit; background:radial-gradient(140px circle at var(--mx,50%) var(--my,50%), #F2A62333, transparent 60%); opacity:0; transition:opacity .3s ease; pointer-events:none;"></span>' +
-                  '<span style="position:relative; z-index:1;">' + escapeHtml(item.linkLabel || 'Lihat detail') + ' &rarr;</span>' +
+                  '<span style="position:relative; z-index:1;">' + escapeHtml(pickLangText(item.linkLabel) || csDict().linkLabel) + ' &rarr;</span>' +
                 '</a>' +
               '</div>' +
             '</div>'
@@ -1373,7 +1389,7 @@
         });
       })
       .catch(function (err) {
-        grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1; text-align:center; color:#FBF6EE99; font-size:14px; padding:40px;">gagal memuat studi kasus.</div>';
+        grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1; text-align:center; color:#FBF6EE99; font-size:14px; padding:40px;">' + csDict().error + '</div>';
         console.error('case studies fetch error:', err);
       });
   })();
@@ -1398,6 +1414,7 @@
       "produk.h2": "beberapa website yang tinggal kamu pakai buat jadi founder.",
       "produk.sub": "bukan mockup. ini produk siap pakai yang sudah kami rancang lengkap, dari desain sampai brand-nya.",
       "produk.link": "lihat semua produk →",
+      "produk.loading": "memuat produk...",
       "layanan.h2": "Dua langkah, satu tujuan.",
       "layanan.sub": "Identitas yang bikin orang percaya di detik pertama. Produk yang bisa langsung dicoba orang beneran, bukan cuma dipresentasikan.",
       "layanan.branding.title": "Branding",
@@ -1416,6 +1433,7 @@
       "proyek.eyebrow": "Studi Kasus", "proyek.h2": "Project yang udah kelar dan beneran jalan.",
       "proyek.sub": "Bukan mockup doang, bukan janji di atas kertas. Ini bukti kalau prosesnya beneran menghasilkan produk yang jalan.",
       "proyek.link": "Lihat semua studi kasus →",
+      "proyek.loading": "memuat studi kasus...",
       "faq.eyebrow": "FAQ", "faq.h2": "Pertanyaan yang sering muncul",
       "faq.q1": "Aku gak punya background teknis, bisa gak?",
       "faq.a1": "Bisa banget, dan ini justru kenapa Founderku ada. Fokus aja ke ide dan visi kamu, kami yang urus branding sampai eksekusi produknya sampai kelar.",
@@ -1455,6 +1473,7 @@
       "produk.h2": "a few websites you can start using to become a founder.",
       "produk.sub": "not a mockup. these are ready-to-use products we've fully designed, from the look to the brand.",
       "produk.link": "see all products →",
+      "produk.loading": "loading products...",
       "layanan.h2": "Two steps, one goal.",
       "layanan.sub": "An identity that earns trust in the first second. A product real people can actually try, not just watch in a slide deck.",
       "layanan.branding.title": "Branding",
@@ -1473,6 +1492,7 @@
       "proyek.eyebrow": "Case Studies", "proyek.h2": "Projects that are done and actually running.",
       "proyek.sub": "Not just mockups, not just promises on paper. This is proof the process actually produces working products.",
       "proyek.link": "See all case studies →",
+      "proyek.loading": "loading case studies...",
       "faq.eyebrow": "FAQ", "faq.h2": "Frequently asked questions",
       "faq.q1": "I don't have a technical background, can I still do this?",
       "faq.a1": "Absolutely, and this is exactly why Founderku exists. Just focus on your idea and vision, we handle the branding through to execution.",
@@ -1512,6 +1532,7 @@
       "produk.h2": "founder olmak için hemen kullanabileceğin birkaç web sitesi.",
       "produk.sub": "maket değil. bunlar tasarımdan markaya kadar eksiksiz hazırladığımız, kullanıma hazır ürünler.",
       "produk.link": "tüm ürünleri gör →",
+      "produk.loading": "ürünler yükleniyor...",
       "layanan.h2": "İki adım, tek hedef.",
       "layanan.sub": "İlk saniyede güven veren bir kimlik. Sadece sunumda değil, gerçek insanların hemen deneyebileceği bir ürün.",
       "layanan.branding.title": "Marka Kimliği",
@@ -1530,6 +1551,7 @@
       "proyek.eyebrow": "Vaka Analizleri", "proyek.h2": "Tamamlanmış ve gerçekten çalışan projeler.",
       "proyek.sub": "Sadece maket değil, kağıt üzerinde söz de değil. Sürecin gerçekten çalışan ürünler ürettiğinin kanıtı.",
       "proyek.link": "Tüm vaka analizlerini gör →",
+      "proyek.loading": "vaka analizleri yükleniyor...",
       "faq.eyebrow": "SSS", "faq.h2": "Sıkça sorulan sorular",
       "faq.q1": "Teknik bir geçmişim yok, yine de olur mu?",
       "faq.a1": "Kesinlikle olur, Founderku'nun var olma sebebi de bu. Sen sadece fikrine ve vizyonuna odaklan, marka kimliğinden ürünün tamamlanmasına kadar biz hallederiz.",
