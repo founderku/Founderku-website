@@ -222,6 +222,35 @@
         "tr": "Merhaba, Lahirku sipariş etmek istiyorum"
       },
       "createdAt": "2026-07-11"
+    },
+    {
+      "id": "nomadbuds-web-app-cari-teman-traveling-lokal",
+      "slug": "nomadbuds-web-app-cari-teman-traveling-lokal",
+      "name": "NomadBuds - Web App Cari Teman Traveling & Lokal",
+      "category": "landing-page",
+      "categoryLabel": "landing page",
+      "price": 350,
+      "priceLabel": "Rp 350",
+      "priceNote": "mulai dari",
+      "featured": false,
+      "shortDescription": "Template web app matchmaking teman traveling & lokal — lengkap dengan swipe deck, filter pencarian, live chat, dan form profil interaktif. Desktop-first, satu file HTML siap pakai.",
+      "fullDescription": "NomadBuds adalah template web app untuk platform matchmaking ala \"Bumble BFF\" yang menghubungkan traveler dengan warga lokal untuk berteman langsung — bukan tur berbayar, bukan aplikasi kencan.\n\nTemplate ini sudah termasuk:\n- Landing page dengan hero section, alur \"How It Works\", dan CTA yang siap konversi\n- Dashboard pencarian buddy dengan filter negara, bahasa, dan minat, lengkap dengan swipe deck ala kartu profil\n- Sistem match dengan modal perayaan saat cocok\n- Fitur live chat dua arah, lengkap dengan simulasi balasan otomatis dan indikator \"sedang mengetik\"\n- Form edit profil dengan live preview yang update langsung saat mengetik\n\nDibangun dengan React + Tailwind, dan sudah dikompilasi jadi satu file HTML mandiri — tinggal upload ke hosting atau GitHub Pages, tanpa perlu build tools atau instalasi tambahan. Cocok untuk developer atau agency yang butuh referensi/starter project aplikasi matchmaking maupun template siap jual.",
+      "featureTags": [
+        "swipe matching",
+        "filter pencarian (negara",
+        "bahasa",
+        "minat)",
+        "live chat real-time",
+        "simulasi auto-reply",
+        "profil interaktif dengan live preview",
+        "desain responsif desktop-first",
+        "satu file HTML siap pakai"
+      ],
+      "thumbnail": "images/products/placeholder.png",
+      "gallery": [],
+      "liveUrl": "",
+      "whatsappMessage": "Halo, saya mau pesan NomadBuds - Web App Cari Teman Traveling & Lokal",
+      "createdAt": "2026-07-21"
     }
   ],
   "categories": [
