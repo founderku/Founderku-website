@@ -10,6 +10,10 @@
 <style>
   html { overflow-x: hidden; width: 100%; }
   .fk-lang-btn.is-active{ background:#1C1B33 !important; color:#FBF6EE !important; }
+  #fkLangMenu.is-open{ display:flex !important; }
+  #fkLangMenu .fk-lang-btn:hover{ background:#FBF6EE1A; }
+  #fkLangMenu .fk-lang-btn.is-active{ display:none; }
+  #fkLangToggle.is-open #fkLangChevron{ transform:rotate(180deg); }
   @media(max-width:640px){
     #fkLangSwitch{ transform:scale(0.92); }
   }
@@ -254,10 +258,16 @@
     </div>
   </div>
 
-  <div id="fkLangSwitch" style="position:fixed; bottom:20px; right:20px; z-index:999999; display:flex; align-items:center; gap:4px; background:#FBF6EE; border-radius:999px; padding:5px; box-shadow:0 10px 30px -8px #1C1B334D, 0 2px 8px -2px #1C1B3326; border:1px solid #FBF6EE1A;">
-    <button type="button" class="fk-lang-btn" data-lang="id" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:#1C1B3399; padding:7px 12px; border-radius:999px; transition:all .2s ease;">ID</button>
-    <button type="button" class="fk-lang-btn" data-lang="en" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:#1C1B3399; padding:7px 12px; border-radius:999px; transition:all .2s ease;">EN</button>
-    <button type="button" class="fk-lang-btn" data-lang="tr" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:#1C1B3399; padding:7px 12px; border-radius:999px; transition:all .2s ease;">TR</button>
+  <div id="fkLangSwitch" style="position:fixed; bottom:20px; right:20px; z-index:999999;">
+    <div id="fkLangMenu" style="display:none; flex-direction:column; gap:2px; background:#1C1B33; border:1px solid #FBF6EE26; border-radius:14px; padding:6px; margin-bottom:8px; min-width:76px; box-shadow:0 14px 34px -10px rgba(0,0,0,0.55);">
+      <button type="button" class="fk-lang-btn" data-lang="id" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; color:#FBF6EECC; padding:9px 12px; border-radius:8px; text-align:left; transition:background .15s ease; width:100%;">ID</button>
+      <button type="button" class="fk-lang-btn" data-lang="en" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; color:#FBF6EECC; padding:9px 12px; border-radius:8px; text-align:left; transition:background .15s ease; width:100%;">EN</button>
+      <button type="button" class="fk-lang-btn" data-lang="tr" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; color:#FBF6EECC; padding:9px 12px; border-radius:8px; text-align:left; transition:background .15s ease; width:100%;">TR</button>
+    </div>
+    <button type="button" id="fkLangToggle" aria-label="ganti bahasa" style="display:flex; align-items:center; gap:7px; background:#FBF6EE; color:#1C1B33; border:none; border-radius:999px; padding:11px 18px; font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; cursor:pointer; box-shadow:0 10px 30px -8px rgba(0,0,0,0.4), 0 2px 8px -2px rgba(0,0,0,0.25);">
+      <span id="fkLangCurrentLabel">EN</span>
+      <svg id="fkLangChevron" width="10" height="6" viewBox="0 0 10 6" style="transition:transform .2s ease; flex:none;"><path d="M1 1l4 4 4-4" stroke="#1C1B33" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
   </div>
 
 
@@ -924,7 +934,7 @@
     document.addEventListener('mouseup', function () { outer.style.width = '34px'; outer.style.height = '34px'; });
     document.querySelectorAll('a, button, .fk-magnetic, .chip, summary').forEach(function (el) {
       el.addEventListener('mouseenter', function () { outer.style.width = '42px'; outer.style.height = '42px'; outer.style.borderColor = '#E15C3E66'; });
-      el.addEventListener('mouseleave', function () { outer.style.width = '34px'; outer.style.height = '34px'; outer.style.borderColor = '#1C1B3355'; });
+      el.addEventListener('mouseleave', function () { outer.style.width = '34px'; outer.style.height = '34px'; outer.style.borderColor = '#FBF6EE55'; });
     });
     function raf() {
       outerX += (targetX - outerX) * 0.18;
@@ -1643,13 +1653,34 @@
     });
     document.documentElement.setAttribute('lang', lang);
     try { localStorage.setItem('fk-lang', lang); } catch (e) {}
+    var currentLabel = document.getElementById('fkLangCurrentLabel');
+    if (currentLabel) currentLabel.textContent = lang.toUpperCase();
   }
 
   document.querySelectorAll('.fk-lang-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
       applyLanguage(btn.getAttribute('data-lang'), false);
+      closeLangMenu();
     });
   });
+
+  var fkLangToggle = document.getElementById('fkLangToggle');
+  var fkLangMenu = document.getElementById('fkLangMenu');
+  function closeLangMenu() {
+    if (fkLangMenu) fkLangMenu.classList.remove('is-open');
+    if (fkLangToggle) fkLangToggle.classList.remove('is-open');
+  }
+  if (fkLangToggle && fkLangMenu) {
+    fkLangToggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var willOpen = !fkLangMenu.classList.contains('is-open');
+      fkLangMenu.classList.toggle('is-open', willOpen);
+      fkLangToggle.classList.toggle('is-open', willOpen);
+    });
+    document.addEventListener('click', function (e) {
+      if (!document.getElementById('fkLangSwitch').contains(e.target)) closeLangMenu();
+    });
+  }
 
   var savedLang = 'en';
   try { savedLang = localStorage.getItem('fk-lang') || 'en'; } catch (e) {}
