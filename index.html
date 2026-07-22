@@ -249,7 +249,7 @@
       <a href="#proyek" class="fk-link" style="text-decoration:none; color:inherit;" data-i18n="nav.proyek">Project</a>
       <a href="#faq" class="fk-link" style="text-decoration:none; color:inherit;" data-i18n="nav.faq">FAQ</a>
       <a href="#generator" class="fk-link" style="text-decoration:none; color:inherit;" data-i18n="nav.generator">Generator</a>
-      <a href="store.html" class="fk-link" style="text-decoration:none; color:#E15C3E; font-weight:700;" data-i18n="nav.instantFounder">Instant Founder</a>
+      <a href="/store/" class="fk-link" style="text-decoration:none; color:#E15C3E; font-weight:700;" data-i18n="nav.instantFounder">Instant Founder</a>
       <a href="#cta" class="fk-nav-cta" style="text-decoration:none; color:#FBF6EE; padding:10px 20px; border-radius:999px; font-weight:600; border:1px solid #FBF6EE33;" data-i18n="nav.ngobrol">Ngobrol</a>
     </div>
   </div>
@@ -321,7 +321,7 @@
 
   <!-- INSTANT FOUNDER BANNER -->
   <div style="max-width:1120px; margin:0 auto; padding: 0 26px 100px;">
-    <a href="store.html" style="text-decoration:none; display:block; position:relative; overflow:hidden; border-radius:22px; background:#1C1B33; background-image:radial-gradient(rgba(255,255,255,0.09) 1.4px, transparent 1.4px); background-size:20px 20px; padding:48px 44px; box-shadow:0 20px 40px -20px #1C1B3340;">
+    <a href="/store/" style="text-decoration:none; display:block; position:relative; overflow:hidden; border-radius:22px; background:#1C1B33; background-image:radial-gradient(rgba(255,255,255,0.09) 1.4px, transparent 1.4px); background-size:20px 20px; padding:48px 44px; box-shadow:0 20px 40px -20px #1C1B3340;">
       <div style="display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap; position:relative; z-index:1;">
         <div>
           <div style="display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700; letter-spacing:0.06em; color:#F2A623; background:#F2A62322; padding:6px 14px; border-radius:20px; margin-bottom:16px;">
@@ -344,7 +344,7 @@
         <h2 class="fk-section-h2" style="font-family:'Fraunces',serif; font-weight:600; font-size:32px; color:#FBF6EE; margin:0 0 10px;" data-i18n="produk.h2">beberapa website yang tinggal kamu pakai buat jadi founder.</h2>
         <p style="font-size:15px; color:#FBF6EE99; margin:0; max-width:480px; line-height:1.6;" data-i18n="produk.sub">bukan mockup. ini produk siap pakai yang sudah kami rancang lengkap, dari desain sampai brand-nya.</p>
       </div>
-      <a href="store.html" style="text-decoration:none; font-size:14px; font-weight:700; color:#E15C3E; white-space:nowrap;" data-i18n="produk.link">lihat semua produk →</a>
+      <a href="/store/" style="text-decoration:none; font-size:14px; font-weight:700; color:#E15C3E; white-space:nowrap;" data-i18n="produk.link">lihat semua produk →</a>
     </div>
     <div style="position:relative;">
       <div class="fk-prod-slider" id="produkPreviewGrid" style="display:flex; gap:22px; overflow-x:auto; scroll-snap-type:x mandatory; touch-action:pan-y; padding:6px 6px 20px; margin:0 -6px; -webkit-overflow-scrolling:touch; scrollbar-width:none;">
@@ -371,7 +371,7 @@
         : `<span style="font-size:12px; color:#FBF6EE99; font-weight:600;">coming soon</span>`;
       return `
       <div class="fk-prod-card">
-        <a href="product.html?slug=${encodeURIComponent(p.slug)}" style="text-decoration:none; color:inherit; display:block; background:rgba(251,246,238,0.05); border:1px solid #FBF6EE1F; border-radius:18px; overflow:hidden; transition:transform .2s ease; height:100%;">
+        <a href="/product/?slug=${encodeURIComponent(p.slug)}" style="text-decoration:none; color:inherit; display:block; background:rgba(251,246,238,0.05); border:1px solid #FBF6EE1F; border-radius:18px; overflow:hidden; transition:transform .2s ease; height:100%;">
           <div style="height:150px; background:#24223F; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
             <div style="position:absolute; top:12px; left:12px; background:#1C1B33; color:#FBF6EE; font-size:10.5px; font-weight:700; padding:5px 11px 5px 17px; border-radius:3px 12px 12px 3px; z-index:1;">${catLabel}</div>
             ${thumbInner}
@@ -586,7 +586,7 @@
       <div style="display:flex; align-items:center; justify-content:center; gap:7px; margin-top:14px;" id="fkCsDots"></div>
 
       <div style="text-align:center; margin-top:36px;">
-        <a href="case-studies.html" class="fk-magnetic" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px; color:#FBF6EE; font-weight:700; font-size:14px; border-bottom:2px solid #F2A623; padding-bottom:2px; position:relative;">
+        <a href="/case-studies/" class="fk-magnetic" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px; color:#FBF6EE; font-weight:700; font-size:14px; border-bottom:2px solid #F2A623; padding-bottom:2px; position:relative;">
           <span class="fk-spot" style="position:absolute; inset:0; border-radius:inherit; background:radial-gradient(140px circle at var(--mx,50%) var(--my,50%), #F2A62333, transparent 60%); opacity:0; transition:opacity .3s ease; pointer-events:none;"></span>
           <span style="position:relative; z-index:1;" data-i18n="proyek.link">Lihat semua studi kasus &rarr;</span>
         </a>
@@ -1270,6 +1270,9 @@
   (function () {
     var grid = document.getElementById('fkCaseStudyGrid');
     if (!grid) return;
+
+    var fkCurrentLang = 'en';
+    try { fkCurrentLang = localStorage.getItem('fk-lang') || 'en'; } catch (e) {}
 
     function escapeHtml(str) {
       return String(str == null ? '' : str).replace(/[&<>"']/g, function (c) {
