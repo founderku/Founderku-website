@@ -4,40 +4,11 @@
       "id": "tukarskill",
       "name": "TukarSkill",
       "logo": "images/case-studies/tukarskill-logo.png",
-      "roundLogo": false,
-      "description": {
-        "id": "TukarSkill adalah platform buat saling tukar skill antar sesama. Dari ide, kami bantu bangun identitas brand dan MVP yang siap dicoba user pertama.",
-        "en": "TukarSkill is a platform for exchanging skills among peers. From idea to launch, we help you build a brand identity and MVP ready for your first users.",
-        "tr": "TukarSkill, bireyler arasında beceri alışverişi yapabileceğiniz bir platformdur. Fikirden başlayarak, marka kimliği ve ilk kullanıcılarınız için hazır MVP oluşturmanızda yardımcı oluyoruz."
-      },
-      "tags": {
-        "id": [
-          "Branding",
-          "MVP",
-          "Landing Page"
-        ],
-        "en": [
-          "Branding",
-          "MVP",
-          "Landing Page"
-        ],
-        "tr": [
-          "Branding",
-          "MVP",
-          "Landing Page"
-        ]
-      },
-      "note": {
-        "id": "Dikerjakan lewat proses 4 langkah Founderku — dari ngobrol ide sampai produk jalan.",
-        "en": "Completed through Founderku's 4-step process, from idea discussion to a live product.",
-        "tr": "Founderku'nun 4 adımlı süreci aracılığıyla tamamlandı, fikir tartışmasından canlı ürüne kadar."
-      },
+      "description": "TukarSkill adalah platform buat saling tukar skill antar sesama. Dari ide, kami bantu bangun identitas brand dan MVP yang siap dicoba user pertama.",
+      "tags": ["Branding", "MVP", "Landing Page"],
+      "note": "Dikerjakan lewat proses 4 langkah Founderku — dari ngobrol ide sampai produk jalan.",
       "linkUrl": "product.html?slug=tukarskill",
-      "linkLabel": {
-        "id": "Lihat produk jadi & detailnya",
-        "en": "View the finished product and details",
-        "tr": "Hazır ürünü ve detaylarını görün"
-      },
+      "linkLabel": "Lihat produk jadi & detailnya",
       "external": false,
       "order": 1
     },
@@ -45,174 +16,13 @@
       "id": "say-cheese",
       "name": "Say Cheese",
       "logo": "images/case-studies/say-cheese-logo.png",
-      "roundLogo": false,
-      "description": {
-        "id": "Say Cheese adalah brand handcrafted cheesecake & chiffon cake made-to-order di Şişli, Istanbul. Kami bangun ulang website-nya dari Wix jadi custom website lengkap dengan animasi interaktif dan domain sendiri.",
-        "en": "Say Cheese is a handcrafted cheesecake & chiffon cake made-to-order brand located in Şişli, Istanbul. We rebuilt their website from Wix into a complete custom website with interactive animations and their own domain.",
-        "tr": "Say Cheese, Şişli, Istanbul'da yer alan, sipariş üzerine yapılan handcrafted cheesecake ve chiffon cake markasıdır. Web sitelerini Wix'ten, interaktif animasyonlar ve kendi domain'i içeren tam özel bir web sitesine yeniden tasarladık."
-      },
-      "tags": {
-        "id": [
-          "Custom Website",
-          "Brand Identity",
-          "Domain & Deployment"
-        ],
-        "en": [
-          "Custom Website",
-          "Brand Identity",
-          "Domain & Deployment"
-        ],
-        "tr": [
-          "Custom Website",
-          "Brand Identity",
-          "Domain & Deployment"
-        ]
-      },
-      "note": {
-        "id": "4 halaman custom, animasi interaktif, dan setup domain dari nol sampai online.",
-        "en": "4 custom pages, interactive animations, and domain setup from zero to live.",
-        "tr": "4 özel sayfa, interaktif animasyonlar ve sıfırdan canlı yayına kadar domain kurulumu."
-      },
+      "description": "Say Cheese adalah brand handcrafted cheesecake & chiffon cake made-to-order di Şişli, Istanbul. Kami bangun ulang website-nya dari Wix jadi custom website lengkap dengan animasi interaktif dan domain sendiri.",
+      "tags": ["Custom Website", "Brand Identity", "Domain & Deployment"],
+      "note": "4 halaman custom, animasi interaktif, dan setup domain dari nol sampai online.",
       "linkUrl": "https://saycheese.cfd",
-      "linkLabel": {
-        "id": "Kunjungi website",
-        "en": "Visit website",
-        "tr": "Web sitesini ziyaret et"
-      },
+      "linkLabel": "Kunjungi website",
       "external": true,
       "order": 2
-    },
-    {
-      "id": "kelasin",
-      "name": "Kelasin",
-      "logo": "images/case-studies/kelasin-logo.png",
-      "roundLogo": true,
-      "description": {
-        "id": "Kelasin adalah paket starter platform belajar skill harian, dua sisi: pembelajar yang butuh solusi cepat (servis motor, jahit, masak, dll) dan pengajar orang biasa yang punya skill tapi belum punya cara monetisasi. Beda dari platform kursus formal, kelas di sini pendek (15-30 menit), murah (mulai Rp 5.000), dan direkam pengajar langsung pake HP.",
-        "en": "Kelasin is a starter package for a daily skill learning platform, two-sided: learners who need quick solutions (motorcycle repair, sewing, cooking, etc.) and ordinary instructors who have skills but haven't found ways to monetize. Different from formal course platforms, classes here are short (15-30 minutes), affordable (starting from Rp 5,000), and recorded directly by instructors using their phones.",
-        "tr": "Kelasin, günlük beceri öğrenme platformunun başlangıç paketi, iki taraflı: hızlı çözüme ihtiyaç duyan öğrenenler (motor onarımı, dikiş, yemek pişirme, vb.) ve beceri sahibi ancak para kazanma yolu bulamayan sıradan öğretmenler. Resmi kurs platformlarından farklı olarak, buradaki dersler kısa (15-30 dakika), uygun fiyatlı (5.000 TL'den başlayarak) ve öğretmenler tarafından doğrudan telefonları kullanılarak kaydedilir."
-      },
-      "tags": {
-        "id": [
-          "katalog interaktif",
-          "search & filter kategori",
-          "preview video contoh",
-          "alur pesan via whatsapp"
-        ],
-        "en": [
-          "interactive catalog",
-          "search and filter by category",
-          "example video preview",
-          "messaging flow via WhatsApp"
-        ],
-        "tr": [
-          "interaktif katalog",
-          "kategori arama ve filtreleme",
-          "örnek video önizlemesi",
-          "WhatsApp üzerinden mesajlaşma akışı"
-        ]
-      },
-      "note": {
-        "id": "platform kelas mikro 15-30 menit buat skill harian, direkam pengajar biasa pake HP. desain sticky-note khas, katalog interaktif, alur pesan via whatsapp.",
-        "en": "micro-class platform for 15-30 minute daily skills, recorded by ordinary instructors using phones. distinctive sticky-note design, interactive catalog, messaging flow via WhatsApp.",
-        "tr": "15-30 dakikalık günlük beceriler için mikro-klass platformu, sıradan öğretmenler tarafından telefonları kullanılarak kaydedilir. karakteristik yapışkan not tasarımı, interaktif katalog, WhatsApp üzerinden mesajlaşma akışı."
-      },
-      "linkUrl": "https://founderku.github.io/Kelasin/index",
-      "linkLabel": {
-        "id": "Kunjungi Kelasin",
-        "en": "Visit Kelasin",
-        "tr": "Kelasin'i Ziyaret Edin"
-      },
-      "external": true,
-      "order": 3
-    },
-    {
-      "id": "motifa",
-      "name": "Motifa",
-      "logo": "images/case-studies/motifa-logo.png",
-      "roundLogo": true,
-      "description": {
-        "id": "Motifa merupakan website yang mengubah nama dan asal daerah pengunjung jadi motif personal bergaya nusantara, lalu dicetak on-demand ke kaos, totebag, atau mug.",
-        "en": "Motifa is a website that transforms visitors' names and regions into personalized nusantara-style motifs, then prints them on-demand onto t-shirts, totebags, or mugs.",
-        "tr": "Motifa, ziyaretçilerin adlarını ve bölgelerini kişiselleştirilmiş nusantara tarzı motiflere dönüştüren ve bunları talep üzerine t-shirt, alışveriş çantası veya kupa üzerine basan bir web sitesidir."
-      },
-      "tags": {
-        "id": [
-          "generator motif personal",
-          "print-on-demand",
-          "tanpa modal stok",
-          "brand & panduan bisnis lengkap",
-          "siap jalan dalam sehari"
-        ],
-        "en": [
-          "personalized motif generator",
-          "print-on-demand",
-          "zero stock investment",
-          "complete brand and business guide",
-          "ready to launch in one day"
-        ],
-        "tr": [
-          "kişiselleştirilmiş motif üreticisi",
-          "talep üzerine baskı",
-          "stok yatırımı yok",
-          "tam marka ve iş rehberi",
-          "bir gün içinde başlamaya hazır"
-        ]
-      },
-      "note": {
-        "id": "motifa adalah paket ide bisnis lengkap: website yang mengubah nama dan asal daerah pengunjung jadi motif personal bergaya nusantara, lalu dicetak on-demand ke kaos, totebag, atau mug.",
-        "en": "Motifa is a complete business idea package: a website that transforms visitors' names and regions into personalized nusantara-style motifs, then prints them on-demand onto t-shirts, totebags, or mugs.",
-        "tr": "Motifa tam bir iş fikri paketidir: ziyaretçilerin adlarını ve bölgelerini kişiselleştirilmiş nusantara tarzı motiflere dönüştüren ve bunları talep üzerine t-shirt, alışveriş çantası veya kupa üzerine basan bir web sitesi."
-      },
-      "linkUrl": "https://founderku.github.io/Motifa/",
-      "linkLabel": {
-        "id": "Kunjungi Motifa",
-        "en": "Visit Motifa",
-        "tr": "Motifa'yı Ziyaret Edin"
-      },
-      "external": true,
-      "order": 4
-    },
-    {
-      "id": "lahirku",
-      "name": "Lahirku",
-      "logo": "images/case-studies/lahirku-logo.png",
-      "roundLogo": true,
-      "description": {
-        "id": "Generator kartu kelahiran bayi berbasis weton (tradisi Jawa). Orang tua tinggal isi nama dan tanggal lahir bayi, sistem otomatis hitung hari-pasaran, neptu, dan watak, lalu disusun jadi kartu kelahiran bergaya heirloom yang bisa dipajang atau dijadiin kado kelahiran. Bukan cuma kalkulator teks kayak situs weton lainnya.",
-        "en": "A baby birth card generator based on weton, a Javanese tradition. Parents simply enter their baby's name and birth date, and the system automatically calculates the day-market, neptu, and character traits, then arranges them into a beautifully designed heirloom-style birth card that can be displayed or given as a birth gift. It's not just another text calculator like other weton sites out there.",
-        "tr": "Jawa geleneği olan weton'a dayanan bir bebek doğum kartı oluşturucu. Ebeveynler sadece bebeklerinin adını ve doğum tarihini girerek sistemi harekete geçirir, sistem otomatik olarak gün-pazar, neptu ve kişilik özelliklerini hesaplar, ardından bunları sergilenebilecek veya doğum hediyesi olarak verilebilecek güzel tasarlanmış bir miras tarzı doğum kartına dönüştürür. Diğer weton sitelerindeki gibi sadece bir metin hesaplayıcı değildir."
-      },
-      "tags": {
-        "id": [
-          "Kalkulator Weton",
-          "Kado Kelahiran",
-          "Digital Product"
-        ],
-        "en": [
-          "Weton Calculator",
-          "Birth Gift",
-          "Digital Product"
-        ],
-        "tr": [
-          "Weton Hesaplayıcı",
-          "Doğum Hediyesi",
-          "Dijital Ürün"
-        ]
-      },
-      "note": {
-        "id": "Dikerjakan lewat proses 4 langkah Founderku — dari riset kompetitor sampai landing page + generator jadi.",
-        "en": "Built through Founderku's 4-step process, from competitor research all the way to a fully functional landing page and generator.",
-        "tr": "Founderku'nun 4 adımlı süreciyle geliştirildi, rakip araştırmasından tam işlevli bir açılış sayfası ve oluşturucuya kadar."
-      },
-      "linkUrl": "https://founderku.github.io/Lahirku/",
-      "linkLabel": {
-        "id": "Lihat Lahirku disini",
-        "en": "Check out Lahirku here",
-        "tr": "Lahirku'yu buradan görüntüleyin"
-      },
-      "external": true,
-      "order": 5
     }
   ]
 }
