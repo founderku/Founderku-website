@@ -9,16 +9,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --krem: #FBF6EE;
-    --krem-2: #F2ECDD;
+    --krem: #1C1B33;
+    --krem-2: #24223F;
     --indigo: #7A78C4;
-    --indigo-deep: #1C1B33;
+    --indigo-deep: #FBF6EE;
     --amber: #F2A623;
     --coral: #E15C3E;
-    --ink: #1C1B33;
-    --ink-soft: #1C1B3399;
-    --line: rgba(44,42,99,0.12);
-    --dot: rgba(44,42,99,0.16);
+    --on-amber: #1C1B33;
+    --ink: #FBF6EE;
+    --ink-soft: #FBF6EEB3;
+    --line: rgba(251,246,238,0.14);
+    --dot: rgba(251,246,238,0.08);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   body{
@@ -38,7 +39,7 @@
   nav{
     display:flex; align-items:center; justify-content:space-between;
     padding: 22px 56px;
-    background: rgba(247,242,231,0.85);
+    background: rgba(20,19,38,0.85);
     backdrop-filter: blur(8px);
     position: sticky; top:0; z-index:50;
     border-bottom: 1px solid var(--line);
@@ -77,9 +78,9 @@
   }
   .hero-actions{ margin-top:32px; display:flex; gap:14px; justify-content:center; }
   .btn-primary{
-    background: var(--amber); color:var(--indigo-deep); font-weight:700; font-size:14.5px;
+    background: var(--amber); color:var(--on-amber); font-weight:700; font-size:14.5px;
     padding: 14px 28px; border-radius:30px;
-    box-shadow: 0 4px 0 rgba(29,27,69,0.15);
+    box-shadow: 0 4px 0 rgba(0,0,0,0.35);
   }
   .btn-ghost{
     border: 1.5px solid var(--indigo-deep); color:var(--indigo-deep); font-weight:700; font-size:14.5px;
@@ -96,7 +97,7 @@
     border:1px solid var(--line); color:var(--ink-soft); background: var(--krem);
   }
   .chip.active{ background: var(--indigo-deep); color:var(--krem); border-color:var(--indigo-deep); }
-  .fk-lang-btn.is-active{ background: var(--indigo-deep) !important; color: var(--krem) !important; }
+  .fk-lang-btn.is-active{ background: #1C1B33 !important; color: #FBF6EE !important; }
 
   /* GRID */
   .grid{
@@ -107,7 +108,7 @@
     background: var(--krem); border:1px solid var(--line); border-radius:18px;
     overflow:hidden; position:relative; transition: transform .25s ease, box-shadow .25s ease;
   }
-  .card:hover{ transform: translateY(-6px); box-shadow: 0 18px 34px rgba(29,27,69,0.12); }
+  .card:hover{ transform: translateY(-6px); box-shadow: 0 18px 34px rgba(0,0,0,0.3); }
   .card-thumb{
     position:relative; height:190px; overflow:hidden;
     border-bottom:1px solid var(--line);
@@ -187,10 +188,10 @@
   </div>
 </nav>
 
-<div id="fkLangSwitch" style="position:fixed; bottom:20px; right:20px; z-index:9999; display:flex; align-items:center; gap:4px; background:var(--krem); border-radius:999px; padding:5px; box-shadow:0 10px 30px -8px rgba(28,27,51,0.3), 0 2px 8px -2px rgba(28,27,51,0.15); border:1px solid rgba(28,27,51,0.1);">
-  <button type="button" class="fk-lang-btn" data-lang="id" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:var(--ink-soft); padding:7px 12px; border-radius:999px; transition:all .2s ease;">ID</button>
-  <button type="button" class="fk-lang-btn" data-lang="en" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:var(--ink-soft); padding:7px 12px; border-radius:999px; transition:all .2s ease;">EN</button>
-  <button type="button" class="fk-lang-btn" data-lang="tr" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:var(--ink-soft); padding:7px 12px; border-radius:999px; transition:all .2s ease;">TR</button>
+<div id="fkLangSwitch" style="position:fixed; bottom:20px; right:20px; z-index:9999; display:flex; align-items:center; gap:4px; background:#FBF6EE; border-radius:999px; padding:5px; box-shadow:0 10px 30px -8px rgba(0,0,0,0.4), 0 2px 8px -2px rgba(0,0,0,0.25); border:1px solid rgba(28,27,51,0.1);">
+  <button type="button" class="fk-lang-btn" data-lang="id" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:#1C1B3399; padding:7px 12px; border-radius:999px; transition:all .2s ease;">ID</button>
+  <button type="button" class="fk-lang-btn" data-lang="en" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:#1C1B3399; padding:7px 12px; border-radius:999px; transition:all .2s ease;">EN</button>
+  <button type="button" class="fk-lang-btn" data-lang="tr" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:#1C1B3399; padding:7px 12px; border-radius:999px; transition:all .2s ease;">TR</button>
 </div>
 
 <section class="hero">

@@ -9,16 +9,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --krem: #FBF6EE;
-    --krem-2: #F2ECDD;
+    --krem: #1C1B33;
+    --krem-2: #24223F;
     --indigo: #7A78C4;
-    --indigo-deep: #1C1B33;
+    --indigo-deep: #FBF6EE;
     --amber: #F2A623;
     --coral: #E15C3E;
-    --ink: #1C1B33;
-    --ink-soft: #1C1B3399;
-    --line: rgba(44,42,99,0.12);
-    --dot: rgba(44,42,99,0.16);
+    --on-amber: #1C1B33;
+    --ink: #FBF6EE;
+    --ink-soft: #FBF6EEB3;
+    --line: rgba(251,246,238,0.14);
+    --dot: rgba(251,246,238,0.08);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   body{
@@ -36,7 +37,7 @@
   nav{
     display:flex; align-items:center; justify-content:space-between;
     padding: 22px 56px;
-    background: rgba(247,242,231,0.85);
+    background: rgba(20,19,38,0.85);
     backdrop-filter: blur(8px);
     position: sticky; top:0; z-index:50;
     border-bottom: 1px solid var(--line);
@@ -123,9 +124,9 @@
 
   .buy-actions{ margin-top:22px; display:flex; flex-direction:column; gap:10px; }
   .btn-order{
-    background: var(--amber); color:var(--indigo-deep); font-weight:700; font-size:14.5px;
+    background: var(--amber); color:var(--on-amber); font-weight:700; font-size:14.5px;
     padding: 15px; border-radius:14px; text-align:center;
-    box-shadow: 0 4px 0 rgba(29,27,69,0.15);
+    box-shadow: 0 4px 0 rgba(0,0,0,0.35);
   }
   .btn-visit{
     border: 1.5px solid var(--indigo-deep); color:var(--indigo-deep); font-weight:700; font-size:14.5px;
@@ -140,7 +141,7 @@
     width:16px; height:16px; border-radius:50%; border:1.5px dashed var(--ink-soft);
     flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:9px; margin-top:2px;
   }
-  .fk-lang-btn.is-active{ background: var(--indigo-deep) !important; color: var(--krem) !important; }
+  .fk-lang-btn.is-active{ background: #1C1B33 !important; color: #FBF6EE !important; }
 
   @media(max-width: 860px){
     .detail-wrap{ grid-template-columns: 1fr; padding:0 24px; }
@@ -158,10 +159,10 @@
   <a href="index.html#cta" class="nav-cta lowercase" data-i18n="nav.mulaiProyek">mulai proyek</a>
 </nav>
 
-<div id="fkLangSwitch" style="position:fixed; bottom:20px; right:20px; z-index:9999; display:flex; align-items:center; gap:4px; background:var(--krem); border-radius:999px; padding:5px; box-shadow:0 10px 30px -8px rgba(28,27,51,0.3), 0 2px 8px -2px rgba(28,27,51,0.15); border:1px solid rgba(28,27,51,0.1);">
-  <button type="button" class="fk-lang-btn" data-lang="id" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:var(--ink-soft); padding:7px 12px; border-radius:999px; transition:all .2s ease;">ID</button>
-  <button type="button" class="fk-lang-btn" data-lang="en" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:var(--ink-soft); padding:7px 12px; border-radius:999px; transition:all .2s ease;">EN</button>
-  <button type="button" class="fk-lang-btn" data-lang="tr" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:var(--ink-soft); padding:7px 12px; border-radius:999px; transition:all .2s ease;">TR</button>
+<div id="fkLangSwitch" style="position:fixed; bottom:20px; right:20px; z-index:9999; display:flex; align-items:center; gap:4px; background:#FBF6EE; border-radius:999px; padding:5px; box-shadow:0 10px 30px -8px rgba(0,0,0,0.4), 0 2px 8px -2px rgba(0,0,0,0.25); border:1px solid rgba(28,27,51,0.1);">
+  <button type="button" class="fk-lang-btn" data-lang="id" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:#1C1B3399; padding:7px 12px; border-radius:999px; transition:all .2s ease;">ID</button>
+  <button type="button" class="fk-lang-btn" data-lang="en" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:#1C1B3399; padding:7px 12px; border-radius:999px; transition:all .2s ease;">EN</button>
+  <button type="button" class="fk-lang-btn" data-lang="tr" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:#1C1B3399; padding:7px 12px; border-radius:999px; transition:all .2s ease;">TR</button>
 </div>
 
 <div class="breadcrumb lowercase" id="breadcrumb">

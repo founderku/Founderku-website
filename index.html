@@ -16,7 +16,7 @@
   @media(max-width:480px){
     #fkLangSwitch button{ padding:6px 8px !important; }
   }
-  body { margin: 0; background: #FBF6EE; overflow-x: hidden; width: 100%; }
+  body { margin: 0; background: #1C1B33; overflow-x: hidden; width: 100%; }
   * { box-sizing: border-box; }
   .fk-faq[open] summary .plus { transform: rotate(45deg); }
   .fk-link { transition: opacity .15s; }
@@ -58,22 +58,22 @@
   .fk-testi-card { width: 320px; flex: none; background: rgba(251,246,238,0.06); border: 1px solid rgba(251,246,238,0.14); border-radius: 20px; padding: 26px; backdrop-filter: blur(6px); }
   .fk-testi-card p { font-size: 14px; line-height: 1.7; color: #FBF6EE; margin: 0 0 18px; }
   .fk-testi-card .who { display: flex; align-items: center; gap: 10px; }
-  .fk-testi-card .avatar { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-style: italic; color: #1C1B33; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+  .fk-testi-card .avatar { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-style: italic; color: #FBF6EE; font-size: 14px; font-weight: 700; flex-shrink: 0; }
   .fk-testi-card .who strong { font-size: 13px; color: #FBF6EE; display: block; }
   .fk-testi-card .who span { font-size: 12px; color: #FBF6EE99; }
   .fk-testi-placeholder-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: #F2A623; background: #F2A62322; padding: 4px 10px; border-radius: 10px; margin-bottom: 10px; }
 
-  .fk-faq-pill { background:#FFFFFF; border-radius:18px; padding:6px 24px; margin-bottom:12px; box-shadow:0 4px 14px -8px #1C1B3326; border:none !important; }
+  .fk-faq-pill { background:#24223F; border-radius:18px; padding:6px 24px; margin-bottom:12px; box-shadow:0 4px 14px -8px rgba(0,0,0,0.35); border:none !important; }
   .fk-faq-pill:last-child { margin-bottom:0; }
 
   html.fk-custom-cursor, html.fk-custom-cursor * { cursor: none !important; }
 
-  .fk-dash { flex:1; height:3px; background:#1C1B331A; border-radius:3px; overflow:hidden; }
+  .fk-dash { flex:1; height:3px; background:#FBF6EE1A; border-radius:3px; overflow:hidden; }
   .fk-dash-fill { height:100%; width:0%; background:linear-gradient(90deg, #7A78C4, #F2A623); border-radius:3px; }
 
   .fk-grid-lines { position:absolute; inset:0; display:flex; justify-content:space-between; padding:0 8%; z-index:0; pointer-events:none; }
-  .fk-grid-line { position:relative; width:1px; height:100%; background:#1C1B330D; }
-  .fk-grid-dot { position:absolute; left:50%; top:10%; transform:translate(-50%,-50%); width:5px; height:5px; border-radius:50%; background:#1C1B3333; }
+  .fk-grid-line { position:relative; width:1px; height:100%; background:#FBF6EE0D; }
+  .fk-grid-dot { position:absolute; left:50%; top:10%; transform:translate(-50%,-50%); width:5px; height:5px; border-radius:50%; background:#FBF6EE33; }
   @media (max-width: 900px) { .fk-grid-lines { display:none; } }
 
   @media (max-width: 640px) {
@@ -96,7 +96,7 @@
     box-shadow: 0 10px 24px -6px #00000077;
     transition: transform .25s cubic-bezier(.34,1.56,.64,1), background .25s ease, border-color .25s ease, box-shadow .25s ease;
   }
-  .fk-cs-nav-btn:hover{ background: #F2A623; border-color: #F2A623; color: #1C1B33; transform: translateY(-2px) scale(1.08); box-shadow: 0 12px 28px -6px #F2A62388; }
+  .fk-cs-nav-btn:hover{ background: #F2A623; border-color: #F2A623; color: #FBF6EE; transform: translateY(-2px) scale(1.08); box-shadow: 0 12px 28px -6px #F2A62388; }
   .fk-cs-nav-btn:active{ transform: translateY(0) scale(0.96); }
   .fk-cs-nav-side{ position:absolute; top:38%; transform:translateY(-50%); z-index:6; }
   .fk-cs-nav-left{ left:2px; }
@@ -114,18 +114,18 @@
     mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
   }
   .fk-prod-nav-btn{
-    width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid #1C1B331F;
-    background: #FBF6EE; color: #1C1B33; cursor: pointer; display:flex; align-items:center; justify-content:center;
+    width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid #FBF6EE1F;
+    background: rgba(251,246,238,0.08); color: #FBF6EE; cursor: pointer; display:flex; align-items:center; justify-content:center;
     box-shadow: 0 10px 24px -10px #1C1B3340;
     transition: transform .25s cubic-bezier(.34,1.56,.64,1), background .25s ease, border-color .25s ease, color .25s ease;
   }
-  .fk-prod-nav-btn:hover{ background:#1C1B33; border-color:#1C1B33; color:#FBF6EE; transform: translateY(-2px) scale(1.06); }
+  .fk-prod-nav-btn:hover{ background:#1C1B33; border-color:#FBF6EE; color:#FBF6EE; transform: translateY(-2px) scale(1.06); }
   .fk-prod-nav-btn:active{ transform: translateY(0) scale(.96); }
   .fk-prod-nav-side{ position:absolute; top:38%; transform:translateY(-50%); z-index:6; }
   .fk-prod-nav-left{ left:-6px; }
   .fk-prod-nav-right{ right:-6px; }
   @media(max-width:640px){ .fk-prod-nav-side{ width:38px; height:38px; } }
-  .fk-prod-dot{ width:7px; height:7px; border-radius:50%; background:#1C1B3326; transition:all .3s ease; }
+  .fk-prod-dot{ width:7px; height:7px; border-radius:50%; background:#FBF6EE26; transition:all .3s ease; }
   .fk-prod-dot.is-active{ background:#E15C3E; width:22px; border-radius:4px; }
   @media (prefers-reduced-motion: reduce) {
     .fk-magnetic, .fk-spot { transition: none !important; }
@@ -148,8 +148,8 @@
   @keyframes fk-spin { to { transform: rotate(360deg); } }
   .fk-tag {
     display: inline-block;
-    background: #1C1B330D;
-    color: #1C1B33;
+    background: #FBF6EE0D;
+    color: #FBF6EE;
     font-family: 'Manrope', sans-serif;
     font-weight: 600;
     font-size: 13px;
@@ -232,17 +232,17 @@
   <div class="fk-dash"><div class="fk-dash-fill" data-seg="5"></div></div>
 </div>
 <div id="fk-cursor-inner" style="position:fixed; top:0; left:0; width:6px; height:6px; background:#E15C3E; border-radius:50%; transform:translate(-9999px,-9999px); pointer-events:none; z-index:9999;"></div>
-<div id="fk-cursor-outer" style="position:fixed; top:0; left:0; width:34px; height:34px; border:1.5px solid #1C1B3355; border-radius:50%; transform:translate(-9999px,-9999px); pointer-events:none; z-index:9998; transition:width .25s ease, height .25s ease, border-color .25s ease;"></div>
+<div id="fk-cursor-outer" style="position:fixed; top:0; left:0; width:34px; height:34px; border:1.5px solid #FBF6EE55; border-radius:50%; transform:translate(-9999px,-9999px); pointer-events:none; z-index:9998; transition:width .25s ease, height .25s ease, border-color .25s ease;"></div>
 
-<div style="font-family: 'Inter', sans-serif; background: #FBF6EE; color: #1C1B33;">
+<div style="font-family: 'Inter', sans-serif; background: #1C1B33; color: #FBF6EE;">
 
   <!-- NAV -->
   <div style="display:flex; align-items:center; justify-content:space-between; max-width:1120px; margin:0 auto; padding: 32px 26px; gap:14px; flex-wrap:wrap;">
     <div style="display:flex; align-items:center; gap:11px; flex:none;">
       <img src="images/logo-founderku.jpg" alt="Founderku" width="30" height="30" loading="eager" decoding="async" style="width:30px; height:30px; border-radius:8px; object-fit:cover;">
-      <div style="font-family:'Manrope',sans-serif; font-weight:800; font-size:19px; color:#1C1B33; letter-spacing:-0.01em;">Founderku</div>
+      <div style="font-family:'Manrope',sans-serif; font-weight:800; font-size:19px; color:#FBF6EE; letter-spacing:-0.01em;">Founderku</div>
     </div>
-    <div class="fk-nav-links" style="display:flex; align-items:center; gap:38px; font-size:15px; font-weight:500; color:#1C1B33;">
+    <div class="fk-nav-links" style="display:flex; align-items:center; gap:38px; font-size:15px; font-weight:500; color:#FBF6EE;">
       <a href="#kenapa" class="fk-link" style="text-decoration:none; color:inherit;" data-i18n="nav.kenapa">Kenapa</a>
       <a href="#layanan" class="fk-link" style="text-decoration:none; color:inherit;" data-i18n="nav.layanan">Layanan</a>
       <a href="#proses" class="fk-link" style="text-decoration:none; color:inherit;" data-i18n="nav.proses">Proses</a>
@@ -250,11 +250,11 @@
       <a href="#faq" class="fk-link" style="text-decoration:none; color:inherit;" data-i18n="nav.faq">FAQ</a>
       <a href="#generator" class="fk-link" style="text-decoration:none; color:inherit;" data-i18n="nav.generator">Generator</a>
       <a href="store.html" class="fk-link" style="text-decoration:none; color:#E15C3E; font-weight:700;" data-i18n="nav.instantFounder">Instant Founder</a>
-      <a href="#cta" class="fk-nav-cta" style="text-decoration:none; color:#1C1B33; padding:10px 20px; border-radius:999px; font-weight:600; border:1px solid #1C1B3333;" data-i18n="nav.ngobrol">Ngobrol</a>
+      <a href="#cta" class="fk-nav-cta" style="text-decoration:none; color:#FBF6EE; padding:10px 20px; border-radius:999px; font-weight:600; border:1px solid #FBF6EE33;" data-i18n="nav.ngobrol">Ngobrol</a>
     </div>
   </div>
 
-  <div id="fkLangSwitch" style="position:fixed; bottom:20px; right:20px; z-index:999999; display:flex; align-items:center; gap:4px; background:#FBF6EE; border-radius:999px; padding:5px; box-shadow:0 10px 30px -8px #1C1B334D, 0 2px 8px -2px #1C1B3326; border:1px solid #1C1B331A;">
+  <div id="fkLangSwitch" style="position:fixed; bottom:20px; right:20px; z-index:999999; display:flex; align-items:center; gap:4px; background:#FBF6EE; border-radius:999px; padding:5px; box-shadow:0 10px 30px -8px #1C1B334D, 0 2px 8px -2px #1C1B3326; border:1px solid #FBF6EE1A;">
     <button type="button" class="fk-lang-btn" data-lang="id" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:#1C1B3399; padding:7px 12px; border-radius:999px; transition:all .2s ease;">ID</button>
     <button type="button" class="fk-lang-btn" data-lang="en" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:#1C1B3399; padding:7px 12px; border-radius:999px; transition:all .2s ease;">EN</button>
     <button type="button" class="fk-lang-btn" data-lang="tr" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; color:#1C1B3399; padding:7px 12px; border-radius:999px; transition:all .2s ease;">TR</button>
@@ -262,7 +262,7 @@
 
 
   <!-- HERO -->
-  <div class="fk-hero-section" id="fkHeroSection" style="position:relative; overflow:hidden; min-height:92vh; display:flex; align-items:center; background:#FBF6EE;">
+  <div class="fk-hero-section" id="fkHeroSection" style="position:relative; overflow:hidden; min-height:92vh; display:flex; align-items:center; background:#1C1B33;">
     <div class="fk-floating-bg" style="position:absolute; inset:-40px; z-index:0; background:radial-gradient(700px 500px at 85% 0%, #F2A62333, transparent 65%), radial-gradient(600px 500px at 5% 100%, #4A479022, transparent 65%);"></div>
     <div class="fk-hero-blob hb1" data-speed="0.3"></div>
     <div class="fk-hero-blob hb2" data-speed="0.5"></div>
@@ -286,12 +286,12 @@
     </svg>
 
     <div style="max-width:800px; margin:0 auto; padding: 100px 26px 90px; text-align:center; position:relative; z-index:1;">
-    <h1 class="fk-hero-h1" id="fkHeroTitle" aria-label="Semua bisa jadi founder." data-i18n-plain="hero.h1" style="font-family:'Fraunces',serif; font-style:italic; font-weight:600; font-size:64px; line-height:1.08; letter-spacing:-0.01em; margin:0 0 26px; color:#1C1B33; position:relative; display:inline-block;">Semua bisa jadi founder.
+    <h1 class="fk-hero-h1" id="fkHeroTitle" aria-label="Semua bisa jadi founder." data-i18n-plain="hero.h1" style="font-family:'Fraunces',serif; font-style:italic; font-weight:600; font-size:64px; line-height:1.08; letter-spacing:-0.01em; margin:0 0 26px; color:#FBF6EE; position:relative; display:inline-block;">Semua bisa jadi founder.
       <svg viewBox="0 0 220 20" style="position:absolute; left:50%; bottom:-10px; transform:translateX(-50%); width:220px; height:20px;">
         <path d="M4 12 C 40 2, 70 18, 110 9 C 150 1, 180 15, 216 6" stroke="#F2A623" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="260" stroke-dashoffset="260" class="fk-underline-draw"></path>
       </svg>
     </h1>
-    <p data-i18n="hero.sub" style="font-size:18px; line-height:1.6; color:#1C1B33B3; max-width:420px; margin:0 auto 36px;">
+    <p data-i18n="hero.sub" style="font-size:18px; line-height:1.6; color:#FBF6EEB3; max-width:420px; margin:0 auto 36px;">
       Ide kamu, kami ubah jadi branding dan produk yang beneran bisa dipakai, bukan sekadar wacana atau mockup doang.
     </p>
     <div style="display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:44px;">
@@ -299,9 +299,9 @@
         <span class="fk-spot" style="position:absolute; inset:0; border-radius:inherit; background:radial-gradient(140px circle at var(--mx,50%) var(--my,50%), #FFFFFF4D, transparent 60%); opacity:0; transition:opacity .3s ease; pointer-events:none;"></span>
         <span style="position:relative; z-index:1;" data-i18n="hero.ctaMain">Ceritain Ide Kamu</span>
       </a>
-      <a href="#layanan" style="text-decoration:none; color:#1C1B33; padding:16px 4px; font-weight:600; font-size:16px;" data-i18n="hero.ctaSecondary">Lihat layanan →</a>
+      <a href="#layanan" style="text-decoration:none; color:#FBF6EE; padding:16px 4px; font-weight:600; font-size:16px;" data-i18n="hero.ctaSecondary">Lihat layanan →</a>
     </div>
-    <div style="display:inline-flex; align-items:center; gap:8px; font-size:14px; color:#1C1B3399; font-weight:500;">
+    <div style="display:inline-flex; align-items:center; gap:8px; font-size:14px; color:#FBF6EE99; font-weight:500;">
       <span style="width:6px; height:6px; border-radius:999px; background:#F2A623; flex:none;"></span>
       <span data-i18n="hero.trust">Dibangun satu orang, satu keyakinan, ide kamu layak jadi kenyataan</span>
     </div>
@@ -309,11 +309,11 @@
   </div>
 
   <!-- KENAPA FOUNDERKU -->
-  <div id="kenapa" class="fk-reveal" style="position:relative; overflow:hidden; background:#FBF6EE;">
+  <div id="kenapa" class="fk-reveal" style="position:relative; overflow:hidden; background:#1C1B33;">
     <div class="fk-floating-bg fk-float-slow" style="position:absolute; inset:-40px; z-index:0; background:radial-gradient(600px 400px at 10% 20%, #F2A6232E, transparent 65%), radial-gradient(600px 400px at 95% 90%, #4A479022, transparent 65%);"></div>
     <div style="max-width:680px; margin:0 auto; padding:90px 26px; text-align:center; position:relative; z-index:1;">
-      <div style="font-size:13px; font-weight:700; color:#1C1B3399; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:20px;" data-i18n="kenapa.eyebrow">Kenapa Founderku</div>
-      <p id="fk-kenapa-text" style="font-family:'Fraunces',serif; font-style:italic; font-weight:600; font-size:32px; line-height:1.4; color:#1C1B33; margin:0;" data-i18n-plain="kenapa.text" data-text="Ide bagus jarang mati karena kurang niat. Yang bikin berhenti itu bagian yang paling sering dilewatin: eksekusi. Founderku ada buat nutup celah itu.">
+      <div style="font-size:13px; font-weight:700; color:#FBF6EE99; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:20px;" data-i18n="kenapa.eyebrow">Kenapa Founderku</div>
+      <p id="fk-kenapa-text" style="font-family:'Fraunces',serif; font-style:italic; font-weight:600; font-size:32px; line-height:1.4; color:#FBF6EE; margin:0;" data-i18n-plain="kenapa.text" data-text="Ide bagus jarang mati karena kurang niat. Yang bikin berhenti itu bagian yang paling sering dilewatin: eksekusi. Founderku ada buat nutup celah itu.">
         Ide bagus jarang mati karena kurang niat. Yang bikin berhenti itu bagian yang paling sering dilewatin: eksekusi. Founderku ada buat nutup celah itu.
       </p>
     </div>
@@ -340,15 +340,15 @@
   <div style="max-width:1120px; margin:0 auto; padding: 0 26px 100px;" id="produkPreviewSection">
     <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-bottom:32px;">
       <div>
-        <div style="font-size:13px; font-weight:700; color:#1C1B3399; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px;" data-i18n="nav.instantFounder">Instant Founder</div>
-        <h2 class="fk-section-h2" style="font-family:'Fraunces',serif; font-weight:600; font-size:32px; color:#1C1B33; margin:0 0 10px;" data-i18n="produk.h2">beberapa website yang tinggal kamu pakai buat jadi founder.</h2>
-        <p style="font-size:15px; color:#1C1B3399; margin:0; max-width:480px; line-height:1.6;" data-i18n="produk.sub">bukan mockup. ini produk siap pakai yang sudah kami rancang lengkap, dari desain sampai brand-nya.</p>
+        <div style="font-size:13px; font-weight:700; color:#FBF6EE99; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px;" data-i18n="nav.instantFounder">Instant Founder</div>
+        <h2 class="fk-section-h2" style="font-family:'Fraunces',serif; font-weight:600; font-size:32px; color:#FBF6EE; margin:0 0 10px;" data-i18n="produk.h2">beberapa website yang tinggal kamu pakai buat jadi founder.</h2>
+        <p style="font-size:15px; color:#FBF6EE99; margin:0; max-width:480px; line-height:1.6;" data-i18n="produk.sub">bukan mockup. ini produk siap pakai yang sudah kami rancang lengkap, dari desain sampai brand-nya.</p>
       </div>
       <a href="store.html" style="text-decoration:none; font-size:14px; font-weight:700; color:#E15C3E; white-space:nowrap;" data-i18n="produk.link">lihat semua produk →</a>
     </div>
     <div style="position:relative;">
       <div class="fk-prod-slider" id="produkPreviewGrid" style="display:flex; gap:22px; overflow-x:auto; scroll-snap-type:x mandatory; touch-action:pan-y; padding:6px 6px 20px; margin:0 -6px; -webkit-overflow-scrolling:touch; scrollbar-width:none;">
-        <div style="text-align:center; padding:30px 0; color:#1C1B3399; font-size:14px;" data-i18n="produk.loading">memuat produk...</div>
+        <div style="text-align:center; padding:30px 0; color:#FBF6EE99; font-size:14px;" data-i18n="produk.loading">memuat produk...</div>
       </div>
       <button type="button" id="fkPpPrev" aria-label="sebelumnya" class="fk-prod-nav-btn fk-prod-nav-side fk-prod-nav-left">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -367,19 +367,19 @@
     function cardHTML(p){
       const catLabel = p.categoryLabel || p.category;
       const thumbInner = p.thumbnail && !p.thumbnail.includes('placeholder')
-        ? `<img src="${p.thumbnail}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;object-position:top;" onerror="this.parentElement.innerHTML='<span style=&quot;font-size:12px;color:#1C1B3399;font-weight:600;&quot;>coming soon</span>'">`
-        : `<span style="font-size:12px; color:#1C1B3399; font-weight:600;">coming soon</span>`;
+        ? `<img src="${p.thumbnail}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;object-position:top;" onerror="this.parentElement.innerHTML='<span style=&quot;font-size:12px;color:#FBF6EE99;font-weight:600;&quot;>coming soon</span>'">`
+        : `<span style="font-size:12px; color:#FBF6EE99; font-weight:600;">coming soon</span>`;
       return `
       <div class="fk-prod-card">
-        <a href="product.html?slug=${encodeURIComponent(p.slug)}" style="text-decoration:none; color:inherit; display:block; background:#FBF6EE; border:1px solid #1C1B331F; border-radius:18px; overflow:hidden; transition:transform .2s ease; height:100%;">
-          <div style="height:150px; background:#F2ECDD; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+        <a href="product.html?slug=${encodeURIComponent(p.slug)}" style="text-decoration:none; color:inherit; display:block; background:rgba(251,246,238,0.05); border:1px solid #FBF6EE1F; border-radius:18px; overflow:hidden; transition:transform .2s ease; height:100%;">
+          <div style="height:150px; background:#24223F; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
             <div style="position:absolute; top:12px; left:12px; background:#1C1B33; color:#FBF6EE; font-size:10.5px; font-weight:700; padding:5px 11px 5px 17px; border-radius:3px 12px 12px 3px; z-index:1;">${catLabel}</div>
             ${thumbInner}
           </div>
           <div style="padding:18px 20px 20px;">
             <div style="font-size:11px; font-weight:700; color:#E15C3E; text-transform:uppercase; letter-spacing:0.05em;">${catLabel}</div>
-            <div style="font-family:'Fraunces',serif; font-size:19px; font-weight:600; color:#1C1B33; margin-top:6px;">${p.name}</div>
-            <div style="font-size:13px; color:#1C1B3399; margin-top:10px; font-weight:700;">${p.priceLabel || ('Rp ' + Number(p.price).toLocaleString('id-ID'))}</div>
+            <div style="font-family:'Fraunces',serif; font-size:19px; font-weight:600; color:#FBF6EE; margin-top:6px;">${p.name}</div>
+            <div style="font-size:13px; color:#FBF6EE99; margin-top:10px; font-weight:700;">${p.priceLabel || ('Rp ' + Number(p.price).toLocaleString('id-ID'))}</div>
           </div>
         </a>
       </div>`;
@@ -452,20 +452,20 @@
   <!-- LAYANAN -->
   <div id="layanan" class="fk-reveal" style="max-width:1120px; margin:0 auto; padding: 100px 26px;">
     <div style="max-width:560px; margin-bottom:56px;">
-      <div style="font-size:13px; font-weight:700; color:#1C1B3399; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px;" data-i18n="nav.layanan">Layanan</div>
-      <h2 class="fk-section-h2" style="font-family:'Fraunces',serif; font-weight:700; font-size:36px; letter-spacing:-0.015em; margin:0 0 14px; color:#1C1B33;" data-i18n="layanan.h2">Dua langkah, satu tujuan.</h2>
-      <p style="font-size:16px; line-height:1.6; color:#1C1B3399; margin:0;" data-i18n="layanan.sub">Identitas yang bikin orang percaya di detik pertama. Produk yang bisa langsung dicoba orang beneran, bukan cuma dipresentasikan.</p>
+      <div style="font-size:13px; font-weight:700; color:#FBF6EE99; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px;" data-i18n="nav.layanan">Layanan</div>
+      <h2 class="fk-section-h2" style="font-family:'Fraunces',serif; font-weight:700; font-size:36px; letter-spacing:-0.015em; margin:0 0 14px; color:#FBF6EE;" data-i18n="layanan.h2">Dua langkah, satu tujuan.</h2>
+      <p style="font-size:16px; line-height:1.6; color:#FBF6EE99; margin:0;" data-i18n="layanan.sub">Identitas yang bikin orang percaya di detik pertama. Produk yang bisa langsung dicoba orang beneran, bukan cuma dipresentasikan.</p>
     </div>
     <div class="fk-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
       <div class="fk-tilt-l fk-glow-card fk-magnetic fk-tilt3d" style="border-radius:22px;">
-        <div class="fk-glow-card-inner" style="background:linear-gradient(135deg, #FBE6BA, #FFFCF5); border-radius:20px; padding:44px; box-shadow:0 20px 40px -20px #1C1B3326, 0 4px 12px -4px #1C1B3314;">
+        <div class="fk-glow-card-inner" style="background:linear-gradient(135deg, rgba(242,166,35,0.10), rgba(251,246,238,0.03)); border:1px solid rgba(251,246,238,0.12); border-radius:20px; padding:44px; box-shadow:0 20px 40px -20px rgba(0,0,0,0.4), 0 4px 12px -4px rgba(0,0,0,0.25);">
         <span class="fk-spot" style="position:absolute; inset:0; border-radius:inherit; background:radial-gradient(180px circle at var(--mx,50%) var(--my,50%), #FFFFFF66, transparent 60%); opacity:0; transition:opacity .3s ease; pointer-events:none;"></span>
-        <div style="width:38px; height:38px; border-radius:10px; border:1.5px solid #1C1B33; margin-bottom:26px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 1px #1C1B330D; position:relative; z-index:1;">
+        <div style="width:38px; height:38px; border-radius:10px; border:1.5px solid #FBF6EE; margin-bottom:26px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 1px #1C1B330D; position:relative; z-index:1;">
           <svg width="16" height="16" viewBox="0 0 24 24" style="filter:drop-shadow(0 0 6px #F2A62399);"><path d="M12 2l2.6 6.6L21 10l-5.2 4.3L17.4 21 12 17.3 6.6 21l1.6-6.7L3 10l6.4-1.4z" fill="#F2A623"/></svg>
         </div>
-        <h3 style="font-family:'Fraunces',serif; font-weight:700; font-size:24px; margin:0 0 12px; color:#1C1B33; position:relative; z-index:1;" data-i18n="layanan.branding.title">Branding</h3>
-        <p style="font-size:15px; line-height:1.7; color:#1C1B3399; margin:0 0 22px; position:relative; z-index:1;" data-i18n="layanan.branding.desc">Nama, logo, sampai suara brand kamu, dirancang biar orang percaya di detik pertama mereka lihat, bukan pelan-pelan.</p>
-        <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; font-size:14px; color:#1C1B3399; position:relative; z-index:1;">
+        <h3 style="font-family:'Fraunces',serif; font-weight:700; font-size:24px; margin:0 0 12px; color:#FBF6EE; position:relative; z-index:1;" data-i18n="layanan.branding.title">Branding</h3>
+        <p style="font-size:15px; line-height:1.7; color:#FBF6EE99; margin:0 0 22px; position:relative; z-index:1;" data-i18n="layanan.branding.desc">Nama, logo, sampai suara brand kamu, dirancang biar orang percaya di detik pertama mereka lihat, bukan pelan-pelan.</p>
+        <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; font-size:14px; color:#FBF6EE99; position:relative; z-index:1;">
           <li data-i18n="layanan.branding.li1">Identitas visual &amp; logo</li>
           <li data-i18n="layanan.branding.li2">Brand guideline</li>
           <li data-i18n="layanan.branding.li3">Nama &amp; tagline</li>
@@ -473,14 +473,14 @@
         </div>
       </div>
       <div class="fk-tilt-r fk-glow-card fk-magnetic fk-tilt3d" style="border-radius:22px;">
-        <div class="fk-glow-card-inner" style="background:linear-gradient(135deg, #DEDBF2, #F6F5FB); border-radius:20px; padding:44px; box-shadow:0 20px 40px -20px #1C1B3326, 0 4px 12px -4px #1C1B3314;">
+        <div class="fk-glow-card-inner" style="background:linear-gradient(135deg, rgba(122,120,196,0.12), rgba(251,246,238,0.03)); border:1px solid rgba(251,246,238,0.12); border-radius:20px; padding:44px; box-shadow:0 20px 40px -20px rgba(0,0,0,0.4), 0 4px 12px -4px rgba(0,0,0,0.25);">
         <span class="fk-spot" style="position:absolute; inset:0; border-radius:inherit; background:radial-gradient(180px circle at var(--mx,50%) var(--my,50%), #FFFFFF66, transparent 60%); opacity:0; transition:opacity .3s ease; pointer-events:none;"></span>
-        <div style="width:38px; height:38px; border-radius:10px; border:1.5px solid #1C1B33; margin-bottom:26px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 1px #1C1B330D; position:relative; z-index:1;">
+        <div style="width:38px; height:38px; border-radius:10px; border:1.5px solid #FBF6EE; margin-bottom:26px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 1px #1C1B330D; position:relative; z-index:1;">
           <svg width="16" height="16" viewBox="0 0 24 24" style="filter:drop-shadow(0 0 6px #F2A62399);"><path d="M12 2l2.6 6.6L21 10l-5.2 4.3L17.4 21 12 17.3 6.6 21l1.6-6.7L3 10l6.4-1.4z" fill="#F2A623"/></svg>
         </div>
-        <h3 style="font-family:'Fraunces',serif; font-weight:700; font-size:24px; margin:0 0 12px; color:#1C1B33; position:relative; z-index:1;" data-i18n="layanan.mvp.title">MVP</h3>
-        <p style="font-size:15px; line-height:1.7; color:#1C1B3399; margin:0 0 22px; position:relative; z-index:1;" data-i18n="layanan.mvp.desc">Produk versi awal yang beneran berfungsi, bukan wireframe. Siap divalidasi langsung ke pengguna dan investor pertama kamu.</p>
-        <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; font-size:14px; color:#1C1B3399; position:relative; z-index:1;">
+        <h3 style="font-family:'Fraunces',serif; font-weight:700; font-size:24px; margin:0 0 12px; color:#FBF6EE; position:relative; z-index:1;" data-i18n="layanan.mvp.title">MVP</h3>
+        <p style="font-size:15px; line-height:1.7; color:#FBF6EE99; margin:0 0 22px; position:relative; z-index:1;" data-i18n="layanan.mvp.desc">Produk versi awal yang beneran berfungsi, bukan wireframe. Siap divalidasi langsung ke pengguna dan investor pertama kamu.</p>
+        <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; font-size:14px; color:#FBF6EE99; position:relative; z-index:1;">
           <li data-i18n="layanan.mvp.li1">Desain produk (UI/UX)</li>
           <li data-i18n="layanan.mvp.li2">Website atau aplikasi fungsional</li>
           <li data-i18n="layanan.mvp.li3">Siap demo ke user &amp; investor</li>
@@ -506,7 +506,7 @@
       </div>
       <div style="border-radius:24px; padding:20px 0; display:flex; flex-direction:column; align-items:center;">
         <div style="width:44px; height:44px; border-radius:999px; background:#F2A623; display:flex; align-items:center; justify-content:center; margin-bottom:18px; box-shadow:0 6px 16px -4px #F2A62366;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 7l8-4 8 4-8 4-8-4z" stroke="#1C1B33" stroke-width="2" stroke-linejoin="round"/><path d="M4 7v10l8 4 8-4V7" stroke="#1C1B33" stroke-width="2" stroke-linejoin="round"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 7l8-4 8 4-8 4-8-4z" stroke="#FBF6EE" stroke-width="2" stroke-linejoin="round"/><path d="M4 7v10l8 4 8-4V7" stroke="#FBF6EE" stroke-width="2" stroke-linejoin="round"/></svg>
         </div>
         <div style="font-family:'Fraunces',serif; font-weight:700; font-size:clamp(48px, 7vw, 88px); letter-spacing:-0.02em; color:#F2A623; line-height:1; text-shadow:0 4px 20px #F2A62366; white-space:nowrap;">2</div>
         <div style="font-size:14px; font-weight:600; color:#FBF6EEAA; margin-top:12px;" data-i18n="stats.packages">paket layanan</div>
@@ -598,48 +598,48 @@
   <!-- FAQ -->
   <div id="faq" class="fk-reveal" style="position:relative; overflow:hidden; max-width:100%; margin:0 auto; padding:100px 26px;">
     <svg viewBox="0 0 1440 90" preserveAspectRatio="none" style="position:absolute; top:0; left:0; width:100%; height:70px; z-index:0; display:block; pointer-events:none;">
-      <path d="M0,45 C240,10 480,80 720,45 C960,10 1200,75 1440,30 L1440,0 L0,0 Z" fill="#1C1B33"></path>
+      <path d="M0,45 C240,10 480,80 720,45 C960,10 1200,75 1440,30 L1440,0 L0,0 Z" fill="#FBF6EE"></path>
     </svg>
     <div style="max-width:800px; margin:0 auto; position:relative; z-index:1;">
     <div style="text-align:center; margin-bottom:52px;">
-      <div style="font-size:13px; font-weight:700; color:#1C1B3399; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px;" data-i18n="faq.eyebrow">FAQ</div>
-      <h2 class="fk-section-h2" style="font-family:'Fraunces',serif; font-weight:700; font-size:36px; letter-spacing:-0.015em; margin:0; color:#1C1B33;" data-i18n="faq.h2">Pertanyaan yang sering muncul</h2>
+      <div style="font-size:13px; font-weight:700; color:#FBF6EE99; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px;" data-i18n="faq.eyebrow">FAQ</div>
+      <h2 class="fk-section-h2" style="font-family:'Fraunces',serif; font-weight:700; font-size:36px; letter-spacing:-0.015em; margin:0; color:#FBF6EE;" data-i18n="faq.h2">Pertanyaan yang sering muncul</h2>
     </div>
     <div style="display:flex; flex-direction:column;">
       <details class="fk-faq fk-faq-pill">
-        <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; padding:20px 0; font-family:'Manrope',sans-serif; font-weight:700; font-size:16px; color:#1C1B33;">
+        <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; padding:20px 0; font-family:'Manrope',sans-serif; font-weight:700; font-size:16px; color:#FBF6EE;">
           <span data-i18n="faq.q1">Aku gak punya background teknis, bisa gak?</span>
-          <span class="plus" style="font-size:20px; color:#1C1B3366; transition:transform 0.2s; font-weight:400;">+</span>
+          <span class="plus" style="font-size:20px; color:#FBF6EE66; transition:transform 0.2s; font-weight:400;">+</span>
         </summary>
-        <p style="margin:0 0 22px; font-size:15px; line-height:1.7; color:#1C1B3399;" data-i18n="faq.a1">Bisa banget, dan ini justru kenapa Founderku ada. Fokus aja ke ide dan visi kamu, kami yang urus branding sampai eksekusi produknya sampai kelar.</p>
+        <p style="margin:0 0 22px; font-size:15px; line-height:1.7; color:#FBF6EE99;" data-i18n="faq.a1">Bisa banget, dan ini justru kenapa Founderku ada. Fokus aja ke ide dan visi kamu, kami yang urus branding sampai eksekusi produknya sampai kelar.</p>
       </details>
       <details class="fk-faq fk-faq-pill">
-        <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; padding:20px 0; font-family:'Manrope',sans-serif; font-weight:700; font-size:16px; color:#1C1B33;">
+        <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; padding:20px 0; font-family:'Manrope',sans-serif; font-weight:700; font-size:16px; color:#FBF6EE;">
           <span data-i18n="faq.q2">Berapa lama proses dari ide sampai MVP jadi?</span>
-          <span class="plus" style="font-size:20px; color:#1C1B3366; transition:transform 0.2s; font-weight:400;">+</span>
+          <span class="plus" style="font-size:20px; color:#FBF6EE66; transition:transform 0.2s; font-weight:400;">+</span>
         </summary>
-        <p style="margin:0 0 22px; font-size:15px; line-height:1.7; color:#1C1B3399;" data-i18n="faq.a2">Rata-rata 4-6 minggu, mulai dari ngobrol awal sampai produk siap didemokan ke user atau investor pertama kamu.</p>
+        <p style="margin:0 0 22px; font-size:15px; line-height:1.7; color:#FBF6EE99;" data-i18n="faq.a2">Rata-rata 4-6 minggu, mulai dari ngobrol awal sampai produk siap didemokan ke user atau investor pertama kamu.</p>
       </details>
       <details class="fk-faq fk-faq-pill">
-        <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; padding:20px 0; font-family:'Manrope',sans-serif; font-weight:700; font-size:16px; color:#1C1B33;">
+        <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; padding:20px 0; font-family:'Manrope',sans-serif; font-weight:700; font-size:16px; color:#FBF6EE;">
           <span data-i18n="faq.q3">Apa bedanya paket Branding dan MVP?</span>
-          <span class="plus" style="font-size:20px; color:#1C1B3366; transition:transform 0.2s; font-weight:400;">+</span>
+          <span class="plus" style="font-size:20px; color:#FBF6EE66; transition:transform 0.2s; font-weight:400;">+</span>
         </summary>
-        <p style="margin:0 0 22px; font-size:15px; line-height:1.7; color:#1C1B3399;" data-i18n="faq.a3">Branding fokus bikin orang percaya sejak lihat pertama, MVP fokus bikin produkmu bisa dicoba beneran. Bisa ambil salah satu, atau dua-duanya sekaligus biar makin lengkap.</p>
+        <p style="margin:0 0 22px; font-size:15px; line-height:1.7; color:#FBF6EE99;" data-i18n="faq.a3">Branding fokus bikin orang percaya sejak lihat pertama, MVP fokus bikin produkmu bisa dicoba beneran. Bisa ambil salah satu, atau dua-duanya sekaligus biar makin lengkap.</p>
       </details>
       <details class="fk-faq fk-faq-pill">
-        <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; padding:20px 0; font-family:'Manrope',sans-serif; font-weight:700; font-size:16px; color:#1C1B33;">
+        <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; padding:20px 0; font-family:'Manrope',sans-serif; font-weight:700; font-size:16px; color:#FBF6EE;">
           <span data-i18n="faq.q4">Setelah MVP jadi, apakah Founderku masih bisa bantu?</span>
-          <span class="plus" style="font-size:20px; color:#1C1B3366; transition:transform 0.2s; font-weight:400;">+</span>
+          <span class="plus" style="font-size:20px; color:#FBF6EE66; transition:transform 0.2s; font-weight:400;">+</span>
         </summary>
-        <p style="margin:0 0 22px; font-size:15px; line-height:1.7; color:#1C1B3399;" data-i18n="faq.a4">Bisa, dan memang di situ Founderku paling sering kepakai. Banyak klien lanjut ke tahap pengembangan produk atau growth begitu MVP-nya tervalidasi.</p>
+        <p style="margin:0 0 22px; font-size:15px; line-height:1.7; color:#FBF6EE99;" data-i18n="faq.a4">Bisa, dan memang di situ Founderku paling sering kepakai. Banyak klien lanjut ke tahap pengembangan produk atau growth begitu MVP-nya tervalidasi.</p>
       </details>
       <details class="fk-faq fk-faq-pill">
-        <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; padding:20px 0; font-family:'Manrope',sans-serif; font-weight:700; font-size:16px; color:#1C1B33;">
+        <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; padding:20px 0; font-family:'Manrope',sans-serif; font-weight:700; font-size:16px; color:#FBF6EE;">
           <span data-i18n="faq.q5">Gimana cara mulainya?</span>
-          <span class="plus" style="font-size:20px; color:#1C1B3366; transition:transform 0.2s; font-weight:400;">+</span>
+          <span class="plus" style="font-size:20px; color:#FBF6EE66; transition:transform 0.2s; font-weight:400;">+</span>
         </summary>
-        <p style="margin:0 0 22px; font-size:15px; line-height:1.7; color:#1C1B3399;" data-i18n="faq.a5">Gampang. Klik tombol Ceritain Ide Kamu, cerita 30 menit gratis, dan kami bantu petakan langkah pertama yang paling masuk akal buat kamu.</p>
+        <p style="margin:0 0 22px; font-size:15px; line-height:1.7; color:#FBF6EE99;" data-i18n="faq.a5">Gampang. Klik tombol Ceritain Ide Kamu, cerita 30 menit gratis, dan kami bantu petakan langkah pertama yang paling masuk akal buat kamu.</p>
       </details>
     </div>
     </div>
@@ -647,20 +647,20 @@
 
   <!-- GENERATOR -->
   <style>
-    .fk-gen-field { font-family:'Manrope',sans-serif; font-size:15px; font-weight:600; color:#1C1B33; background:#FFFCF5; border:1.5px solid #1C1B3326; border-radius:14px; padding:14px 16px; width:100%; box-sizing:border-box; outline:none; transition:border-color .2s ease, box-shadow .2s ease; appearance:none; -webkit-appearance:none; }
+    .fk-gen-field { font-family:'Manrope',sans-serif; font-size:15px; font-weight:600; color:#FBF6EE; background:#24223F; border:1.5px solid #FBF6EE26; border-radius:14px; padding:14px 16px; width:100%; box-sizing:border-box; outline:none; transition:border-color .2s ease, box-shadow .2s ease; appearance:none; -webkit-appearance:none; }
     .fk-gen-field:focus { border-color:#F2A623; box-shadow:0 0 0 3px #F2A62333; }
-    select.fk-gen-field { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231C1B33' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 16px center; padding-right:40px; cursor:pointer; }
+    select.fk-gen-field { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23FBF6EE' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 16px center; padding-right:40px; cursor:pointer; }
     .fk-gen-vibes { display:flex; flex-wrap:wrap; gap:10px; }
     .fk-gen-vibe { position:relative; cursor:pointer; }
     .fk-gen-vibe input { position:absolute; opacity:0; pointer-events:none; }
-    .fk-gen-vibe span { display:inline-block; font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; color:#1C1B33; background:#FFFCF5; border:1.5px solid #1C1B3326; border-radius:999px; padding:10px 20px; transition:all .2s ease; }
-    .fk-gen-vibe:hover span { border-color:#1C1B3366; transform:translateY(-1px); }
-    .fk-gen-vibe input:checked + span { background:#1C1B33; color:#FBF6EE; border-color:#1C1B33; box-shadow:0 8px 20px -8px #1C1B3366; }
-    .fk-gen-label { display:block; font-size:13px; font-weight:700; color:#1C1B3399; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:10px; }
-    .fk-gen-result { opacity:0; transform:translateY(18px) rotate(var(--tilt,0deg)); animation:fk-gen-in .55s cubic-bezier(.22,.9,.35,1.2) forwards; border-radius:20px; background:#FFFCF5; box-shadow:0 20px 40px -20px #1C1B3326, 0 4px 12px -4px #1C1B3314; border:1px solid #1C1B3312; padding:30px 26px; display:flex; flex-direction:column; gap:14px; position:relative; overflow:hidden; transition:transform .3s ease, box-shadow .3s ease; }
+    .fk-gen-vibe span { display:inline-block; font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; color:#FBF6EE; background:#24223F; border:1.5px solid #FBF6EE26; border-radius:999px; padding:10px 20px; transition:all .2s ease; }
+    .fk-gen-vibe:hover span { border-color:#FBF6EE66; transform:translateY(-1px); }
+    .fk-gen-vibe input:checked + span { background:#1C1B33; color:#FBF6EE; border-color:#FBF6EE; box-shadow:0 8px 20px -8px #1C1B3366; }
+    .fk-gen-label { display:block; font-size:13px; font-weight:700; color:#FBF6EE99; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:10px; }
+    .fk-gen-result { opacity:0; transform:translateY(18px) rotate(var(--tilt,0deg)); animation:fk-gen-in .55s cubic-bezier(.22,.9,.35,1.2) forwards; border-radius:20px; background:#24223F; box-shadow:0 20px 40px -20px #1C1B3326, 0 4px 12px -4px #1C1B3314; border:1px solid #FBF6EE12; padding:30px 26px; display:flex; flex-direction:column; gap:14px; position:relative; overflow:hidden; transition:transform .3s ease, box-shadow .3s ease; }
     .fk-gen-result:hover { transform:translateY(-4px) rotate(0deg) !important; box-shadow:0 28px 50px -22px #1C1B3340, 0 6px 16px -6px #1C1B331F; }
     @keyframes fk-gen-in { to { opacity:1; transform:translateY(0) rotate(var(--tilt,0deg)); } }
-    .fk-gen-swatch { width:34px; height:34px; border-radius:10px; border:1.5px solid #1C1B331F; box-shadow:inset 0 0 0 1px #FFFFFF40; }
+    .fk-gen-swatch { width:34px; height:34px; border-radius:10px; border:1.5px solid #FBF6EE1F; box-shadow:inset 0 0 0 1px #FFFFFF40; }
     .fk-gen-cta { display:inline-flex; align-items:center; gap:8px; text-decoration:none; font-family:'Manrope',sans-serif; font-weight:700; font-size:14px; color:#FBF6EE; background:linear-gradient(180deg, #2b2a4a, #1C1B33); padding:12px 22px; border-radius:999px; transition:transform .25s ease, box-shadow .25s ease; box-shadow:0 10px 24px -10px #1C1B3355; align-self:flex-start; }
     .fk-gen-cta:hover { transform:translateY(-2px); box-shadow:0 14px 30px -10px #1C1B3377; }
     .fk-gen-btn { font-family:'Manrope',sans-serif; cursor:pointer; border:none; }
@@ -671,13 +671,13 @@
     <div class="fk-floating-bg fk-float-slow" style="position:absolute; bottom:-80px; left:-100px; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle at 60% 40%, #E15C3E33, transparent 70%); filter:blur(12px); pointer-events:none;"></div>
     <div style="max-width:1120px; margin:0 auto; padding:100px 26px; position:relative; z-index:1;">
       <div style="max-width:620px; margin:0 auto 52px; text-align:center;">
-        <div style="font-size:13px; font-weight:700; color:#1C1B3399; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px;" data-i18n="nav.generator">Generator</div>
-        <h2 class="fk-section-h2" style="font-family:'Fraunces',serif; font-weight:700; font-size:36px; letter-spacing:-0.015em; margin:0 0 14px; color:#1C1B33;" data-i18n="gen.h2">Coba lihat brand kamu jadi, sekarang juga.</h2>
-        <p style="font-size:16px; line-height:1.6; color:#1C1B3399; margin:0;" data-i18n="gen.sub">Pilih industri, ceritain target user kamu, klik generate. Nama, tagline, sama warna langsung muncul di depan mata. Gratis, cuma buat mancing ide, tanpa daftar apa pun.</p>
+        <div style="font-size:13px; font-weight:700; color:#FBF6EE99; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px;" data-i18n="nav.generator">Generator</div>
+        <h2 class="fk-section-h2" style="font-family:'Fraunces',serif; font-weight:700; font-size:36px; letter-spacing:-0.015em; margin:0 0 14px; color:#FBF6EE;" data-i18n="gen.h2">Coba lihat brand kamu jadi, sekarang juga.</h2>
+        <p style="font-size:16px; line-height:1.6; color:#FBF6EE99; margin:0;" data-i18n="gen.sub">Pilih industri, ceritain target user kamu, klik generate. Nama, tagline, sama warna langsung muncul di depan mata. Gratis, cuma buat mancing ide, tanpa daftar apa pun.</p>
       </div>
 
       <div class="fk-glow-card fk-tilt-l" style="max-width:760px; margin:0 auto 44px; border-radius:22px;">
-        <div class="fk-glow-card-inner" style="background:linear-gradient(135deg, #FBE6BA, #FFFCF5); border-radius:20px; padding:40px;">
+        <div class="fk-glow-card-inner" style="background:linear-gradient(135deg, rgba(242,166,35,0.10), rgba(251,246,238,0.03)); border:1px solid rgba(251,246,238,0.12); border-radius:20px; padding:40px;">
           <form id="fk-gen-form" style="display:flex; flex-direction:column; gap:24px;">
             <div class="fk-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
               <div>
@@ -716,7 +716,7 @@
       </div>
 
       <div id="fk-gen-results" class="fk-grid-3" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; max-width:1000px; margin:0 auto;" aria-live="polite"></div>
-      <p id="fk-gen-hint" style="display:none; text-align:center; font-size:14px; color:#1C1B3380; margin:28px 0 0;" data-i18n="gen.hint">Belum sreg? Klik generate lagi. Hasilnya beda terus. Atau langsung aja ngobrol bareng kita.</p>
+      <p id="fk-gen-hint" style="display:none; text-align:center; font-size:14px; color:#FBF6EE80; margin:28px 0 0;" data-i18n="gen.hint">Belum sreg? Klik generate lagi. Hasilnya beda terus. Atau langsung aja ngobrol bareng kita.</p>
     </div>
   </div>
 
@@ -806,7 +806,7 @@
         var swatches = colors.map(function (c) {
           return '<div style="display:flex; flex-direction:column; align-items:center; gap:6px;">' +
                    '<span class="fk-gen-swatch" style="background:' + c[1] + ';" title="' + c[0] + ' ' + c[1] + '"></span>' +
-                   '<span style="font-size:11px; font-weight:600; color:#1C1B3380;">' + c[1] + '</span>' +
+                   '<span style="font-size:11px; font-weight:600; color:#FBF6EE80;">' + c[1] + '</span>' +
                  '</div>';
         }).join('');
 
@@ -814,8 +814,8 @@
         cards.push(
           '<div class="fk-gen-result" style="--tilt:' + tilt + '; animation-delay:' + (i * 0.12) + 's;">' +
             '<div style="font-size:12px; font-weight:700; color:#F2A623; text-transform:uppercase; letter-spacing:0.08em;">Opsi ' + (i + 1) + '</div>' +
-            '<div style="font-family:\'Fraunces\',serif; font-weight:700; font-size:27px; letter-spacing:-0.01em; color:#1C1B33; line-height:1.15;">' + esc(name) + '</div>' +
-            '<p style="margin:0; font-size:15px; line-height:1.6; color:#1C1B3399; flex-grow:1;">&ldquo;' + esc(tagline) + '&rdquo;</p>' +
+            '<div style="font-family:\'Fraunces\',serif; font-weight:700; font-size:27px; letter-spacing:-0.01em; color:#FBF6EE; line-height:1.15;">' + esc(name) + '</div>' +
+            '<p style="margin:0; font-size:15px; line-height:1.6; color:#FBF6EE99; flex-grow:1;">&ldquo;' + esc(tagline) + '&rdquo;</p>' +
             '<div style="display:flex; gap:14px;">' + swatches + '</div>' +
             '<a class="fk-gen-cta" href="https://wa.me/' + WA_NUMBER + '?text=' + waText + '" target="_blank" rel="noopener">Suka ini? Chat kita <span aria-hidden="true">&rarr;</span></a>' +
           '</div>'
@@ -856,9 +856,9 @@
 
   <!-- FOOTER -->
   <div style="padding:32px 26px;">
-    <div style="max-width:1120px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; font-size:14px; color:#1C1B3399;">
+    <div style="max-width:1120px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; font-size:14px; color:#FBF6EE99;">
       <div data-i18n="footer.copy">Founderku · 2026</div>
-      <a href="https://www.instagram.com/founderku?igsh=OHZlcGd4emhoczNv" target="_blank" rel="noopener" class="fk-link fk-footer-link" style="color:#1C1B33; text-decoration:none; font-weight:600;">Instagram @founderku</a>
+      <a href="https://www.instagram.com/founderku?igsh=OHZlcGd4emhoczNv" target="_blank" rel="noopener" class="fk-link fk-footer-link" style="color:#FBF6EE; text-decoration:none; font-weight:600;">Instagram @founderku</a>
     </div>
   </div>
 
@@ -1319,15 +1319,15 @@
 
           return (
             '<div class="fk-proj-card">' +
-              '<div class="fk-proj-inner" style="background:#FBF6EE; border-radius:22px; padding:48px; position:relative; overflow:hidden; height:100%;">' +
+              '<div class="fk-proj-inner" style="background:rgba(251,246,238,0.05); border:1px solid rgba(251,246,238,0.14); border-radius:22px; padding:48px; position:relative; overflow:hidden; height:100%;">' +
                 '<svg class="fk-circuit-draw" viewBox="0 0 720 2" style="position:absolute; top:0; left:0; width:100%; height:2px;" preserveAspectRatio="none">' +
                   '<line x1="0" y1="1" x2="720" y2="1" stroke="#F2A623" stroke-width="2" stroke-dasharray="720" stroke-dashoffset="720"></line>' +
                 '</svg>' +
                 '<div style="display:flex; align-items:center; gap:18px; margin-bottom:28px; flex-wrap:wrap;">' + logoHtml + '</div>' +
-                '<p style="font-size:16px; line-height:1.7; color:#1C1B3399; margin:0 0 26px;">' + escapeHtml(pickLangText(item.description)) + '</p>' +
+                '<p style="font-size:16px; line-height:1.7; color:#FBF6EE99; margin:0 0 26px;">' + escapeHtml(pickLangText(item.description)) + '</p>' +
                 '<div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:30px;">' + tagsHtml + '</div>' +
-                '<div style="font-size:14px; color:#1C1B3399; margin-bottom:24px;">' + escapeHtml(pickLangText(item.note)) + '</div>' +
-                '<a href="' + escapeHtml(item.linkUrl) + '" ' + linkAttrs + ' class="fk-magnetic" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px; color:#1C1B33; font-weight:700; font-size:14px; border-bottom:2px solid #F2A623; padding-bottom:2px; position:relative;">' +
+                '<div style="font-size:14px; color:#FBF6EE99; margin-bottom:24px;">' + escapeHtml(pickLangText(item.note)) + '</div>' +
+                '<a href="' + escapeHtml(item.linkUrl) + '" ' + linkAttrs + ' class="fk-magnetic" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px; color:#FBF6EE; font-weight:700; font-size:14px; border-bottom:2px solid #F2A623; padding-bottom:2px; position:relative;">' +
                   '<span class="fk-spot" style="position:absolute; inset:0; border-radius:inherit; background:radial-gradient(140px circle at var(--mx,50%) var(--my,50%), #F2A62333, transparent 60%); opacity:0; transition:opacity .3s ease; pointer-events:none;"></span>' +
                   '<span style="position:relative; z-index:1;">' + escapeHtml(pickLangText(item.linkLabel) || csDict().linkLabel) + ' &rarr;</span>' +
                 '</a>' +
