@@ -45,15 +45,40 @@
       "id": "say-cheese",
       "name": "Say Cheese",
       "logo": "images/case-studies/say-cheese-logo.png",
-      "description": "Say Cheese adalah brand handcrafted cheesecake & chiffon cake made-to-order di Şişli, Istanbul. Kami bangun ulang website-nya dari Wix jadi custom website lengkap dengan animasi interaktif dan domain sendiri.",
-      "tags": [
-        "Custom Website",
-        "Brand Identity",
-        "Domain & Deployment"
-      ],
-      "note": "4 halaman custom, animasi interaktif, dan setup domain dari nol sampai online.",
+      "roundLogo": false,
+      "description": {
+        "id": "Say Cheese adalah brand handcrafted cheesecake & chiffon cake made-to-order di Şişli, Istanbul. Kami bangun ulang website-nya dari Wix jadi custom website lengkap dengan animasi interaktif dan domain sendiri.",
+        "en": "Say Cheese is a handcrafted cheesecake & chiffon cake made-to-order brand in Şişli, Istanbul. We rebuilt their website from Wix into a custom website complete with interactive animations and their own domain.",
+        "tr": "Say Cheese, Şişli, İstanbul'da siparişe göre hazırlanan el yapımı cheesecake ve chiffon cake markasıdır. Wix'ten özel bir web sitesine dönüştürdük, etkileşimli animasyonlar ve kendi domain'i dahil olmak üzere."
+      },
+      "tags": {
+        "id": [
+          "Custom Website",
+          "Brand Identity",
+          "Domain & Deployment"
+        ],
+        "en": [
+          "Custom Website",
+          "Brand Identity",
+          "Domain & Deployment"
+        ],
+        "tr": [
+          "Özel Web Sitesi",
+          "Marka Kimliği",
+          "Domain & Dağıtım"
+        ]
+      },
+      "note": {
+        "id": "4 halaman custom, animasi interaktif, dan setup domain dari nol sampai online.",
+        "en": "4 custom pages, interactive animations, and domain setup from zero to live.",
+        "tr": "4 özel sayfa, etkileşimli animasyonlar ve sıfırdan canlıya kadar domain kurulumu."
+      },
       "linkUrl": "https://saycheese.cfd",
-      "linkLabel": "Kunjungi website",
+      "linkLabel": {
+        "id": "Kunjungi website",
+        "en": "Visit website",
+        "tr": "Web sitesini ziyaret edin"
+      },
       "external": true,
       "order": 2
     }
