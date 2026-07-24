@@ -144,8 +144,10 @@
       },
       "category": "platform-marketplace",
       "categoryLabel": "platform & marketplace",
-      "price": 1800000,
-      "priceLabel": "Rp 1.800.000",
+      "price": 5000000,
+      "priceUSD": 280,
+      "priceTRY": 13180,
+      "priceLabel": "Rp 5.000.000",
       "priceNote": "mulai dari",
       "featured": false,
       "shortDescription": {
