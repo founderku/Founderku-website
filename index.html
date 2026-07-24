@@ -408,8 +408,8 @@
           </div>
           <div style="padding:18px 20px 20px;">
             <div style="font-size:11px; font-weight:700; color:#E15C3E; text-transform:uppercase; letter-spacing:0.05em;">${catLabel}</div>
-            <div style="font-family:'Fraunces',serif; font-size:19px; font-weight:600; color:#FBF6EE; margin-top:6px;">${pName}</div>
-            <div style="font-size:13px; color:#FBF6EE99; margin-top:10px; font-weight:700;">${getDisplayPrice(p, fkCurrentLang)}</div>
+            <div class="fk-prod-name" style="font-family:'Fraunces',serif; font-size:19px; font-weight:600; color:#FBF6EE; margin-top:6px;">${pName}</div>
+            <div class="fk-prod-price" style="font-size:13px; color:#FBF6EE99; margin-top:10px; font-weight:700;">${getDisplayPrice(p, fkCurrentLang)}</div>
           </div>
         </a>
       </div>`;
@@ -423,6 +423,19 @@
         return;
       }
       grid.innerHTML = items.map(cardHTML).join('');
+
+      window.fkRerenderProductPreview = function () {
+        try { fkCurrentLang = localStorage.getItem('fk-lang') || 'en'; } catch (e) {}
+        const nodes = Array.prototype.slice.call(grid.querySelectorAll('.fk-prod-card'));
+        nodes.forEach(function (node, i) {
+          const p = items[i];
+          if (!p) return;
+          const nameEl = node.querySelector('.fk-prod-name');
+          const priceEl = node.querySelector('.fk-prod-price');
+          if (nameEl) nameEl.textContent = pickLangText(p.name);
+          if (priceEl) priceEl.textContent = getDisplayPrice(p, fkCurrentLang);
+        });
+      };
 
       const prevBtn = document.getElementById('fkPpPrev');
       const nextBtn = document.getElementById('fkPpNext');
@@ -1372,12 +1385,12 @@
                   '<line x1="0" y1="1" x2="720" y2="1" stroke="#F2A623" stroke-width="2" stroke-dasharray="720" stroke-dashoffset="720"></line>' +
                 '</svg>' +
                 '<div style="display:flex; align-items:center; gap:18px; margin-bottom:28px; flex-wrap:wrap;">' + logoHtml + '</div>' +
-                '<p style="font-size:16px; line-height:1.7; color:#FBF6EE99; margin:0 0 26px;">' + escapeHtml(pickLangText(item.description)) + '</p>' +
-                '<div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:30px;">' + tagsHtml + '</div>' +
-                '<div style="font-size:14px; color:#FBF6EE99; margin-bottom:24px;">' + escapeHtml(pickLangText(item.note)) + '</div>' +
+                '<p class="fk-proj-desc" style="font-size:16px; line-height:1.7; color:#FBF6EE99; margin:0 0 26px;">' + escapeHtml(pickLangText(item.description)) + '</p>' +
+                '<div class="fk-proj-tags" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:30px;">' + tagsHtml + '</div>' +
+                '<div class="fk-proj-note" style="font-size:14px; color:#FBF6EE99; margin-bottom:24px;">' + escapeHtml(pickLangText(item.note)) + '</div>' +
                 '<a href="' + escapeHtml(item.linkUrl) + '" ' + linkAttrs + ' class="fk-magnetic" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px; color:#FBF6EE; font-weight:700; font-size:14px; border-bottom:2px solid #F2A623; padding-bottom:2px; position:relative;">' +
                   '<span class="fk-spot" style="position:absolute; inset:0; border-radius:inherit; background:radial-gradient(140px circle at var(--mx,50%) var(--my,50%), #F2A62333, transparent 60%); opacity:0; transition:opacity .3s ease; pointer-events:none;"></span>' +
-                  '<span style="position:relative; z-index:1;">' + escapeHtml(pickLangText(item.linkLabel) || csDict().linkLabel) + ' &rarr;</span>' +
+                  '<span class="fk-proj-linklabel" style="position:relative; z-index:1;">' + escapeHtml(pickLangText(item.linkLabel) || csDict().linkLabel) + ' &rarr;</span>' +
                 '</a>' +
               '</div>' +
             '</div>'
@@ -1386,6 +1399,27 @@
 
         fkWireCircuitDraw(grid);
         fkWireMagnetic(grid);
+
+        window.fkRerenderCaseStudies = function () {
+          try { fkCurrentLang = localStorage.getItem('fk-lang') || 'en'; } catch (e) {}
+          var nodes = Array.prototype.slice.call(grid.querySelectorAll('.fk-proj-card'));
+          nodes.forEach(function (node, i) {
+            var item = items[i];
+            if (!item) return;
+            var descEl = node.querySelector('.fk-proj-desc');
+            var noteEl = node.querySelector('.fk-proj-note');
+            var linkLabelEl = node.querySelector('.fk-proj-linklabel');
+            var tagsEl = node.querySelector('.fk-proj-tags');
+            if (descEl) descEl.textContent = pickLangText(item.description);
+            if (noteEl) noteEl.textContent = pickLangText(item.note);
+            if (linkLabelEl) linkLabelEl.textContent = (pickLangText(item.linkLabel) || csDict().linkLabel) + ' \u2192';
+            if (tagsEl) {
+              tagsEl.innerHTML = pickLangArray(item.tags).map(function (tag, ti) {
+                return '<span class="fk-tag" style="animation-delay:' + (ti * 0.15) + 's;">' + escapeHtml(tag) + '</span>';
+              }).join('');
+            }
+          });
+        };
 
         var prevBtn = document.getElementById('fkCsPrev');
         var nextBtn = document.getElementById('fkCsNext');
@@ -1701,6 +1735,9 @@
       if (heroEl && dict['hero.h1']) rebuildHeroTitle(dict['hero.h1'], !!isInitial);
       if (dict['kenapa.text']) rebuildKenapaText(dict['kenapa.text']);
     }
+
+    if (window.fkRerenderProductPreview) window.fkRerenderProductPreview();
+    if (window.fkRerenderCaseStudies) window.fkRerenderCaseStudies();
 
     document.querySelectorAll('.fk-lang-btn').forEach(function (btn) {
       btn.classList.toggle('is-active', btn.getAttribute('data-lang') === lang);
