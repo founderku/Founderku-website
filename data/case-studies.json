@@ -4,11 +4,40 @@
       "id": "tukarskill",
       "name": "TukarSkill",
       "logo": "images/case-studies/tukarskill-logo.png",
-      "description": "TukarSkill adalah platform buat saling tukar skill antar sesama. Dari ide, kami bantu bangun identitas brand dan MVP yang siap dicoba user pertama.",
-      "tags": ["Branding", "MVP", "Landing Page"],
-      "note": "Dikerjakan lewat proses 4 langkah Founderku — dari ngobrol ide sampai produk jalan.",
+      "roundLogo": false,
+      "description": {
+        "id": "TukarSkill adalah platform buat saling tukar skill antar sesama. Dari ide, kami bantu bangun identitas brand dan MVP yang siap dicoba user pertama.",
+        "en": "TukarSkill is a platform for people to exchange skills with each other. From idea, we help you build brand identity and an MVP ready to try with your first users.",
+        "tr": "TukarSkill, insanların birbirleriyle beceri alışverişi yapabilecekleri bir platformdur. Fikirden başlayarak, marka kimliği ve ilk kullanıcılarınızla denemeye hazır bir MVP inşa etmenize yardımcı oluyoruz."
+      },
+      "tags": {
+        "id": [
+          "Branding",
+          "MVP",
+          "Landing Page"
+        ],
+        "en": [
+          "Branding",
+          "MVP",
+          "Landing Page"
+        ],
+        "tr": [
+          "Branding",
+          "MVP",
+          "Landing Page"
+        ]
+      },
+      "note": {
+        "id": "Dikerjakan lewat proses 4 langkah Founderku — dari ngobrol ide sampai produk jalan.",
+        "en": "Built through Founderku's 4-step process, from idea discussion to a working product.",
+        "tr": "Founderku'nun 4 adımlı süreci ile gerçekleştirilmiş, fikir tartışmasından çalışan bir ürüne kadar."
+      },
       "linkUrl": "product.html?slug=tukarskill",
-      "linkLabel": "Lihat produk jadi & detailnya",
+      "linkLabel": {
+        "id": "Lihat produk jadi & detailnya",
+        "en": "See the finished product & details",
+        "tr": "Tamamlanmış ürünü ve detaylarını görün"
+      },
       "external": false,
       "order": 1
     },
@@ -17,7 +46,11 @@
       "name": "Say Cheese",
       "logo": "images/case-studies/say-cheese-logo.png",
       "description": "Say Cheese adalah brand handcrafted cheesecake & chiffon cake made-to-order di Şişli, Istanbul. Kami bangun ulang website-nya dari Wix jadi custom website lengkap dengan animasi interaktif dan domain sendiri.",
-      "tags": ["Custom Website", "Brand Identity", "Domain & Deployment"],
+      "tags": [
+        "Custom Website",
+        "Brand Identity",
+        "Domain & Deployment"
+      ],
       "note": "4 halaman custom, animasi interaktif, dan setup domain dari nol sampai online.",
       "linkUrl": "https://saycheese.cfd",
       "linkLabel": "Kunjungi website",
