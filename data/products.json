@@ -84,6 +84,8 @@
       "category": "landing-page",
       "categoryLabel": "landing page",
       "price": 500000,
+      "priceUSD": 28,
+      "priceTRY": 1317,
       "priceLabel": "Rp 500.000",
       "priceNote": "mulai dari",
       "featured": false,
