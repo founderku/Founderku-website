@@ -184,6 +184,7 @@
     <div class="tab-nav">
       <div class="tab-btn active lowercase" id="tabBtnProducts" onclick="switchTab('products')">produk store</div>
       <div class="tab-btn lowercase" id="tabBtnCaseStudies" onclick="switchTab('caseStudies')">studi kasus</div>
+      <div class="tab-btn lowercase" id="tabBtnBlog" onclick="switchTab('blog')">blog</div>
     </div>
 
     <div id="panelProducts">
@@ -202,6 +203,15 @@
       </div>
       <div id="csStatusBanner" class="status-msg"></div>
       <div id="csList"></div>
+    </div>
+
+    <div id="panelBlog" style="display:none;">
+      <div class="dash-header">
+        <h1 class="lowercase">blog</h1>
+        <button class="btn btn-primary lowercase" onclick="openBlogForm()">+ tambah post</button>
+      </div>
+      <div id="blogStatusBanner" class="status-msg"></div>
+      <div id="blogList"></div>
     </div>
   </div>
 </div>
@@ -457,6 +467,101 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="blogFormModal">
+  <div class="modal">
+    <span class="modal-close" onclick="closeBlogForm()">&times;</span>
+    <h2 class="lowercase" id="blogFormTitle">tambah post</h2>
+
+    <div class="form-row">
+      <div class="field">
+        <label class="lowercase">judul post · bahasa indonesia</label>
+        <input type="text" id="blogTitle" oninput="blogAutoSlug()">
+      </div>
+      <div class="field">
+        <label class="lowercase">tanggal (bebas format, misal: mar 2026)</label>
+        <input type="text" id="blogDate" placeholder="Mar 2026">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="field">
+        <label class="lowercase">kategori</label>
+        <select id="blogCategory">
+          <option value="update">update</option>
+          <option value="product">product</option>
+          <option value="case-study">studi kasus</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="lowercase">warna cover</label>
+        <select id="blogGradient">
+          <option value="amber">amber</option>
+          <option value="indigo">indigo</option>
+          <option value="coral">coral</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="lowercase">urutan tampil (angka, kecil = duluan)</label>
+      <input type="number" id="blogOrder" value="1">
+    </div>
+
+    <div class="field">
+      <label class="lowercase">ringkasan singkat · bahasa indonesia</label>
+      <textarea id="blogExcerpt"></textarea>
+    </div>
+    <div class="field">
+      <label class="lowercase">isi post (pisahin paragraf pakai baris kosong) · bahasa indonesia</label>
+      <textarea id="blogContent" style="min-height:160px;"></textarea>
+    </div>
+
+    <div style="margin:18px 0 22px; padding:16px; border:1px dashed rgba(28,27,51,0.25); border-radius:12px;">
+      <button type="button" class="btn btn-ghost lowercase" id="blogTranslateBtn" onclick="translateBlogFields()" style="width:100%;">translate otomatis (en + tr)</button>
+      <div id="blogTranslateStatus" class="status-msg" style="margin-top:10px;"></div>
+    </div>
+
+    <details style="margin-bottom:22px;">
+      <summary class="lowercase" style="cursor:pointer; font-weight:700; font-size:13px; color:var(--ink-soft, #6b6880); margin-bottom:12px;">lihat / edit versi english</summary>
+      <div class="field">
+        <label class="lowercase">judul · english</label>
+        <input type="text" id="blogTitleEn">
+      </div>
+      <div class="field">
+        <label class="lowercase">ringkasan · english</label>
+        <textarea id="blogExcerptEn"></textarea>
+      </div>
+      <div class="field">
+        <label class="lowercase">isi post · english</label>
+        <textarea id="blogContentEn" style="min-height:120px;"></textarea>
+      </div>
+    </details>
+
+    <details style="margin-bottom:22px;">
+      <summary class="lowercase" style="cursor:pointer; font-weight:700; font-size:13px; color:var(--ink-soft, #6b6880); margin-bottom:12px;">lihat / edit versi türkçe</summary>
+      <div class="field">
+        <label class="lowercase">judul · türkçe</label>
+        <input type="text" id="blogTitleTr">
+      </div>
+      <div class="field">
+        <label class="lowercase">ringkasan · türkçe</label>
+        <textarea id="blogExcerptTr"></textarea>
+      </div>
+      <div class="field">
+        <label class="lowercase">isi post · türkçe</label>
+        <textarea id="blogContentTr" style="min-height:120px;"></textarea>
+      </div>
+    </details>
+
+    <div id="blogFormStatus" class="status-msg"></div>
+
+    <div class="modal-actions">
+      <button class="btn btn-ghost lowercase" onclick="closeBlogForm()">batal</button>
+      <button class="btn btn-primary lowercase" id="blogSaveBtn" onclick="saveBlogPost()">simpan post</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const LS_KEY = 'fk_admin_config';
 let config = null;
@@ -472,6 +577,10 @@ let csEditingId = null;
 let csPendingLogoBase64 = null;
 let csPendingLogoExt = null;
 let csLoaded = false;
+let blogData = { posts: [] };
+let blogSha = null;
+let blogEditingId = null;
+let blogLoaded = false;
 
 function loadConfig(){
   try {
@@ -557,11 +666,17 @@ async function showDashboard(){
 function switchTab(tab){
   document.getElementById('tabBtnProducts').classList.toggle('active', tab === 'products');
   document.getElementById('tabBtnCaseStudies').classList.toggle('active', tab === 'caseStudies');
+  document.getElementById('tabBtnBlog').classList.toggle('active', tab === 'blog');
   document.getElementById('panelProducts').style.display = tab === 'products' ? 'block' : 'none';
   document.getElementById('panelCaseStudies').style.display = tab === 'caseStudies' ? 'block' : 'none';
+  document.getElementById('panelBlog').style.display = tab === 'blog' ? 'block' : 'none';
   if (tab === 'caseStudies' && !csLoaded){
     csLoaded = true;
     loadCaseStudies();
+  }
+  if (tab === 'blog' && !blogLoaded){
+    blogLoaded = true;
+    loadBlog();
   }
 }
 
@@ -1088,6 +1203,220 @@ async function deleteCaseStudy(id){
     banner.className = 'status-msg success';
     banner.textContent = 'studi kasus dihapus.';
     renderCsList();
+    setTimeout(() => { banner.style.display = 'none'; }, 2000);
+  } catch(err){
+    banner.className = 'status-msg error';
+    banner.textContent = 'gagal hapus: ' + err.message;
+  }
+}
+
+async function loadBlog(){
+  const banner = document.getElementById('blogStatusBanner');
+  banner.className = 'status-msg info';
+  banner.textContent = 'memuat blog...';
+  try {
+    const res = await ghGetFile('data/blog.json');
+    if (!res){
+      blogData = { posts: [] };
+      blogSha = null;
+    } else {
+      blogSha = res.sha;
+      const decoded = decodeURIComponent(escape(atob(res.content.replace(/\n/g, ''))));
+      blogData = JSON.parse(decoded);
+      if (!blogData.posts) blogData.posts = [];
+    }
+    banner.style.display = 'none';
+    renderBlogList();
+  } catch(err){
+    banner.className = 'status-msg error';
+    banner.textContent = 'error: ' + err.message;
+  }
+}
+
+function renderBlogList(){
+  const list = document.getElementById('blogList');
+  const items = (blogData.posts || []).slice().sort((a, b) => (a.order || 0) - (b.order || 0));
+  if (!items.length){
+    list.innerHTML = `<div class="empty-state lowercase">belum ada post. klik "tambah post" buat mulai.</div>`;
+    return;
+  }
+  list.innerHTML = items.map(p => `
+    <div class="product-row">
+      <div class="no-img lowercase">${p.category || '-'}</div>
+      <div class="info">
+        <div class="name">${langText(p.title, 'id')}</div>
+        <div class="meta lowercase">urutan ${p.order || 0} &middot; ${p.date || 'tanpa tanggal'}</div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-ghost btn-sm lowercase" onclick="editBlogPost('${p.id}')">edit</button>
+        <button class="btn btn-danger btn-sm lowercase" onclick="deleteBlogPost('${p.id}')">hapus</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function blogAutoSlug(){
+  // slug diturunkan otomatis dari judul cuma pas simpan (bukan real-time), sama pola kayak studi kasus
+}
+
+function openBlogForm(post){
+  blogEditingId = post ? post.id : null;
+  document.getElementById('blogFormTitle').textContent = post ? 'edit post' : 'tambah post';
+  document.getElementById('blogTitle').value = post ? langText(post.title, 'id') : '';
+  document.getElementById('blogDate').value = post ? (post.date || '') : '';
+  document.getElementById('blogCategory').value = post ? (post.category || 'update') : 'update';
+  document.getElementById('blogGradient').value = post ? (post.coverGradient || 'amber') : 'amber';
+  document.getElementById('blogOrder').value = post ? (post.order || 1) : (blogData.posts.length + 1);
+  document.getElementById('blogExcerpt').value = post ? langText(post.excerpt, 'id') : '';
+  document.getElementById('blogContent').value = post ? langText(post.content, 'id') : '';
+  document.getElementById('blogTitleEn').value = post ? langText(post.title, 'en') : '';
+  document.getElementById('blogExcerptEn').value = post ? langText(post.excerpt, 'en') : '';
+  document.getElementById('blogContentEn').value = post ? langText(post.content, 'en') : '';
+  document.getElementById('blogTitleTr').value = post ? langText(post.title, 'tr') : '';
+  document.getElementById('blogExcerptTr').value = post ? langText(post.excerpt, 'tr') : '';
+  document.getElementById('blogContentTr').value = post ? langText(post.content, 'tr') : '';
+  document.getElementById('blogFormStatus').style.display = 'none';
+  document.getElementById('blogTranslateStatus').style.display = 'none';
+  document.getElementById('blogFormModal').classList.add('open');
+}
+function closeBlogForm(){
+  document.getElementById('blogFormModal').classList.remove('open');
+}
+function editBlogPost(id){
+  const post = blogData.posts.find(x => x.id === id);
+  if (post) openBlogForm(post);
+}
+
+async function translateBlogFields(){
+  const btn = document.getElementById('blogTranslateBtn');
+  const statusEl = document.getElementById('blogTranslateStatus');
+
+  const titleId = document.getElementById('blogTitle').value.trim();
+  const excerpt = document.getElementById('blogExcerpt').value.trim();
+  const content = document.getElementById('blogContent').value.trim();
+
+  if (!titleId || !excerpt){
+    statusEl.style.display = 'block';
+    statusEl.className = 'status-msg error';
+    statusEl.textContent = 'isi judul dan ringkasan bahasa indonesia dulu sebelum translate.';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> lagi translate...';
+  statusEl.style.display = 'block';
+  statusEl.className = 'status-msg info';
+  statusEl.textContent = 'lagi manggil ai buat translate, tunggu sebentar...';
+
+  try {
+    const data = await callTranslateWorker(
+      titleId,
+      { title: titleId, excerpt, content },
+      {}
+    );
+
+    document.getElementById('blogTitleEn').value = data.en.textFields.title || '';
+    document.getElementById('blogExcerptEn').value = data.en.textFields.excerpt || '';
+    document.getElementById('blogContentEn').value = data.en.textFields.content || '';
+    document.getElementById('blogTitleTr').value = data.tr.textFields.title || '';
+    document.getElementById('blogExcerptTr').value = data.tr.textFields.excerpt || '';
+    document.getElementById('blogContentTr').value = data.tr.textFields.content || '';
+
+    statusEl.className = 'status-msg success';
+    statusEl.textContent = 'berhasil, versi english dan türkçe udah keisi. cek dulu di bagian "lihat / edit" di bawah sebelum simpan.';
+  } catch(err){
+    statusEl.className = 'status-msg error';
+    statusEl.textContent = 'gagal translate: ' + err.message;
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = 'translate otomatis (en + tr)';
+  }
+}
+
+function setBlogFormStatus(type, msg){
+  const el = document.getElementById('blogFormStatus');
+  el.className = 'status-msg ' + type;
+  el.textContent = msg;
+}
+
+async function saveBlogPost(){
+  const titleId = document.getElementById('blogTitle').value.trim();
+  const titleEn = document.getElementById('blogTitleEn').value.trim();
+  const titleTr = document.getElementById('blogTitleTr').value.trim();
+  const title = (titleEn || titleTr) ? { id: titleId, en: titleEn, tr: titleTr } : titleId;
+
+  const excerptId = document.getElementById('blogExcerpt').value.trim();
+  const excerptEn = document.getElementById('blogExcerptEn').value.trim();
+  const excerptTr = document.getElementById('blogExcerptTr').value.trim();
+  const excerpt = (excerptEn || excerptTr) ? { id: excerptId, en: excerptEn, tr: excerptTr } : excerptId;
+
+  const contentId = document.getElementById('blogContent').value.trim();
+  const contentEn = document.getElementById('blogContentEn').value.trim();
+  const contentTr = document.getElementById('blogContentTr').value.trim();
+  const content = (contentEn || contentTr) ? { id: contentId, en: contentEn, tr: contentTr } : contentId;
+
+  const category = document.getElementById('blogCategory').value;
+  const coverGradient = document.getElementById('blogGradient').value;
+  const date = document.getElementById('blogDate').value.trim();
+  const order = parseInt(document.getElementById('blogOrder').value || '0', 10);
+
+  if (!titleId){
+    setBlogFormStatus('error', 'judul post wajib diisi.');
+    return;
+  }
+
+  const slug = titleId.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const id = blogEditingId || slug;
+
+  const saveBtn = document.getElementById('blogSaveBtn');
+  saveBtn.disabled = true;
+  saveBtn.innerHTML = '<span class="spinner"></span> menyimpan...';
+  setBlogFormStatus('info', 'menyimpan post...');
+
+  try {
+    const postObj = { id, slug, title, excerpt, content, category, coverGradient, date, order };
+
+    if (blogEditingId){
+      const idx = blogData.posts.findIndex(x => x.id === blogEditingId);
+      blogData.posts[idx] = postObj;
+    } else {
+      blogData.posts.push(postObj);
+    }
+
+    const jsonStr = JSON.stringify(blogData, null, 2);
+    const base64Content = btoa(unescape(encodeURIComponent(jsonStr)));
+    const result = await ghPutFile('data/blog.json', base64Content, `${blogEditingId ? 'Update' : 'Add'} blog post: ${titleId}`, blogSha);
+    blogSha = result.content.sha;
+
+    setBlogFormStatus('success', 'post berhasil disimpan.');
+    renderBlogList();
+    setTimeout(() => { closeBlogForm(); }, 700);
+  } catch(err){
+    setBlogFormStatus('error', 'gagal: ' + err.message);
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.innerHTML = 'simpan post';
+  }
+}
+
+async function deleteBlogPost(id){
+  const post = blogData.posts.find(x => x.id === id);
+  if (!post) return;
+  if (!confirm(`Yakin mau hapus "${langText(post.title, 'id')}"? Tindakan ini tidak bisa dibatalkan.`)) return;
+
+  const banner = document.getElementById('blogStatusBanner');
+  banner.className = 'status-msg info';
+  banner.textContent = 'menghapus post...';
+
+  try {
+    blogData.posts = blogData.posts.filter(x => x.id !== id);
+    const jsonStr = JSON.stringify(blogData, null, 2);
+    const base64Content = btoa(unescape(encodeURIComponent(jsonStr)));
+    const result = await ghPutFile('data/blog.json', base64Content, `Delete blog post: ${langText(post.title, 'id')}`, blogSha);
+    blogSha = result.content.sha;
+    banner.className = 'status-msg success';
+    banner.textContent = 'post dihapus.';
+    renderBlogList();
     setTimeout(() => { banner.style.display = 'none'; }, 2000);
   } catch(err){
     banner.className = 'status-msg error';
