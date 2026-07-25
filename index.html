@@ -1,1505 +1,533 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Founderku · Semua bisa jadi founder</title>
-<link rel="icon" type="image/jpeg" href="images/logo-founderku.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,600&family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  html { overflow-x: hidden; width: 100%; }
-  .fk-lang-btn.is-active{ background:#1C1B33 !important; color:#FBF6EE !important; }
-  #fkLangMenu.is-open{ display:flex !important; }
-  #fkLangMenu .fk-lang-btn:hover{ background:#FBF6EE1A; }
-  #fkLangMenu .fk-lang-btn.is-active{ display:none; }
-  #fkLangToggle.is-open #fkLangChevron{ transform:rotate(180deg); }
-  @media(max-width:640px){
-    #fkLangSwitch{ transform:scale(0.92); }
+  :root {
+    --brand-amber: #F2A623;
+    --brand-coral: #E15C3E;
+    --brand-indigo: #7A78C4;
+
+    --bg: #FFFFFF;
+    --bg-soft: #F5F4F1;
+    --bg-dark-block: #14131F;
+    --text: #14131F;
+    --text-soft: rgba(20,19,31,0.65);
+    --text-faint: rgba(20,19,31,0.45);
+    --border: rgba(20,19,31,0.10);
+    --card-bg: #F5F4F1;
+    --pill-bg: #14131F;
+    --pill-text: #FFFFFF;
+    --pill-outline-border: #14131F;
+    --logo-opacity: 0.45;
   }
-  @media(max-width:480px){
-    #fkLangSwitch button{ padding:6px 8px !important; }
+  html[data-theme="dark"] {
+    --bg: #1C1B33;
+    --bg-soft: #24223F;
+    --bg-dark-block: #100F1E;
+    --text: #FBF6EE;
+    --text-soft: rgba(251,246,238,0.7);
+    --text-faint: rgba(251,246,238,0.5);
+    --border: rgba(251,246,238,0.14);
+    --card-bg: rgba(251,246,238,0.05);
+    --pill-bg: #FBF6EE;
+    --pill-text: #1C1B33;
+    --pill-outline-border: #FBF6EE;
+    --logo-opacity: 0.6;
   }
-  body { margin: 0; background: #1C1B33; overflow-x: hidden; width: 100%; }
+
   * { box-sizing: border-box; }
-  .fk-faq[open] summary .plus { transform: rotate(45deg); }
-  .fk-link { transition: opacity .15s; }
-  .fk-link:hover { opacity: 0.6; }
-  .fk-reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
-  .fk-reveal.is-visible { opacity: 1; transform: translateY(0); }
-  @keyframes fk-float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-26px); }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text);
+    transition: background .25s ease, color .25s ease;
   }
-  .fk-floating-bg { animation: fk-float 9s ease-in-out infinite; }
-  .fk-floating-bg.fk-float-slow { animation-duration: 12s; animation-delay: -4s; }
-  .fk-tilt-l { transform: rotate(-2deg); transition: transform .3s ease; }
-  .fk-tilt-r { transform: rotate(2deg); transition: transform .3s ease; }
-  .fk-tilt-l:hover, .fk-tilt-r:hover { transform: rotate(0deg); }
+  a { color: inherit; }
+  .fk-serif { font-family: 'Manrope', sans-serif; }
+  .fk-h1 { font-family:'Manrope',sans-serif; font-weight:800; letter-spacing:-0.02em; line-height:1.05; margin:0; }
+  .fk-h2 { font-family:'Manrope',sans-serif; font-weight:800; letter-spacing:-0.015em; line-height:1.12; margin:0; }
+  .fk-eyebrow { font-family:'Manrope',sans-serif; font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-faint); }
+  .fk-section { padding: clamp(60px,8vw,110px) 26px; }
+  .fk-wrap { max-width: 1160px; margin: 0 auto; }
 
-  /* grain texture overlay, whole site */
-  .fk-grain {
-    position: fixed; inset: 0; pointer-events: none; opacity: .035; z-index: 90; mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
+  .fk-pill { display:inline-flex; align-items:center; gap:8px; font-family:'Manrope',sans-serif; font-weight:700; font-size:15px; padding:13px 26px; border-radius:999px; text-decoration:none; cursor:pointer; border:none; transition: transform .2s ease, box-shadow .2s ease; }
+  .fk-pill-solid { background: var(--pill-bg); color: var(--pill-text); }
+  .fk-pill-solid:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -8px rgba(0,0,0,0.35); }
+  .fk-pill-outline { background: transparent; color: var(--text); border: 1.5px solid var(--border); }
+  .fk-pill-outline:hover { border-color: var(--text); }
+  .fk-pill-sm { padding: 8px 16px; font-size:13px; }
 
-  /* hero blobs, parallax on scroll via JS */
-  .fk-hero-blob { position: absolute; border-radius: 50%; filter: blur(6px); opacity: .5; will-change: transform; pointer-events: none; z-index: 0; }
-  .fk-hero-blob.hb1 { width: 220px; height: 220px; background: #F2A62333; top: 6%; left: 4%; }
-  .fk-hero-blob.hb2 { width: 160px; height: 160px; background: #7A78C433; bottom: 10%; right: 6%; }
-  .fk-hero-blob.hb3 { width: 120px; height: 120px; background: #E15C3E22; top: 55%; left: 10%; }
-  .fk-hero-blob.hb4 { width: 100px; height: 100px; background: #F2A62322; top: 12%; right: 12%; }
+  nav { position: sticky; top:0; z-index:50; background: var(--bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+  .fk-nav-inner { max-width:1160px; margin:0 auto; padding:16px 26px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+  .fk-logo { display:flex; align-items:center; gap:9px; font-family:'Manrope',sans-serif; font-weight:800; font-size:17px; text-decoration:none; color: var(--text); }
+  .fk-logo svg { width:26px; height:26px; }
+  .fk-nav-links { display:flex; align-items:center; gap:26px; font-family:'Manrope',sans-serif; font-size:14px; font-weight:600; }
+  .fk-nav-links a { text-decoration:none; color: var(--text-soft); transition: color .15s ease; }
+  .fk-nav-links a:hover { color: var(--text); }
+  .fk-nav-right { display:flex; align-items:center; gap:10px; }
+  @media (max-width:900px) { .fk-nav-links { display:none; } }
 
-  /* real 3D cursor-follow tilt for service cards */
-  .fk-tilt3d { transform-style: preserve-3d; perspective: 900px; transition: transform .35s cubic-bezier(.22,.8,.32,1), box-shadow .35s ease; will-change: transform; }
-  .fk-tilt3d-inner { transform: translateZ(0); transition: transform .35s ease; }
+  .fk-ctrl-btn { width:38px; height:38px; border-radius:999px; border:1px solid var(--border); background: var(--bg-soft); color: var(--text); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:14px; font-weight:700; font-family:'Manrope',sans-serif; }
+  .fk-lang-wrap { position:relative; }
+  .fk-lang-menu { display:none; position:absolute; top:46px; right:0; background: var(--bg); border:1px solid var(--border); border-radius:14px; padding:6px; min-width:88px; box-shadow: 0 16px 34px -12px rgba(0,0,0,0.25); flex-direction:column; gap:2px; }
+  .fk-lang-menu.is-open { display:flex; }
+  .fk-lang-btn { border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; color:var(--text-soft); padding:9px 12px; border-radius:8px; text-align:left; width:100%; }
+  .fk-lang-btn:hover { background: var(--bg-soft); }
+  .fk-lang-btn.is-active { display:none; }
 
-  /* testimonial marquee */
-  .fk-testi-wrap { background: #1C1B33; overflow: hidden; padding-block: clamp(60px, 8vw, 100px); position: relative; }
-  .fk-testi-marquee { display: flex; gap: 20px; width: max-content; animation: fk-scroll-x 34s linear infinite; }
-  .fk-testi-marquee:hover { animation-play-state: paused; }
-  @keyframes fk-scroll-x { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-  .fk-testi-card { width: 320px; flex: none; background: rgba(251,246,238,0.06); border: 1px solid rgba(251,246,238,0.14); border-radius: 20px; padding: 26px; backdrop-filter: blur(6px); }
-  .fk-testi-card p { font-size: 14px; line-height: 1.7; color: #FBF6EE; margin: 0 0 18px; }
-  .fk-testi-card .who { display: flex; align-items: center; gap: 10px; }
-  .fk-testi-card .avatar { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-style: italic; color: #FBF6EE; font-size: 14px; font-weight: 700; flex-shrink: 0; }
-  .fk-testi-card .who strong { font-size: 13px; color: #FBF6EE; display: block; }
-  .fk-testi-card .who span { font-size: 12px; color: #FBF6EE99; }
-  .fk-testi-placeholder-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: #F2A623; background: #F2A62322; padding: 4px 10px; border-radius: 10px; margin-bottom: 10px; }
+  .fk-orb { border-radius: 50%; position: relative; overflow: hidden; background-size: cover; transition: transform .25s ease-out; }
+  .fk-orb:hover { transform: scale(1.08) rotate(6deg) !important; }
+  .fk-orb-float { animation: fk-orb-float 7s ease-in-out infinite; display:inline-block; }
+  @keyframes fk-orb-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  @media (prefers-reduced-motion: reduce) { .fk-orb-float { animation: none; } }
+  .fk-orb::after {
+    content:''; position:absolute; inset:0; opacity:.35; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .fk-orb-amber { background: radial-gradient(circle at 35% 30%, #FFD98A, var(--brand-amber) 55%, var(--brand-coral) 100%); }
+  .fk-orb-indigo { background: radial-gradient(circle at 65% 35%, #B9B7E8, var(--brand-indigo) 55%, #3F3D74 100%); }
+  .fk-orb-coral { background: radial-gradient(circle at 40% 60%, #FFC1AE, var(--brand-coral) 55%, #7A2C1B 100%); }
 
-  .fk-faq-pill { background:#24223F; border-radius:18px; padding:6px 24px; margin-bottom:12px; box-shadow:0 4px 14px -8px rgba(0,0,0,0.35); border:none !important; }
-  .fk-faq-pill:last-child { margin-bottom:0; }
+  .fk-hero { padding: clamp(70px,10vw,120px) 26px 40px; text-align:center; }
+  .fk-hero-orbs { display:flex; justify-content:center; align-items:flex-end; gap:18px; margin-bottom:36px; }
+  .fk-hero h1 { font-size: clamp(34px, 5.2vw, 62px); }
+  .fk-hero p.fk-sub { max-width:560px; margin:20px auto 34px; font-size:18px; line-height:1.6; color: var(--text-soft); }
+  .fk-hero-ctas { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
 
-  html.fk-custom-cursor, html.fk-custom-cursor * { cursor: none !important; }
+  .fk-trust { padding: 30px 26px 50px; }
+  .fk-trust-label { text-align:center; font-size:13px; font-weight:600; color: var(--text-faint); margin-bottom:22px; }
+  .fk-trust-grid { max-width:900px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:center; gap:20px 44px; }
+  .fk-trust-item { font-family:'Manrope',sans-serif; font-weight:700; font-size:15px; color: var(--text-faint); opacity: var(--logo-opacity); }
 
-  .fk-dash { flex:1; height:3px; background:#FBF6EE1A; border-radius:3px; overflow:hidden; }
-  .fk-dash-fill { height:100%; width:0%; background:linear-gradient(90deg, #7A78C4, #F2A623); border-radius:3px; }
+  .fk-grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .fk-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  @media (max-width:760px) { .fk-grid-3, .fk-grid-2 { grid-template-columns:1fr !important; } }
 
-  .fk-grid-lines { position:absolute; inset:0; display:flex; justify-content:space-between; padding:0 8%; z-index:0; pointer-events:none; }
-  .fk-grid-line { position:relative; width:1px; height:100%; background:#FBF6EE0D; }
-  .fk-grid-dot { position:absolute; left:50%; top:10%; transform:translate(-50%,-50%); width:5px; height:5px; border-radius:50%; background:#FBF6EE33; }
-  @media (max-width: 900px) { .fk-grid-lines { display:none; } }
+  .fk-card { background: var(--card-bg); border:1px solid var(--border); border-radius:20px; padding:32px; transition: transform .3s cubic-bezier(.22,.9,.35,1.2), box-shadow .3s ease; }
+  .fk-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px -20px rgba(0,0,0,0.18); }
+  .fk-card h3 { font-size:22px; margin:0 0 10px; }
+  .fk-card p { font-size:15px; line-height:1.65; color: var(--text-soft); margin:0 0 18px; }
+  .fk-card ul { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px; font-size:14px; color: var(--text-soft); }
+  .fk-card ul li::before { content:'-  '; color: var(--brand-coral); font-weight:700; }
 
-  @media (max-width: 640px) {
-    .fk-nav-links a:not(.fk-nav-cta) { display: none; }
-    .fk-grid-2, .fk-grid-3, .fk-grid-4 { grid-template-columns: 1fr !important; }
-    .fk-hero-h1 { font-size: 38px !important; }
-    .fk-section-h2 { font-size: 26px !important; }
-    .fk-stat-big { font-size: 48px !important; }
-  }
-  .fk-proj-slider::-webkit-scrollbar{ display:none; }
-  .fk-proj-slider .fk-proj-card{ flex:0 0 min(420px, 88vw); scroll-snap-align:start; }
-  .fk-proj-slider{
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
-    mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
-  }
-  .fk-cs-nav-btn{
-    width: 46px; height: 46px; border-radius: 50%; border: 2px solid #FBF6EE;
-    background: #1C1B33;
-    color: #FBF6EE; cursor: pointer; display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 10px 24px -6px #00000077;
-    transition: transform .25s cubic-bezier(.34,1.56,.64,1), background .25s ease, border-color .25s ease, box-shadow .25s ease;
-  }
-  .fk-cs-nav-btn:hover{ background: #F2A623; border-color: #F2A623; color: #FBF6EE; transform: translateY(-2px) scale(1.08); box-shadow: 0 12px 28px -6px #F2A62388; }
-  .fk-cs-nav-btn:active{ transform: translateY(0) scale(0.96); }
-  .fk-cs-nav-side{ position:absolute; top:38%; transform:translateY(-50%); z-index:6; }
-  .fk-cs-nav-left{ left:2px; }
-  .fk-cs-nav-right{ right:2px; }
-  @media(max-width:640px){
-    .fk-cs-nav-side{ width:40px; height:40px; }
-  }
-  .fk-cs-dot{ width: 7px; height: 7px; border-radius: 50%; background: #FBF6EE33; transition: all .3s ease; }
-  .fk-cs-dot.is-active{ background: #F2A623; width: 22px; border-radius: 4px; }
+  .fk-section-soft { background: var(--bg-soft); }
 
-  .fk-prod-slider::-webkit-scrollbar{ display:none; }
-  .fk-prod-slider .fk-prod-card{ flex:0 0 min(300px, 82vw); scroll-snap-align:start; height:auto; }
-  .fk-prod-slider{
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
-    mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
-  }
-  .fk-prod-nav-btn{
-    width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid #FBF6EE1F;
-    background: rgba(251,246,238,0.08); color: #FBF6EE; cursor: pointer; display:flex; align-items:center; justify-content:center;
-    box-shadow: 0 10px 24px -10px #1C1B3340;
-    transition: transform .25s cubic-bezier(.34,1.56,.64,1), background .25s ease, border-color .25s ease, color .25s ease;
-  }
-  .fk-prod-nav-btn:hover{ background:#1C1B33; border-color:#FBF6EE; color:#FBF6EE; transform: translateY(-2px) scale(1.06); }
-  .fk-prod-nav-btn:active{ transform: translateY(0) scale(.96); }
-  .fk-prod-nav-side{ position:absolute; top:38%; transform:translateY(-50%); z-index:6; }
-  .fk-prod-nav-left{ left:-6px; }
-  .fk-prod-nav-right{ right:-6px; }
-  @media(max-width:640px){ .fk-prod-nav-side{ width:38px; height:38px; } }
-  .fk-prod-dot{ width:7px; height:7px; border-radius:50%; background:#FBF6EE26; transition:all .3s ease; }
-  .fk-prod-dot.is-active{ background:#E15C3E; width:22px; border-radius:4px; }
-  @media (prefers-reduced-motion: reduce) {
-    .fk-magnetic, .fk-spot { transition: none !important; }
-    .fk-floating-bg { animation: none !important; }
-    .fk-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
-  }
-  .fk-proj-card, .fk-glow-card { position: relative; border-radius: 24px; padding: 2px; }
-  .fk-proj-card::before, .fk-glow-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: conic-gradient(from 0deg, #7A78C4, #F2A623, #E15C3E, #7A78C4);
-    opacity: 0.55;
-    animation: fk-spin 5s linear infinite;
-    z-index: 0;
-  }
-  .fk-proj-card:hover::before, .fk-glow-card:hover::before { opacity: 1; }
-  .fk-proj-inner, .fk-glow-card-inner { position: relative; z-index: 1; overflow: hidden; }
-  @keyframes fk-spin { to { transform: rotate(360deg); } }
-  .fk-tag {
-    display: inline-block;
-    background: #FBF6EE0D;
-    color: #FBF6EE;
-    font-family: 'Manrope', sans-serif;
-    font-weight: 600;
-    font-size: 13px;
-    padding: 7px 16px;
-    border-radius: 999px;
-    opacity: 0;
-    animation: fk-tag-in .5s ease forwards;
-  }
-  @keyframes fk-tag-in {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .fk-char {
-    display: inline-block;
-    opacity: 0;
-    transform: translateY(22px);
-    filter: blur(9px);
-    transition: opacity .7s cubic-bezier(.25,1,.5,1), transform .7s cubic-bezier(.25,1,.5,1), filter .7s cubic-bezier(.25,1,.5,1);
-  }
-  .fk-char.fk-char-in { opacity: 1; transform: translateY(0); filter: blur(0); }
-  .fk-underline-draw {
-    transition: stroke-dashoffset 1s ease .6s;
-  }
-  .fk-underline-draw.is-visible { stroke-dashoffset: 0; }
-  .fk-reveal-word {
-    display: inline-block;
-    opacity: 0.15;
-    filter: blur(2px);
-    transition: opacity .5s ease, filter .5s ease;
-  }
-  .fk-reveal-word.is-visible { opacity: 1; filter: blur(0); }
-  .fk-step { position: relative; }
-  .fk-step::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0;
-    height: 2px;
-    width: 0;
-    background: #F2A623;
-    box-shadow: 0 0 8px 1px #F2A62399;
-    transition: width .9s ease;
-  }
-  .fk-step.is-visible::before { width: 100%; }
-  .fk-grid-4 .fk-step:nth-child(1)::before { transition-delay: 0s; }
-  .fk-grid-4 .fk-step:nth-child(2)::before { transition-delay: .25s; }
-  .fk-grid-4 .fk-step:nth-child(3)::before { transition-delay: .5s; }
-  .fk-grid-4 .fk-step:nth-child(4)::before { transition-delay: .75s; }
-  .fk-step .fk-step-num { transition: text-shadow .3s ease, color .3s ease; }
-  .fk-step.is-visible .fk-step-num { text-shadow: 0 0 12px #F2A623AA; }
-  .fk-faq-pill { transition: box-shadow .3s ease, transform .2s ease; }
-  .fk-faq-pill:hover { box-shadow: 0 8px 22px -8px #F2A62355, 0 4px 14px -8px #1C1B3326; transform: translateY(-1px); }
-  .fk-footer-link { position: relative; }
-  .fk-footer-link::after {
-    content: "";
-    position: absolute;
-    left: 0; bottom: -3px;
-    width: 0; height: 1.5px;
-    background: #F2A623;
-    transition: width .3s ease;
-  }
-  .fk-footer-link:hover::after { width: 100%; }
-  @media (prefers-reduced-motion: reduce) {
-    .fk-proj-card::before, .fk-glow-card::before { animation: none; }
-    .fk-tag { animation: none; opacity: 1; }
-    .fk-char { transition: none; opacity: 1; transform: none; filter: none; }
-    .fk-reveal-word { opacity: 1; filter: none; }
-    .fk-step::before { transition: none; width: 100%; }
-  }
+  .fk-slider { display:flex; gap:20px; overflow-x:auto; scroll-snap-type:x mandatory; padding:6px 6px 16px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+  .fk-slider::-webkit-scrollbar{ display:none; }
+  .fk-slide { flex:0 0 auto; width:280px; scroll-snap-align:start; }
+  .fk-prod-card-link { text-decoration:none; color:inherit; display:block; background: var(--card-bg); border:1px solid var(--border); border-radius:18px; overflow:hidden; height:100%; }
+  .fk-prod-thumb { height:150px; background: var(--bg-soft); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+  .fk-prod-thumb img { width:100%; height:100%; object-fit:cover; object-position:top; }
+  .fk-prod-cat-badge { position:absolute; top:12px; left:12px; background: var(--pill-bg); color: var(--pill-text); font-size:10.5px; font-weight:700; padding:5px 11px 5px 17px; border-radius:3px 12px 12px 3px; z-index:1; }
+  .fk-prod-body { padding:18px 20px 20px; }
+  .fk-prod-cat { font-size:11px; font-weight:700; color: var(--brand-coral); text-transform:uppercase; letter-spacing:0.05em; }
+  .fk-prod-name { font-family:'Manrope',sans-serif; font-size:18px; font-weight:700; margin-top:6px; }
+  .fk-prod-price { font-size:13px; color: var(--text-soft); margin-top:10px; font-weight:700; }
+
+  footer { border-top: 1px solid var(--border); padding: 40px 26px; text-align:center; font-size:13px; color: var(--text-faint); }
+
+  .fk-gen-field { font-family:'Manrope',sans-serif; font-size:15px; font-weight:600; color: var(--text); background: var(--bg); border:1.5px solid var(--border); border-radius:14px; padding:14px 16px; width:100%; box-sizing:border-box; outline:none; appearance:none; -webkit-appearance:none; }
+  .fk-gen-field:focus { border-color: var(--brand-amber); }
+  .fk-gen-vibes { display:flex; flex-wrap:wrap; gap:10px; }
+  .fk-gen-vibe { position:relative; cursor:pointer; }
+  .fk-gen-vibe input { position:absolute; opacity:0; pointer-events:none; }
+  .fk-gen-vibe span { display:inline-block; font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; color: var(--text); background: var(--bg); border:1.5px solid var(--border); border-radius:999px; padding:10px 20px; transition:all .2s ease; }
+  .fk-gen-vibe input:checked + span { background: var(--pill-bg); color: var(--pill-text); border-color: var(--pill-bg); }
+  .fk-gen-label { display:block; font-size:13px; font-weight:700; color: var(--text-faint); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:10px; }
+  .fk-gen-result { opacity:0; transform:translateY(18px); animation:fk-gen-in .5s ease forwards; border-radius:18px; background: var(--card-bg); border:1px solid var(--border); padding:26px 22px; display:flex; flex-direction:column; gap:12px; }
+  @keyframes fk-gen-in { to { opacity:1; transform:translateY(0); } }
+  .fk-gen-swatch { width:32px; height:32px; border-radius:9px; border:1px solid var(--border); }
+  .fk-gen-cta { display:inline-flex; align-items:center; gap:8px; text-decoration:none; font-family:'Manrope',sans-serif; font-weight:700; font-size:14px; color: var(--pill-text); background: var(--pill-bg); padding:11px 20px; border-radius:999px; align-self:flex-start; }
+
+  .fk-reveal { opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease; }
+  .fk-reveal.is-visible { opacity:1; transform:translateY(0); }
+  @media (prefers-reduced-motion: reduce) { .fk-reveal { opacity:1; transform:none; transition:none; } }
+
+  /* layanan orb carousel */
+  .fk-lay-tabs { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin-bottom:44px; }
+  .fk-lay-tab { font-family:'Manrope',sans-serif; font-weight:700; font-size:14px; padding:10px 20px; border-radius:999px; border:1px solid var(--border); background:transparent; color:var(--text-soft); cursor:pointer; transition: all .2s ease; }
+  .fk-lay-tab.is-active { background: var(--bg); color: var(--text); border-color: var(--text); box-shadow: 0 6px 16px -8px rgba(0,0,0,0.15); }
+  .fk-lay-carousel { display:flex; align-items:center; justify-content:center; gap:22px; margin-bottom:36px; }
+  .fk-lay-orbs { display:flex; align-items:center; gap:26px; }
+  .fk-lay-orb-slot { cursor:pointer; }
+  .fk-lay-orb-visual { width:96px; height:96px; opacity:.35; filter: grayscale(.4); transition: all .35s cubic-bezier(.22,.9,.35,1.2); animation:none; }
+  .fk-lay-orb-slot.is-active .fk-lay-orb-visual { width:200px; height:200px; opacity:1; filter:none; }
+  .fk-lay-caption { max-width:520px; margin:0 auto; text-align:center; min-height:170px; }
+  .fk-lay-panel { display:none; }
+  .fk-lay-panel.is-active { display:block; animation: fk-fade-in .4s ease; }
+  @keyframes fk-fade-in { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  .fk-lay-list { list-style:none; margin:16px 0 0; padding:0; display:flex; flex-wrap:wrap; justify-content:center; gap:10px; font-size:13px; color:var(--text-soft); }
+  .fk-lay-list li { background:var(--card-bg); border:1px solid var(--border); padding:7px 14px; border-radius:999px; }
+  @media (max-width:640px) { .fk-lay-orbs { gap:14px; } .fk-lay-orb-visual { width:60px; height:60px; } .fk-lay-orb-slot.is-active .fk-lay-orb-visual { width:130px; height:130px; } }
+
+  /* timeline scrubber */
+  .fk-timeline-box { background: var(--bg-soft); border-radius:24px; padding:clamp(30px,5vw,60px) clamp(20px,4vw,50px); }
+  .fk-timeline-controls { display:flex; align-items:center; gap:18px; }
+  .fk-timeline-track { flex:1; position:relative; height:60px; display:flex; align-items:center; overflow:hidden; }
+  .fk-timeline-line { position:absolute; left:0; right:0; top:50%; height:1px; background:var(--border); }
+  .fk-timeline-dots { position:relative; display:flex; align-items:center; gap:28px; width:100%; justify-content:space-between; z-index:1; }
+  .fk-timeline-dot { width:10px; height:10px; border-radius:50%; background:var(--border); cursor:pointer; transition: all .25s ease; flex:none; }
+  .fk-timeline-dot.is-active { background: var(--brand-coral); width:16px; height:34px; border-radius:4px; }
+  .fk-timeline-caption { max-width:560px; margin:34px auto 0; text-align:center; min-height:80px; }
+  .fk-timeline-panel { display:none; }
+  .fk-timeline-panel.is-active { display:block; animation: fk-fade-in .4s ease; }
+  .fk-timeline-panel p { font-size:18px; line-height:1.55; color:var(--text); margin:0; }
+
+  /* latest updates */
+  .fk-update-card { text-decoration:none; color:var(--text); display:block; }
+  .fk-update-thumb { height:210px; position:relative; }
+  .fk-update-card:hover .fk-update-thumb { transform: scale(1.015); }
+  .fk-update-thumb { transition: transform .3s ease; }
 </style>
 </head>
 <body>
-<div class="fk-grain"></div>
 
-<div id="fk-scroll-progress" style="position:fixed; top:0; left:0; right:0; display:flex; gap:4px; padding:0 16px; height:3px; z-index:9999; pointer-events:none;">
-  <div class="fk-dash"><div class="fk-dash-fill" data-seg="0"></div></div>
-  <div class="fk-dash"><div class="fk-dash-fill" data-seg="1"></div></div>
-  <div class="fk-dash"><div class="fk-dash-fill" data-seg="2"></div></div>
-  <div class="fk-dash"><div class="fk-dash-fill" data-seg="3"></div></div>
-  <div class="fk-dash"><div class="fk-dash-fill" data-seg="4"></div></div>
-  <div class="fk-dash"><div class="fk-dash-fill" data-seg="5"></div></div>
-</div>
-<div id="fk-cursor-inner" style="position:fixed; top:0; left:0; width:6px; height:6px; background:#E15C3E; border-radius:50%; transform:translate(-9999px,-9999px); pointer-events:none; z-index:9999999;"></div>
-<div id="fk-cursor-outer" style="position:fixed; top:0; left:0; width:34px; height:34px; border:1.5px solid #FBF6EE55; border-radius:50%; transform:translate(-9999px,-9999px); pointer-events:none; z-index:9999998; transition:width .25s ease, height .25s ease, border-color .25s ease;"></div>
-
-<div style="font-family: 'Inter', sans-serif; background: #1C1B33; color: #FBF6EE;">
-
-  <!-- NAV -->
-  <div style="display:flex; align-items:center; justify-content:space-between; max-width:1120px; margin:0 auto; padding: 32px 26px; gap:14px; flex-wrap:wrap;">
-    <div style="display:flex; align-items:center; gap:11px; flex:none;">
-      <img src="images/logo-founderku.jpg" alt="Founderku" width="30" height="30" loading="eager" decoding="async" style="width:30px; height:30px; border-radius:8px; object-fit:cover;">
-      <div style="font-family:'Manrope',sans-serif; font-weight:800; font-size:19px; color:#FBF6EE; letter-spacing:-0.01em;">Founderku</div>
-    </div>
-    <div class="fk-nav-links" style="display:flex; align-items:center; gap:38px; font-size:15px; font-weight:500; color:#FBF6EE;">
-      <a href="#kenapa" class="fk-link" style="text-decoration:none; color:inherit;" data-i18n="nav.kenapa">Kenapa</a>
-      <a href="#layanan" class="fk-link" style="text-decoration:none; color:inherit;" data-i18n="nav.layanan">Layanan</a>
-      <a href="#proses" class="fk-link" style="text-decoration:none; color:inherit;" data-i18n="nav.proses">Proses</a>
-      <a href="#proyek" class="fk-link" style="text-decoration:none; color:inherit;" data-i18n="nav.proyek">Project</a>
-      <a href="#faq" class="fk-link" style="text-decoration:none; color:inherit;" data-i18n="nav.faq">FAQ</a>
-      <a href="#generator" class="fk-link" style="text-decoration:none; color:inherit;" data-i18n="nav.generator">Generator</a>
-      <a href="store.html" class="fk-link" style="text-decoration:none; color:#E15C3E; font-weight:700;" data-i18n="nav.instantFounder">Founder Starterpack</a>
-      <a href="#cta" class="fk-nav-cta" style="text-decoration:none; color:#FBF6EE; padding:10px 20px; border-radius:999px; font-weight:600; border:1px solid #FBF6EE33;" data-i18n="nav.ngobrol">Ngobrol</a>
-    </div>
-  </div>
-
-  <div id="fkLangSwitch" style="position:fixed; bottom:20px; right:20px; z-index:999999;">
-    <div id="fkLangMenu" style="display:none; flex-direction:column; gap:2px; background:#1C1B33; border:1px solid #FBF6EE26; border-radius:14px; padding:6px; margin-bottom:8px; min-width:92px; box-shadow:0 14px 34px -10px rgba(0,0,0,0.55);">
-      <button type="button" class="fk-lang-btn" data-lang="id" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:15px; font-weight:700; color:#FBF6EECC; padding:12px 16px; border-radius:9px; text-align:left; transition:background .15s ease; width:100%;">ID</button>
-      <button type="button" class="fk-lang-btn" data-lang="en" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:15px; font-weight:700; color:#FBF6EECC; padding:12px 16px; border-radius:9px; text-align:left; transition:background .15s ease; width:100%;">EN</button>
-      <button type="button" class="fk-lang-btn" data-lang="tr" style="border:none; background:transparent; cursor:pointer; font-family:'Manrope',sans-serif; font-size:15px; font-weight:700; color:#FBF6EECC; padding:12px 16px; border-radius:9px; text-align:left; transition:background .15s ease; width:100%;">TR</button>
-    </div>
-    <button type="button" id="fkLangToggle" aria-label="ganti bahasa" style="display:flex; align-items:center; gap:9px; background:#FBF6EE; color:#1C1B33; border:none; border-radius:999px; padding:15px 24px; font-family:'Manrope',sans-serif; font-size:16px; font-weight:800; cursor:pointer; box-shadow:0 12px 34px -8px rgba(0,0,0,0.45), 0 2px 10px -2px rgba(0,0,0,0.3);">
-      <span id="fkLangCurrentLabel">EN</span>
-      <svg id="fkLangChevron" width="13" height="8" viewBox="0 0 10 6" style="transition:transform .2s ease; flex:none;"><path d="M1 1l4 4 4-4" stroke="#1C1B33" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-  </div>
-
-
-  <!-- HERO -->
-  <div class="fk-hero-section" id="fkHeroSection" style="position:relative; overflow:hidden; min-height:92vh; display:flex; align-items:center; background:#1C1B33;">
-    <div class="fk-floating-bg" style="position:absolute; inset:-40px; z-index:0; background:radial-gradient(700px 500px at 85% 0%, #F2A62333, transparent 65%), radial-gradient(600px 500px at 5% 100%, #4A479022, transparent 65%);"></div>
-    <div class="fk-hero-blob hb1" data-speed="0.3"></div>
-    <div class="fk-hero-blob hb2" data-speed="0.5"></div>
-    <div class="fk-hero-blob hb3" data-speed="0.2"></div>
-    <div class="fk-hero-blob hb4" data-speed="0.4"></div>
-
-    <canvas id="fkParticles" style="position:absolute; inset:0; z-index:0; pointer-events:none;"></canvas>
-
-    <div class="fk-grid-lines" id="fkGridLines">
-      <div class="fk-grid-line"><div class="fk-grid-dot"></div></div>
-      <div class="fk-grid-line"><div class="fk-grid-dot"></div></div>
-      <div class="fk-grid-line"><div class="fk-grid-dot"></div></div>
-      <div class="fk-grid-line"><div class="fk-grid-dot"></div></div>
-      <div class="fk-grid-line"><div class="fk-grid-dot"></div></div>
-    </div>
-    <svg viewBox="0 0 300 220" style="position:absolute; top:50%; left:50%; transform:translate(-50%,-52%); width:520px; height:auto; z-index:0; opacity:0.06; pointer-events:none;">
-      <rect x="20" y="120" width="55" height="90" rx="20" fill="#7A78C4"></rect>
-      <rect x="122" y="70" width="55" height="140" rx="20" fill="#F2A623"></rect>
-      <rect x="224" y="20" width="55" height="190" rx="20" fill="#E15C3E"></rect>
-      <circle cx="251" cy="0" r="32" fill="#F6C84B"></circle>
-    </svg>
-
-    <div style="max-width:800px; margin:0 auto; padding: 100px 26px 90px; text-align:center; position:relative; z-index:1;">
-    <h1 class="fk-hero-h1" id="fkHeroTitle" aria-label="Semua bisa jadi founder." data-i18n-plain="hero.h1" style="font-family:'Fraunces',serif; font-style:italic; font-weight:600; font-size:64px; line-height:1.08; letter-spacing:-0.01em; margin:0 0 26px; color:#FBF6EE; position:relative; display:inline-block;">Semua bisa jadi founder.
-      <svg viewBox="0 0 220 20" style="position:absolute; left:50%; bottom:-10px; transform:translateX(-50%); width:220px; height:20px;">
-        <path d="M4 12 C 40 2, 70 18, 110 9 C 150 1, 180 15, 216 6" stroke="#F2A623" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="260" stroke-dashoffset="260" class="fk-underline-draw"></path>
-      </svg>
-    </h1>
-    <p data-i18n="hero.sub" style="font-size:18px; line-height:1.6; color:#FBF6EEB3; max-width:420px; margin:0 auto 36px;">
-      Ide kamu, kami ubah jadi branding, website, dan produk yang beneran bisa dipakai, bukan sekadar wacana atau mockup doang.
-    </p>
-    <div style="display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:44px;">
-      <a href="https://wa.me/6285710477257?text=Halo%20Founderku%2C%20aku%20punya%20ide%20yang%20mau%20diceritain" target="_blank" rel="noopener" class="fk-magnetic" style="text-decoration:none; background:linear-gradient(180deg, #2b2a4a, #1C1B33); color:#FBF6EE; padding:16px 30px; border-radius:999px; font-weight:700; font-size:16px; box-shadow:0 10px 24px -8px #1C1B3366, 0 2px 6px #1C1B3333; position:relative; overflow:hidden; display:inline-block; transition:transform .4s cubic-bezier(.34,1.56,.64,1);">
-        <span class="fk-spot" style="position:absolute; inset:0; border-radius:inherit; background:radial-gradient(140px circle at var(--mx,50%) var(--my,50%), #FFFFFF4D, transparent 60%); opacity:0; transition:opacity .3s ease; pointer-events:none;"></span>
-        <span style="position:relative; z-index:1;" data-i18n="hero.ctaMain">Ceritain Ide Kamu</span>
-      </a>
-      <a href="#layanan" style="text-decoration:none; color:#FBF6EE; padding:16px 4px; font-weight:600; font-size:16px;" data-i18n="hero.ctaSecondary">Lihat layanan →</a>
-    </div>
-    <div style="display:inline-flex; align-items:center; gap:8px; font-size:14px; color:#FBF6EE99; font-weight:500;">
-      <span style="width:6px; height:6px; border-radius:999px; background:#F2A623; flex:none;"></span>
-      <span data-i18n="hero.trust">Dibangun satu orang, satu keyakinan, ide kamu layak jadi kenyataan</span>
-    </div>
-    </div>
-  </div>
-
-  <!-- KENAPA FOUNDERKU -->
-  <div id="kenapa" class="fk-reveal" style="position:relative; overflow:hidden; background:#1C1B33;">
-    <div class="fk-floating-bg fk-float-slow" style="position:absolute; inset:-40px; z-index:0; background:radial-gradient(600px 400px at 10% 20%, #F2A6232E, transparent 65%), radial-gradient(600px 400px at 95% 90%, #4A479022, transparent 65%);"></div>
-    <div style="max-width:680px; margin:0 auto; padding:90px 26px; text-align:center; position:relative; z-index:1;">
-      <div style="font-size:13px; font-weight:700; color:#FBF6EE99; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:20px;" data-i18n="kenapa.eyebrow">Kenapa Founderku</div>
-      <p id="fk-kenapa-text" style="font-family:'Fraunces',serif; font-style:italic; font-weight:600; font-size:32px; line-height:1.4; color:#FBF6EE; margin:0;" data-i18n-plain="kenapa.text" data-text="Ide bagus jarang mati karena kurang niat. Yang bikin berhenti itu bagian yang paling sering dilewatin: eksekusi. Founderku ada buat nutup celah itu.">
-        Ide bagus jarang mati karena kurang niat. Yang bikin berhenti itu bagian yang paling sering dilewatin: eksekusi. Founderku ada buat nutup celah itu.
-      </p>
-    </div>
-  </div>
-
-  <!-- INSTANT FOUNDER BANNER -->
-  <div style="max-width:1120px; margin:0 auto; padding: 0 26px 100px;">
-    <a href="store.html" style="text-decoration:none; display:block; position:relative; overflow:hidden; border-radius:22px; background:#1C1B33; background-image:radial-gradient(rgba(255,255,255,0.09) 1.4px, transparent 1.4px); background-size:20px 20px; padding:48px 44px; box-shadow:0 20px 40px -20px #1C1B3340;">
-      <div style="display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap; position:relative; z-index:1;">
-        <div>
-          <div style="display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700; letter-spacing:0.06em; color:#F2A623; background:#F2A62322; padding:6px 14px; border-radius:20px; margin-bottom:16px;">
-            <span style="width:6px; height:6px; border-radius:50%; background:#F2A623;"></span>
-            <span data-i18n="banner.eyebrow">founder starterpack</span>
-          </div>
-          <h2 style="font-family:'Fraunces',serif; font-weight:600; font-size:30px; color:#FFFCF5; margin:0 0 10px;" data-i18n="banner.h2">sudah dipaketkan lengkap, kamu tinggal jadi founder.</h2>
-          <p style="font-size:15px; color:#FFFCF599; margin:0; max-width:460px; line-height:1.6;" data-i18n="banner.sub">website jadi, branding jadi, tone warna juga jadi. cocok buat portofolio yang keliatan niat atau bisnis yang pengen langsung jalan, tinggal pilih, kami dampingi sampai online.</p>
-        </div>
-        <div style="background:#F2A623; color:#1C1B33; font-weight:700; font-size:14.5px; padding:14px 26px; border-radius:30px; white-space:nowrap;" data-i18n="banner.cta">lihat katalog →</div>
-      </div>
+<nav>
+  <div class="fk-nav-inner">
+    <a href="/" class="fk-logo">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#7A78C4"/><stop offset="50%" stop-color="#F2A623"/><stop offset="100%" stop-color="#E15C3E"/></linearGradient><linearGradient id="lg2" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#E15C3E"/><stop offset="50%" stop-color="#F2A623"/><stop offset="100%" stop-color="#7A78C4"/></linearGradient></defs><rect width="200" height="200" rx="44" fill="none"/><path d="M55 50 L145 50 Q165 50 165 70 L165 95 Q165 115 145 115 L75 115" fill="none" stroke="url(#lg1)" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/><path d="M145 150 L55 150 Q35 150 35 130 L35 105 Q35 85 55 85 L125 85" fill="none" stroke="url(#lg2)" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      founder<span style="color:var(--brand-coral)">ku</span>
     </a>
-  </div>
-
-  <!-- PRODUK PREVIEW -->
-  <div style="max-width:1120px; margin:0 auto; padding: 0 26px 100px;" id="produkPreviewSection">
-    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-bottom:32px;">
-      <div>
-        <div style="font-size:13px; font-weight:700; color:#FBF6EE99; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px;" data-i18n="nav.instantFounder">Founder Starterpack</div>
-        <h2 class="fk-section-h2" style="font-family:'Fraunces',serif; font-weight:600; font-size:32px; color:#FBF6EE; margin:0 0 10px;" data-i18n="produk.h2">beberapa website yang tinggal kamu pakai buat jadi founder.</h2>
-        <p style="font-size:15px; color:#FBF6EE99; margin:0; max-width:480px; line-height:1.6;" data-i18n="produk.sub">bukan mockup. ini produk siap pakai yang sudah kami rancang lengkap, dari desain sampai brand-nya.</p>
-      </div>
-      <a href="store.html" style="text-decoration:none; font-size:14px; font-weight:700; color:#E15C3E; white-space:nowrap;" data-i18n="produk.link">lihat semua produk →</a>
+    <div class="fk-nav-links">
+      <a href="#kenapa" data-i18n="nav.kenapa">Kenapa</a>
+      <a href="#layanan" data-i18n="nav.layanan">Layanan</a>
+      <a href="#proses" data-i18n="nav.proses">Proses</a>
+      <a href="#proyek" data-i18n="nav.proyek">Project</a>
+      <a href="#blog" data-i18n="nav.blog">Blog</a>
+      <a href="#faq" data-i18n="nav.faq">FAQ</a>
+      <a href="store.html" style="color:var(--brand-coral); font-weight:700;" data-i18n="nav.instantFounder">Founder Starterpack</a>
     </div>
-    <div style="position:relative;">
-      <div class="fk-prod-slider" id="produkPreviewGrid" style="display:flex; gap:22px; overflow-x:auto; scroll-snap-type:x mandatory; touch-action:pan-y; padding:6px 6px 20px; margin:0 -6px; -webkit-overflow-scrolling:touch; scrollbar-width:none;">
-        <div style="text-align:center; padding:30px 0; color:#FBF6EE99; font-size:14px;" data-i18n="produk.loading">memuat produk...</div>
-      </div>
-      <button type="button" id="fkPpPrev" aria-label="sebelumnya" class="fk-prod-nav-btn fk-prod-nav-side fk-prod-nav-left">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <button type="button" id="fkPpNext" aria-label="berikutnya" class="fk-prod-nav-btn fk-prod-nav-side fk-prod-nav-right">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-    </div>
-    <div style="display:flex; align-items:center; justify-content:center; gap:7px; margin-top:14px;" id="fkPpDots"></div>
-  </div>
-
-  <script>
-  (async function(){
-    const grid = document.getElementById('produkPreviewGrid');
-    const section = document.getElementById('produkPreviewSection');
-    var fkCurrentLang = 'en';
-    try { fkCurrentLang = localStorage.getItem('fk-lang') || 'en'; } catch (e) {}
-    function pickLangText(field){
-      if (field == null) return '';
-      if (typeof field === 'string') return field;
-      return field[fkCurrentLang] || field.id || field.en || '';
-    }
-    function formatPriceLang(priceIDR, lang) {
-      var USD_RATE = 15700; var TRY_RATE = 490;
-      function thousands(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
-      if (lang === 'en') return '$' + thousands(Math.round(priceIDR / USD_RATE));
-      if (lang === 'tr') return '\u20ba' + thousands(Math.round(priceIDR / TRY_RATE));
-      return 'Rp ' + thousands(priceIDR);
-    }
-    function getDisplayPrice(p, lang) {
-      if (lang === 'en' && p.priceUSD) return '$' + Number(p.priceUSD).toLocaleString('en-US');
-      if (lang === 'tr' && p.priceTRY) return '\u20ba' + Number(p.priceTRY).toLocaleString('tr-TR');
-      return formatPriceLang(p.price, lang);
-    }
-    function cardHTML(p){
-      const catLabel = p.categoryLabel || p.category;
-      const pName = pickLangText(p.name);
-      const thumbInner = p.thumbnail && !p.thumbnail.includes('placeholder')
-        ? `<img src="${p.thumbnail}" alt="${pName}" style="width:100%;height:100%;object-fit:cover;object-position:top;" onerror="this.parentElement.innerHTML='<span style=&quot;font-size:12px;color:#FBF6EE99;font-weight:600;&quot;>coming soon</span>'">`
-        : `<span style="font-size:12px; color:#FBF6EE99; font-weight:600;">coming soon</span>`;
-      return `
-      <div class="fk-prod-card">
-        <a href="product.html?slug=${encodeURIComponent(p.slug)}" style="text-decoration:none; color:inherit; display:block; background:rgba(251,246,238,0.05); border:1px solid #FBF6EE1F; border-radius:18px; overflow:hidden; transition:transform .2s ease; height:100%;">
-          <div style="height:150px; background:#24223F; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
-            <div style="position:absolute; top:12px; left:12px; background:#1C1B33; color:#FBF6EE; font-size:10.5px; font-weight:700; padding:5px 11px 5px 17px; border-radius:3px 12px 12px 3px; z-index:1;">${catLabel}</div>
-            ${thumbInner}
-          </div>
-          <div style="padding:18px 20px 20px;">
-            <div style="font-size:11px; font-weight:700; color:#E15C3E; text-transform:uppercase; letter-spacing:0.05em;">${catLabel}</div>
-            <div class="fk-prod-name" style="font-family:'Fraunces',serif; font-size:19px; font-weight:600; color:#FBF6EE; margin-top:6px;">${pName}</div>
-            <div class="fk-prod-price" style="font-size:13px; color:#FBF6EE99; margin-top:10px; font-weight:700;">${getDisplayPrice(p, fkCurrentLang)}</div>
-          </div>
-        </a>
-      </div>`;
-    }
-    try {
-      const res = await fetch('data/products.json', { cache: 'no-store' });
-      const data = await res.json();
-      const items = (data.products || []).slice(0, 6);
-      if (!items.length){
-        section.style.display = 'none';
-        return;
-      }
-      grid.innerHTML = items.map(cardHTML).join('');
-
-      window.fkRerenderProductPreview = function (lang) {
-        if (lang) { fkCurrentLang = lang; }
-        else { try { fkCurrentLang = localStorage.getItem('fk-lang') || 'en'; } catch (e) {} }
-        const nodes = Array.prototype.slice.call(grid.querySelectorAll('.fk-prod-card'));
-        nodes.forEach(function (node, i) {
-          const p = items[i];
-          if (!p) return;
-          const nameEl = node.querySelector('.fk-prod-name');
-          const priceEl = node.querySelector('.fk-prod-price');
-          if (nameEl) nameEl.textContent = pickLangText(p.name);
-          if (priceEl) priceEl.textContent = getDisplayPrice(p, fkCurrentLang);
-        });
-      };
-
-      const prevBtn = document.getElementById('fkPpPrev');
-      const nextBtn = document.getElementById('fkPpNext');
-      const dotsWrap = document.getElementById('fkPpDots');
-      const cards = Array.prototype.slice.call(grid.querySelectorAll('.fk-prod-card'));
-
-      if (dotsWrap && cards.length > 1){
-        dotsWrap.innerHTML = cards.map(function(_, i){
-          return '<div class="fk-prod-dot' + (i === 0 ? ' is-active' : '') + '" data-idx="' + i + '"></div>';
-        }).join('');
-      }
-      const dots = dotsWrap ? Array.prototype.slice.call(dotsWrap.querySelectorAll('.fk-prod-dot')) : [];
-
-      function getCurrentIndex(){
-        const gridLeft = grid.getBoundingClientRect().left;
-        let closestIdx = 0, closestDist = Infinity;
-        cards.forEach(function(card, i){
-          const dist = Math.abs(card.getBoundingClientRect().left - gridLeft);
-          if (dist < closestDist){ closestDist = dist; closestIdx = i; }
-        });
-        return closestIdx;
-      }
-      function updateActiveDot(){
-        if (!dots.length) return;
-        const idx = getCurrentIndex();
-        dots.forEach(function(d, i){ d.classList.toggle('is-active', i === idx); });
-      }
-      function goToIndex(idx){
-        idx = Math.max(0, Math.min(cards.length - 1, idx));
-        const target = cards[idx];
-        if (target) grid.scrollTo({ left: target.offsetLeft - grid.offsetLeft, behavior: 'smooth' });
-      }
-
-      if (cards.length > 1 && prevBtn && nextBtn){
-        prevBtn.addEventListener('click', function(){ goToIndex(getCurrentIndex() - 1); });
-        nextBtn.addEventListener('click', function(){ goToIndex(getCurrentIndex() + 1); });
-      } else {
-        if (prevBtn) prevBtn.style.display = 'none';
-        if (nextBtn) nextBtn.style.display = 'none';
-      }
-      dots.forEach(function(d){
-        d.addEventListener('click', function(){ goToIndex(parseInt(d.dataset.idx, 10)); });
-      });
-
-      let scrollTimer;
-      grid.addEventListener('scroll', function(){
-        clearTimeout(scrollTimer);
-        scrollTimer = setTimeout(updateActiveDot, 80);
-      });
-    } catch(err){
-      section.style.display = 'none';
-      console.error(err);
-    }
-  })();
-  </script>
-
-  <!-- LAYANAN -->
-  <div id="layanan" class="fk-reveal" style="max-width:1120px; margin:0 auto; padding: 100px 26px;">
-    <div style="max-width:560px; margin-bottom:56px;">
-      <div style="font-size:13px; font-weight:700; color:#FBF6EE99; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px;" data-i18n="nav.layanan">Layanan</div>
-      <h2 class="fk-section-h2" style="font-family:'Fraunces',serif; font-weight:700; font-size:36px; letter-spacing:-0.015em; margin:0 0 14px; color:#FBF6EE;" data-i18n="layanan.h2">Tiga langkah, satu tujuan.</h2>
-      <p style="font-size:16px; line-height:1.6; color:#FBF6EE99; margin:0;" data-i18n="layanan.sub">Identitas yang bikin orang percaya di detik pertama. Produk atau website yang bisa langsung dicoba orang beneran, bukan cuma dipresentasikan.</p>
-    </div>
-    <div class="fk-grid-3" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px;">
-      <div class="fk-tilt-l fk-glow-card fk-magnetic fk-tilt3d" style="border-radius:22px;">
-        <div class="fk-glow-card-inner" style="background:linear-gradient(135deg, rgba(242,166,35,0.10), rgba(251,246,238,0.03)); border:1px solid rgba(251,246,238,0.12); border-radius:20px; padding:44px; box-shadow:0 20px 40px -20px rgba(0,0,0,0.4), 0 4px 12px -4px rgba(0,0,0,0.25);">
-        <span class="fk-spot" style="position:absolute; inset:0; border-radius:inherit; background:radial-gradient(180px circle at var(--mx,50%) var(--my,50%), #FFFFFF66, transparent 60%); opacity:0; transition:opacity .3s ease; pointer-events:none;"></span>
-        <div style="width:38px; height:38px; border-radius:10px; border:1.5px solid #FBF6EE; margin-bottom:26px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 1px #1C1B330D; position:relative; z-index:1;">
-          <svg width="16" height="16" viewBox="0 0 24 24" style="filter:drop-shadow(0 0 6px #F2A62399);"><path d="M12 2l2.6 6.6L21 10l-5.2 4.3L17.4 21 12 17.3 6.6 21l1.6-6.7L3 10l6.4-1.4z" fill="#F2A623"/></svg>
+    <div class="fk-nav-right">
+      <button type="button" class="fk-ctrl-btn" id="fkThemeToggle" aria-label="ganti tema" title="ganti tema">☀</button>
+      <div class="fk-lang-wrap" id="fkLangSwitch">
+        <button type="button" class="fk-ctrl-btn" id="fkLangToggle" aria-label="ganti bahasa" style="width:auto; padding:0 12px; gap:5px;">
+          <span id="fkLangCurrentLabel">EN</span>
+        </button>
+        <div class="fk-lang-menu" id="fkLangMenu">
+          <button type="button" class="fk-lang-btn" data-lang="id">ID</button>
+          <button type="button" class="fk-lang-btn" data-lang="en">EN</button>
+          <button type="button" class="fk-lang-btn" data-lang="tr">TR</button>
         </div>
-        <h3 style="font-family:'Fraunces',serif; font-weight:700; font-size:24px; margin:0 0 12px; color:#FBF6EE; position:relative; z-index:1;" data-i18n="layanan.branding.title">Branding</h3>
-        <p style="font-size:15px; line-height:1.7; color:#FBF6EE99; margin:0 0 22px; position:relative; z-index:1;" data-i18n="layanan.branding.desc">Nama, logo, sampai suara brand kamu, dirancang biar orang percaya di detik pertama mereka lihat, bukan pelan-pelan.</p>
-        <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; font-size:14px; color:#FBF6EE99; position:relative; z-index:1;">
-          <li data-i18n="layanan.branding.li1">Identitas visual &amp; logo</li>
+      </div>
+      <a href="#cta" class="fk-pill fk-pill-solid fk-pill-sm" data-i18n="nav.ngobrol">Ngobrol</a>
+    </div>
+  </div>
+</nav>
+
+<div class="fk-hero">
+  <div class="fk-hero-orbs" id="fkHeroOrbs">
+    <div class="fk-orb-float" style="animation-delay:.3s;"><div class="fk-orb fk-orb-indigo" data-depth="18" style="width:56px; height:56px;"></div></div>
+    <div class="fk-orb-float" style="animation-delay:0s;"><div class="fk-orb fk-orb-amber" data-depth="30" style="width:100px; height:100px;"></div></div>
+    <div class="fk-orb-float" style="animation-delay:.6s;"><div class="fk-orb fk-orb-coral" data-depth="24" style="width:70px; height:70px;"></div></div>
+  </div>
+  <h1 class="fk-h1" data-i18n="hero.h1">Semua bisa jadi founder.</h1>
+  <p class="fk-sub" data-i18n="hero.sub">Ide kamu, kami ubah jadi branding, website, dan produk yang beneran bisa dipakai, bukan sekadar wacana atau mockup doang.</p>
+  <div class="fk-hero-ctas">
+    <a href="#cta" class="fk-pill fk-pill-solid" data-i18n="hero.ctaMain">Ceritain Ide Kamu</a>
+    <a href="#layanan" class="fk-pill fk-pill-outline" data-i18n="hero.ctaSecondary">Lihat layanan →</a>
+  </div>
+</div>
+
+<div class="fk-trust">
+  <div class="fk-trust-label" data-i18n="hero.trust">Dibangun satu orang, satu keyakinan, ide kamu layak jadi kenyataan</div>
+  <div class="fk-trust-grid">
+    <div class="fk-trust-item">TukarSkill</div>
+    <div class="fk-trust-item">Motifa</div>
+    <div class="fk-trust-item">Kelasin</div>
+    <div class="fk-trust-item">Lahirku</div>
+    <div class="fk-trust-item">NomadBuds</div>
+  </div>
+</div>
+
+<div id="kenapa" class="fk-section fk-reveal">
+  <div class="fk-wrap" style="max-width:720px; text-align:center;">
+    <div class="fk-eyebrow" data-i18n="kenapa.eyebrow">Kenapa Founderku</div>
+    <p class="fk-h2" style="font-size:clamp(22px,3vw,30px); margin-top:14px;" data-i18n="kenapa.text">Ide bagus jarang mati karena kurang niat. Yang bikin berhenti itu bagian yang paling sering dilewatin: eksekusi. Founderku ada buat nutup celah itu.</p>
+  </div>
+</div>
+
+<div class="fk-section fk-reveal">
+  <div class="fk-wrap">
+    <div style="max-width:640px; margin:0 auto 40px;">
+      <h2 class="fk-h2" style="font-size:clamp(22px,3vw,30px);" data-i18n="timeline.h2">Beberapa hal soal jadi founder yang jarang diomongin.</h2>
+      <p style="color:var(--text-soft); margin-top:12px;" data-i18n="timeline.sub">Geser atau klik titiknya buat liat satu-satu.</p>
+    </div>
+    <div class="fk-timeline-box">
+      <div class="fk-timeline-controls">
+        <button type="button" class="fk-slider-nav-btn" id="tlPrev" aria-label="sebelumnya">‹</button>
+        <div class="fk-timeline-track" id="tlTrack">
+          <div class="fk-timeline-line"></div>
+          <div class="fk-timeline-dots" id="tlDots"></div>
+        </div>
+        <button type="button" class="fk-slider-nav-btn" id="tlNext" aria-label="berikutnya">›</button>
+      </div>
+      <div class="fk-timeline-caption" id="tlCaption">
+        <div class="fk-timeline-panel is-active" data-idx="0"><p data-i18n="timeline.f1">Kebanyakan founder nggak mulai dari ide yang sempurna, mereka mulai dari masalah yang mereka sendiri alami.</p></div>
+        <div class="fk-timeline-panel" data-idx="1"><p data-i18n="timeline.f2">Ide pertama jarang jadi ide yang akhirnya berhasil. Yang bertahan itu yang mau ubah arah, bukan yang keras kepala.</p></div>
+        <div class="fk-timeline-panel" data-idx="2"><p data-i18n="timeline.f3">Produk yang "kurang sempurna tapi online" selalu ngalahin produk sempurna yang masih di draft.</p></div>
+        <div class="fk-timeline-panel" data-idx="3"><p data-i18n="timeline.f4">Pembeli pertama itu paling susah dicari, tapi paling berharga, karena dia yang jadi bukti buat pembeli kedua.</p></div>
+        <div class="fk-timeline-panel" data-idx="4"><p data-i18n="timeline.f5">Brand yang dipercaya bukan yang paling mahal, tapi yang paling konsisten cerita dan janjinya.</p></div>
+        <div class="fk-timeline-panel" data-idx="5"><p data-i18n="timeline.f6">Founder yang jalan sendirian sekarang, dengan alat yang tepat, bisa hasilin yang dulu butuh satu tim penuh.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="produkPreviewSection" class="fk-section fk-reveal" style="padding-top:0;">
+  <div class="fk-wrap">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom:28px; flex-wrap:wrap;">
+      <div style="max-width:520px;">
+        <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,34px);" data-i18n="produk.h2">beberapa website yang tinggal kamu pakai buat jadi founder.</h2>
+        <p style="color:var(--text-soft); margin-top:10px; font-size:15px;" data-i18n="produk.sub">bukan mockup. ini produk siap pakai yang sudah kami rancang lengkap, dari desain sampai brand-nya.</p>
+      </div>
+      <a href="store.html" style="text-decoration:none; font-weight:700; color:var(--brand-coral); font-size:14px; white-space:nowrap;" data-i18n="produk.link">lihat semua produk →</a>
+    </div>
+    <div class="fk-slider" id="produkPreviewGrid">
+      <div style="padding:20px; color:var(--text-faint);" data-i18n="produk.loading">memuat produk...</div>
+    </div>
+  </div>
+</div>
+
+<div id="layanan" class="fk-section fk-reveal">
+  <div class="fk-wrap">
+    <div style="max-width:600px; margin:0 auto 40px; text-align:center;">
+      <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,34px);" data-i18n="layanan.h2">Tiga langkah, satu tujuan.</h2>
+      <p style="color:var(--text-soft); margin-top:12px;" data-i18n="layanan.sub">Identitas yang bikin orang percaya di detik pertama. Produk atau website yang bisa langsung dicoba orang beneran, bukan cuma dipresentasikan.</p>
+    </div>
+
+    <div class="fk-lay-tabs" id="layTabs">
+      <button type="button" class="fk-lay-tab is-active" data-idx="0" data-i18n="layanan.branding.title">Branding</button>
+      <button type="button" class="fk-lay-tab" data-idx="1" data-i18n="layanan.mvp.title">MVP</button>
+      <button type="button" class="fk-lay-tab" data-idx="2" data-i18n="layanan.website.title">Website & Rebuild</button>
+    </div>
+
+    <div class="fk-lay-carousel">
+      <button type="button" class="fk-slider-nav-btn" id="layPrev" aria-label="sebelumnya">‹</button>
+      <div class="fk-lay-orbs" id="layOrbs">
+        <div class="fk-lay-orb-slot" data-idx="0"><div class="fk-orb fk-orb-amber fk-lay-orb-visual"></div></div>
+        <div class="fk-lay-orb-slot" data-idx="1"><div class="fk-orb fk-orb-indigo fk-lay-orb-visual"></div></div>
+        <div class="fk-lay-orb-slot" data-idx="2"><div class="fk-orb fk-orb-coral fk-lay-orb-visual"></div></div>
+      </div>
+      <button type="button" class="fk-slider-nav-btn" id="layNext" aria-label="berikutnya">›</button>
+    </div>
+
+    <div class="fk-lay-caption">
+      <div class="fk-lay-panel is-active" data-idx="0">
+        <h3 class="fk-serif" data-i18n="layanan.branding.title">Branding</h3>
+        <p data-i18n="layanan.branding.desc">Nama, logo, sampai suara brand kamu, dirancang biar orang percaya di detik pertama mereka lihat, bukan pelan-pelan.</p>
+        <ul class="fk-lay-list">
+          <li data-i18n="layanan.branding.li1">Identitas visual & logo</li>
           <li data-i18n="layanan.branding.li2">Brand guideline</li>
-          <li data-i18n="layanan.branding.li3">Nama &amp; tagline</li>
+          <li data-i18n="layanan.branding.li3">Nama & tagline</li>
         </ul>
-        </div>
       </div>
-      <div class="fk-tilt-r fk-glow-card fk-magnetic fk-tilt3d" style="border-radius:22px;">
-        <div class="fk-glow-card-inner" style="background:linear-gradient(135deg, rgba(122,120,196,0.12), rgba(251,246,238,0.03)); border:1px solid rgba(251,246,238,0.12); border-radius:20px; padding:44px; box-shadow:0 20px 40px -20px rgba(0,0,0,0.4), 0 4px 12px -4px rgba(0,0,0,0.25);">
-        <span class="fk-spot" style="position:absolute; inset:0; border-radius:inherit; background:radial-gradient(180px circle at var(--mx,50%) var(--my,50%), #FFFFFF66, transparent 60%); opacity:0; transition:opacity .3s ease; pointer-events:none;"></span>
-        <div style="width:38px; height:38px; border-radius:10px; border:1.5px solid #FBF6EE; margin-bottom:26px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 1px #1C1B330D; position:relative; z-index:1;">
-          <svg width="16" height="16" viewBox="0 0 24 24" style="filter:drop-shadow(0 0 6px #F2A62399);"><path d="M12 2l2.6 6.6L21 10l-5.2 4.3L17.4 21 12 17.3 6.6 21l1.6-6.7L3 10l6.4-1.4z" fill="#F2A623"/></svg>
-        </div>
-        <h3 style="font-family:'Fraunces',serif; font-weight:700; font-size:24px; margin:0 0 12px; color:#FBF6EE; position:relative; z-index:1;" data-i18n="layanan.mvp.title">MVP</h3>
-        <p style="font-size:15px; line-height:1.7; color:#FBF6EE99; margin:0 0 22px; position:relative; z-index:1;" data-i18n="layanan.mvp.desc">Produk versi awal yang beneran berfungsi, bukan wireframe. Siap divalidasi langsung ke pengguna dan investor pertama kamu.</p>
-        <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; font-size:14px; color:#FBF6EE99; position:relative; z-index:1;">
+      <div class="fk-lay-panel" data-idx="1">
+        <h3 class="fk-serif" data-i18n="layanan.mvp.title">MVP</h3>
+        <p data-i18n="layanan.mvp.desc">Produk versi awal yang beneran berfungsi, bukan wireframe. Siap divalidasi langsung ke pengguna dan investor pertama kamu.</p>
+        <ul class="fk-lay-list">
           <li data-i18n="layanan.mvp.li1">Desain produk (UI/UX)</li>
           <li data-i18n="layanan.mvp.li2">Website atau aplikasi fungsional</li>
-          <li data-i18n="layanan.mvp.li3">Siap demo ke user &amp; investor</li>
+          <li data-i18n="layanan.mvp.li3">Siap demo ke user & investor</li>
         </ul>
-        </div>
       </div>
-      <div class="fk-glow-card fk-magnetic fk-tilt3d" style="border-radius:22px;">
-        <div class="fk-glow-card-inner" style="background:linear-gradient(135deg, rgba(122,120,196,0.10), rgba(251,246,238,0.03)); border:1px solid rgba(251,246,238,0.12); border-radius:20px; padding:44px; box-shadow:0 20px 40px -20px rgba(0,0,0,0.4), 0 4px 12px -4px rgba(0,0,0,0.25);">
-        <span class="fk-spot" style="position:absolute; inset:0; border-radius:inherit; background:radial-gradient(180px circle at var(--mx,50%) var(--my,50%), #FFFFFF66, transparent 60%); opacity:0; transition:opacity .3s ease; pointer-events:none;"></span>
-        <div style="width:38px; height:38px; border-radius:10px; border:1.5px solid #FBF6EE; margin-bottom:26px; display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 1px #1C1B330D; position:relative; z-index:1;">
-          <svg width="16" height="16" viewBox="0 0 24 24" style="filter:drop-shadow(0 0 6px #F2A62399);"><path d="M12 2l2.6 6.6L21 10l-5.2 4.3L17.4 21 12 17.3 6.6 21l1.6-6.7L3 10l6.4-1.4z" fill="#F2A623"/></svg>
-        </div>
-        <h3 style="font-family:'Fraunces',serif; font-weight:700; font-size:24px; margin:0 0 12px; color:#FBF6EE; position:relative; z-index:1;" data-i18n="layanan.website.title">Website &amp; Rebuild</h3>
-        <p style="font-size:15px; line-height:1.7; color:#FBF6EE99; margin:0 0 22px; position:relative; z-index:1;" data-i18n="layanan.website.desc">Punya website yang udah ketinggalan zaman atau masih pakai builder gratisan? Kami bangun ulang jadi custom, cepat, dan sesuai brand kamu, dari nol atau dari yang udah ada.</p>
-        <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; font-size:14px; color:#FBF6EE99; position:relative; z-index:1;">
+      <div class="fk-lay-panel" data-idx="2">
+        <h3 class="fk-serif" data-i18n="layanan.website.title">Website & Rebuild</h3>
+        <p data-i18n="layanan.website.desc">Punya website yang udah ketinggalan zaman atau masih pakai builder gratisan? Kami bangun ulang jadi custom, cepat, dan sesuai brand kamu, dari nol atau dari yang udah ada.</p>
+        <ul class="fk-lay-list">
           <li data-i18n="layanan.website.li1">Website custom dari nol</li>
           <li data-i18n="layanan.website.li2">Rebuild dari platform lama (Wix, dll)</li>
-          <li data-i18n="layanan.website.li3">Domain &amp; deployment</li>
+          <li data-i18n="layanan.website.li3">Domain & deployment</li>
         </ul>
-        </div>
       </div>
     </div>
   </div>
-
-  <!-- STATS -->
-  <div id="stats" class="fk-reveal" style="position:relative; overflow:hidden; background:#1C1B33;">
-    <svg viewBox="0 0 1440 90" preserveAspectRatio="none" style="position:absolute; top:0; left:0; width:100%; height:70px; z-index:1; display:block; pointer-events:none;">
-      <path d="M0,30 C240,75 480,0 720,35 C960,70 1200,10 1440,45 L1440,0 L0,0 Z" fill="#FBF6EE"></path>
-    </svg>
-    <div class="fk-floating-bg" style="position:absolute; inset:-40px; z-index:0; background:radial-gradient(800px 500px at 20% 10%, #4A479055, transparent 60%), radial-gradient(700px 500px at 90% 100%, #F2A62322, transparent 60%);"></div>
-    <div class="fk-grid-3" style="max-width:1120px; margin:0 auto; padding:90px 26px; display:grid; grid-template-columns:repeat(3, 1fr); gap:32px; text-align:center; position:relative; z-index:1;">
-      <div style="border-radius:24px; padding:20px 0; display:flex; flex-direction:column; align-items:center;">
-        <div style="width:44px; height:44px; border-radius:999px; background:#7A78C4; display:flex; align-items:center; justify-content:center; margin-bottom:18px; box-shadow:0 6px 16px -4px #7A78C466;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 6v6l4 2" stroke="#FBF6EE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#FBF6EE" stroke-width="2"/></svg>
-        </div>
-        <div style="font-family:'Fraunces',serif; font-weight:700; font-size:clamp(48px, 7vw, 88px); letter-spacing:-0.02em; color:#FBF6EE; line-height:1; white-space:nowrap;">4-6</div>
-        <div style="font-size:14px; font-weight:600; color:#FBF6EEAA; margin-top:12px;" data-i18n="stats.weeks">minggu per proyek</div>
-      </div>
-      <div style="border-radius:24px; padding:20px 0; display:flex; flex-direction:column; align-items:center;">
-        <div style="width:44px; height:44px; border-radius:999px; background:#F2A623; display:flex; align-items:center; justify-content:center; margin-bottom:18px; box-shadow:0 6px 16px -4px #F2A62366;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 7l8-4 8 4-8 4-8-4z" stroke="#FBF6EE" stroke-width="2" stroke-linejoin="round"/><path d="M4 7v10l8 4 8-4V7" stroke="#FBF6EE" stroke-width="2" stroke-linejoin="round"/></svg>
-        </div>
-        <div style="font-family:'Fraunces',serif; font-weight:700; font-size:clamp(48px, 7vw, 88px); letter-spacing:-0.02em; color:#F2A623; line-height:1; text-shadow:0 4px 20px #F2A62366; white-space:nowrap;">2</div>
-        <div style="font-size:14px; font-weight:600; color:#FBF6EEAA; margin-top:12px;" data-i18n="stats.packages">paket layanan</div>
-      </div>
-      <div style="border-radius:24px; padding:20px 0; display:flex; flex-direction:column; align-items:center;">
-        <div style="width:44px; height:44px; border-radius:999px; background:#E15C3E; display:flex; align-items:center; justify-content:center; margin-bottom:18px; box-shadow:0 6px 16px -4px #E15C3E66;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20.8 8.6c0-2.7-2.2-4.6-4.6-4.6-1.6 0-3 .8-3.8 2.1-.8-1.3-2.2-2.1-3.8-2.1-2.4 0-4.6 1.9-4.6 4.6 0 5.1 8.4 10.4 8.4 10.4s8.4-5.3 8.4-10.4z" stroke="#FBF6EE" stroke-width="2" stroke-linejoin="round"/></svg>
-        </div>
-        <div style="font-family:'Fraunces',serif; font-weight:700; font-size:clamp(44px, 6.4vw, 80px); letter-spacing:-0.02em; color:#FBF6EE; line-height:1; white-space:nowrap;">100%</div>
-        <div style="font-size:14px; font-weight:600; color:#FBF6EEAA; margin-top:12px;" data-i18n="stats.focus">fokus ke ide kamu</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- PROSES -->
-  <div id="proses" class="fk-reveal" style="position:relative; overflow:hidden; background:#1C1B33;">
-    <div class="fk-floating-bg fk-float-slow" style="position:absolute; inset:-40px; z-index:0; background:radial-gradient(800px 500px at 80% 0%, #F2A62322, transparent 60%), radial-gradient(700px 500px at 10% 100%, #4A479044, transparent 60%);"></div>
-    <div style="max-width:1120px; margin:0 auto; padding:100px 26px; position:relative; z-index:1;">
-      <div style="max-width:560px; margin-bottom:60px;">
-        <div style="font-size:13px; font-weight:700; color:#FBF6EE99; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px;" data-i18n="proses.eyebrow">Cara Kerja</div>
-        <h2 class="fk-section-h2" style="font-family:'Fraunces',serif; font-weight:700; font-size:36px; letter-spacing:-0.015em; margin:0 0 14px; color:#FBF6EE;" data-i18n="proses.h2">Empat langkah, biasanya 4-6 minggu.</h2>
-        <p style="font-size:16px; line-height:1.6; color:#FBF6EEAA; margin:0;" data-i18n="proses.sub">Bukan proses berbelit. Jelas dari hari pertama kamu ngobrol, sampai hari kamu resmi jadi founder.</p>
-      </div>
-      <div class="fk-grid-4" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:32px; position:relative;">
-        <div class="fk-step" style="padding-top:20px; position:relative; z-index:1;">
-          <div class="fk-step-num" style="font-family:'Manrope',sans-serif; font-weight:700; font-size:14px; color:#F2A623; margin-bottom:14px; text-shadow:0 2px 6px #F2A62355; display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; background:#1C1B33; border:2px solid #F2A623;">01</div>
-          <div style="font-size:11px; font-weight:700; color:#F2A62399; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px;" data-i18n="proses.step1.week">Minggu 1</div>
-          <h4 style="font-family:'Manrope',sans-serif; font-weight:700; font-size:17px; margin:0 0 10px; color:#FBF6EE;" data-i18n="proses.step1.title">Ngobrol ide</h4>
-          <p style="font-size:14px; line-height:1.6; color:#FBF6EEAA; margin:0;" data-i18n="proses.step1.desc">Ceritakan idemu. Kami bantu perjelas arahnya.</p>
-        </div>
-        <div class="fk-step" style="padding-top:20px; position:relative; z-index:1;">
-          <div class="fk-step-num" style="font-family:'Manrope',sans-serif; font-weight:700; font-size:14px; color:#F2A623; margin-bottom:14px; text-shadow:0 2px 6px #F2A62355; display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; background:#1C1B33; border:2px solid #F2A623;">02</div>
-          <div style="font-size:11px; font-weight:700; color:#F2A62399; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px;" data-i18n="proses.step2.week">Minggu 1-2</div>
-          <h4 style="font-family:'Manrope',sans-serif; font-weight:700; font-size:17px; margin:0 0 10px; color:#FBF6EE;" data-i18n="proses.step2.title">Bangun brand</h4>
-          <p style="font-size:14px; line-height:1.6; color:#FBF6EEAA; margin:0;" data-i18n="proses.step2.desc">Identitas dirancang biar gampang diingat.</p>
-        </div>
-        <div class="fk-step" style="padding-top:20px; position:relative; z-index:1;">
-          <div class="fk-step-num" style="font-family:'Manrope',sans-serif; font-weight:700; font-size:14px; color:#F2A623; margin-bottom:14px; text-shadow:0 2px 6px #F2A62355; display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; background:#1C1B33; border:2px solid #F2A623;">03</div>
-          <div style="font-size:11px; font-weight:700; color:#F2A62399; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px;" data-i18n="proses.step3.week">Minggu 2-5</div>
-          <h4 style="font-family:'Manrope',sans-serif; font-weight:700; font-size:17px; margin:0 0 10px; color:#FBF6EE;" data-i18n="proses.step3.title">Rancang &amp; bangun MVP</h4>
-          <p style="font-size:14px; line-height:1.6; color:#FBF6EEAA; margin:0;" data-i18n="proses.step3.desc">Produk fungsional, siap dicoba.</p>
-        </div>
-        <div class="fk-step" style="padding-top:20px; position:relative; z-index:1;">
-          <div class="fk-step-num" style="font-family:'Manrope',sans-serif; font-weight:700; font-size:14px; color:#F2A623; margin-bottom:14px; text-shadow:0 2px 6px #F2A62355; display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; background:#1C1B33; border:2px solid #F2A623;">04</div>
-          <div style="font-size:11px; font-weight:700; color:#F2A62399; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px;" data-i18n="proses.step4.week">Minggu 5-6</div>
-          <h4 style="font-family:'Manrope',sans-serif; font-weight:700; font-size:17px; margin:0 0 10px; color:#FBF6EE;" data-i18n="proses.step4.title">Luncurkan</h4>
-
-          <p style="font-size:14px; line-height:1.6; color:#FBF6EEAA; margin:0;" data-i18n="proses.step4.desc">Produkmu jalan. Kamu resmi jadi founder.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- PROYEK -->
-  <div id="proyek" class="fk-reveal" style="position:relative; overflow:hidden; background:#1C1B33; padding:100px 26px;">
-    <canvas id="fk-neural-canvas" style="position:absolute; inset:0; width:100%; height:100%; z-index:0; opacity:0.6;"></canvas>
-    <div style="max-width:1120px; margin:0 auto; position:relative; z-index:1;">
-      <div style="max-width:620px; margin:0 auto 56px; text-align:center;">
-        <div style="font-size:13px; font-weight:700; color:#FBF6EE99; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px;" data-i18n="proyek.eyebrow">Studi Kasus</div>
-        <h2 class="fk-section-h2" style="font-family:'Fraunces',serif; font-weight:700; font-size:36px; letter-spacing:-0.015em; margin:0 0 14px; color:#FBF6EE;" data-i18n="proyek.h2">Project yang udah kelar dan beneran jalan.</h2>
-        <p style="font-size:16px; line-height:1.6; color:#FBF6EEAA; margin:0;" data-i18n="proyek.sub">Bukan mockup doang, bukan janji di atas kertas. Ini bukti kalau prosesnya beneran menghasilkan produk yang jalan.</p>
-      </div>
-
-      <div style="position:relative;">
-        <div class="fk-proj-slider" id="fkCaseStudyGrid" style="display:flex; gap:22px; overflow-x:auto; scroll-snap-type:x mandatory; touch-action:pan-y; padding:6px 6px 20px; margin:0 -6px; -webkit-overflow-scrolling:touch; scrollbar-width:none;">
-          <div class="empty-state" style="color:#FBF6EE99; font-size:14px; padding:40px;" data-i18n="proyek.loading">memuat studi kasus...</div>
-        </div>
-        <button type="button" id="fkCsPrev" aria-label="sebelumnya" class="fk-cs-nav-btn fk-cs-nav-side fk-cs-nav-left">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <button type="button" id="fkCsNext" aria-label="berikutnya" class="fk-cs-nav-btn fk-cs-nav-side fk-cs-nav-right">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
-
-      <div style="display:flex; align-items:center; justify-content:center; gap:7px; margin-top:14px;" id="fkCsDots"></div>
-
-      <div style="text-align:center; margin-top:36px;">
-        <a href="case-studies.html" class="fk-magnetic" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px; color:#FBF6EE; font-weight:700; font-size:14px; border-bottom:2px solid #F2A623; padding-bottom:2px; position:relative;">
-          <span class="fk-spot" style="position:absolute; inset:0; border-radius:inherit; background:radial-gradient(140px circle at var(--mx,50%) var(--my,50%), #F2A62333, transparent 60%); opacity:0; transition:opacity .3s ease; pointer-events:none;"></span>
-          <span style="position:relative; z-index:1;" data-i18n="proyek.link">Lihat semua studi kasus &rarr;</span>
-        </a>
-      </div>
-</div>
 </div>
 
-
-  <!-- FAQ -->
-  <div id="faq" class="fk-reveal" style="position:relative; overflow:hidden; max-width:100%; margin:0 auto; padding:100px 26px;">
-    <svg viewBox="0 0 1440 90" preserveAspectRatio="none" style="position:absolute; top:0; left:0; width:100%; height:70px; z-index:0; display:block; pointer-events:none;">
-      <path d="M0,45 C240,10 480,80 720,45 C960,10 1200,75 1440,30 L1440,0 L0,0 Z" fill="#FBF6EE"></path>
-    </svg>
-    <div style="max-width:800px; margin:0 auto; position:relative; z-index:1;">
-    <div style="text-align:center; margin-bottom:52px;">
-      <div style="font-size:13px; font-weight:700; color:#FBF6EE99; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px;" data-i18n="faq.eyebrow">FAQ</div>
-      <h2 class="fk-section-h2" style="font-family:'Fraunces',serif; font-weight:700; font-size:36px; letter-spacing:-0.015em; margin:0; color:#FBF6EE;" data-i18n="faq.h2">Pertanyaan yang sering muncul</h2>
-    </div>
-    <div style="display:flex; flex-direction:column;">
-      <details class="fk-faq fk-faq-pill">
-        <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; padding:20px 0; font-family:'Manrope',sans-serif; font-weight:700; font-size:16px; color:#FBF6EE;">
-          <span data-i18n="faq.q1">Aku gak punya background teknis, bisa gak?</span>
-          <span class="plus" style="font-size:20px; color:#FBF6EE66; transition:transform 0.2s; font-weight:400;">+</span>
-        </summary>
-        <p style="margin:0 0 22px; font-size:15px; line-height:1.7; color:#FBF6EE99;" data-i18n="faq.a1">Bisa banget, dan ini justru kenapa Founderku ada. Fokus aja ke ide dan visi kamu, kami yang urus branding sampai eksekusi produknya sampai kelar.</p>
-      </details>
-      <details class="fk-faq fk-faq-pill">
-        <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; padding:20px 0; font-family:'Manrope',sans-serif; font-weight:700; font-size:16px; color:#FBF6EE;">
-          <span data-i18n="faq.q2">Berapa lama proses dari ide sampai MVP jadi?</span>
-          <span class="plus" style="font-size:20px; color:#FBF6EE66; transition:transform 0.2s; font-weight:400;">+</span>
-        </summary>
-        <p style="margin:0 0 22px; font-size:15px; line-height:1.7; color:#FBF6EE99;" data-i18n="faq.a2">Rata-rata 4-6 minggu, mulai dari ngobrol awal sampai produk siap didemokan ke user atau investor pertama kamu.</p>
-      </details>
-      <details class="fk-faq fk-faq-pill">
-        <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; padding:20px 0; font-family:'Manrope',sans-serif; font-weight:700; font-size:16px; color:#FBF6EE;">
-          <span data-i18n="faq.q3">Apa bedanya paket Branding dan MVP?</span>
-          <span class="plus" style="font-size:20px; color:#FBF6EE66; transition:transform 0.2s; font-weight:400;">+</span>
-        </summary>
-        <p style="margin:0 0 22px; font-size:15px; line-height:1.7; color:#FBF6EE99;" data-i18n="faq.a3">Branding fokus bikin orang percaya sejak lihat pertama, MVP fokus bikin produkmu bisa dicoba beneran. Bisa ambil salah satu, atau dua-duanya sekaligus biar makin lengkap.</p>
-      </details>
-      <details class="fk-faq fk-faq-pill">
-        <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; padding:20px 0; font-family:'Manrope',sans-serif; font-weight:700; font-size:16px; color:#FBF6EE;">
-          <span data-i18n="faq.q4">Setelah MVP jadi, apakah Founderku masih bisa bantu?</span>
-          <span class="plus" style="font-size:20px; color:#FBF6EE66; transition:transform 0.2s; font-weight:400;">+</span>
-        </summary>
-        <p style="margin:0 0 22px; font-size:15px; line-height:1.7; color:#FBF6EE99;" data-i18n="faq.a4">Bisa, dan memang di situ Founderku paling sering kepakai. Banyak klien lanjut ke tahap pengembangan produk atau growth begitu MVP-nya tervalidasi.</p>
-      </details>
-      <details class="fk-faq fk-faq-pill">
-        <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between; padding:20px 0; font-family:'Manrope',sans-serif; font-weight:700; font-size:16px; color:#FBF6EE;">
-          <span data-i18n="faq.q5">Gimana cara mulainya?</span>
-          <span class="plus" style="font-size:20px; color:#FBF6EE66; transition:transform 0.2s; font-weight:400;">+</span>
-        </summary>
-        <p style="margin:0 0 22px; font-size:15px; line-height:1.7; color:#FBF6EE99;" data-i18n="faq.a5">Gampang. Klik tombol Ceritain Ide Kamu, cerita 30 menit gratis, dan kami bantu petakan langkah pertama yang paling masuk akal buat kamu.</p>
-      </details>
-    </div>
+<div id="proses" class="fk-section fk-reveal">
+  <div class="fk-wrap" style="text-align:center;">
+    <div class="fk-eyebrow" data-i18n="proses.eyebrow">Proses</div>
+    <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,34px); margin-top:14px;" data-i18n="proses.h2">Empat langkah, dari ngobrol sampai online.</h2>
+    <div class="fk-grid-3" style="margin-top:44px; text-align:left;">
+      <div>
+        <div class="fk-eyebrow" style="color:var(--brand-amber);">01</div>
+        <h3 class="fk-serif" style="font-size:19px; margin-top:8px;" data-i18n="proses.s1title">Ngobrol Ide</h3>
+        <p style="color:var(--text-soft); font-size:14px;" data-i18n="proses.s1desc">Cerita 30 menit, gratis, kami bantu petakan arah paling masuk akal.</p>
+      </div>
+      <div>
+        <div class="fk-eyebrow" style="color:var(--brand-coral);">02</div>
+        <h3 class="fk-serif" style="font-size:19px; margin-top:8px;" data-i18n="proses.s2title">Desain & Brand</h3>
+        <p style="color:var(--text-soft); font-size:14px;" data-i18n="proses.s2desc">Identitas visual dirancang biar kepercayaan orang datang di detik pertama.</p>
+      </div>
+      <div>
+        <div class="fk-eyebrow" style="color:var(--brand-indigo);">03</div>
+        <h3 class="fk-serif" style="font-size:19px; margin-top:8px;" data-i18n="proses.s3title">Bangun Produk</h3>
+        <p style="color:var(--text-soft); font-size:14px;" data-i18n="proses.s3desc">Website/aplikasi fungsional yang beneran bisa dicoba, bukan cuma wireframe.</p>
+      </div>
     </div>
   </div>
+</div>
 
-  <!-- GENERATOR -->
-  <style>
-    .fk-gen-field { font-family:'Manrope',sans-serif; font-size:15px; font-weight:600; color:#FBF6EE; background:#24223F; border:1.5px solid #FBF6EE26; border-radius:14px; padding:14px 16px; width:100%; box-sizing:border-box; outline:none; transition:border-color .2s ease, box-shadow .2s ease; appearance:none; -webkit-appearance:none; }
-    .fk-gen-field:focus { border-color:#F2A623; box-shadow:0 0 0 3px #F2A62333; }
-    select.fk-gen-field { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23FBF6EE' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 16px center; padding-right:40px; cursor:pointer; }
-    .fk-gen-vibes { display:flex; flex-wrap:wrap; gap:10px; }
-    .fk-gen-vibe { position:relative; cursor:pointer; }
-    .fk-gen-vibe input { position:absolute; opacity:0; pointer-events:none; }
-    .fk-gen-vibe span { display:inline-block; font-family:'Manrope',sans-serif; font-size:14px; font-weight:700; color:#FBF6EE; background:#24223F; border:1.5px solid #FBF6EE26; border-radius:999px; padding:10px 20px; transition:all .2s ease; }
-    .fk-gen-vibe:hover span { border-color:#FBF6EE66; transform:translateY(-1px); }
-    .fk-gen-vibe input:checked + span { background:#1C1B33; color:#FBF6EE; border-color:#FBF6EE; box-shadow:0 8px 20px -8px #1C1B3366; }
-    .fk-gen-label { display:block; font-size:13px; font-weight:700; color:#FBF6EE99; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:10px; }
-    .fk-gen-result { opacity:0; transform:translateY(18px) rotate(var(--tilt,0deg)); animation:fk-gen-in .55s cubic-bezier(.22,.9,.35,1.2) forwards; border-radius:20px; background:#24223F; box-shadow:0 20px 40px -20px #1C1B3326, 0 4px 12px -4px #1C1B3314; border:1px solid #FBF6EE12; padding:30px 26px; display:flex; flex-direction:column; gap:14px; position:relative; overflow:hidden; transition:transform .3s ease, box-shadow .3s ease; }
-    .fk-gen-result:hover { transform:translateY(-4px) rotate(0deg) !important; box-shadow:0 28px 50px -22px #1C1B3340, 0 6px 16px -6px #1C1B331F; }
-    @keyframes fk-gen-in { to { opacity:1; transform:translateY(0) rotate(var(--tilt,0deg)); } }
-    .fk-gen-swatch { width:34px; height:34px; border-radius:10px; border:1.5px solid #FBF6EE1F; box-shadow:inset 0 0 0 1px #FFFFFF40; }
-    .fk-gen-cta { display:inline-flex; align-items:center; gap:8px; text-decoration:none; font-family:'Manrope',sans-serif; font-weight:700; font-size:14px; color:#FBF6EE; background:linear-gradient(180deg, #2b2a4a, #1C1B33); padding:12px 22px; border-radius:999px; transition:transform .25s ease, box-shadow .25s ease; box-shadow:0 10px 24px -10px #1C1B3355; align-self:flex-start; }
-    .fk-gen-cta:hover { transform:translateY(-2px); box-shadow:0 14px 30px -10px #1C1B3377; }
-    .fk-gen-btn { font-family:'Manrope',sans-serif; cursor:pointer; border:none; }
-    @media (prefers-reduced-motion: reduce) { .fk-gen-result { animation:none; opacity:1; transform:none; } }
-  </style>
-  <div id="generator" class="fk-reveal" style="position:relative; overflow:hidden;">
-    <div class="fk-floating-bg" style="position:absolute; top:60px; right:-120px; width:320px; height:320px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #F2A62355, transparent 70%); filter:blur(10px); pointer-events:none;"></div>
-    <div class="fk-floating-bg fk-float-slow" style="position:absolute; bottom:-80px; left:-100px; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle at 60% 40%, #E15C3E33, transparent 70%); filter:blur(12px); pointer-events:none;"></div>
-    <div style="max-width:1120px; margin:0 auto; padding:100px 26px; position:relative; z-index:1;">
-      <div style="max-width:620px; margin:0 auto 52px; text-align:center;">
-        <div style="font-size:13px; font-weight:700; color:#FBF6EE99; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px;" data-i18n="nav.generator">Generator</div>
-        <h2 class="fk-section-h2" style="font-family:'Fraunces',serif; font-weight:700; font-size:36px; letter-spacing:-0.015em; margin:0 0 14px; color:#FBF6EE;" data-i18n="gen.h2">Coba lihat brand kamu jadi, sekarang juga.</h2>
-        <p style="font-size:16px; line-height:1.6; color:#FBF6EE99; margin:0;" data-i18n="gen.sub">Pilih industri, ceritain target user kamu, klik generate. Nama, tagline, sama warna langsung muncul di depan mata. Gratis, cuma buat mancing ide, tanpa daftar apa pun.</p>
-      </div>
-
-      <div class="fk-glow-card fk-tilt-l" style="max-width:760px; margin:0 auto 44px; border-radius:22px;">
-        <div class="fk-glow-card-inner" style="background:linear-gradient(135deg, rgba(242,166,35,0.10), rgba(251,246,238,0.03)); border:1px solid rgba(251,246,238,0.12); border-radius:20px; padding:40px;">
-          <form id="fk-gen-form" style="display:flex; flex-direction:column; gap:24px;">
-            <div class="fk-grid-2" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-              <div>
-                <label class="fk-gen-label" for="fk-gen-industri" data-i18n="gen.labelIndustri">Industri</label>
-                <select id="fk-gen-industri" class="fk-gen-field">
-                  <option value="edukasi" data-i18n="gen.optEdukasi">Edukasi</option>
-                  <option value="kesehatan" data-i18n="gen.optKesehatan">Kesehatan</option>
-                  <option value="fnb" data-i18n="gen.optFnb">F&amp;B</option>
-                  <option value="teknologi" data-i18n="gen.optTeknologi">Teknologi / SaaS</option>
-                  <option value="kreatif" data-i18n="gen.optKreatif">Kreatif / Desain</option>
-                  <option value="fashion" data-i18n="gen.optFashion">Fashion / Lifestyle</option>
-                  <option value="sosial" data-i18n="gen.optSosial">Sosial / NGO</option>
-                  <option value="finansial" data-i18n="gen.optFinansial">Finansial</option>
-                </select>
-              </div>
-              <div>
-                <label class="fk-gen-label" for="fk-gen-target" data-i18n="gen.labelTarget">Target user kamu</label>
-                <input id="fk-gen-target" class="fk-gen-field" type="text" maxlength="40" data-i18n-placeholder="gen.placeholderTarget" placeholder="misal: anak muda, ibu rumah tangga&hellip;">
-              </div>
-            </div>
-            <div>
-              <span class="fk-gen-label" data-i18n="gen.labelVibe">Vibe</span>
-              <div class="fk-gen-vibes" role="radiogroup" aria-label="Pilih vibe brand">
-                <label class="fk-gen-vibe"><input type="radio" name="fk-gen-vibe" value="playful" checked><span data-i18n="gen.vibePlayful">Playful</span></label>
-                <label class="fk-gen-vibe"><input type="radio" name="fk-gen-vibe" value="professional"><span data-i18n="gen.vibeProfessional">Professional</span></label>
-                <label class="fk-gen-vibe"><input type="radio" name="fk-gen-vibe" value="bold"><span data-i18n="gen.vibeBold">Bold</span></label>
-                <label class="fk-gen-vibe"><input type="radio" name="fk-gen-vibe" value="minimalis"><span data-i18n="gen.vibeMinimalis">Minimalis</span></label>
-              </div>
-            </div>
-            <button type="submit" class="fk-gen-btn fk-magnetic" style="background:linear-gradient(180deg, #2b2a4a, #1C1B33); color:#FBF6EE; padding:16px 30px; border-radius:999px; font-weight:700; font-size:16px; box-shadow:0 12px 32px -6px #1C1B3355; position:relative; overflow:hidden; align-self:flex-start; transition:transform .4s cubic-bezier(.34,1.56,.64,1);">
-              <span class="fk-spot" style="position:absolute; inset:0; border-radius:inherit; background:radial-gradient(140px circle at var(--mx,50%) var(--my,50%), #FFFFFF4D, transparent 60%); opacity:0; transition:opacity .3s ease; pointer-events:none;"></span>
-              <span style="position:relative; z-index:1;" data-i18n="gen.btn">Generate ✨</span>
-            </button>
-          </form>
-        </div>
-      </div>
-
-      <div id="fk-gen-results" class="fk-grid-3" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; max-width:1000px; margin:0 auto;" aria-live="polite"></div>
-      <p id="fk-gen-hint" style="display:none; text-align:center; font-size:14px; color:#FBF6EE80; margin:28px 0 0;" data-i18n="gen.hint">Belum sreg? Klik generate lagi. Hasilnya beda terus. Atau langsung aja ngobrol bareng kita.</p>
+<div id="proyek" class="fk-section fk-reveal">
+  <div class="fk-wrap">
+    <div style="max-width:600px; margin:0 auto 36px; text-align:center;">
+      <div class="fk-eyebrow" data-i18n="proyek.eyebrow">Studi Kasus</div>
+      <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,34px); margin-top:14px;" data-i18n="proyek.h2">Project yang udah kelar dan beneran jalan.</h2>
+      <p style="color:var(--text-soft); margin-top:12px;" data-i18n="proyek.sub">Bukan mockup doang, bukan janji di atas kertas. Ini bukti kalau prosesnya beneran menghasilkan produk yang jalan.</p>
+    </div>
+    <div class="fk-slider" id="fkCaseStudyGrid">
+      <div style="padding:20px; color:var(--text-faint);">...</div>
+    </div>
+    <div style="text-align:center; margin-top:20px;">
+      <a href="case-studies.html" style="text-decoration:none; font-weight:700; color:var(--brand-coral); font-size:14px;" data-i18n="proyek.link">lihat semua studi kasus →</a>
     </div>
   </div>
+</div>
 
-  <script>
-  (function () {
-    var BANK = {
-      edukasi:   { prefix: ['Edu','Skola','Pinter','Belajar','Kelas','Cerdas','Ajar','Bisa'], suffix: ['kelas','pintar','ilmu','belajar','kul','ajar','paham','cerdas'], noun: 'ilmu', verbs: ['Belajar','Ngulik','Nyerap'] },
-      kesehatan: { prefix: ['Sehat','Vita','Bugar','Sigap','Prima','Rawat','Pulih','Segar'], suffix: ['sehat','bugar','medis','klinik','jaga','fit','rawat','prima'], noun: 'kesehatan', verbs: ['Jaga','Rawat','Pulihin'] },
-      fnb:       { prefix: ['Rasa','Nikmat','Kunyah','Santap','Selera','Dapur','Lahap','Gurih'], suffix: ['rasa','makan','kuliner','saji','kunyah','lezat','santap','lapar'], noun: 'kuliner', verbs: ['Santap','Rasain','Nikmatin'] },
-      teknologi: { prefix: ['Data','Sistem','Otomatis','Cepat','Pintar','Konek','Logika','Kilat'], suffix: ['sys','flow','stack','hub','base','labs','ku','tech'], noun: 'teknologi', verbs: ['Kelola','Otomatisin','Bangun'] },
-      kreatif:   { prefix: ['Karya','Rupa','Warna','Bentuk','Ide','Kanvas','Cipta','Goresan'], suffix: ['karya','studio','rupa','kreasi','visual','cipta','lab','warna'], noun: 'karya', verbs: ['Bikin','Rancang','Wujudkan'] },
-      fashion:   { prefix: ['Gaya','Kilau','Padu','Rancang','Anggun','Jelita','Tampil','Serasi'], suffix: ['gaya','padu','style','kilau','wear','pesona','look','rupa'], noun: 'gaya', verbs: ['Padu','Tampil','Rancang'] },
-      sosial:    { prefix: ['Peduli','Sama','Gerak','Bangun','Ruang','Suara','Rangkul','Ulur'], suffix: ['peduli','bersama','gerak','untuk','bakti','asa','tangan','kita'], noun: 'gerakan', verbs: ['Gerak','Rangkul','Bangun'] },
-      finansial: { prefix: ['Untung','Hemat','Modal','Aman','Tumbuh','Cuan','Rencana','Saldo'], suffix: ['untung','modal','tumbuh','aman','dana','hemat','cuan','plan'], noun: 'keuangan', verbs: ['Kelola','Tumbuhin','Atur'] }
-    };
-    var VIBE = {
-      playful:      { adj: ['ceria','seru','asik','ringan','hangat','gampang','gembira','nagih'], colors: [['Kuning cerah','#FFC93C'],['Biru langit','#5FB8E8'],['Putih krem','#FFF8ED']] },
-      professional: { adj: ['prima','solid','presisi','terpercaya','matang','tegas','rapi','andal'], colors: [['Navy','#1C2B4A'],['Abu kalem','#A8ADB4'],['Putih','#FFFFFF']] },
-      bold:         { adj: ['berani','tajam','beda','kencang','nekat','gebrak','lantang','total'], colors: [['Merah gelap','#C0392B'],['Hitam','#1A1A1A'],['Kuning aksen','#F2A623']] },
-      minimalis:    { adj: ['bersih','simpel','jernih','tenang','ringkas','murni','lega','pas'], colors: [['Krem','#F5F1E8'],['Abu muda','#D9D6CE'],['Hitam lembut','#2B2B2B']] }
-    };
-    var TEMPLATES = [
-      function (d) { return d.verb + ' ' + d.noun + ', jadi ' + d.adj + '.'; },
-      function (d) { return 'Bukan ' + d.noun + ' biasa. Ini yang ' + d.adj + '.'; },
-      function (d) { return cap(d.noun) + ' yang ' + d.adj + ', buat ' + d.target + '.'; },
-      function (d) { return 'Satu langkah kecil, ' + d.noun + ' yang ' + d.adj + ' nunggu.'; },
-      function (d) { return cap(d.target) + ' deserve ' + d.noun + ' yang ' + d.adj + '.'; },
-      function (d) { return 'Akhirnya, ' + d.noun + ' yang beneran ' + d.adj + '.'; }
-    ];
-    var WA_NUMBER = '6285710477257';
-    var INDUSTRIES = Object.keys(BANK);
-    var usedNames = [];
+<div class="fk-section fk-reveal">
+  <div class="fk-wrap" style="max-width:760px; text-align:center;">
+    <div class="fk-eyebrow" data-i18n="banner.eyebrow">founder starterpack</div>
+    <h2 class="fk-h2" style="font-size:clamp(24px,3.6vw,36px); margin-top:14px;" data-i18n="banner.h2">sudah dipaketkan lengkap, kamu tinggal jadi founder.</h2>
+    <p style="color:var(--text-soft); margin-top:14px;" data-i18n="banner.sub">website jadi, branding jadi, tone warna juga jadi. cocok buat portofolio yang keliatan niat atau bisnis yang pengen langsung jalan, tinggal pilih, kami dampingi sampai online.</p>
+    <a href="store.html" class="fk-pill fk-pill-solid" style="margin-top:22px; background:var(--brand-amber); color:#14131F;" data-i18n="banner.cta">lihat katalog →</a>
+  </div>
+</div>
 
-    function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-    function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-    function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
-
-    function makeName(industry) {
-      for (var attempt = 0; attempt < 30; attempt++) {
-        var prefix = pick(BANK[industry].prefix);
-        // 30% chance ambil suffix dari industri lain biar variatif
-        var suffixPool = Math.random() < 0.3 ? BANK[pick(INDUSTRIES)].suffix : BANK[industry].suffix;
-        var suffix = pick(suffixPool).toLowerCase();
-        var p = prefix.toLowerCase();
-        if (p === suffix) continue;                       // "Rasarasa" dsb.
-        if (p.slice(-1) === suffix.charAt(0)) suffix = suffix.slice(1); // hindari huruf dobel di sambungan
-        var name = cap(p + suffix);
-        if (name.length < 5 || name.length > 14) continue;
-        if (usedNames.indexOf(name) !== -1) continue;     // anti keulang antar-klik
-        return name;
-      }
-      return null;
-    }
-
-    function makeTagline(industry, vibe, target) {
-      var d = {
-        noun: BANK[industry].noun,
-        verb: pick(BANK[industry].verbs),
-        adj: pick(VIBE[vibe].adj),
-        target: target || 'kamu'
-      };
-      return pick(TEMPLATES)(d);
-    }
-
-    function generate() {
-      var industry = document.getElementById('fk-gen-industri').value;
-      var target = document.getElementById('fk-gen-target').value.trim();
-      var vibe = document.querySelector('input[name="fk-gen-vibe"]:checked').value;
-      var colors = VIBE[vibe].colors;
-
-      if (usedNames.length > 60) usedNames = []; // reset biar bank gak habis
-      var count = 3, cards = [], taglines = [];
-
-      for (var i = 0; i < count; i++) {
-        var name = makeName(industry);
-        if (!name) { usedNames = []; name = makeName(industry) || cap(pick(BANK[industry].prefix)) + 'ku'; }
-        usedNames.push(name);
-
-        var tagline;
-        for (var t = 0; t < 10; t++) {
-          tagline = makeTagline(industry, vibe, target);
-          if (taglines.indexOf(tagline) === -1) break;    // anti duplikat di render yang sama
-        }
-        taglines.push(tagline);
-
-        var waText = encodeURIComponent('Halo Founderku, aku barusan generate nama brand "' + name + '" di situs kamu. Suka nih, bisa dibantu lanjutin gak?');
-        var swatches = colors.map(function (c) {
-          return '<div style="display:flex; flex-direction:column; align-items:center; gap:6px;">' +
-                   '<span class="fk-gen-swatch" style="background:' + c[1] + ';" title="' + c[0] + ' ' + c[1] + '"></span>' +
-                   '<span style="font-size:11px; font-weight:600; color:#FBF6EE80;">' + c[1] + '</span>' +
-                 '</div>';
-        }).join('');
-
-        var tilt = (i % 2 === 0 ? -1.2 : 1.2) + 'deg';
-        cards.push(
-          '<div class="fk-gen-result" style="--tilt:' + tilt + '; animation-delay:' + (i * 0.12) + 's;">' +
-            '<div style="font-size:12px; font-weight:700; color:#F2A623; text-transform:uppercase; letter-spacing:0.08em;">Opsi ' + (i + 1) + '</div>' +
-            '<div style="font-family:\'Fraunces\',serif; font-weight:700; font-size:27px; letter-spacing:-0.01em; color:#FBF6EE; line-height:1.15;">' + esc(name) + '</div>' +
-            '<p style="margin:0; font-size:15px; line-height:1.6; color:#FBF6EE99; flex-grow:1;">&ldquo;' + esc(tagline) + '&rdquo;</p>' +
-            '<div style="display:flex; gap:14px;">' + swatches + '</div>' +
-            '<a class="fk-gen-cta" href="https://wa.me/' + WA_NUMBER + '?text=' + waText + '" target="_blank" rel="noopener">Suka ini? Chat kita <span aria-hidden="true">&rarr;</span></a>' +
-          '</div>'
-        );
-      }
-
-      document.getElementById('fk-gen-results').innerHTML = cards.join('');
-      document.getElementById('fk-gen-hint').style.display = 'block';
-    }
-
-    document.getElementById('fk-gen-form').addEventListener('submit', function (e) {
-      e.preventDefault();
-      generate();
-    });
-  })();
-  </script>
-
-
-  <!-- CTA -->
-  <div id="cta" class="fk-reveal" style="position:relative; overflow:hidden; background:linear-gradient(160deg, #E8B368, #B5721F);">
-    <svg viewBox="0 0 1440 90" preserveAspectRatio="none" style="position:absolute; top:0; left:0; width:100%; height:70px; z-index:1; display:block; pointer-events:none;">
-      <path d="M0,30 C240,75 480,0 720,35 C960,70 1200,10 1440,45 L1440,0 L0,0 Z" fill="#FBF6EE"></path>
-    </svg>
-    <div style="position:absolute; inset:0; z-index:0; background:#FBF6EE; opacity:0.12;"></div>
-    <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:360px; height:220px; border-radius:50%; background:#FFFFFF; opacity:0.18; filter:blur(80px); z-index:0; pointer-events:none;"></div>
-    <div style="max-width:640px; margin:0 auto; padding:110px 26px; text-align:center; position:relative; z-index:1;">
-      <h2 class="fk-section-h2" style="font-family:'Fraunces',serif; font-weight:700; font-size:36px; letter-spacing:-0.015em; margin:0 0 18px; color:#1C1B33;" data-i18n="cta.h2">Ide kamu udah cukup lama nunggu. Sekarang giliran jalan.</h2>
-      <p style="font-size:16px; color:#1C1B3399; margin:0 0 36px;" data-i18n="cta.sub">Cerita 30 menit, gratis, tanpa tekanan. Kita cari langkah pertama yang paling masuk akal buat kamu.</p>
-      <a href="https://wa.me/6285710477257?text=Halo%20Founderku%2C%20aku%20punya%20ide%20yang%20mau%20diceritain" target="_blank" rel="noopener" class="fk-magnetic" style="text-decoration:none; background:linear-gradient(180deg, #2b2a4a, #1C1B33); color:#FBF6EE; padding:17px 32px; border-radius:999px; font-weight:700; font-size:16px; display:inline-block; box-shadow:0 12px 32px -6px #1C1B3355, 0 0 40px 6px #FFFFFF55; position:relative; overflow:hidden; transition:transform .4s cubic-bezier(.34,1.56,.64,1);">
-        <span class="fk-spot" style="position:absolute; inset:0; border-radius:inherit; background:radial-gradient(140px circle at var(--mx,50%) var(--my,50%), #FFFFFF4D, transparent 60%); opacity:0; transition:opacity .3s ease; pointer-events:none;"></span>
-        <span style="position:relative; z-index:1;" data-i18n="hero.ctaMain">Ceritain Ide Kamu</span>
+<div id="blog" class="fk-section fk-reveal">
+  <div class="fk-wrap">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom:30px; flex-wrap:wrap;">
+      <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,32px);" data-i18n="updates.h2">Latest updates</h2>
+      <a href="#" class="fk-pill fk-pill-outline fk-pill-sm" data-i18n="updates.all">All posts</a>
+    </div>
+    <div class="fk-grid-3">
+      <a href="#" class="fk-update-card">
+        <div class="fk-update-thumb fk-orb-indigo" style="border-radius:16px; animation:none;"></div>
+        <div style="margin-top:14px; font-weight:700;" data-i18n="updates.p1title">TukarSkill tembus 100 pengguna aktif</div>
+        <div style="margin-top:6px; font-size:13px; color:var(--text-faint);"><span data-i18n="updates.tagUpdate">Update</span> · Mar 2026</div>
+      </a>
+      <a href="#" class="fk-update-card">
+        <div class="fk-update-thumb fk-orb-amber" style="border-radius:16px; animation:none;"></div>
+        <div style="margin-top:14px; font-weight:700;" data-i18n="updates.p2title">Kenalan sama Founder Starterpack</div>
+        <div style="margin-top:6px; font-size:13px; color:var(--text-faint);"><span data-i18n="updates.tagProduct">Product</span> · Feb 2026</div>
+      </a>
+      <a href="#" class="fk-update-card">
+        <div class="fk-update-thumb fk-orb-coral" style="border-radius:16px; animation:none;"></div>
+        <div style="margin-top:14px; font-weight:700;" data-i18n="updates.p3title">Di balik proses bikin Lahirku</div>
+        <div style="margin-top:6px; font-size:13px; color:var(--text-faint);"><span data-i18n="updates.tagCase">Studi Kasus</span> · Jan 2026</div>
       </a>
     </div>
-    <svg viewBox="0 0 1440 90" preserveAspectRatio="none" style="position:absolute; bottom:0; left:0; width:100%; height:70px; z-index:1; display:block; pointer-events:none;">
-      <path d="M0,45 C240,10 480,80 720,45 C960,10 1200,75 1440,30 L1440,90 L0,90 Z" fill="#FBF6EE"></path>
-    </svg>
   </div>
-
-  <!-- FOOTER -->
-  <div style="padding:32px 26px;">
-    <div style="max-width:1120px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; font-size:14px; color:#FBF6EE99;">
-      <div data-i18n="footer.copy">Founderku · 2026</div>
-      <a href="https://www.instagram.com/founderku?igsh=OHZlcGd4emhoczNv" target="_blank" rel="noopener" class="fk-link fk-footer-link" style="color:#FBF6EE; text-decoration:none; font-weight:600;">Instagram @founderku</a>
-    </div>
-  </div>
-
 </div>
 
-<script>
-  // Scroll-reveal for sections
-  var revealEls = document.querySelectorAll('.fk-reveal');
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-    revealEls.forEach(function (el) { io.observe(el); });
-  } else {
-    revealEls.forEach(function (el) { el.classList.add('is-visible'); });
-  }
+<div id="faq" class="fk-section fk-reveal">
+  <div class="fk-wrap" style="max-width:720px;">
+    <div style="text-align:center; margin-bottom:36px;">
+      <div class="fk-eyebrow" data-i18n="faq.eyebrow">FAQ</div>
+      <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,34px); margin-top:14px;" data-i18n="faq.h2">Pertanyaan yang sering ditanyain.</h2>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <details class="fk-card" style="cursor:pointer;"><summary style="font-weight:700; font-size:16px;" data-i18n="faq.q1">Berapa lama prosesnya?</summary><p style="margin-top:14px;" data-i18n="faq.a1">Rata-rata 4-6 minggu tergantung kompleksitas, katalog siap pakai bisa online dalam hitungan hari.</p></details>
+      <details class="fk-card" style="cursor:pointer;"><summary style="font-weight:700; font-size:16px;" data-i18n="faq.q5">Gimana cara mulainya?</summary><p style="margin-top:14px;" data-i18n="faq.a5">Gampang. Klik tombol Ceritain Ide Kamu, cerita 30 menit gratis, dan kami bantu petakan langkah pertama yang paling masuk akal buat kamu.</p></details>
+    </div>
+  </div>
+</div>
 
-  // Scroll progress: segmented dashes
-  (function () {
-    var fills = document.querySelectorAll('.fk-dash-fill');
-    if (!fills.length) return;
-    var segCount = fills.length;
-    function update() {
-      var docEl = document.documentElement;
-      var scrollTop = window.scrollY || docEl.scrollTop;
-      var height = docEl.scrollHeight - docEl.clientHeight;
-      var pct = height > 0 ? (scrollTop / height) : 0;
-      var overall = pct * segCount;
-      fills.forEach(function (fill, i) {
-        var segProgress = Math.max(0, Math.min(1, overall - i));
-        fill.style.width = (segProgress * 100) + '%';
-      });
-    }
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-    update();
-  })();
+<div id="generator" class="fk-section fk-reveal">
+  <div class="fk-wrap" style="max-width:760px;">
+    <div style="text-align:center; margin-bottom:40px;">
+      <div class="fk-eyebrow" data-i18n="nav.generator">Generator</div>
+      <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,34px); margin-top:14px;" data-i18n="gen.h2">Coba lihat brand kamu jadi, sekarang juga.</h2>
+      <p style="color:var(--text-soft); margin-top:12px;" data-i18n="gen.sub">Pilih industri, ceritain target user kamu, klik generate. Nama, tagline, sama warna langsung muncul di depan mata.</p>
+    </div>
+    <div class="fk-card">
+      <form id="fk-gen-form" style="display:flex; flex-direction:column; gap:22px;">
+        <div class="fk-grid-2">
+          <div>
+            <label class="fk-gen-label" for="fk-gen-industri" data-i18n="gen.labelIndustri">Industri</label>
+            <select id="fk-gen-industri" class="fk-gen-field">
+              <option value="edukasi" data-i18n="gen.optEdukasi">Edukasi</option>
+              <option value="kesehatan" data-i18n="gen.optKesehatan">Kesehatan</option>
+              <option value="fnb" data-i18n="gen.optFnb">F&amp;B</option>
+              <option value="teknologi" data-i18n="gen.optTeknologi">Teknologi / SaaS</option>
+              <option value="kreatif" data-i18n="gen.optKreatif">Kreatif / Desain</option>
+              <option value="fashion" data-i18n="gen.optFashion">Fashion / Lifestyle</option>
+              <option value="sosial" data-i18n="gen.optSosial">Sosial / NGO</option>
+              <option value="finansial" data-i18n="gen.optFinansial">Finansial</option>
+            </select>
+          </div>
+          <div>
+            <label class="fk-gen-label" for="fk-gen-target" data-i18n="gen.labelTarget">Target user kamu</label>
+            <input id="fk-gen-target" class="fk-gen-field" type="text" maxlength="40" data-i18n-placeholder="gen.placeholderTarget" placeholder="misal: anak muda, ibu rumah tangga…">
+          </div>
+        </div>
+        <div>
+          <span class="fk-gen-label" data-i18n="gen.labelVibe">Vibe</span>
+          <div class="fk-gen-vibes" role="radiogroup" aria-label="Pilih vibe brand">
+            <label class="fk-gen-vibe"><input type="radio" name="fk-gen-vibe" value="playful" checked><span data-i18n="gen.vibePlayful">Playful</span></label>
+            <label class="fk-gen-vibe"><input type="radio" name="fk-gen-vibe" value="professional"><span data-i18n="gen.vibeProfessional">Professional</span></label>
+            <label class="fk-gen-vibe"><input type="radio" name="fk-gen-vibe" value="bold"><span data-i18n="gen.vibeBold">Bold</span></label>
+            <label class="fk-gen-vibe"><input type="radio" name="fk-gen-vibe" value="minimalis"><span data-i18n="gen.vibeMinimalis">Minimalis</span></label>
+          </div>
+        </div>
+        <button type="submit" class="fk-pill fk-pill-solid" style="align-self:flex-start;"><span data-i18n="gen.btn">Generate ✨</span></button>
+      </form>
+    </div>
+    <div id="fk-gen-results" class="fk-grid-3" style="margin-top:24px;" aria-live="polite"></div>
+    <p id="fk-gen-hint" style="display:none; text-align:center; font-size:14px; color:var(--text-faint); margin-top:24px;" data-i18n="gen.hint">Belum sreg? Klik generate lagi. Hasilnya beda terus.</p>
+  </div>
+</div>
 
-  // Custom two-ring cursor (desktop pointer devices only)
-  (function () {
-    var inner = document.getElementById('fk-cursor-inner');
-    var outer = document.getElementById('fk-cursor-outer');
-    if (!inner || !outer) return;
-    var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced || window.matchMedia('(hover: none)').matches || window.matchMedia('(pointer: coarse)').matches) {
-      inner.style.display = 'none';
-      outer.style.display = 'none';
-      return;
-    }
-    document.documentElement.classList.add('fk-custom-cursor');
-    var targetX = -9999, targetY = -9999, outerX = -9999, outerY = -9999;
-    document.addEventListener('mousemove', function (e) {
-      targetX = e.clientX;
-      targetY = e.clientY;
-      inner.style.transform = 'translate(' + (targetX - 3) + 'px,' + (targetY - 3) + 'px)';
-    });
-    document.addEventListener('mousedown', function () { outer.style.width = '26px'; outer.style.height = '26px'; });
-    document.addEventListener('mouseup', function () { outer.style.width = '34px'; outer.style.height = '34px'; });
-    document.querySelectorAll('a, button, .fk-magnetic, .chip, summary').forEach(function (el) {
-      el.addEventListener('mouseenter', function () { outer.style.width = '42px'; outer.style.height = '42px'; outer.style.borderColor = '#E15C3E66'; });
-      el.addEventListener('mouseleave', function () { outer.style.width = '34px'; outer.style.height = '34px'; outer.style.borderColor = '#FBF6EE55'; });
-    });
-    function raf() {
-      outerX += (targetX - outerX) * 0.18;
-      outerY += (targetY - outerY) * 0.18;
-      outer.style.transform = 'translate(' + (outerX - 17) + 'px,' + (outerY - 17) + 'px)';
-      requestAnimationFrame(raf);
-    }
-    raf();
-  })();
+<div id="cta" class="fk-section fk-reveal" style="text-align:center;">
+  <div class="fk-wrap" style="max-width:640px;">
+    <h2 class="fk-h2" style="font-size:clamp(26px,4vw,40px);" data-i18n="cta.h2">Siap ceritain ide kamu?</h2>
+    <p style="color:var(--text-soft); margin-top:14px;" data-i18n="cta.sub">30 menit ngobrol santai, gratis, tanpa komitmen.</p>
+    <a href="https://wa.me/6285710477257" target="_blank" rel="noopener" class="fk-pill fk-pill-solid" style="margin-top:20px; background:var(--brand-amber); color:#14131F;" data-i18n="cta.btn">Chat di WhatsApp</a>
+  </div>
+</div>
 
-  // Per-letter blur-up reveal for hero title
-  (function () {
-    var titleEl = document.getElementById('fkHeroTitle');
-    if (!titleEl) return;
-    var svgEl = titleEl.querySelector('svg');
-    var text = titleEl.childNodes[0] ? titleEl.childNodes[0].textContent : titleEl.textContent;
-    text = text.trim();
-    var prefersReducedChar = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var html = '<span aria-hidden="true">';
-    var delayIndex = 0;
-    var words = text.split(' ');
-    for (var w = 0; w < words.length; w++) {
-      html += '<span style="display:inline-block; white-space:nowrap;">';
-      for (var i = 0; i < words[w].length; i++) {
-        html += '<span class="fk-char" style="transition-delay:' + (delayIndex * 0.03) + 's;">' + words[w][i] + '</span>';
-        delayIndex++;
-      }
-      html += '</span>';
-      if (w < words.length - 1) html += ' ';
-    }
-    html += '</span>';
-    titleEl.innerHTML = html;
-    if (svgEl) titleEl.appendChild(svgEl);
-    if (prefersReducedChar) {
-      titleEl.querySelectorAll('.fk-char').forEach(function (c) { c.classList.add('fk-char-in'); });
-    } else {
-      setTimeout(function () {
-        titleEl.querySelectorAll('.fk-char').forEach(function (c) { c.classList.add('fk-char-in'); });
-      }, 80);
-    }
-  })();
-
-  // Hero underline draw-on-load
-  (function () {
-    var path = document.querySelector('.fk-underline-draw');
-    if (!path) return;
-    setTimeout(function () { path.classList.add('is-visible'); }, 1250);
-  })();
-
-  // Staggered word reveal for "Kenapa Founderku" paragraph, on scroll
-  (function () {
-    var el = document.getElementById('fk-kenapa-text');
-    if (!el) return;
-    var text = el.getAttribute('data-text') || el.textContent.trim();
-    var words = text.trim().split(/\s+/);
-    el.innerHTML = words.map(function (w, i) {
-      return '<span class="fk-reveal-word" style="transition-delay:' + (i * 0.045) + 's;">' + w + '</span>';
-    }).join(' ');
-    var spans = el.querySelectorAll('.fk-reveal-word');
-    if ('IntersectionObserver' in window) {
-      var io2 = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            spans.forEach(function (s) { s.classList.add('is-visible'); });
-            io2.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.4 });
-      io2.observe(el);
-    } else {
-      spans.forEach(function (s) { s.classList.add('is-visible'); });
-    }
-  })();
-
-  // Sequential "power-on" line reveal for Proses steps
-  (function () {
-    var steps = document.querySelectorAll('.fk-step');
-    if (!steps.length) return;
-    if ('IntersectionObserver' in window) {
-      var io3 = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            io3.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.3 });
-      steps.forEach(function (el) { io3.observe(el); });
-    } else {
-      steps.forEach(function (el) { el.classList.add('is-visible'); });
-    }
-  })();
-
-  // Magnetic button + cursor spotlight (+ real 3D tilt for .fk-tilt3d cards)
-  var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  document.querySelectorAll('.fk-magnetic').forEach(function (el) {
-    var spot = el.querySelector('.fk-spot');
-    var is3d = el.classList.contains('fk-tilt3d');
-    el.addEventListener('mousemove', function (e) {
-      if (prefersReduced) return;
-      var rect = el.getBoundingClientRect();
-      var relX = e.clientX - rect.left;
-      var relY = e.clientY - rect.top;
-      var dx = (relX - rect.width / 2) / (rect.width / 2);
-      var dy = (relY - rect.height / 2) / (rect.height / 2);
-      if (is3d) {
-        var rotX = dy * -8;
-        var rotY = dx * 8;
-        el.style.transform = 'perspective(900px) rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg) translateY(-4px)';
-      } else {
-        el.style.transform = 'translate(' + (dx * 6) + 'px, ' + (dy * 6) + 'px)';
-      }
-      el.style.setProperty('--mx', relX + 'px');
-      el.style.setProperty('--my', relY + 'px');
-      if (spot) spot.style.opacity = '1';
-    });
-    el.addEventListener('mouseleave', function () {
-      el.style.transform = is3d ? 'perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0)' : 'translate(0px, 0px)';
-      if (spot) spot.style.opacity = '0';
-    });
-  });
-
-  // Hero blob parallax on scroll
-  (function () {
-    var blobs = document.querySelectorAll('.fk-hero-blob');
-    if (!blobs.length) return;
-    var prefersReducedBlob = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedBlob) return;
-    function onScroll() {
-      var sy = window.scrollY;
-      blobs.forEach(function (b) {
-        var speed = parseFloat(b.dataset.speed || 0.3);
-        b.style.transform = 'translateY(' + (sy * -0.15 * speed) + 'px)';
-      });
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  })();
-
-  // Ambient particles in hero (lightweight canvas 2D, no WebGL)
-  (function () {
-    var canvas = document.getElementById('fkParticles');
-    var stage = document.getElementById('fkHeroSection');
-    if (!canvas || !stage) return;
-    var prefersReducedP = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedP) return;
-    var ctx = canvas.getContext('2d');
-    var colors = ['#F2A623', '#7A78C4'];
-    var particles = [];
-    var count = window.innerWidth < 700 ? 12 : 24;
-
-    function resize() {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    }
-    function makeParticle() {
-      return {
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: 1 + Math.random() * 2,
-        speedY: 0.12 + Math.random() * 0.22,
-        drift: (Math.random() - 0.5) * 0.25,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        alpha: 0.15 + Math.random() * 0.25
-      };
-    }
-    function init() {
-      resize();
-      particles = [];
-      for (var i = 0; i < count; i++) particles.push(makeParticle());
-    }
-    function tick() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(function (p) {
-        p.y -= p.speedY;
-        p.x += p.drift;
-        if (p.y < -10) { p.y = canvas.height + 10; p.x = Math.random() * canvas.width; }
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = p.alpha;
-        ctx.fill();
-      });
-      ctx.globalAlpha = 1;
-      requestAnimationFrame(tick);
-    }
-    window.addEventListener('resize', resize);
-    init();
-    tick();
-  })();
-
-  // Grid dots drifting
-  (function () {
-    var dots = document.querySelectorAll('.fk-grid-dot');
-    if (!dots.length) return;
-    var prefersReducedGrid = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedGrid) return;
-    var start = Date.now();
-    function raf() {
-      var t = (Date.now() - start) / 1000;
-      dots.forEach(function (dot, i) {
-        var speed = 4 + i * 1.3;
-        var y = (Math.sin(t / speed + i * 2) * 0.5 + 0.5) * 90 + 5;
-        dot.style.top = y + '%';
-      });
-      requestAnimationFrame(raf);
-    }
-    raf();
-  })();
-</script>
+<footer>
+  <div data-i18n="footer.text">© 2026 Founderku. Dibangun satu orang, satu keyakinan.</div>
+</footer>
 
 <script>
-  // Neural network canvas animation for the Proyek section
-  (function () {
-    var canvas = document.getElementById('fk-neural-canvas');
-    if (!canvas || !canvas.getContext) return;
-    var ctx = canvas.getContext('2d');
-    var section = canvas.parentElement;
-    var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var dpr = window.devicePixelRatio || 1;
-    var W = 0, H = 0, points = [];
-    var colors = ['#7A78C4', '#F2A623', '#E15C3E'];
-
-    function hexAlpha(hex, alpha01) {
-      var a = Math.max(0, Math.min(255, Math.round(alpha01 * 255)));
-      var hexA = a.toString(16).padStart(2, '0');
-      return hex + hexA;
-    }
-
-    function resize() {
-      W = section.offsetWidth;
-      H = section.offsetHeight;
-      canvas.width = W * dpr;
-      canvas.height = H * dpr;
-      canvas.style.width = W + 'px';
-      canvas.style.height = H + 'px';
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-
-    function initPoints() {
-      var count = Math.max(18, Math.min(48, Math.floor((W * H) / 22000)));
-      points = [];
-      for (var i = 0; i < count; i++) {
-        points.push({
-          x: Math.random() * W,
-          y: Math.random() * H,
-          vx: (Math.random() - 0.5) * 0.25,
-          vy: (Math.random() - 0.5) * 0.25,
-          c: colors[i % colors.length]
-        });
-      }
-    }
-
-    function drawFrame() {
-      ctx.clearRect(0, 0, W, H);
-      for (var i = 0; i < points.length; i++) {
-        var p = points[i];
-        if (!prefersReduced) {
-          p.x += p.vx;
-          p.y += p.vy;
-          if (p.x < 0 || p.x > W) p.vx *= -1;
-          if (p.y < 0 || p.y > H) p.vy *= -1;
-        }
-      }
-      for (var i = 0; i < points.length; i++) {
-        for (var j = i + 1; j < points.length; j++) {
-          var a = points[i], b = points[j];
-          var dx = a.x - b.x, dy = a.y - b.y;
-          var dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 140) {
-            ctx.strokeStyle = hexAlpha(a.c, (1 - dist / 140) * 0.35);
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.stroke();
-          }
-        }
-      }
-      for (var i = 0; i < points.length; i++) {
-        var p = points[i];
-        ctx.fillStyle = p.c;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      if (!prefersReduced) requestAnimationFrame(drawFrame);
-    }
-
-    resize();
-    initPoints();
-    drawFrame();
-    window.addEventListener('resize', function () {
-      resize();
-      initPoints();
-      if (prefersReduced) drawFrame();
-    });
-  })();
-
-  // Circuit line "power-on" draw effect when the Proyek card scrolls into view
-  function fkWireCircuitDraw(scopeEl) {
-    var lines = (scopeEl || document).querySelectorAll('.fk-circuit-draw line');
-    if (!lines.length) return;
-    if ('IntersectionObserver' in window) {
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.style.transition = 'stroke-dashoffset 1.1s ease';
-            entry.target.style.strokeDashoffset = '0';
-            io.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.3 });
-      lines.forEach(function (el) { io.observe(el); });
-    } else {
-      lines.forEach(function (el) { el.style.strokeDashoffset = '0'; });
-    }
-  }
-  fkWireCircuitDraw(document);
-
-  // Magnetic spotlight hover for dynamically-injected links (case study cards)
-  function fkWireMagnetic(scopeEl) {
-    var prefersReducedM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    (scopeEl || document).querySelectorAll('.fk-magnetic').forEach(function (el) {
-      if (el.dataset.fkMagWired) return;
-      el.dataset.fkMagWired = '1';
-      var spot = el.querySelector('.fk-spot');
-      el.addEventListener('mousemove', function (e) {
-        if (prefersReducedM || !spot) return;
-        var rect = el.getBoundingClientRect();
-        spot.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
-        spot.style.setProperty('--my', (e.clientY - rect.top) + 'px');
-        spot.style.opacity = '1';
-      });
-      el.addEventListener('mouseleave', function () {
-        if (spot) spot.style.opacity = '0';
-      });
-    });
-  }
-  fkWireMagnetic(document);
-
-  // Studi Kasus / case studies: fetch from data/case-studies.json and render cards
-  (function () {
-    var grid = document.getElementById('fkCaseStudyGrid');
-    if (!grid) return;
-
-    var fkCurrentLang = 'en';
-    try { fkCurrentLang = localStorage.getItem('fk-lang') || 'en'; } catch (e) {}
-
-    function escapeHtml(str) {
-      return String(str == null ? '' : str).replace(/[&<>"']/g, function (c) {
-        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-      });
-    }
-    function pickLangText(field){
-      if (field == null) return '';
-      if (typeof field === 'string') return field;
-      return field[fkCurrentLang] || field.id || field.en || '';
-    }
-    function pickLangArray(field){
-      if (!field) return [];
-      if (Array.isArray(field)) return field;
-      return field[fkCurrentLang] || field.id || field.en || [];
-    }
-    var csMsg = {
-      id: { empty: 'belum ada studi kasus.', error: 'gagal memuat studi kasus.', linkLabel: 'Lihat detail' },
-      en: { empty: 'no case studies yet.', error: 'failed to load case studies.', linkLabel: 'View details' },
-      tr: { empty: 'henüz vaka analizi yok.', error: 'vaka analizleri yüklenemedi.', linkLabel: 'Detayları gör' }
-    };
-    function csDict(){ return csMsg[fkCurrentLang] || csMsg.id; }
-
-    fetch('data/case-studies.json')
-      .then(function (res) { if (!res.ok) throw new Error('failed to load data'); return res.json(); })
-      .then(function (data) {
-        var items = (data.caseStudies || []).slice().sort(function (a, b) {
-          return (a.order || 0) - (b.order || 0);
-        });
-        if (!items.length) {
-          grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1; text-align:center; color:#FBF6EE99; font-size:14px; padding:40px;">' + csDict().empty + '</div>';
-          return;
-        }
-
-        grid.innerHTML = items.map(function (item) {
-          var tagsHtml = pickLangArray(item.tags).map(function (tag, i) {
-            return '<span class="fk-tag" style="animation-delay:' + (i * 0.15) + 's;">' + escapeHtml(tag) + '</span>';
-          }).join('');
-
-          var logoHtml = item.logo
-            ? '<img src="' + escapeHtml(item.logo) + '" alt="' + escapeHtml(item.name) + ' logo" loading="lazy" decoding="async" style="height:48px; width:auto;' + (item.roundLogo ? ' border-radius:50%;' : '') + '">'
-            : '';
-
-          var linkAttrs = item.external
-            ? 'target="_blank" rel="noopener"'
-            : '';
-
-          return (
-            '<div class="fk-proj-card">' +
-              '<div class="fk-proj-inner" style="background:rgba(251,246,238,0.05); border:1px solid rgba(251,246,238,0.14); border-radius:22px; padding:48px; position:relative; overflow:hidden; height:100%;">' +
-                '<svg class="fk-circuit-draw" viewBox="0 0 720 2" style="position:absolute; top:0; left:0; width:100%; height:2px;" preserveAspectRatio="none">' +
-                  '<line x1="0" y1="1" x2="720" y2="1" stroke="#F2A623" stroke-width="2" stroke-dasharray="720" stroke-dashoffset="720"></line>' +
-                '</svg>' +
-                '<div style="display:flex; align-items:center; gap:18px; margin-bottom:28px; flex-wrap:wrap;">' + logoHtml + '</div>' +
-                '<p class="fk-proj-desc" style="font-size:16px; line-height:1.7; color:#FBF6EE99; margin:0 0 26px;">' + escapeHtml(pickLangText(item.description)) + '</p>' +
-                '<div class="fk-proj-tags" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:30px;">' + tagsHtml + '</div>' +
-                '<div class="fk-proj-note" style="font-size:14px; color:#FBF6EE99; margin-bottom:24px;">' + escapeHtml(pickLangText(item.note)) + '</div>' +
-                '<a href="' + escapeHtml(item.linkUrl) + '" ' + linkAttrs + ' class="fk-magnetic" style="text-decoration:none; display:inline-flex; align-items:center; gap:8px; color:#FBF6EE; font-weight:700; font-size:14px; border-bottom:2px solid #F2A623; padding-bottom:2px; position:relative;">' +
-                  '<span class="fk-spot" style="position:absolute; inset:0; border-radius:inherit; background:radial-gradient(140px circle at var(--mx,50%) var(--my,50%), #F2A62333, transparent 60%); opacity:0; transition:opacity .3s ease; pointer-events:none;"></span>' +
-                  '<span class="fk-proj-linklabel" style="position:relative; z-index:1;">' + escapeHtml(pickLangText(item.linkLabel) || csDict().linkLabel) + ' &rarr;</span>' +
-                '</a>' +
-              '</div>' +
-            '</div>'
-          );
-        }).join('');
-
-        fkWireCircuitDraw(grid);
-        fkWireMagnetic(grid);
-
-        window.fkRerenderCaseStudies = function (lang) {
-          if (lang) { fkCurrentLang = lang; }
-          else { try { fkCurrentLang = localStorage.getItem('fk-lang') || 'en'; } catch (e) {} }
-          var nodes = Array.prototype.slice.call(grid.querySelectorAll('.fk-proj-card'));
-          nodes.forEach(function (node, i) {
-            var item = items[i];
-            if (!item) return;
-            var descEl = node.querySelector('.fk-proj-desc');
-            var noteEl = node.querySelector('.fk-proj-note');
-            var linkLabelEl = node.querySelector('.fk-proj-linklabel');
-            var tagsEl = node.querySelector('.fk-proj-tags');
-            if (descEl) descEl.textContent = pickLangText(item.description);
-            if (noteEl) noteEl.textContent = pickLangText(item.note);
-            if (linkLabelEl) linkLabelEl.textContent = (pickLangText(item.linkLabel) || csDict().linkLabel) + ' \u2192';
-            if (tagsEl) {
-              tagsEl.innerHTML = pickLangArray(item.tags).map(function (tag, ti) {
-                return '<span class="fk-tag" style="animation-delay:' + (ti * 0.15) + 's;">' + escapeHtml(tag) + '</span>';
-              }).join('');
-            }
-          });
-        };
-
-        var prevBtn = document.getElementById('fkCsPrev');
-        var nextBtn = document.getElementById('fkCsNext');
-        var dotsWrap = document.getElementById('fkCsDots');
-        var cards = Array.prototype.slice.call(grid.querySelectorAll('.fk-proj-card'));
-
-        if (dotsWrap && cards.length > 1) {
-          dotsWrap.innerHTML = cards.map(function (_, i) {
-            return '<div class="fk-cs-dot' + (i === 0 ? ' is-active' : '') + '" data-idx="' + i + '"></div>';
-          }).join('');
-        }
-        var dots = dotsWrap ? Array.prototype.slice.call(dotsWrap.querySelectorAll('.fk-cs-dot')) : [];
-
-        function getCurrentIndex() {
-          var gridLeft = grid.getBoundingClientRect().left;
-          var closestIdx = 0;
-          var closestDist = Infinity;
-          cards.forEach(function (card, i) {
-            var dist = Math.abs(card.getBoundingClientRect().left - gridLeft);
-            if (dist < closestDist) { closestDist = dist; closestIdx = i; }
-          });
-          return closestIdx;
-        }
-
-        function updateActiveDot() {
-          if (!dots.length) return;
-          var idx = getCurrentIndex();
-          dots.forEach(function (d, i) { d.classList.toggle('is-active', i === idx); });
-        }
-
-        function goToIndex(idx) {
-          idx = Math.max(0, Math.min(cards.length - 1, idx));
-          var target = cards[idx];
-          if (target) grid.scrollTo({ left: target.offsetLeft - grid.offsetLeft, behavior: 'smooth' });
-        }
-
-        if (prevBtn && nextBtn) {
-          prevBtn.addEventListener('click', function () { goToIndex(getCurrentIndex() - 1); });
-          nextBtn.addEventListener('click', function () { goToIndex(getCurrentIndex() + 1); });
-        }
-        dots.forEach(function (d) {
-          d.addEventListener('click', function () { goToIndex(parseInt(d.dataset.idx, 10)); });
-        });
-
-        var scrollTimer;
-        grid.addEventListener('scroll', function () {
-          clearTimeout(scrollTimer);
-          scrollTimer = setTimeout(updateActiveDot, 80);
-        });
-      })
-      .catch(function (err) {
-        grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1; text-align:center; color:#FBF6EE99; font-size:14px; padding:40px;">' + csDict().error + '</div>';
-        console.error('case studies fetch error:', err);
-      });
-  })();
-</script>
-
-<script>
-(function () {
   var I18N = {
     id: {
       "pageTitle": "Founderku · Semua bisa jadi founder",
       "nav.kenapa": "Kenapa", "nav.layanan": "Layanan", "nav.proses": "Proses", "nav.proyek": "Project",
-      "nav.faq": "FAQ", "nav.generator": "Generator", "nav.instantFounder": "Founder Starterpack", "nav.ngobrol": "Ngobrol",
+      "nav.blog": "Blog", "nav.faq": "FAQ", "nav.generator": "Generator", "nav.instantFounder": "Founder Starterpack", "nav.ngobrol": "Ngobrol",
       "hero.h1": "Semua bisa jadi founder.",
       "hero.sub": "Ide kamu, kami ubah jadi branding, website, dan produk yang beneran bisa dipakai, bukan sekadar wacana atau mockup doang.",
       "hero.ctaMain": "Ceritain Ide Kamu", "hero.ctaSecondary": "Lihat layanan →",
       "hero.trust": "Dibangun satu orang, satu keyakinan, ide kamu layak jadi kenyataan",
       "kenapa.eyebrow": "Kenapa Founderku",
       "kenapa.text": "Ide bagus jarang mati karena kurang niat. Yang bikin berhenti itu bagian yang paling sering dilewatin: eksekusi. Founderku ada buat nutup celah itu.",
-      "banner.eyebrow": "founder starterpack",
-      "banner.h2": "sudah dipaketkan lengkap, kamu tinggal jadi founder.",
+      "timeline.h2": "Beberapa hal soal jadi founder yang jarang diomongin.",
+      "timeline.sub": "Geser atau klik titiknya buat liat satu-satu.",
+      "timeline.f1": "Kebanyakan founder nggak mulai dari ide yang sempurna, mereka mulai dari masalah yang mereka sendiri alami.",
+      "timeline.f2": "Ide pertama jarang jadi ide yang akhirnya berhasil. Yang bertahan itu yang mau ubah arah, bukan yang keras kepala.",
+      "timeline.f3": "Produk yang kurang sempurna tapi online selalu ngalahin produk sempurna yang masih di draft.",
+      "timeline.f4": "Pembeli pertama itu paling susah dicari, tapi paling berharga, karena dia yang jadi bukti buat pembeli kedua.",
+      "timeline.f5": "Brand yang dipercaya bukan yang paling mahal, tapi yang paling konsisten cerita dan janjinya.",
+      "timeline.f6": "Founder yang jalan sendirian sekarang, dengan alat yang tepat, bisa hasilin yang dulu butuh satu tim penuh.",
+      "updates.h2": "Latest updates",
+      "updates.all": "Semua post",
+      "updates.p1title": "TukarSkill tembus 100 pengguna aktif",
+      "updates.p2title": "Kenalan sama Founder Starterpack",
+      "updates.p3title": "Di balik proses bikin Lahirku",
+      "updates.tagUpdate": "Update",
+      "updates.tagProduct": "Product",
+      "updates.tagCase": "Studi Kasus",
+      "banner.eyebrow": "Founder Starterpack",
+      "banner.h2": "Sudah dipaketkan lengkap, kamu tinggal jadi founder.",
       "banner.sub": "website jadi, branding jadi, tone warna juga jadi. cocok buat portofolio yang keliatan niat atau bisnis yang pengen langsung jalan, tinggal pilih, kami dampingi sampai online.",
-      "banner.cta": "lihat katalog →",
-      "produk.h2": "beberapa website yang tinggal kamu pakai buat jadi founder.",
-      "produk.sub": "bukan mockup. ini produk siap pakai yang sudah kami rancang lengkap, dari desain sampai brand-nya.",
-      "produk.link": "lihat semua produk →",
-      "produk.loading": "memuat produk...",
+      "banner.cta": "Lihat katalog →",
+      "produk.h2": "Beberapa website yang tinggal kamu pakai buat jadi founder.",
+      "produk.sub": "Bukan mockup. Ini produk siap pakai yang sudah kami rancang lengkap, dari desain sampai brand-nya.",
+      "produk.link": "Lihat semua produk →",
+      "produk.loading": "Memuat produk...",
       "layanan.h2": "Tiga langkah, satu tujuan.",
       "layanan.sub": "Identitas yang bikin orang percaya di detik pertama. Produk atau website yang bisa langsung dicoba orang beneran, bukan cuma dipresentasikan.",
       "layanan.website.title": "Website & Rebuild",
@@ -1523,7 +551,7 @@
       "proyek.eyebrow": "Studi Kasus", "proyek.h2": "Project yang udah kelar dan beneran jalan.",
       "proyek.sub": "Bukan mockup doang, bukan janji di atas kertas. Ini bukti kalau prosesnya beneran menghasilkan produk yang jalan.",
       "proyek.link": "Lihat semua studi kasus →",
-      "proyek.loading": "memuat studi kasus...",
+      "proyek.loading": "Memuat studi kasus...",
       "faq.eyebrow": "FAQ", "faq.h2": "Pertanyaan yang sering muncul",
       "faq.q1": "Aku gak punya background teknis, bisa gak?",
       "faq.a1": "Bisa banget, dan ini justru kenapa Founderku ada. Fokus aja ke ide dan visi kamu, kami yang urus branding sampai eksekusi produknya sampai kelar.",
@@ -1550,21 +578,37 @@
     en: {
       "pageTitle": "Founderku · Anyone can become a founder",
       "nav.kenapa": "Why", "nav.layanan": "Services", "nav.proses": "Process", "nav.proyek": "Projects",
-      "nav.faq": "FAQ", "nav.generator": "Generator", "nav.instantFounder": "Founder Starterpack", "nav.ngobrol": "Chat",
+      "nav.blog": "Blog", "nav.faq": "FAQ", "nav.generator": "Generator", "nav.instantFounder": "Founder Starterpack", "nav.ngobrol": "Chat",
       "hero.h1": "Anyone can become a founder.",
       "hero.sub": "Your idea, turned into branding, a website, and a product people can actually use, not just talk or a mockup.",
       "hero.ctaMain": "Tell Us Your Idea", "hero.ctaSecondary": "See services →",
       "hero.trust": "Built by one person, one belief: your idea deserves to become real",
       "kenapa.eyebrow": "Why Founderku",
       "kenapa.text": "Good ideas rarely die from lack of will. What stops them is the part most people skip: execution. Founderku exists to close that gap.",
-      "banner.eyebrow": "founder starterpack",
-      "banner.h2": "already packaged in full, you just have to become the founder.",
+      "timeline.h2": "A few things about being a founder that rarely get talked about.",
+      "timeline.sub": "Drag or click the dots to see them one by one.",
+      "timeline.f1": "Most founders do not start with a perfect idea, they start with a problem they lived through themselves.",
+      "timeline.f2": "The first idea rarely becomes the one that works. What survives is the willingness to change direction, not stubbornness.",
+      "timeline.f3": "A product that is imperfect but live always beats a perfect product still sitting in draft.",
+      "timeline.f4": "The first customer is the hardest to find, but the most valuable, because they become the proof for the second one.",
+      "timeline.f5": "The brand people trust is not the most expensive one, it is the one that is most consistent in its story and promises.",
+      "timeline.f6": "A founder working alone now, with the right tools, can produce what used to take a full team.",
+      "updates.h2": "Latest updates",
+      "updates.all": "All posts",
+      "updates.p1title": "TukarSkill hits 100 active users",
+      "updates.p2title": "Meet the Founder Starterpack",
+      "updates.p3title": "Behind the scenes of building Lahirku",
+      "updates.tagUpdate": "Update",
+      "updates.tagProduct": "Product",
+      "updates.tagCase": "Case Study",
+      "banner.eyebrow": "Founder Starterpack",
+      "banner.h2": "Already packaged in full, you just have to become the founder.",
       "banner.sub": "the website is done, the branding is done, the tone and colors are done too. great for a portfolio that shows real effort, or a business you want to launch right away, just pick one and we'll guide you until it's live.",
-      "banner.cta": "browse catalog →",
-      "produk.h2": "a few websites you can start using to become a founder.",
-      "produk.sub": "not a mockup. these are ready-to-use products we've fully designed, from the look to the brand.",
-      "produk.link": "see all products →",
-      "produk.loading": "loading products...",
+      "banner.cta": "Browse catalog →",
+      "produk.h2": "A few websites you can start using to become a founder.",
+      "produk.sub": "Not a mockup. These are ready-to-use products we've fully designed, from the look to the brand.",
+      "produk.link": "See all products →",
+      "produk.loading": "Loading products...",
       "layanan.h2": "Three steps, one goal.",
       "layanan.sub": "An identity that earns trust in the first second. A product or website real people can actually try, not just watch in a slide deck.",
       "layanan.website.title": "Website & Rebuild",
@@ -1588,7 +632,7 @@
       "proyek.eyebrow": "Case Studies", "proyek.h2": "Projects that are done and actually running.",
       "proyek.sub": "Not just mockups, not just promises on paper. This is proof the process actually produces working products.",
       "proyek.link": "See all case studies →",
-      "proyek.loading": "loading case studies...",
+      "proyek.loading": "Loading case studies...",
       "faq.eyebrow": "FAQ", "faq.h2": "Frequently asked questions",
       "faq.q1": "I don't have a technical background, can I still do this?",
       "faq.a1": "Absolutely, and this is exactly why Founderku exists. Just focus on your idea and vision, we handle the branding through to execution.",
@@ -1615,21 +659,37 @@
     tr: {
       "pageTitle": "Founderku · Herkes founder olabilir",
       "nav.kenapa": "Neden", "nav.layanan": "Hizmetler", "nav.proses": "Süreç", "nav.proyek": "Projeler",
-      "nav.faq": "SSS", "nav.generator": "Üretici", "nav.instantFounder": "Founder Starterpack", "nav.ngobrol": "Sohbet",
+      "nav.blog": "Blog", "nav.faq": "SSS", "nav.generator": "Üretici", "nav.instantFounder": "Founder Starterpack", "nav.ngobrol": "Sohbet",
       "hero.h1": "Herkes founder olabilir.",
       "hero.sub": "Fikrini, markaya, web sitesine ve gerçekten kullanılabilir bir ürüne dönüştürüyoruz, sadece laf ya da maket değil.",
       "hero.ctaMain": "Fikrini Anlat", "hero.ctaSecondary": "Hizmetlere bak →",
       "hero.trust": "Tek kişi, tek inançla kuruldu: fikrin gerçek olmayı hak ediyor",
       "kenapa.eyebrow": "Neden Founderku",
       "kenapa.text": "İyi fikirler nadiren isteksizlikten ölür. Onları durduran şey genelde atlanan kısım: uygulama. Founderku, o boşluğu kapatmak için var.",
-      "banner.eyebrow": "founder starterpack",
-      "banner.h2": "her şey hazır paketlendi, sana sadece founder olmak kaldı.",
+      "timeline.h2": "Founder olmakla ilgili nadiren konuşulan birkaç şey.",
+      "timeline.sub": "Noktaları sürükle ya da tıkla, tek tek gör.",
+      "timeline.f1": "Çoğu founder mükemmel bir fikirle başlamaz, kendi yaşadıkları bir sorunla başlar.",
+      "timeline.f2": "İlk fikir nadiren işe yarayan fikir olur. Hayatta kalan, yön değiştirmeye istekli olandır, inatçı olan değil.",
+      "timeline.f3": "Mükemmel olmayan ama yayında olan bir ürün, hâlâ taslakta duran mükemmel bir ürünü her zaman geçer.",
+      "timeline.f4": "İlk müşteriyi bulmak en zorudur, ama en değerlisidir, çünkü ikinci müşteri için kanıt olur.",
+      "timeline.f5": "İnsanların güvendiği marka en pahalı olan değil, hikayesinde ve sözlerinde en tutarlı olandır.",
+      "timeline.f6": "Artık tek başına çalışan bir founder, doğru araçlarla, eskiden tam bir ekibin yaptığını yapabilir.",
+      "updates.h2": "Son güncellemeler",
+      "updates.all": "Tüm yazılar",
+      "updates.p1title": "TukarSkill 100 aktif kullanıcıya ulaştı",
+      "updates.p2title": "Founder Starterpack ile tanışın",
+      "updates.p3title": "Lahirku\u0027yu yaparken perde arkası",
+      "updates.tagUpdate": "Güncelleme",
+      "updates.tagProduct": "Ürün",
+      "updates.tagCase": "Vaka Analizi",
+      "banner.eyebrow": "Founder Starterpack",
+      "banner.h2": "Her şey hazır paketlendi, sana sadece founder olmak kaldı.",
       "banner.sub": "web sitesi hazır, marka kimliği hazır, renk tonu da hazır. gerçekten emek verilmiş görünen bir portfolyo veya hemen başlamak istediğin bir iş için ideal, birini seç, siteye alana kadar sana eşlik edelim.",
-      "banner.cta": "kataloğa bak →",
-      "produk.h2": "founder olmak için hemen kullanabileceğin birkaç web sitesi.",
-      "produk.sub": "maket değil. bunlar tasarımdan markaya kadar eksiksiz hazırladığımız, kullanıma hazır ürünler.",
-      "produk.link": "tüm ürünleri gör →",
-      "produk.loading": "ürünler yükleniyor...",
+      "banner.cta": "Kataloğa bak →",
+      "produk.h2": "Founder olmak için hemen kullanabileceğin birkaç web sitesi.",
+      "produk.sub": "Maket değil. Bunlar tasarımdan markaya kadar eksiksiz hazırladığımız, kullanıma hazır ürünler.",
+      "produk.link": "Tüm ürünleri gör →",
+      "produk.loading": "Ürünler yükleniyor...",
       "layanan.h2": "Üç adım, tek hedef.",
       "layanan.sub": "İlk saniyede güven veren bir kimlik. Sadece sunumda değil, gerçek insanların hemen deneyebileceği bir ürün ya da web sitesi.",
       "layanan.website.title": "Web Sitesi & Yeniden Yapım",
@@ -1653,7 +713,7 @@
       "proyek.eyebrow": "Vaka Analizleri", "proyek.h2": "Tamamlanmış ve gerçekten çalışan projeler.",
       "proyek.sub": "Sadece maket değil, kağıt üzerinde söz de değil. Sürecin gerçekten çalışan ürünler ürettiğinin kanıtı.",
       "proyek.link": "Tüm vaka analizlerini gör →",
-      "proyek.loading": "vaka analizleri yükleniyor...",
+      "proyek.loading": "Vaka analizleri yükleniyor...",
       "faq.eyebrow": "SSS", "faq.h2": "Sıkça sorulan sorular",
       "faq.q1": "Teknik bir geçmişim yok, yine de olur mu?",
       "faq.a1": "Kesinlikle olur, Founderku'nun var olma sebebi de bu. Sen sadece fikrine ve vizyonuna odaklan, marka kimliğinden ürünün tamamlanmasına kadar biz hallederiz.",
@@ -1679,107 +739,329 @@
     }
   };
 
-  function rebuildHeroTitle(text, animate) {
-    var titleEl = document.getElementById('fkHeroTitle');
-    if (!titleEl) return;
-    var svgEl = titleEl.querySelector('svg');
-    titleEl.setAttribute('aria-label', text);
-    var prefersReducedChar = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var html = '<span aria-hidden="true">';
-    var delayIndex = 0;
-    var words = text.split(' ');
-    for (var w = 0; w < words.length; w++) {
-      html += '<span style="display:inline-block; white-space:nowrap;">';
-      for (var i = 0; i < words[w].length; i++) {
-        if (animate && !prefersReducedChar) {
-          html += '<span class="fk-char" style="transition-delay:' + (delayIndex * 0.03) + 's;">' + words[w][i] + '</span>';
-        } else {
-          html += '<span class="fk-char fk-char-in" style="transition-delay:0s;">' + words[w][i] + '</span>';
-        }
-        delayIndex++;
-      }
-      html += '</span>';
-      if (w < words.length - 1) html += ' ';
-    }
-    html += '</span>';
-    titleEl.innerHTML = html;
-    if (svgEl) titleEl.appendChild(svgEl);
-    if (animate && !prefersReducedChar) {
-      setTimeout(function () {
-        titleEl.querySelectorAll('.fk-char').forEach(function (c) { c.classList.add('fk-char-in'); });
-      }, 80);
-    }
+var fkCurrentLang = 'en';
+try { fkCurrentLang = localStorage.getItem('fk-lang') || 'en'; } catch (e) {}
+
+function pickLangText(field){
+  if (field == null) return '';
+  if (typeof field === 'string') return field;
+  return field[fkCurrentLang] || field.id || field.en || '';
+}
+function formatPriceLang(priceIDR, lang) {
+  var USD_RATE = 15700; var TRY_RATE = 490;
+  function thousands(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+  if (lang === 'en') return '$' + thousands(Math.round(priceIDR / USD_RATE));
+  if (lang === 'tr') return '\u20ba' + thousands(Math.round(priceIDR / TRY_RATE));
+  return 'Rp ' + thousands(priceIDR);
+}
+function getDisplayPrice(p, lang) {
+  if (lang === 'en' && p.priceUSD) return '$' + Number(p.priceUSD).toLocaleString('en-US');
+  if (lang === 'tr' && p.priceTRY) return '\u20ba' + Number(p.priceTRY).toLocaleString('tr-TR');
+  return formatPriceLang(p.price, lang);
+}
+
+(function () {
+  var toggle = document.getElementById('fkThemeToggle');
+  var html = document.documentElement;
+  function applyTheme(t) {
+    html.setAttribute('data-theme', t);
+    toggle.textContent = t === 'dark' ? '\u263E' : '\u2600';
+    try { localStorage.setItem('fk-theme', t); } catch (e) {}
   }
+  var saved = 'light';
+  try { saved = localStorage.getItem('fk-theme') || 'light'; } catch (e) {}
+  applyTheme(saved);
+  toggle.addEventListener('click', function () {
+    applyTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+})();
 
-  function rebuildKenapaText(text) {
-    var el = document.getElementById('fk-kenapa-text');
-    if (!el) return;
-    el.setAttribute('data-text', text);
-    var words = text.trim().split(/\s+/);
-    el.innerHTML = words.map(function (w) {
-      return '<span class="fk-reveal-word is-visible">' + w + '</span>';
-    }).join(' ');
-  }
-
-  function applyLanguage(lang, isInitial) {
-    var dict = I18N[lang] || I18N.id;
-    if (dict.pageTitle) document.title = dict.pageTitle;
-    document.querySelectorAll('[data-i18n]').forEach(function (el) {
-      var key = el.getAttribute('data-i18n');
-      if (dict[key]) el.textContent = dict[key];
-    });
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
-      var key = el.getAttribute('data-i18n-placeholder');
-      if (dict[key]) el.setAttribute('placeholder', dict[key]);
-    });
-    if (!(isInitial && lang === 'id')) {
-      var heroEl = document.querySelector('[data-i18n-plain="hero.h1"]');
-      if (heroEl && dict['hero.h1']) rebuildHeroTitle(dict['hero.h1'], !!isInitial);
-      if (dict['kenapa.text']) rebuildKenapaText(dict['kenapa.text']);
-    }
-
-    if (window.fkRerenderProductPreview) window.fkRerenderProductPreview(lang);
-    if (window.fkRerenderCaseStudies) window.fkRerenderCaseStudies(lang);
-
-    document.querySelectorAll('.fk-lang-btn').forEach(function (btn) {
-      btn.classList.toggle('is-active', btn.getAttribute('data-lang') === lang);
-    });
-    document.documentElement.setAttribute('lang', lang);
-    try { localStorage.setItem('fk-lang', lang); } catch (e) {}
-    var currentLabel = document.getElementById('fkLangCurrentLabel');
-    if (currentLabel) currentLabel.textContent = lang.toUpperCase();
-  }
-
+function applyLanguage(lang, isInitial) {
+  var dict = I18N[lang] || I18N.id;
+  if (dict.pageTitle) document.title = dict.pageTitle;
+  document.querySelectorAll('[data-i18n]').forEach(function (el) {
+    var key = el.getAttribute('data-i18n');
+    if (dict[key]) el.textContent = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+    var key = el.getAttribute('data-i18n-placeholder');
+    if (dict[key]) el.setAttribute('placeholder', dict[key]);
+  });
   document.querySelectorAll('.fk-lang-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      applyLanguage(btn.getAttribute('data-lang'), false);
-      closeLangMenu();
+    btn.classList.toggle('is-active', btn.getAttribute('data-lang') === lang);
+  });
+  document.documentElement.setAttribute('lang', lang);
+  try { localStorage.setItem('fk-lang', lang); } catch (e) {}
+  var currentLabel = document.getElementById('fkLangCurrentLabel');
+  if (currentLabel) currentLabel.textContent = lang.toUpperCase();
+  if (window.fkRerenderProductPreview) window.fkRerenderProductPreview(lang);
+  if (window.fkRerenderCaseStudies) window.fkRerenderCaseStudies(lang);
+}
+
+document.querySelectorAll('.fk-lang-btn').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    applyLanguage(btn.getAttribute('data-lang'), false);
+    closeLangMenu();
+  });
+});
+
+var fkLangToggle = document.getElementById('fkLangToggle');
+var fkLangMenu = document.getElementById('fkLangMenu');
+function closeLangMenu() { if (fkLangMenu) fkLangMenu.classList.remove('is-open'); }
+if (fkLangToggle && fkLangMenu) {
+  fkLangToggle.addEventListener('click', function (e) {
+    e.stopPropagation();
+    fkLangMenu.classList.toggle('is-open');
+  });
+  document.addEventListener('click', function (e) {
+    if (!document.getElementById('fkLangSwitch').contains(e.target)) closeLangMenu();
+  });
+}
+
+var savedLang = 'en';
+try { savedLang = localStorage.getItem('fk-lang') || 'en'; } catch (e) {}
+applyLanguage(savedLang, true);
+
+(function () {
+  var els = document.querySelectorAll('.fk-reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { entry.target.classList.add('is-visible'); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(function (el) { io.observe(el); });
+  } else {
+    els.forEach(function (el) { el.classList.add('is-visible'); });
+  }
+})();
+
+(function () {
+  var dotsWrap = document.getElementById('tlDots');
+  var panels = document.querySelectorAll('.fk-timeline-panel');
+  var count = panels.length;
+  var dots = [];
+  for (var i = 0; i < count; i++) {
+    var d = document.createElement('div');
+    d.className = 'fk-timeline-dot' + (i === 0 ? ' is-active' : '');
+    d.setAttribute('data-idx', i);
+    dotsWrap.appendChild(d);
+    dots.push(d);
+  }
+  function setActive(idx) {
+    idx = ((idx % count) + count) % count;
+    dots.forEach(function (d) { d.classList.toggle('is-active', d.getAttribute('data-idx') === String(idx)); });
+    panels.forEach(function (p) { p.classList.toggle('is-active', p.getAttribute('data-idx') === String(idx)); });
+  }
+  dots.forEach(function (d) { d.addEventListener('click', function () { setActive(parseInt(d.getAttribute('data-idx'), 10)); }); });
+  function currentIdx() { var el = document.querySelector('.fk-timeline-panel.is-active'); return el ? parseInt(el.getAttribute('data-idx'), 10) : 0; }
+  var prevBtn = document.getElementById('tlPrev');
+  var nextBtn = document.getElementById('tlNext');
+  if (prevBtn) prevBtn.addEventListener('click', function () { setActive(currentIdx() - 1); });
+  if (nextBtn) nextBtn.addEventListener('click', function () { setActive(currentIdx() + 1); });
+})();
+
+(function () {
+  var tabs = document.querySelectorAll('.fk-lay-tab');
+  var slots = document.querySelectorAll('.fk-lay-orb-slot');
+  var panels = document.querySelectorAll('.fk-lay-panel');
+  function setActive(idx) {
+    tabs.forEach(function (t) { t.classList.toggle('is-active', t.getAttribute('data-idx') === String(idx)); });
+    slots.forEach(function (s) { s.classList.toggle('is-active', s.getAttribute('data-idx') === String(idx)); });
+    panels.forEach(function (p) { p.classList.toggle('is-active', p.getAttribute('data-idx') === String(idx)); });
+  }
+  tabs.forEach(function (t) { t.addEventListener('click', function () { setActive(t.getAttribute('data-idx')); }); });
+  slots.forEach(function (s) { s.addEventListener('click', function () { setActive(s.getAttribute('data-idx')); }); });
+  var prevBtn = document.getElementById('layPrev');
+  var nextBtn = document.getElementById('layNext');
+  function currentIdx() { var el = document.querySelector('.fk-lay-panel.is-active'); return el ? parseInt(el.getAttribute('data-idx'), 10) : 0; }
+  if (prevBtn) prevBtn.addEventListener('click', function () { setActive((currentIdx() + panels.length - 1) % panels.length); });
+  if (nextBtn) nextBtn.addEventListener('click', function () { setActive((currentIdx() + 1) % panels.length); });
+})();
+
+(function () {
+  var wrap = document.getElementById('fkHeroOrbs');
+  if (!wrap || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var orbs = Array.prototype.slice.call(wrap.querySelectorAll('.fk-orb'));
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+  wrap.addEventListener('mousemove', function (e) {
+    var rect = wrap.getBoundingClientRect();
+    var relX = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
+    var relY = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
+    orbs.forEach(function (orb) {
+      var depth = parseFloat(orb.getAttribute('data-depth')) || 20;
+      orb.style.transform = 'translate(' + (relX * depth) + 'px, ' + (relY * depth) + 'px)';
     });
   });
+  wrap.addEventListener('mouseleave', function () {
+    orbs.forEach(function (orb) { orb.style.transform = ''; });
+  });
+})();
 
-  var fkLangToggle = document.getElementById('fkLangToggle');
-  var fkLangMenu = document.getElementById('fkLangMenu');
-  function closeLangMenu() {
-    if (fkLangMenu) fkLangMenu.classList.remove('is-open');
-    if (fkLangToggle) fkLangToggle.classList.remove('is-open');
+(async function () {
+  var grid = document.getElementById('produkPreviewGrid');
+  function cardHTML(p) {
+    var catLabel = p.categoryLabel || p.category;
+    var pName = pickLangText(p.name);
+    var thumbInner = p.thumbnail && !p.thumbnail.includes('placeholder')
+      ? '<img src="' + p.thumbnail + '" alt="' + pName + '">'
+      : '<span style="font-size:12px;color:var(--text-faint);font-weight:600;">coming soon</span>';
+    return '<div class="fk-slide fk-prod-card">' +
+      '<a href="product.html?slug=' + encodeURIComponent(p.slug) + '" class="fk-prod-card-link">' +
+        '<div class="fk-prod-thumb"><div class="fk-prod-cat-badge">' + catLabel + '</div>' + thumbInner + '</div>' +
+        '<div class="fk-prod-body"><div class="fk-prod-cat">' + catLabel + '</div>' +
+          '<div class="fk-prod-name">' + pName + '</div>' +
+          '<div class="fk-prod-price">' + getDisplayPrice(p, fkCurrentLang) + '</div>' +
+        '</div>' +
+      '</a></div>';
   }
-  if (fkLangToggle && fkLangMenu) {
-    fkLangToggle.addEventListener('click', function (e) {
-      e.stopPropagation();
-      var willOpen = !fkLangMenu.classList.contains('is-open');
-      fkLangMenu.classList.toggle('is-open', willOpen);
-      fkLangToggle.classList.toggle('is-open', willOpen);
-    });
-    document.addEventListener('click', function (e) {
-      if (!document.getElementById('fkLangSwitch').contains(e.target)) closeLangMenu();
-    });
-  }
+  try {
+    var res = await fetch('data/products.json', { cache: 'no-store' });
+    var data = await res.json();
+    var items = (data.products || []).slice(0, 6);
+    if (!items.length) return;
+    grid.innerHTML = items.map(cardHTML).join('');
+    window.fkRerenderProductPreview = function (lang) {
+      if (lang) fkCurrentLang = lang;
+      var nodes = Array.prototype.slice.call(grid.querySelectorAll('.fk-prod-card'));
+      nodes.forEach(function (node, i) {
+        var p = items[i]; if (!p) return;
+        var nameEl = node.querySelector('.fk-prod-name');
+        var priceEl = node.querySelector('.fk-prod-price');
+        if (nameEl) nameEl.textContent = pickLangText(p.name);
+        if (priceEl) priceEl.textContent = getDisplayPrice(p, fkCurrentLang);
+      });
+    };
+  } catch (e) { console.error('products fetch error', e); }
+})();
 
-  var savedLang = 'en';
-  try { savedLang = localStorage.getItem('fk-lang') || 'en'; } catch (e) {}
-  applyLanguage(savedLang, true);
+(async function () {
+  var grid = document.getElementById('fkCaseStudyGrid');
+  function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function pickLangArray(field) {
+    if (!field) return [];
+    if (Array.isArray(field)) return field;
+    return field[fkCurrentLang] || field.id || field.en || [];
+  }
+  function cardHTML(item) {
+    var tagsHtml = pickLangArray(item.tags).map(function (t) { return '<span style="background:var(--bg-soft); border:1px solid var(--border); padding:6px 12px; border-radius:999px; font-size:12px; font-weight:700; margin-right:6px;">' + escapeHtml(t) + '</span>'; }).join('');
+    var logoInner = item.logo ? '<img src="' + escapeHtml(item.logo) + '" alt="' + escapeHtml(item.name) + '" style="height:28px;">' : '<strong>' + escapeHtml(item.name) + '</strong>';
+    var linkAttrs = item.external ? 'target="_blank" rel="noopener"' : '';
+    return '<div class="fk-slide" style="width:320px;">' +
+      '<div class="fk-card" style="height:100%;">' +
+        '<div style="margin-bottom:18px;">' + logoInner + '</div>' +
+        '<p class="fk-proj-desc" style="font-size:14px;">' + escapeHtml(pickLangText(item.description)) + '</p>' +
+        '<div class="fk-proj-tags" style="margin-bottom:16px;">' + tagsHtml + '</div>' +
+        '<div class="fk-proj-note" style="font-size:13px; color:var(--text-faint); margin-bottom:16px;">' + escapeHtml(pickLangText(item.note)) + '</div>' +
+        '<a href="' + escapeHtml(item.linkUrl) + '" ' + linkAttrs + ' style="text-decoration:none; font-weight:700; color:var(--brand-coral); font-size:14px;" class="fk-proj-linklabel">' + (escapeHtml(pickLangText(item.linkLabel)) || 'Lihat detail') + ' \u2192</a>' +
+      '</div></div>';
+  }
+  try {
+    var res = await fetch('data/case-studies.json', { cache: 'no-store' });
+    var data = await res.json();
+    var items = data.caseStudies || [];
+    if (!items.length) return;
+    items.sort(function (a, b) { return (a.order || 0) - (b.order || 0); });
+    grid.innerHTML = items.map(cardHTML).join('');
+    window.fkRerenderCaseStudies = function (lang) {
+      if (lang) fkCurrentLang = lang;
+      var nodes = Array.prototype.slice.call(grid.querySelectorAll('.fk-slide'));
+      nodes.forEach(function (node, i) {
+        var item = items[i]; if (!item) return;
+        var descEl = node.querySelector('.fk-proj-desc');
+        var noteEl = node.querySelector('.fk-proj-note');
+        var linkEl = node.querySelector('.fk-proj-linklabel');
+        if (descEl) descEl.textContent = pickLangText(item.description);
+        if (noteEl) noteEl.textContent = pickLangText(item.note);
+        if (linkEl) linkEl.textContent = (pickLangText(item.linkLabel) || 'Lihat detail') + ' \u2192';
+      });
+    };
+  } catch (e) { console.error('case studies fetch error', e); }
+})();
+
+(function () {
+  var BANK = {
+    edukasi:   { prefix: ['Edu','Skola','Pinter','Belajar','Kelas','Cerdas','Ajar','Bisa'], suffix: ['kelas','pintar','ilmu','belajar','kul','ajar','paham','cerdas'], noun: 'ilmu', verbs: ['Belajar','Ngulik','Nyerap'] },
+    kesehatan: { prefix: ['Sehat','Vita','Bugar','Sigap','Prima','Rawat','Pulih','Segar'], suffix: ['sehat','bugar','medis','klinik','jaga','fit','rawat','prima'], noun: 'kesehatan', verbs: ['Jaga','Rawat','Pulihin'] },
+    fnb:       { prefix: ['Rasa','Nikmat','Kunyah','Santap','Selera','Dapur','Lahap','Gurih'], suffix: ['rasa','makan','kuliner','saji','kunyah','lezat','santap','lapar'], noun: 'kuliner', verbs: ['Santap','Rasain','Nikmatin'] },
+    teknologi: { prefix: ['Data','Sistem','Otomatis','Cepat','Pintar','Konek','Logika','Kilat'], suffix: ['sys','flow','stack','hub','base','labs','ku','tech'], noun: 'teknologi', verbs: ['Kelola','Otomatisin','Bangun'] },
+    kreatif:   { prefix: ['Karya','Rupa','Warna','Bentuk','Ide','Kanvas','Cipta','Goresan'], suffix: ['karya','studio','rupa','kreasi','visual','cipta','lab','warna'], noun: 'karya', verbs: ['Bikin','Rancang','Wujudkan'] },
+    fashion:   { prefix: ['Gaya','Kilau','Padu','Rancang','Anggun','Jelita','Tampil','Serasi'], suffix: ['gaya','padu','style','kilau','wear','pesona','look','rupa'], noun: 'gaya', verbs: ['Padu','Tampil','Rancang'] },
+    sosial:    { prefix: ['Peduli','Sama','Gerak','Bangun','Ruang','Suara','Rangkul','Ulur'], suffix: ['peduli','bersama','gerak','untuk','bakti','asa','tangan','kita'], noun: 'gerakan', verbs: ['Gerak','Rangkul','Bangun'] },
+    finansial: { prefix: ['Untung','Hemat','Modal','Aman','Tumbuh','Cuan','Rencana','Saldo'], suffix: ['untung','modal','tumbuh','aman','dana','hemat','cuan','plan'], noun: 'keuangan', verbs: ['Kelola','Tumbuhin','Atur'] }
+  };
+  var VIBE = {
+    playful:      { adj: ['ceria','seru','asik','ringan','hangat','gampang','gembira','nagih'], colors: [['Kuning cerah','#FFC93C'],['Biru langit','#5FB8E8'],['Putih krem','#FFF8ED']] },
+    professional: { adj: ['prima','solid','presisi','terpercaya','matang','tegas','rapi','andal'], colors: [['Navy','#1C2B4A'],['Abu kalem','#A8ADB4'],['Putih','#FFFFFF']] },
+    bold:         { adj: ['berani','tajam','beda','kencang','nekat','gebrak','lantang','total'], colors: [['Merah gelap','#C0392B'],['Hitam','#1A1A1A'],['Kuning aksen','#F2A623']] },
+    minimalis:    { adj: ['bersih','simpel','jernih','tenang','ringkas','murni','lega','pas'], colors: [['Krem','#F5F1E8'],['Abu muda','#D9D6CE'],['Hitam lembut','#2B2B2B']] }
+  };
+  var TEMPLATES = [
+    function (d) { return d.verb + ' ' + d.noun + ', jadi ' + d.adj + '.'; },
+    function (d) { return 'Bukan ' + d.noun + ' biasa. Ini yang ' + d.adj + '.'; },
+    function (d) { return cap(d.noun) + ' yang ' + d.adj + ', buat ' + d.target + '.'; },
+    function (d) { return 'Satu langkah kecil, ' + d.noun + ' yang ' + d.adj + ' nunggu.'; },
+    function (d) { return cap(d.target) + ' deserve ' + d.noun + ' yang ' + d.adj + '.'; },
+    function (d) { return 'Akhirnya, ' + d.noun + ' yang beneran ' + d.adj + '.'; }
+  ];
+  var WA_NUMBER = '6285710477257';
+  var INDUSTRIES = Object.keys(BANK);
+  var usedNames = [];
+
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+  function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+  function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+  function makeName(industry) {
+    for (var attempt = 0; attempt < 30; attempt++) {
+      var prefix = pick(BANK[industry].prefix);
+      var suffixPool = Math.random() < 0.3 ? BANK[pick(INDUSTRIES)].suffix : BANK[industry].suffix;
+      var suffix = pick(suffixPool).toLowerCase();
+      var p = prefix.toLowerCase();
+      if (p === suffix) continue;
+      if (p.slice(-1) === suffix.charAt(0)) suffix = suffix.slice(1);
+      var name = cap(p + suffix);
+      if (name.length < 5 || name.length > 14) continue;
+      if (usedNames.indexOf(name) !== -1) continue;
+      return name;
+    }
+    return null;
+  }
+  function makeTagline(industry, vibe, target) {
+    var d = { noun: BANK[industry].noun, verb: pick(BANK[industry].verbs), adj: pick(VIBE[vibe].adj), target: target || 'kamu' };
+    return pick(TEMPLATES)(d);
+  }
+  function generate() {
+    var industry = document.getElementById('fk-gen-industri').value;
+    var target = document.getElementById('fk-gen-target').value.trim();
+    var vibe = document.querySelector('input[name="fk-gen-vibe"]:checked').value;
+    var colors = VIBE[vibe].colors;
+    if (usedNames.length > 60) usedNames = [];
+    var count = 3, cards = [], taglines = [];
+    for (var i = 0; i < count; i++) {
+      var name = makeName(industry);
+      if (!name) { usedNames = []; name = makeName(industry) || cap(pick(BANK[industry].prefix)) + 'ku'; }
+      usedNames.push(name);
+      var tagline;
+      for (var t = 0; t < 10; t++) { tagline = makeTagline(industry, vibe, target); if (taglines.indexOf(tagline) === -1) break; }
+      taglines.push(tagline);
+      var waText = encodeURIComponent('Halo Founderku, aku barusan generate nama brand "' + name + '" di situs kamu. Suka nih, bisa dibantu lanjutin gak?');
+      var swatches = colors.map(function (c) { return '<div style="display:flex;flex-direction:column;align-items:center;gap:6px;"><span class="fk-gen-swatch" style="background:' + c[1] + ';" title="' + c[0] + '"></span></div>'; }).join('');
+      cards.push(
+        '<div class="fk-gen-result" style="animation-delay:' + (i * 0.1) + 's;">' +
+          '<div style="font-size:12px; font-weight:700; color:var(--brand-coral); text-transform:uppercase;">Opsi ' + (i + 1) + '</div>' +
+          '<div class="fk-serif" style="font-weight:700; font-size:24px;">' + esc(name) + '</div>' +
+          '<p style="margin:0; font-size:14px; color:var(--text-soft); flex-grow:1;">&ldquo;' + esc(tagline) + '&rdquo;</p>' +
+          '<div style="display:flex; gap:12px;">' + swatches + '</div>' +
+          '<a class="fk-gen-cta" href="https://wa.me/' + WA_NUMBER + '?text=' + waText + '" target="_blank" rel="noopener">Suka ini? Chat kita \u2192</a>' +
+        '</div>'
+      );
+    }
+    document.getElementById('fk-gen-results').innerHTML = cards.join('');
+    document.getElementById('fk-gen-hint').style.display = 'block';
+  }
+  document.getElementById('fk-gen-form').addEventListener('submit', function (e) { e.preventDefault(); generate(); });
 })();
 </script>
-
 </body>
 </html>
