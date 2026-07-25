@@ -1,3 +1,27 @@
 {
-  "posts": []
+  "posts": [
+    {
+      "id": "founderku-background",
+      "slug": "founderku-background",
+      "title": {
+        "id": "Founderku Background",
+        "en": "Founderku Background",
+        "tr": "Founderku Background"
+      },
+      "excerpt": {
+        "id": "Latar belakang dari Founderku",
+        "en": "The background of Founderku",
+        "tr": "Founderku'nun Arka Planı"
+      },
+      "content": {
+        "id": "Hai hai, Andi disini.. Jadi Founderku merupakan sebuah studio? bukan juga sih, tapi lebih mirip perspektif dari seorang yang mau semua orang punya niche dan keunikan mereka masing masing dan founderku fokus di dukungan untuk infrastruktur digital mereka.\n\nps : kita mau buat 1000 founder di Indonesia",
+        "en": "Hey there, Andi here.. So Founderku is a studio? Not exactly, but more like the perspective of someone who wants everyone to have their own niche and uniqueness, and Founderku focuses on supporting their digital infrastructure.\n\nps: we want to create 1000 founders in Indonesia",
+        "tr": "Hey, Andi burada.. Yani Founderku bir stüdyo mu? Pek de öyle değil, ama herkesin kendi niş ve benzersizliğine sahip olmasını isteyen birinin perspektifine daha yakın ve Founderku dijital altyapılarını desteklemeye odaklanıyor.\n\nps: Endonezya'da 1000 kurucu yaratmak istiyoruz"
+      },
+      "category": "update",
+      "coverGradient": "amber",
+      "date": "July 2026",
+      "order": 1
+    }
+  ]
 }
