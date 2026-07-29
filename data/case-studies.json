@@ -81,6 +81,50 @@
       },
       "external": true,
       "order": 2
+    },
+    {
+      "id": "nora-paslanmaz",
+      "name": "Nora Paslanmaz",
+      "logo": "images/case-studies/nora-paslanmaz-logo.png",
+      "roundLogo": false,
+      "description": {
+        "id": "Company profile 210 halaman untuk produsen besi, baja, dan stainless steel asal Istanbul. Dibangun dalam 5 bahasa (Turki, Inggris, Prancis, Arab, Rusia), lengkap dengan 26 kategori produk, 6 layanan inti, dan sertifikasi ISO, biar Nora bisa dipercaya buyer dari berbagai negara.",
+        "en": "210-page company profile for an Istanbul-based iron, steel, and stainless steel manufacturer. Built in 5 languages (Turkish, English, French, Arabic, Russian), complete with 26 product categories, 6 core services, and ISO certifications, so Nora can be trusted by buyers from various countries.",
+        "tr": "İstanbul merkezli bir demir, çelik ve paslanmaz çelik üreticisinin 210 sayfalık şirket profili. 5 dilde (Türkçe, İngilizce, Fransızca, Arapça, Rusça) tasarlanmış, 26 ürün kategorisi, 6 temel hizmet ve ISO sertifikasyonları içerir, böylece Nora çeşitli ülkelerden alıcılar tarafından güvenilir bulunur."
+      },
+      "tags": {
+        "id": [
+          "Company Profile",
+          "Website Multi-bahasa",
+          "B2B",
+          "Manufaktur"
+        ],
+        "en": [
+          "Company Profile",
+          "Multi-language Website",
+          "B2B",
+          "Manufacturing"
+        ],
+        "tr": [
+          "Şirket Profili",
+          "Çok Dilli Web Sitesi",
+          "B2B",
+          "İmalat"
+        ]
+      },
+      "note": {
+        "id": "210 halaman · 5 bahasa · 26 kategori produk",
+        "en": "210 pages · 5 languages · 26 product categories",
+        "tr": "210 sayfa · 5 dil · 26 ürün kategorisi"
+      },
+      "linkUrl": "https://www.norapaslanmazcelik.com/",
+      "linkLabel": {
+        "id": "Kunjungi Website",
+        "en": "https://www.norapaslanmazcelik.com/",
+        "tr": "https://www.norapaslanmazcelik.com/"
+      },
+      "external": true,
+      "order": 3
     }
   ]
 }
