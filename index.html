@@ -120,6 +120,7 @@
   .fk-slider { display:flex; gap:20px; overflow-x:auto; scroll-snap-type:x mandatory; padding:6px 6px 16px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
   .fk-slider::-webkit-scrollbar{ display:none; }
   .fk-slide { flex:0 0 auto; width:280px; scroll-snap-align:start; }
+  .fk-proj-tags { display:flex; flex-wrap:wrap; gap:8px; }
   .fk-prod-card-link { text-decoration:none; color:inherit; display:block; background: var(--card-bg); border:1px solid var(--border); border-radius:18px; overflow:hidden; height:100%; }
   .fk-prod-thumb { height:150px; background: var(--bg-soft); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
   .fk-prod-thumb img { width:100%; height:100%; object-fit:cover; object-position:top; }
@@ -962,7 +963,7 @@ applyLanguage(savedLang, true);
     return field[fkCurrentLang] || field.id || field.en || [];
   }
   function cardHTML(item) {
-    var tagsHtml = pickLangArray(item.tags).map(function (t) { return '<span style="background:var(--bg-soft); border:1px solid var(--border); padding:6px 12px; border-radius:999px; font-size:12px; font-weight:700; margin-right:6px; white-space:nowrap;">' + escapeHtml(t) + '</span>'; }).join('');
+    var tagsHtml = pickLangArray(item.tags).map(function (t) { return '<span style="background:var(--bg-soft); border:1px solid var(--border); padding:6px 12px; border-radius:999px; font-size:12px; font-weight:700; white-space:nowrap;">' + escapeHtml(t) + '</span>'; }).join('');
     var logoInner = item.logo ? '<img src="' + escapeHtml(item.logo) + '" alt="' + escapeHtml(item.name) + '" style="height:28px;">' : '<strong>' + escapeHtml(item.name) + '</strong>';
     var linkAttrs = item.external ? 'target="_blank" rel="noopener"' : '';
     return '<div class="fk-slide" style="width:320px;">' +
