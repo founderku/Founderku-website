@@ -185,6 +185,7 @@
       <div class="tab-btn active lowercase" id="tabBtnProducts" onclick="switchTab('products')">produk store</div>
       <div class="tab-btn lowercase" id="tabBtnCaseStudies" onclick="switchTab('caseStudies')">studi kasus</div>
       <div class="tab-btn lowercase" id="tabBtnBlog" onclick="switchTab('blog')">blog</div>
+      <div class="tab-btn lowercase" id="tabBtnTestimoni" onclick="switchTab('testimoni')">testimoni</div>
     </div>
 
     <div id="panelProducts">
@@ -212,6 +213,14 @@
       </div>
       <div id="blogStatusBanner" class="status-msg"></div>
       <div id="blogList"></div>
+    </div>
+    <div id="panelTestimoni" style="display:none;">
+      <div class="dash-header">
+        <h1 class="lowercase">testimoni</h1>
+        <button class="btn btn-primary lowercase" onclick="openTestimoniForm()">+ tambah testimoni</button>
+      </div>
+      <div id="testimoniStatusBanner" class="status-msg"></div>
+      <div id="testimoniList"></div>
     </div>
   </div>
 </div>
@@ -562,6 +571,74 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="testimoniFormModal">
+  <div class="modal">
+    <span class="modal-close" onclick="closeTestimoniForm()">&times;</span>
+    <h2 class="lowercase" id="testimoniFormTitle">tambah testimoni</h2>
+
+    <div class="form-row">
+      <div class="field">
+        <label class="lowercase">nama klien / brand</label>
+        <input type="text" id="testimoniName">
+      </div>
+      <div class="field">
+        <label class="lowercase">urutan tampil (angka, kecil = duluan)</label>
+        <input type="number" id="testimoniOrder" value="1">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="lowercase">path logo (misal: images/case-studies/nama-logo.png)</label>
+      <input type="text" id="testimoniLogo" placeholder="images/case-studies/nama-logo.png">
+    </div>
+
+    <div class="field">
+      <label class="lowercase">peran / keterangan · bahasa indonesia</label>
+      <input type="text" id="testimoniRole" placeholder="misal: Handcrafted Cake Brand, Istanbul">
+    </div>
+    <div class="field">
+      <label class="lowercase">isi testimoni · bahasa indonesia</label>
+      <textarea id="testimoniQuote" style="min-height:100px;"></textarea>
+    </div>
+
+    <div style="margin:18px 0 22px; padding:16px; border:1px dashed rgba(28,27,51,0.25); border-radius:12px;">
+      <button type="button" class="btn btn-ghost lowercase" id="testimoniTranslateBtn" onclick="translateTestimoniFields()" style="width:100%;">translate otomatis (en + tr)</button>
+      <div id="testimoniTranslateStatus" class="status-msg" style="margin-top:10px;"></div>
+    </div>
+
+    <details style="margin-bottom:22px;">
+      <summary class="lowercase" style="cursor:pointer; font-weight:700; font-size:13px; color:var(--ink-soft, #6b6880); margin-bottom:12px;">lihat / edit versi english</summary>
+      <div class="field">
+        <label class="lowercase">peran / keterangan · english</label>
+        <input type="text" id="testimoniRoleEn">
+      </div>
+      <div class="field">
+        <label class="lowercase">isi testimoni · english</label>
+        <textarea id="testimoniQuoteEn" style="min-height:100px;"></textarea>
+      </div>
+    </details>
+
+    <details style="margin-bottom:22px;">
+      <summary class="lowercase" style="cursor:pointer; font-weight:700; font-size:13px; color:var(--ink-soft, #6b6880); margin-bottom:12px;">lihat / edit versi türkçe</summary>
+      <div class="field">
+        <label class="lowercase">peran / keterangan · türkçe</label>
+        <input type="text" id="testimoniRoleTr">
+      </div>
+      <div class="field">
+        <label class="lowercase">isi testimoni · türkçe</label>
+        <textarea id="testimoniQuoteTr" style="min-height:100px;"></textarea>
+      </div>
+    </details>
+
+    <div id="testimoniFormStatus" class="status-msg"></div>
+
+    <div class="modal-actions">
+      <button class="btn btn-ghost lowercase" onclick="closeTestimoniForm()">batal</button>
+      <button class="btn btn-primary lowercase" id="testimoniSaveBtn" onclick="saveTestimoni()">simpan testimoni</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const LS_KEY = 'fk_admin_config';
 let config = null;
@@ -581,6 +658,10 @@ let blogData = { posts: [] };
 let blogSha = null;
 let blogEditingId = null;
 let blogLoaded = false;
+let testimoniData = { testimonials: [] };
+let testimoniSha = null;
+let testimoniEditingId = null;
+let testimoniLoaded = false;
 
 function loadConfig(){
   try {
@@ -667,9 +748,11 @@ function switchTab(tab){
   document.getElementById('tabBtnProducts').classList.toggle('active', tab === 'products');
   document.getElementById('tabBtnCaseStudies').classList.toggle('active', tab === 'caseStudies');
   document.getElementById('tabBtnBlog').classList.toggle('active', tab === 'blog');
+  document.getElementById('tabBtnTestimoni').classList.toggle('active', tab === 'testimoni');
   document.getElementById('panelProducts').style.display = tab === 'products' ? 'block' : 'none';
   document.getElementById('panelCaseStudies').style.display = tab === 'caseStudies' ? 'block' : 'none';
   document.getElementById('panelBlog').style.display = tab === 'blog' ? 'block' : 'none';
+  document.getElementById('panelTestimoni').style.display = tab === 'testimoni' ? 'block' : 'none';
   if (tab === 'caseStudies' && !csLoaded){
     csLoaded = true;
     loadCaseStudies();
@@ -677,6 +760,10 @@ function switchTab(tab){
   if (tab === 'blog' && !blogLoaded){
     blogLoaded = true;
     loadBlog();
+  }
+  if (tab === 'testimoni' && !testimoniLoaded){
+    testimoniLoaded = true;
+    loadTestimoni();
   }
 }
 
@@ -1417,6 +1504,208 @@ async function deleteBlogPost(id){
     banner.className = 'status-msg success';
     banner.textContent = 'post dihapus.';
     renderBlogList();
+    setTimeout(() => { banner.style.display = 'none'; }, 2000);
+  } catch(err){
+    banner.className = 'status-msg error';
+    banner.textContent = 'gagal hapus: ' + err.message;
+  }
+}
+
+async function loadTestimoni(){
+  const banner = document.getElementById('testimoniStatusBanner');
+  banner.className = 'status-msg info';
+  banner.textContent = 'memuat testimoni...';
+  try {
+    const res = await ghGetFile('data/testimonials.json');
+    if (!res){
+      testimoniData = { testimonials: [] };
+      testimoniSha = null;
+    } else {
+      testimoniSha = res.sha;
+      const decoded = decodeURIComponent(escape(atob(res.content.replace(/\n/g, ''))));
+      testimoniData = JSON.parse(decoded);
+      if (!testimoniData.testimonials) testimoniData.testimonials = [];
+    }
+    banner.style.display = 'none';
+    renderTestimoniList();
+  } catch(err){
+    banner.className = 'status-msg error';
+    banner.textContent = 'error: ' + err.message;
+  }
+}
+
+function renderTestimoniList(){
+  const list = document.getElementById('testimoniList');
+  const items = (testimoniData.testimonials || []).slice().sort((a, b) => (a.order || 0) - (b.order || 0));
+  if (!items.length){
+    list.innerHTML = `<div class="empty-state lowercase">belum ada testimoni. klik "tambah testimoni" buat mulai.</div>`;
+    return;
+  }
+  list.innerHTML = items.map(t => `
+    <div class="product-row">
+      <div class="no-img lowercase">${(t.name || '-').slice(0,2)}</div>
+      <div class="info">
+        <div class="name">${t.name || '-'}</div>
+        <div class="meta lowercase">urutan ${t.order || 0} &middot; ${langText(t.role, 'id') || 'tanpa peran'}</div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-ghost btn-sm lowercase" onclick="editTestimoni('${t.id}')">edit</button>
+        <button class="btn btn-danger btn-sm lowercase" onclick="deleteTestimoni('${t.id}')">hapus</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openTestimoniForm(t){
+  testimoniEditingId = t ? t.id : null;
+  document.getElementById('testimoniFormTitle').textContent = t ? 'edit testimoni' : 'tambah testimoni';
+  document.getElementById('testimoniName').value = t ? (t.name || '') : '';
+  document.getElementById('testimoniOrder').value = t ? (t.order || 1) : (testimoniData.testimonials.length + 1);
+  document.getElementById('testimoniLogo').value = t ? (t.logo || '') : '';
+  document.getElementById('testimoniRole').value = t ? langText(t.role, 'id') : '';
+  document.getElementById('testimoniQuote').value = t ? langText(t.quote, 'id') : '';
+  document.getElementById('testimoniRoleEn').value = t ? langText(t.role, 'en') : '';
+  document.getElementById('testimoniQuoteEn').value = t ? langText(t.quote, 'en') : '';
+  document.getElementById('testimoniRoleTr').value = t ? langText(t.role, 'tr') : '';
+  document.getElementById('testimoniQuoteTr').value = t ? langText(t.quote, 'tr') : '';
+  document.getElementById('testimoniFormStatus').style.display = 'none';
+  document.getElementById('testimoniTranslateStatus').style.display = 'none';
+  document.getElementById('testimoniFormModal').classList.add('open');
+}
+function closeTestimoniForm(){
+  document.getElementById('testimoniFormModal').classList.remove('open');
+}
+function editTestimoni(id){
+  const t = testimoniData.testimonials.find(x => x.id === id);
+  if (t) openTestimoniForm(t);
+}
+
+async function translateTestimoniFields(){
+  const btn = document.getElementById('testimoniTranslateBtn');
+  const statusEl = document.getElementById('testimoniTranslateStatus');
+
+  const nameId = document.getElementById('testimoniName').value.trim();
+  const role = document.getElementById('testimoniRole').value.trim();
+  const quote = document.getElementById('testimoniQuote').value.trim();
+
+  if (!nameId || !quote){
+    statusEl.style.display = 'block';
+    statusEl.className = 'status-msg error';
+    statusEl.textContent = 'isi nama dan isi testimoni bahasa indonesia dulu sebelum translate.';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> lagi translate...';
+  statusEl.style.display = 'block';
+  statusEl.className = 'status-msg info';
+  statusEl.textContent = 'lagi manggil ai buat translate, tunggu sebentar...';
+
+  try {
+    const data = await callTranslateWorker(
+      nameId,
+      { role, quote },
+      {}
+    );
+
+    document.getElementById('testimoniRoleEn').value = data.en.textFields.role || '';
+    document.getElementById('testimoniQuoteEn').value = data.en.textFields.quote || '';
+    document.getElementById('testimoniRoleTr').value = data.tr.textFields.role || '';
+    document.getElementById('testimoniQuoteTr').value = data.tr.textFields.quote || '';
+
+    statusEl.className = 'status-msg success';
+    statusEl.textContent = 'berhasil, versi english dan türkçe udah keisi. cek dulu di bagian "lihat / edit" di bawah sebelum simpan.';
+  } catch(err){
+    statusEl.className = 'status-msg error';
+    statusEl.textContent = 'gagal translate: ' + err.message;
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = 'translate otomatis (en + tr)';
+  }
+}
+
+function setTestimoniFormStatus(type, msg){
+  const el = document.getElementById('testimoniFormStatus');
+  el.className = 'status-msg ' + type;
+  el.textContent = msg;
+}
+
+async function saveTestimoni(){
+  const nameId = document.getElementById('testimoniName').value.trim();
+  const logo = document.getElementById('testimoniLogo').value.trim();
+  const order = parseInt(document.getElementById('testimoniOrder').value || '0', 10);
+
+  const roleId = document.getElementById('testimoniRole').value.trim();
+  const roleEn = document.getElementById('testimoniRoleEn').value.trim();
+  const roleTr = document.getElementById('testimoniRoleTr').value.trim();
+  const role = (roleEn || roleTr) ? { id: roleId, en: roleEn, tr: roleTr } : roleId;
+
+  const quoteId = document.getElementById('testimoniQuote').value.trim();
+  const quoteEn = document.getElementById('testimoniQuoteEn').value.trim();
+  const quoteTr = document.getElementById('testimoniQuoteTr').value.trim();
+  const quote = (quoteEn || quoteTr) ? { id: quoteId, en: quoteEn, tr: quoteTr } : quoteId;
+
+  if (!nameId){
+    setTestimoniFormStatus('error', 'nama klien wajib diisi.');
+    return;
+  }
+  if (!quoteId){
+    setTestimoniFormStatus('error', 'isi testimoni wajib diisi.');
+    return;
+  }
+
+  const slug = nameId.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const id = testimoniEditingId || slug;
+
+  const saveBtn = document.getElementById('testimoniSaveBtn');
+  saveBtn.disabled = true;
+  saveBtn.innerHTML = '<span class="spinner"></span> menyimpan...';
+  setTestimoniFormStatus('info', 'menyimpan testimoni...');
+
+  try {
+    const testiObj = { id, name: nameId, logo, role, quote, order };
+
+    if (testimoniEditingId){
+      const idx = testimoniData.testimonials.findIndex(x => x.id === testimoniEditingId);
+      testimoniData.testimonials[idx] = testiObj;
+    } else {
+      testimoniData.testimonials.push(testiObj);
+    }
+
+    const jsonStr = JSON.stringify(testimoniData, null, 2);
+    const base64Content = btoa(unescape(encodeURIComponent(jsonStr)));
+    const result = await ghPutFile('data/testimonials.json', base64Content, `${testimoniEditingId ? 'Update' : 'Add'} testimoni: ${nameId}`, testimoniSha);
+    testimoniSha = result.content.sha;
+
+    setTestimoniFormStatus('success', 'testimoni berhasil disimpan.');
+    renderTestimoniList();
+    setTimeout(() => { closeTestimoniForm(); }, 700);
+  } catch(err){
+    setTestimoniFormStatus('error', 'gagal: ' + err.message);
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.innerHTML = 'simpan testimoni';
+  }
+}
+
+async function deleteTestimoni(id){
+  const t = testimoniData.testimonials.find(x => x.id === id);
+  if (!t) return;
+  if (!confirm(`Yakin mau hapus testimoni "${t.name}"? Tindakan ini tidak bisa dibatalkan.`)) return;
+
+  const banner = document.getElementById('testimoniStatusBanner');
+  banner.className = 'status-msg info';
+  banner.textContent = 'menghapus testimoni...';
+
+  try {
+    testimoniData.testimonials = testimoniData.testimonials.filter(x => x.id !== id);
+    const jsonStr = JSON.stringify(testimoniData, null, 2);
+    const base64Content = btoa(unescape(encodeURIComponent(jsonStr)));
+    const result = await ghPutFile('data/testimonials.json', base64Content, `Delete testimoni: ${t.name}`, testimoniSha);
+    testimoniSha = result.content.sha;
+    banner.className = 'status-msg success';
+    banner.textContent = 'testimoni dihapus.';
+    renderTestimoniList();
     setTimeout(() => { banner.style.display = 'none'; }, 2000);
   } catch(err){
     banner.className = 'status-msg error';
