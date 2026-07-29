@@ -244,24 +244,26 @@
       "slug": "nomadbuds-web-app-cari-teman-traveling-lokal",
       "name": {
         "id": "NomadBuds - Web App Cari Teman Traveling & Lokal",
-        "en": "NomadBuds - Web App to Find Travel & Local Friends",
-        "tr": "NomadBuds - Seyahat ve Yerel Arkadaş Bulma Web Uygulaması"
+        "en": "NomadBuds - Web App Cari Teman Traveling & Lokal",
+        "tr": "NomadBuds - Web App Cari Teman Traveling & Lokal"
       },
       "category": "landing-page",
       "categoryLabel": "landing page",
-      "price": 500000,
-      "priceLabel": "Rp 500.000",
+      "price": 5000000,
+      "priceUSD": null,
+      "priceTRY": null,
+      "priceLabel": "Rp 5.000.000",
       "priceNote": "mulai dari",
       "featured": false,
       "shortDescription": {
         "id": "Template web app matchmaking teman traveling & lokal yang lengkap dengan swipe deck, filter pencarian, live chat, dan form profil interaktif. Desktop-first, satu file HTML siap pakai.",
-        "en": "Complete web app template for matching traveling buddies and locals with swipe deck, search filters, live chat, and interactive profile forms. Desktop-first, single HTML file ready to use.",
-        "tr": "Seyahat arkadaşları ve yerel kişileri eşleştirmek için eksiksiz web uygulama şablonu, swipe destesi, arama filtreleri, canlı sohbet ve etkileşimli profil formları ile. Masaüstü-odaklı, kullanıma hazır tek HTML dosyası."
+        "en": "Complete web app template for travel buddy and local friend matchmaking with swipe deck, search filters, live chat, and interactive profile forms. Desktop-first, single HTML file ready to use.",
+        "tr": "Seyahat arkadaşı ve yerel arkadaş eşleştirmesi için eksiksiz web uygulaması şablonu, kaydırma destesi, arama filtreleri, canlı sohbet ve etkileşimli profil formları ile. Masaüstü öncelikli, kullanıma hazır tek HTML dosyası."
       },
       "fullDescription": {
         "id": "NomadBuds adalah template web app untuk platform matchmaking ala \"Bumble BFF\" yang menghubungkan traveler dengan warga lokal untuk berteman langsung dan bukan tur berbayar, bukan aplikasi kencan.\n\nTemplate ini sudah termasuk:\n- Landing page dengan hero section, alur \"How It Works\", dan CTA yang siap konversi\n- Dashboard pencarian buddy dengan filter negara, bahasa, dan minat, lengkap dengan swipe deck ala kartu profil\n- Sistem match dengan modal perayaan saat cocok\n- Fitur live chat dua arah, lengkap dengan simulasi balasan otomatis dan indikator \"sedang mengetik\"\n- Form edit profil dengan live preview yang update langsung saat mengetik\n\nDibangun dengan React + Tailwind, dan sudah dikompilasi jadi satu file HTML mandiri yang tinggal diupload ke hosting atau GitHub Pages, tanpa perlu build tools atau instalasi tambahan. Cocok untuk developer atau agency yang butuh referensi/starter project aplikasi matchmaking maupun template siap jual.",
-        "en": "NomadBuds is a web app template for a matchmaking platform like \"Bumble BFF\" that connects travelers with local residents to make friends directly, not paid tours or dating apps.\n\nThis template includes:\n- Landing page with hero section, \"How It Works\" flow, and conversion-ready CTA\n- Buddy search dashboard with country, language, and interest filters, complete with swipe deck like profile cards\n- Match system with celebration modal when there's a match\n- Two-way live chat feature, complete with auto-reply simulation and typing indicator\n- Profile edit form with live preview that updates instantly while typing\n\nBuilt with React + Tailwind, and already compiled into a single standalone HTML file that you just upload to hosting or GitHub Pages, no build tools or extra installation needed. Perfect for developers or agencies who need a reference or starter project for matchmaking applications or ready-to-sell templates.",
-        "tr": "NomadBuds, gezginleri yerel sakinlerle bağlayan \"Bumble BFF\" benzeri bir eşleştirme platformu için web uygulaması şablonudur. Ücretli turlar veya çiftleşme uygulamaları değil, doğrudan arkadaş bulmak için tasarlanmıştır.\n\nBu şablon şunları içerir:\n- Hero bölümü, \"Nasıl Çalışır\" akışı ve dönüşüme hazır CTA içeren açılış sayfası\n- Ülke, dil ve ilgi filtreleri içeren arkadaş arama panosu, profil kartları gibi swipe desteri ile tamamlanmış\n- Eşleşme olduğunda kutlama modalı içeren eşleştirme sistemi\n- Otomatik yanıt simülasyonu ve yazma göstergesi ile birlikte çift yönlü canlı sohbet özelliği\n- Yazarken anında güncellenen canlı önizlemesi ile profil düzenleme formu\n\nReact + Tailwind ile oluşturulmuş ve zaten tek bir bağımsız HTML dosyasına derlenmişdir. Bunu hosting veya GitHub Pages'e yüklemek yeterli olup, derleme araçları veya ek kurulum gerekmez. Eşleştirme uygulamalarına referans veya başlangıç projesi gereken geliştirici ve ajanslar için idealdir. Satışa hazır şablonlar için de uygundur."
+        "en": "NomadBuds is a web app template for a matchmaking platform like 'Bumble BFF' that connects travelers with local residents to make friends directly, not paid tours or dating app.\n\nTemplate includes:\n- Landing page with hero section, 'How It Works' flow, and conversion-ready CTA\n- Buddy search dashboard with country, language, and interest filters, complete with card-style swipe deck\n- Match system with celebration modal when matches occur\n- Two-way live chat feature, complete with auto-reply simulation and typing indicator\n- Profile edit form with live preview that updates instantly as you type\n\nBuilt with React + Tailwind, and already compiled into a single standalone HTML file ready to upload to hosting or GitHub Pages, no build tools or additional installation needed. Perfect for developers or agencies who need a reference or starter project for matchmaking apps or ready-to-sell templates.",
+        "tr": "NomadBuds, gezginleri yerel sakinlerle doğrudan arkadaş olmak için bağlayan 'Bumble BFF' gibi bir eşleştirme platformu için web uygulaması şablonudur. Ücretli turlar değil, flört uygulaması değil.\n\nŞablon şunları içerir:\n- Hero bölümü, 'Nasıl Çalışır' akışı ve dönüşüm için hazır CTA ile açılış sayfası\n- Ülke, dil ve ilgi filtreleri ile arkadaş arama panosu, kart tarzı kaydırma destesi ile tamamlayıcı\n- Eşleştirmeler gerçekleştiğinde kutlama modalı içeren eşleştirme sistemi\n- Otomatik yanıt simülasyonu ve yazma göstergesi ile çift yönlü canlı sohbet özelliği\n- Yazarken anında güncellenen canlı ön izleme ile profil düzenleme formu\n\nReact + Tailwind ile inşa edilmiş ve şimdiden barındırmaya veya GitHub Pages'e yüklenmeye hazır tek bir bağımsız HTML dosyasında derlenmiş, herhangi bir derleme aracı veya ek kurulum gerekmez. Eşleştirme uygulamaları için referans veya başlangıç projesi veya satışa hazır şablonlara ihtiyaç duyan geliştiriciler veya ajanslar için mükemmeldir."
       },
       "featureTags": {
         "id": [
@@ -279,7 +281,7 @@
           "swipe matching",
           "search filters (country",
           "language",
-          "interests)",
+          "interest)",
           "real-time live chat",
           "auto-reply simulation",
           "interactive profile with live preview",
@@ -287,14 +289,14 @@
           "single HTML file ready to use"
         ],
         "tr": [
-          "swipe eşleştirme",
+          "kaydırma eşleştirmesi",
           "arama filtreleri (ülke",
           "dil",
-          "ilgiler)",
+          "ilgi)",
           "gerçek zamanlı canlı sohbet",
           "otomatik yanıt simülasyonu",
-          "canlı önizlemeli etkileşimli profil",
-          "duyarlı masaüstü-odaklı tasarım",
+          "canlı ön izlemeli etkileşimli profil",
+          "duyarlı masaüstü öncelikli tasarım",
           "kullanıma hazır tek HTML dosyası"
         ]
       },
@@ -305,8 +307,8 @@
       "liveUrl": "https://sho462.github.io/NomadBuds/",
       "whatsappMessage": {
         "id": "Halo, saya mau pesan NomadBuds - Web App Cari Teman Traveling & Lokal",
-        "en": "Hi, I want to order NomadBuds - Web App to Find Traveling & Local Friends",
-        "tr": "Merhaba, NomadBuds - Seyahat ve Yerel Arkadaş Bulma Web Uygulaması'nı sipariş etmek istiyorum"
+        "en": "Hi, I want to order NomadBuds - Web App Cari Teman Traveling & Lokal",
+        "tr": "Merhaba, NomadBuds - Web App Cari Teman Traveling & Lokal sipariş etmek istiyorum"
       },
       "createdAt": "2026-07-21"
     }
