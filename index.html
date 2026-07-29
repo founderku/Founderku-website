@@ -245,7 +245,7 @@
     <a href="#cta" class="fk-pill fk-pill-solid" data-i18n="hero.ctaMain">Ceritain Ide Kamu</a>
     <a href="#layanan" class="fk-pill fk-pill-outline" data-i18n="hero.ctaSecondary">Lihat layanan →</a>
   </div>
-  <p style="margin-top:18px; font-size:14px; color:var(--text-faint);">
+  <p id="fkPajanginCta" style="margin-top:18px; font-size:14px; color:var(--text-faint);">
     <span data-i18n="hero.pajanginLead">Butuh halaman jualan online cepat?</span>
     <a href="https://pajangin.founderku.com/beranda" target="_blank" rel="noopener" style="color:var(--brand-coral); font-weight:700; text-decoration:none;" data-i18n="hero.pajanginCta">Coba Pajangin, produk baru kami →</a>
   </p>
@@ -819,6 +819,8 @@ function applyLanguage(lang, isInitial) {
   });
   document.documentElement.setAttribute('lang', lang);
   try { localStorage.setItem('fk-lang', lang); } catch (e) {}
+  var pajanginCta = document.getElementById('fkPajanginCta');
+  if (pajanginCta) pajanginCta.style.display = (lang === 'id') ? '' : 'none';
   var currentLabel = document.getElementById('fkLangCurrentLabel');
   if (currentLabel) currentLabel.textContent = lang.toUpperCase();
   if (window.fkRerenderProductPreview) window.fkRerenderProductPreview(lang);
@@ -1159,6 +1161,21 @@ applyLanguage(savedLang, true);
     document.getElementById('fk-gen-hint').style.display = 'block';
   }
   document.getElementById('fk-gen-form').addEventListener('submit', function (e) { e.preventDefault(); generate(); });
+})();
+
+(function () {
+  if (!location.hash) return;
+  function scrollToHash() {
+    var el = document.querySelector(location.hash);
+    if (el) el.scrollIntoView();
+  }
+  // konten testimoni, studi kasus, produk, dan blog dimuat async dan mengubah
+  // tinggi halaman setelah browser pertama kali lompat ke anchor, jadi kita
+  // re-scroll setelah semua fetch kemungkinan besar selesai.
+  window.addEventListener('load', function () {
+    setTimeout(scrollToHash, 300);
+    setTimeout(scrollToHash, 900);
+  });
 })();
 </script>
 </body>
