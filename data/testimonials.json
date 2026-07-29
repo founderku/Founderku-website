@@ -1,0 +1,36 @@
+{
+  "testimonials": [
+    {
+      "id": "say-cheese",
+      "name": "Say Cheese",
+      "logo": "images/case-studies/say-cheese-logo.png",
+      "role": {
+        "id": "Handcrafted Cake Brand, Istanbul",
+        "en": "Handcrafted Cake Brand, Istanbul",
+        "tr": "El Yapımı Pasta Markası, İstanbul"
+      },
+      "quote": {
+        "id": "Website-nya bagus dan pengerjaannya cepat, dibantu dari awal sampai akhir, dan pelayanannya sangat baik. Stylenya juga mengikuti zaman sekarang.",
+        "en": "The website turned out great and was finished quickly. They helped us from start to finish, and the service was excellent. The style is modern and up to date.",
+        "tr": "Web sitesi çok güzel oldu ve hızlı bir şekilde tamamlandı. Baştan sona bize yardımcı oldular ve hizmetleri çok iyiydi. Tarzı da güncel ve modern."
+      },
+      "order": 1
+    },
+    {
+      "id": "nora-paslanmaz",
+      "name": "Nora Paslanmaz Çelik",
+      "logo": "images/case-studies/nora-paslanmaz-logo.png",
+      "role": {
+        "id": "Produsen Besi & Baja, Istanbul",
+        "en": "Iron & Steel Manufacturer, Istanbul",
+        "tr": "Demir & Çelik Üreticisi, İstanbul"
+      },
+      "quote": {
+        "id": "Harga terjangkau dan sangat friendly. Pengerjaan website yang kita rebuild ulang mengikuti referensi dan berjalan cepat. Hasilnya sangat bagus, terbaik.",
+        "en": "Affordable pricing and very friendly service. They rebuilt our website following our references, and the work was fast. The result is excellent, the best.",
+        "tr": "Fiyatlar uygun ve hizmet çok samimi. Referanslarımıza uygun şekilde web sitemizi yeniden inşa ettiler ve iş hızlı ilerledi. Sonuç çok başarılı, en iyisi."
+      },
+      "order": 2
+    }
+  ]
+}
