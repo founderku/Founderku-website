@@ -249,10 +249,10 @@
       },
       "category": "landing-page",
       "categoryLabel": "landing page",
-      "price": 0,
+      "price": 1000000,
       "priceUSD": null,
       "priceTRY": null,
-      "priceLabel": "Rp 0",
+      "priceLabel": "Rp 1.000.000",
       "priceNote": "mulai dari",
       "featured": false,
       "shortDescription": {
