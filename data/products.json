@@ -238,6 +238,70 @@
         "tr": "Merhaba, Lahirku sipariş etmek istiyorum"
       },
       "createdAt": "2026-07-11"
+    },
+    {
+      "id": "crt-creator-page",
+      "slug": "crt-creator-page",
+      "name": {
+        "id": "CRT Creator Page",
+        "en": "CRT Creator Page",
+        "tr": "CRT Creator Page"
+      },
+      "category": "landing-page",
+      "categoryLabel": "landing page",
+      "price": 0,
+      "priceUSD": null,
+      "priceTRY": null,
+      "priceLabel": "Rp 0",
+      "priceNote": "mulai dari",
+      "featured": false,
+      "shortDescription": {
+        "id": "Landing page interaktif bergaya TV retro dengan animasi microinteraction, carousel portofolio, dan galeri konten yang langsung siap pakai untuk kreator atau personal brand.",
+        "en": "An interactive, retro-TV-styled landing page with microinteraction animations, a portfolio carousel, and a content gallery, ready to use for creators or personal brands.",
+        "tr": "Mikro-etkileşim animasyonları, bir portfolyo carousel'i ve içerik galerisiyle donatılmış, retro televizyon temalı interaktif bir açılış sayfası, içerik üreticileri veya kişisel markalar için kullanıma hazır."
+      },
+      "fullDescription": {
+        "id": "Bukan landing page biasa, halaman ini punya TV retro sebagai centerpiece: video looping otomatis begitu halaman dibuka, efek nyala/mati saat pengunjung scroll, bahkan tombol channel yang bisa diklik untuk ganti \"channel\". Di sekitarnya ada bubble button yang bisa di-drag dan menampilkan label saat di-hover, plus menu navigasi yang secara visual \"menyatu\" berpindah dari samping TV ke header begitu halaman di-scroll.\n\nBagian portofolio (\"The Work\") tampil sebagai carousel yang bisa di-drag manual atau auto-scroll berkelanjutan, sementara galeri konten terbaru (\"Latest Drops\") disajikan sebagai tumpukan kartu yang terbuka dengan animasi spring saat halaman di-scroll, dan \"meledak\" berpencar saat di-hover.\n\nSeluruh halaman dibangun dengan animasi scroll-reveal yang halus, sepenuhnya responsif dari desktop sampai mobile, sudah memenuhi standar aksesibilitas (kontras warna, navigasi keyboard, dukungan reduced-motion), dan siap SEO dengan meta tag lengkap untuk preview link di media sosial.\n\nCocok untuk kreator konten, host, atau siapa pun yang ingin personal brand-nya tampil beda sejak detik pertama pengunjung mendarat di halaman.",
+        "en": "Not your average landing page, this one features a retro TV as the centerpiece: a looping video that starts the moment the page loads, an on/off effect triggered by scrolling, and even a clickable channel knob that lets visitors \"change the channel.\" Around it float draggable bubble buttons that reveal a label on hover, plus a nav menu that visually \"merges\" from beside the TV into the header as you scroll.\n\nThe portfolio section (\"The Work\") is a carousel you can drag manually or let auto-scroll continuously, while the latest-content gallery (\"Latest Drops\") is presented as a stacked deck of cards that springs open with a scroll-triggered animation and bursts apart on hover.\n\nThe whole page is built with smooth scroll-reveal animations, fully responsive from desktop to mobile, meets accessibility standards (color contrast, keyboard navigation, reduced-motion support), and is SEO-ready with full meta tags for social media link previews.\n\nPerfect for content creators, hosts, or anyone who wants their personal brand to stand out from the moment a visitor lands on the page.",
+        "tr": "Sıradan bir açılış sayfası değil, bu sayfanın merkezinde retro bir televizyon var: sayfa açılır açılmaz otomatik başlayan döngüsel bir video, kaydırma hareketiyle tetiklenen açma/kapama efekti, hatta ziyaretçilerin \"kanal değiştirmesine\" izin veren tıklanabilir bir kanal düğmesi. Etrafında, üzerine gelindiğinde etiket gösteren sürüklenebilir baloncuk butonlar ve sayfa kaydırıldıkça TV'nin yanından başlığa doğru görsel olarak \"birleşen\" bir navigasyon menüsü yer alıyor.\n\nPortfolyo bölümü (\"The Work\") elle sürüklenebilen veya sürekli otomatik kayan bir carousel olarak sunulurken, en yeni içerikler galerisi (\"Latest Drops\") kaydırmayla tetiklenen bir animasyonla açılan ve üzerine gelindiğinde dağılan, yığılmış bir kart destesi şeklinde gösteriliyor.\n\nTüm sayfa akıcı kaydırma-açılım animasyonlarıyla inşa edilmiş, masaüstünden mobile tamamen duyarlı (responsive), erişilebilirlik standartlarını karşılıyor (renk kontrastı, klavye navigasyonu, azaltılmış hareket desteği) ve sosyal medya bağlantı önizlemeleri için eksiksiz meta etiketleriyle SEO'ya hazır.\n\nİçerik üreticileri, sunucular veya ziyaretçinin sayfaya ilk adım attığı andan itibaren kişisel markasının öne çıkmasını isteyen herkes için ideal."
+      },
+      "featureTags": {
+        "id": [
+          "TV retro interaktif",
+          "animasi microinteraction",
+          "carousel portofolio drag & auto-scroll",
+          "galeri hover disperse",
+          "desain responsif",
+          "siap SEO"
+        ],
+        "en": [
+          "Interactive retro TV",
+          "microinteraction animations",
+          "drag & auto-scroll portfolio carousel",
+          "disperse-on-hover gallery",
+          "responsive design",
+          "SEO-ready"
+        ],
+        "tr": [
+          "İnteraktif retro televizyon",
+          "mikro-etkileşim animasyonları",
+          "sürükle & otomatik kaydırmalı portfolyo carousel'i",
+          "üzerine gelince dağılan galeri",
+          "duyarlı tasarım",
+          "SEO'ya hazır"
+        ]
+      },
+      "thumbnail": "images/products/crt-creator-page.jpg",
+      "gallery": [
+        "images/products/crt-creator-page.jpg"
+      ],
+      "liveUrl": "https://sho462.github.io/portfolio-web/",
+      "whatsappMessage": {
+        "id": "Halo, saya mau pesan CRT Creator Page",
+        "en": "Hi, I'd like to order the CRT Creator Page.",
+        "tr": "Merhaba, CRT Creator Page'i sipariş etmek istiyorum"
+      },
+      "createdAt": "2026-08-03"
     }
   ],
   "categories": [
