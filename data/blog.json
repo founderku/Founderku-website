@@ -45,6 +45,29 @@
       "coverGradient": "coral",
       "date": "Jul 2026",
       "order": 2
+    },
+    {
+      "id": "kenalan-sama-founder-starterpack-katalog-produk-siap-pakai-dari-founderku",
+      "slug": "kenalan-sama-founder-starterpack-katalog-produk-siap-pakai-dari-founderku",
+      "title": {
+        "id": "Kenalan Sama Founder Starterpack, Katalog Produk Siap Pakai dari Founderku",
+        "en": "Meet Founder Starterpack, Ready-Made Product Catalog from Founderku",
+        "tr": "Founder Starterpack ile Tanışın, Founderku'dan Hazır Ürün Kataloğu"
+      },
+      "excerpt": {
+        "id": "Nggak perlu mulai dari nol. Lima produk ini udah lengkap, brand, tone warna, sampai cerita produknya, tinggal kamu jadiin milikmu.",
+        "en": "No need to start from scratch. These five products come complete, with branding, color tone, and product story included, you just need to make it yours.",
+        "tr": "Sıfırdan başlamaya gerek yok. Bu beş ürün tamamen hazır, marka, renk tonu ve ürün hikayesi dahil, sadece senin yapman gereken onu sahiplenmen."
+      },
+      "content": {
+        "id": "Salah satu pertanyaan yang paling sering kami dengar dari calon founder adalah, \"aku punya ide tapi nggak tau harus mulai dari mana\". Founder Starterpack jawabannya.\n\nIni bukan template kosong yang harus kamu isi sendiri dari nol. Tiap produk di katalog ini udah lengkap, ada brand, tone warna, sampai cerita produknya. Kamu tinggal pilih yang paling nyambung sama ide kamu, dan kami dampingi sampai bisnismu beneran online dan jalan.\n\nSekarang ada lima produk di katalog. TukarSkill, platform barter skill yang udah beneran dipakai user asli. Motifa, website generator motif Nusantara personal yang bisa dicetak on-demand. Kelasin, platform kelas mikro 15 menit dari siapa aja. Lahirku, kartu kelahiran digital berbasis tradisi weton Jawa. Dan NomadBuds, template web app buat cari teman traveling dan lokal.\n\nTiap produk punya harga dan kelengkapan yang beda, jadi kamu bisa pilih sesuai kebutuhan dan budget. Yang paling penting, kamu nggak sendirian ngerjain ini. Begitu kamu pilih, kami bantu proses adopsinya sampai produk itu beneran jadi milikmu dan online.\n\nLihat katalog lengkapnya di halaman Founder Starterpack.",
+        "en": "One of the most common questions we hear from prospective founders is, 'I have an idea but don't know where to start'. Founder Starterpack is the answer.\n\nThis isn't an empty template you have to fill in from zero. Every product in this catalog is complete, with branding, color tone, and product story already included. You just pick the one that resonates most with your idea, and we'll guide you until your business is actually online and running.\n\nRight now there are five products in the catalog. TukarSkill, a skill-bartering platform that's already being used by real users. Motifa, a personal Nusantara motif website generator that can be printed on-demand. Kelasin, a micro-class platform with 15-minute sessions from anyone. Lahirku, a digital birth certificate based on Javanese weton tradition. And NomadBuds, a web app template for finding traveling and local friends.\n\nEach product comes with different pricing and features, so you can choose based on your needs and budget. Most importantly, you're not doing this alone. Once you choose, we help you through the adoption process until that product truly becomes yours and goes online.\n\nCheck out the full catalog on the Founder Starterpack page.",
+        "tr": "Potansiyel kuruculardan en sık duyduğumuz sorulardan biri, 'fikirlerim var ama nereden başlayacağımı bilmiyorum' oluyor. Founder Starterpack bunun cevabı.\n\nBu, sıfırdan doldurman gereken boş bir şablon değil. Bu katalogdaki her ürün tamamlanmış, marka, renk tonu ve ürün hikayesi zaten dahil. Sadece fikrininle en çok resonans kuranı seç, sonrasında işletmen gerçekten online olup çalışmaya başlayana kadar seni rehber ederiz.\n\nŞu anda katalogda beş ürün var. TukarSkill, gerçek kullanıcılar tarafından zaten kullanılan beceri takas platformu. Motifa, talep üzerine basılabilen kişisel Nusantara motif web sitesi oluşturucu. Kelasin, herkesin verebildiği 15 dakikalık mini kurslar platformu. Lahirku, Jawa weton geleneğine dayanan dijital doğum sertifikası. Ve NomadBuds, seyahat eden ve yerel arkadaş bulmak için web uygulaması şablonu.\n\nHer ürünün farklı fiyatı ve özellikleri var, yani ihtiyaç ve bütçene göre seçebilirsin. En önemlisi, bunu yalnız başına yapmıyorsun. Seçim yaptığında, ürün gerçekten sening olana ve online olana kadar seni benimseme sürecinde destekleriz.\n\nFounder Starterpack sayfasında tam kataloğu görebilirsin."
+      },
+      "category": "product",
+      "coverGradient": "indigo",
+      "date": "Jun 2026",
+      "order": 3
     }
   ]
 }
