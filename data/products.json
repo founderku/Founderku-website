@@ -354,8 +354,10 @@
           "kodlama gerekmez"
         ]
       },
-      "thumbnail": "images/products/placeholder.png",
-      "gallery": [],
+      "thumbnail": "images/products/pajangin.jpg",
+      "gallery": [
+        "images/products/pajangin.jpg"
+      ],
       "liveUrl": "https://pajangin.founderku.com/beranda",
       "whatsappMessage": {
         "id": "Halo, saya tertarik dengan Pajangin",
