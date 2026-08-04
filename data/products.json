@@ -304,6 +304,65 @@
         "tr": "Merhaba, CRT Creator Page'i sipariş etmek istiyorum"
       },
       "createdAt": "2026-08-03"
+    },
+    {
+      "id": "pajangin",
+      "slug": "pajangin",
+      "name": {
+        "id": "Pajangin",
+        "en": "Pajangin",
+        "tr": "Pajangin"
+      },
+      "category": "platform-marketplace",
+      "categoryLabel": "platform & marketplace",
+      "price": 1300000,
+      "priceUSD": 728,
+      "priceTRY": 34372,
+      "priceLabel": "Rp 1.300.000",
+      "priceNote": "mulai dari",
+      "featured": false,
+      "shortDescription": {
+        "id": "Bikin halaman jualan digital dalam hitungan menit, langsung terhubung ke WhatsApp - tanpa perlu ngoding atau desain.",
+        "en": "Create a digital sales page in minutes, directly connected to WhatsApp, no coding or design skills needed.",
+        "tr": "Dakikalar içinde dijital satış sayfası oluşturun, doğrudan WhatsApp'a bağlı, kodlama veya tasarım becerisi gerekmez."
+      },
+      "fullDescription": {
+        "id": "Pajangin adalah platform yang bikin pedagang UMKM bisa punya halaman jualan digital sendiri, tanpa perlu bisa desain atau coding. Cukup isi nama produk, harga, dan foto, langsung dapat 1 link halaman jualan yang rapi buat dibagikan ke calon pembeli lewat WhatsApp. Tersedia 5 pilihan gaya visual, fitur Halaman Toko buat gabungin semua produk jadi 1 link, dan paket gratis buat 2 halaman pertama.",
+        "en": "Pajangin is a platform that lets UMKM merchants have their own digital sales page without needing design or coding skills. Just fill in product name, price, and photo, and instantly get 1 clean sales page link to share with potential buyers via WhatsApp. Choose from 5 visual styles, use the Store Page feature to combine all products into 1 link, and get a free package for your first 2 pages.",
+        "tr": "Pajangin, UMKM satıcılarının tasarım veya kodlama becerilerine ihtiyaç duymadan kendi dijital satış sayfasına sahip olmalarını sağlayan bir platformdur. Ürün adı, fiyat ve fotoğraf girmeniz yeterlidir, anında potansiyel alıcılarla WhatsApp üzerinden paylaşabileceğiniz temiz bir satış sayfası bağlantısı alırsınız. 5 görsel stilden seçim yapın, tüm ürünleri 1 bağlantıda birleştirmek için Mağaza Sayfası özelliğini kullanın ve ilk 2 sayfanız için ücretsiz paket alın."
+      },
+      "featureTags": {
+        "id": [
+          "halaman jualan digital",
+          "terhubung whatsapp",
+          "5 pilihan style",
+          "gratis 2 halaman",
+          "tanpa perlu coding"
+        ],
+        "en": [
+          "digital sales page",
+          "connected to whatsapp",
+          "5 style options",
+          "free 2 pages",
+          "no coding required"
+        ],
+        "tr": [
+          "dijital satış sayfası",
+          "whatsapp'a bağlı",
+          "5 stil seçeneği",
+          "ücretsiz 2 sayfa",
+          "kodlama gerekmez"
+        ]
+      },
+      "thumbnail": "images/products/placeholder.png",
+      "gallery": [],
+      "liveUrl": "https://pajangin.founderku.com/beranda",
+      "whatsappMessage": {
+        "id": "Halo, saya tertarik dengan Pajangin",
+        "en": "Hi, I want to order Pajangin",
+        "tr": "Merhaba, Pajangin sipariş etmek istiyorum"
+      },
+      "createdAt": "2026-08-04"
     }
   ],
   "categories": [
