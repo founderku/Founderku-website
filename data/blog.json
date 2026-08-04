@@ -68,6 +68,29 @@
       "coverGradient": "indigo",
       "date": "Jun 2026",
       "order": 3
+    },
+    {
+      "id": "dari-ngobrol-ide-ke-produk-jalan-gimana-founderku-kerjadari-ngobrol-ide-ke-produk-jalan-gimana-founderku-kerja",
+      "slug": "dari-ngobrol-ide-ke-produk-jalan-gimana-founderku-kerjadari-ngobrol-ide-ke-produk-jalan-gimana-founderku-kerja",
+      "title": {
+        "id": "Dari Ngobrol Ide ke Produk Jalan: Gimana Founderku KerjaDari Ngobrol Ide ke Produk Jalan: Gimana Founderku Kerja",
+        "en": "From Idea Chat to Working Product: How Founderku Works",
+        "tr": "Fikir Sohbetinden Çalışan Ürüne: Founderku Nasıl Çalışır"
+      },
+      "excerpt": {
+        "id": "Bukan mockup doang. Ini cerita gimana ide berubah jadi produk yang beneran dipakai, lewat proses tiga langkah.",
+        "en": "Not just mockups. This is the story of how ideas become real products that people actually use, through a three-step process.",
+        "tr": "Sadece mockup değil. Bu, fikirlerin üç adımlı bir süreçle insanların gerçekten kullandığı ürünlere nasıl dönüştüğünün hikayesidir."
+      },
+      "content": {
+        "id": "Banyak orang punya ide bagus tapi nggak pernah jalan, karena nggak tau harus mulai dari mana atau takut prosesnya ribet. Di Founderku, kami bikin prosesnya sesimpel mungkin, tiga langkah, biasanya 4-6 minggu dari awal sampai online.\n\nLangkah pertama, Ngobrol Ide. Cerita 30 menit, gratis, tanpa tekanan. Di sini kami bantu petakan arah paling masuk akal buat ide kamu, apa yang penting duluan, apa yang bisa nyusul belakangan.\n\nLangkah kedua, Desain dan Brand. Identitas visual dirancang biar kepercayaan orang datang di detik pertama mereka lihat produk kamu. Warna, logo, tone komunikasi, semua dipikirin biar konsisten dan keliatan niat.\n\nLangkah ketiga, Bangun Produk. Website atau aplikasi fungsional yang beneran bisa dicoba, bukan cuma wireframe atau mockup di atas kertas. Ini yang bikin proses kami beda, hasil akhirnya adalah produk yang jalan, bukan sekadar janji.\n\nProses ini udah kebukti lewat beberapa studi kasus nyata, dari TukarSkill yang sekarang punya user asli, sampai rebuild website lengkap buat klien seperti Say Cheese dan Nora Paslanmaz Çelik. Semua bisa kamu lihat detailnya di halaman studi kasus kami.",
+        "en": "Many people have great ideas but they never happen, because they don't know where to start or worry the process is too complicated. At Founderku, we make the process as simple as possible, three steps, usually 4-6 weeks from start to launch.\n\nStep one, Idea Chat. A 30-minute conversation, free, no pressure. Here we help map out the smartest direction for your idea, what matters first, what can come later.\n\nStep two, Design and Brand. Visual identity designed so trust comes at the first second people see your product. Colors, logo, communication tone, everything is thought through to look consistent and intentional.\n\nStep three, Build Product. A functional website or app you can actually try, not just wireframes or mockups on paper. This is what makes our process different, the end result is a working product, not just a promise.\n\nThis process has been proven through several real case studies, from TukarSkill which now has real users, to a complete website rebuild for clients like Say Cheese and Nora Paslanmaz Çelik. You can see all the details on our case studies page.",
+        "tr": "Birçok insan harika fikirler sahibi ama bu fikirler hiçbir zaman hayata geçmiyor, çünkü nereden başlayacaklarını bilmiyorlar ya da sürecin karmaşık olacağından korkuyorlar. Founderku'da, süreci olabildiğince basit hale getirdik, üç adım, genellikle başından sonuna kadar 4-6 hafta.\n\nBirinci adım, Fikir Sohbeti. 30 dakikalık bir konuşma, ücretsiz, baskı yok. Burada fikriniz için en mantıklı yönü haritalamanıza yardımcı oluruz, hangisi önce önemli, hangisi daha sonra gelebilir.\n\nİkinci adım, Tasarım ve Marka. Görsel kimlik, insanlar ürününüzü ilk kez gördüklerinin ilk saniyesinde güven gelsin diye tasarlanır. Renkler, logo, iletişim tonu, her şey tutarlı görünmesi ve niyeti hissettirilmesi için düşünülür.\n\nÜçüncü adım, Ürün İnşa Et. Gerçekten deneyebileceğiniz işlevsel bir web sitesi ya da uygulama, sadece kağıt üzerinde wireframe ya da mockup değil. Bu, sürecimizi farklı yapan şey, son sonuç bir çalışan ürün, sadece bir söz değil.\n\nBu süreç birkaç gerçek vaka çalışması ile kanıtlanmıştır, şu anda gerçek kullanıcıları olan TukarSkill'den, Say Cheese ve Nora Paslanmaz Çelik gibi müşteriler için yapılan tam web sitesi yeniden tasarımına kadar. Tüm detayları vaka çalışmaları sayfamızda görebilirsiniz."
+      },
+      "category": "case-study",
+      "coverGradient": "amber",
+      "date": "Mei 2026",
+      "order": 4
     }
   ]
 }
