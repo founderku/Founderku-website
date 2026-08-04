@@ -22,6 +22,29 @@
       "coverGradient": "amber",
       "date": "July 2026",
       "order": 1
+    },
+    {
+      "id": "kenalin-pajangin-produk-baru-kami-buat-yang-jualan-online",
+      "slug": "kenalin-pajangin-produk-baru-kami-buat-yang-jualan-online",
+      "title": {
+        "id": "Kenalin, Pajangin: Produk Baru Kami Buat yang Jualan Online",
+        "en": "Introducing Pajangin: Our New Product for Online Sellers",
+        "tr": "Pajangin'ı Tanıtıyoruz: Online Satıcılar İçin Yeni Ürünümüz"
+      },
+      "excerpt": {
+        "id": "Bikin halaman jualan yang langsung nyambung ke WhatsApp, nggak perlu ribet bikin toko online dari nol.",
+        "en": "Create a sales page that connects directly to WhatsApp, no need to hassle building an online store from scratch.",
+        "tr": "WhatsApp'a doğrudan bağlanan bir satış sayfası oluşturun, sıfırdan çevrimiçi mağaza oluşturmanın zahmetine gerek yok."
+      },
+      "content": {
+        "id": "Founderku sekarang bukan cuma soal katalog MVP. Kami baru ngeluarin produk baru namanya Pajangin, khusus buat kamu yang jualan online tapi belum punya \"wajah\" digital yang meyakinkan.\n\nBanyak penjual kecil di Indonesia jualan cuma modal story WhatsApp atau chat langsung. Itu jalan, tapi kadang kurang meyakinkan buat calon pembeli baru yang belum kenal. Bikin website sendiri kerasa ribet, perlu domain, hosting, desain, belum lagi belajar cara pakainya.\n\nPajangin bikin itu semua jadi simpel. Isi nama produk, harga, foto, sama nomor WhatsApp kamu, langsung jadi halaman jualan yang rapi dalam hitungan menit. Nggak ada keranjang belanja yang ribet, orang yang buka halamannya tinggal klik satu tombol dan langsung nyambung ke chat WhatsApp kamu buat pesan.\n\nCocok banget buat kamu yang jualan cireng, kue rumahan, jasa kecil-kecilan, atau apapun yang biasanya cuma dipromosiin lewat story doang. Sekarang ada halaman yang bisa kamu share ke mana-mana, keliatan lebih niat dan profesional.\n\nCoba langsung di pajangin.founderku.com/beranda.",
+        "en": "Founderku is no longer just about MVP catalogs. We just launched a new product called Pajangin, made specifically for you who sell online but don't have a convincing digital presence yet.\n\nMany small sellers in Indonesia sell using only WhatsApp stories or direct chats. It works, but sometimes it's not convincing enough for new potential buyers who don't know you yet. Building a website yourself feels complicated, you need a domain, hosting, design, plus you have to learn how to use it.\n\nPajangin makes all of that simple. Fill in your product name, price, photos, and your WhatsApp number, and you instantly get a neat sales page in minutes. No complicated shopping cart, people who visit your page just click one button and go straight to your WhatsApp chat to message you.\n\nPerfect for you who sell fried snacks, homemade cakes, small services, or anything you usually only promote through stories. Now you have a page you can share everywhere, looking more serious and professional.\n\nTry it directly at pajangin.founderku.com/beranda.",
+        "tr": "Founderku artık sadece MVP kataloğu hakkında değil. Az önce çevrimiçi satış yapan ama henüz ikna edici bir dijital varlığa sahip olmayan kişiler için Pajangin adlı yeni ürünümüzü başlattık.\n\nEndonezya'daki birçok küçük satıcı sadece WhatsApp hikayeleri veya doğrudan sohbetler kullanarak satış yapıyor. İşe yarıyor, ama bazen sizi henüz tanımayan yeni potansiyel alıcıları ikna etmek için yeterli olmuyor. Bir web sitesi kendiniz oluşturmak karmaşık görünüyor, alan adı, hosting, tasarım gerekiyor ve bunu nasıl kullanacağınızı öğrenmeniz de lazım.\n\nPajangin bütün bunları basitleştiriyor. Ürün adınızı, fiyatını, fotoğraflarınızı ve WhatsApp numaranızı doldurun, dakikalar içinde düzenli bir satış sayfanız hazır. Karmaşık alışveriş sepeti yok, sayfanızı ziyaret eden kişiler sadece bir düğmeye tıklıyor ve doğrudan sizinle iletişim kurmak için WhatsApp sohbetinize geçiyor.\n\nSizin gibi kızarmış atıştırmalık, ev yapımı pastane, küçük hizmetler veya genellikle sadece hikayelerde tanıtılan her şey satanlar için mükemmel. Şimdi her yere paylaşabileceğiniz, daha ciddi ve profesyonel görünen bir sayfanız var.\n\npajangin.founderku.com/beranda adresinden doğrudan deneyin."
+      },
+      "category": "product",
+      "coverGradient": "coral",
+      "date": "Jul 2026",
+      "order": 2
     }
   ]
 }
