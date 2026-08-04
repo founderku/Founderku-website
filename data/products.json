@@ -11,9 +11,11 @@
       "category": "platform-marketplace",
       "categoryLabel": "platform & marketplace",
       "price": 12000000,
+      "priceUSD": null,
+      "priceTRY": null,
       "priceLabel": "Rp 12.000.000",
       "priceNote": "mulai dari",
-      "featured": true,
+      "featured": false,
       "shortDescription": {
         "id": "platform barter skill yang sudah terbukti jalan dengan AI matching, gamifikasi, chat real-time, dan forum komunitas. tinggal rebrand, langsung pakai.",
         "en": "A proven skill-bartering platform with AI matching, gamification, real-time chat, and community forum. Just rebrand it and you're ready to go.",
