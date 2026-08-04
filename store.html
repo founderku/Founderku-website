@@ -211,7 +211,7 @@
   .fk-p-title { font-family:'Manrope',sans-serif; font-size:19px; font-weight:700; margin-top:8px; }
   .fk-p-desc { font-size:14px; line-height:1.6; color: var(--text-soft); margin-top:10px; }
   .fk-p-tags { display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
-  .fk-p-tags span { font-size:12px; font-weight:600; color: var(--text-faint); background: var(--bg-soft); border:1px solid var(--border); padding:5px 11px; border-radius:999px; white-space:nowrap; }
+  .fk-p-tags span { font-size:12px; font-weight:600; color: var(--text-faint); background: var(--bg-soft); border:1px solid var(--border); padding:5px 11px; border-radius:999px; }
   .fk-p-footer { display:flex; align-items:center; justify-content:space-between; margin-top:18px; padding-top:16px; border-top:1px dashed var(--border); }
   .fk-p-price { font-weight:800; font-size:17px; }
   .fk-p-price small { display:block; font-weight:600; font-size:11.5px; color: var(--text-faint); }
@@ -381,6 +381,8 @@ function applyStoreStaticI18n() {
   document.querySelectorAll('.fk-lang-btn').forEach(function (btn) {
     btn.classList.toggle('is-active', btn.getAttribute('data-lang') === fkCurrentLang);
   });
+  var currentLabel = document.getElementById('fkLangCurrentLabel');
+  if (currentLabel) currentLabel.textContent = fkCurrentLang.toUpperCase();
   document.documentElement.setAttribute('lang', fkCurrentLang);
 }
 
