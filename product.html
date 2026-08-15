@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
 <title>founderku</title>
+<meta name="description" content="Browse founderku's ready-to-launch startup products, branding, MVP, and websites built for first-time founders.">
+<link rel="canonical" href="https://founderku.com/store.html">
+<meta property="og:type" content="product">
+<meta property="og:title" content="founderku · founder starterpack">
+<meta property="og:description" content="Browse founderku's ready-to-launch startup products, branding, MVP, and websites built for first-time founders.">
+<meta property="og:image" content="https://founderku.com/images/favicon.svg">
+<meta property="og:url" content="https://founderku.com/product.html">
+<meta property="og:site_name" content="Founderku">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="founderku · founder starterpack">
+<meta name="twitter:description" content="Browse founderku's ready-to-launch startup products, branding, MVP, and websites built for first-time founders.">
+<meta name="twitter:image" content="https://founderku.com/images/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -489,6 +501,48 @@ function applyProductStaticI18n() {
     currentProduct = p;
 
     document.title = pickLangText(p.name) + ' · founderku';
+
+    (function updateMetaTags(){
+      var pageTitle = pickLangText(p.name) + ' · founderku';
+      var pageDesc = pickLangText(p.shortDescription) || pickLangText(p.fullDescription) || '';
+      var pageImg = (p.thumbnail && !p.thumbnail.includes('placeholder')) ? ('https://founderku.com/' + p.thumbnail) : 'https://founderku.com/images/favicon.svg';
+      var pageUrl = 'https://founderku.com/product.html?slug=' + encodeURIComponent(p.slug);
+      function setMeta(selector, value){
+        var el = document.querySelector(selector);
+        if (el && value) el.setAttribute('content', value);
+      }
+      setMeta('meta[name="description"]', pageDesc);
+      setMeta('meta[property="og:title"]', pageTitle);
+      setMeta('meta[property="og:description"]', pageDesc);
+      setMeta('meta[property="og:image"]', pageImg);
+      setMeta('meta[property="og:url"]', pageUrl);
+      setMeta('meta[name="twitter:title"]', pageTitle);
+      setMeta('meta[name="twitter:description"]', pageDesc);
+      setMeta('meta[name="twitter:image"]', pageImg);
+      var canon = document.querySelector('link[rel="canonical"]');
+      if (canon) canon.setAttribute('href', pageUrl);
+
+      var ld = {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": pageTitle.replace(' · founderku', ''),
+        "description": pageDesc,
+        "image": pageImg,
+        "url": pageUrl,
+        "brand": { "@type": "Brand", "name": "Founderku" },
+        "offers": {
+          "@type": "Offer",
+          "url": pageUrl,
+          "priceCurrency": "IDR",
+          "price": p.price || undefined,
+          "availability": "https://schema.org/InStock"
+        }
+      };
+      var ldScript = document.createElement('script');
+      ldScript.type = 'application/ld+json';
+      ldScript.textContent = JSON.stringify(ld);
+      document.head.appendChild(ldScript);
+    })();
 
     var catLabel = p.categoryLabel || p.category;
     renderProductText();
