@@ -5,18 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
 <title>Blog · Founderku</title>
-<meta name="description" content="Product progress, case studies, and things we're currently working on, from Founderku, an Indonesian startup studio.">
-<link rel="canonical" href="https://founderku.com/blog.html">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Blog · Founderku">
-<meta property="og:description" content="Product progress, case studies, and things we're currently working on.">
-<meta property="og:image" content="https://founderku.com/images/favicon.svg">
-<meta property="og:url" content="https://founderku.com/blog-post.html">
-<meta property="og:site_name" content="Founderku">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Blog · Founderku">
-<meta name="twitter:description" content="Product progress, case studies, and things we're currently working on.">
-<meta name="twitter:image" content="https://founderku.com/images/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -40,9 +28,9 @@
     --logo-opacity: 0.45;
   }
   html[data-theme="dark"] {
-    --bg: #1C1B33;
-    --bg-soft: #24223F;
-    --bg-dark-block: #100F1E;
+    --bg: #000000;
+    --bg-soft: #0D0D0F;
+    --bg-dark-block: #000000;
     --text: #FBF6EE;
     --text-soft: rgba(251,246,238,0.7);
     --text-faint: rgba(251,246,238,0.5);
@@ -314,40 +302,6 @@ function applyPostStaticI18n() {
     var dict = fkPostDict();
     var p = currentPost;
     document.title = pickLangText(p.title) + ' · founderku';
-
-    (function updateMetaTags(){
-      var pageTitle = pickLangText(p.title) + ' · founderku';
-      var pageDesc = pickLangText(p.excerpt) || '';
-      var pageUrl = 'https://founderku.com/blog-post.html?slug=' + encodeURIComponent(p.slug);
-      function setMeta(selector, value){
-        var el = document.querySelector(selector);
-        if (el && value) el.setAttribute('content', value);
-      }
-      setMeta('meta[name="description"]', pageDesc);
-      setMeta('meta[property="og:title"]', pageTitle);
-      setMeta('meta[property="og:description"]', pageDesc);
-      setMeta('meta[property="og:url"]', pageUrl);
-      setMeta('meta[name="twitter:title"]', pageTitle);
-      setMeta('meta[name="twitter:description"]', pageDesc);
-      var canon = document.querySelector('link[rel="canonical"]');
-      if (canon) canon.setAttribute('href', pageUrl);
-
-      var ld = {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "headline": pageTitle.replace(' · founderku', ''),
-        "description": pageDesc,
-        "url": pageUrl,
-        "datePublished": p.date || undefined,
-        "author": { "@type": "Organization", "name": "Founderku" },
-        "publisher": { "@type": "Organization", "name": "Founderku", "logo": { "@type": "ImageObject", "url": "https://founderku.com/images/favicon.svg" } }
-      };
-      var ldScript = document.createElement('script');
-      ldScript.type = 'application/ld+json';
-      ldScript.textContent = JSON.stringify(ld);
-      document.head.appendChild(ldScript);
-    })();
-
     var gradClass = GRADIENTS[p.coverGradient] || 'fk-orb-amber';
     var cover = document.getElementById('postCover');
     cover.className = 'fk-post-cover ' + gradClass;
