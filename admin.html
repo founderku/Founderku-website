@@ -186,6 +186,7 @@
       <div class="tab-btn lowercase" id="tabBtnCaseStudies" onclick="switchTab('caseStudies')">studi kasus</div>
       <div class="tab-btn lowercase" id="tabBtnBlog" onclick="switchTab('blog')">blog</div>
       <div class="tab-btn lowercase" id="tabBtnTestimoni" onclick="switchTab('testimoni')">testimoni</div>
+      <div class="tab-btn lowercase" id="tabBtnPartners" onclick="switchTab('partners')">partner</div>
     </div>
 
     <div id="panelProducts">
@@ -221,6 +222,14 @@
       </div>
       <div id="testimoniStatusBanner" class="status-msg"></div>
       <div id="testimoniList"></div>
+    </div>
+    <div id="panelPartners" style="display:none;">
+      <div class="dash-header">
+        <h1 class="lowercase">our partners</h1>
+        <button class="btn btn-primary lowercase" onclick="openPartnerForm()">+ tambah partner</button>
+      </div>
+      <div id="partnerStatusBanner" class="status-msg"></div>
+      <div id="partnerList"></div>
     </div>
   </div>
 </div>
@@ -639,6 +648,41 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="partnerFormModal">
+  <div class="modal">
+    <span class="modal-close" onclick="closePartnerForm()">&times;</span>
+    <h2 class="lowercase" id="partnerFormTitle">tambah partner</h2>
+
+    <div class="form-row">
+      <div class="field">
+        <label class="lowercase">nama partner</label>
+        <input type="text" id="partnerName">
+      </div>
+      <div class="field">
+        <label class="lowercase">urutan tampil (angka, kecil = duluan)</label>
+        <input type="number" id="partnerOrder" value="1">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="lowercase">path logo (misal: images/partners/nama-logo.png)</label>
+      <input type="text" id="partnerLogo" placeholder="images/partners/nama-logo.png">
+    </div>
+
+    <div class="field">
+      <label class="lowercase">link website partner (opsional)</label>
+      <input type="text" id="partnerUrl" placeholder="https://...">
+    </div>
+
+    <div id="partnerFormStatus" class="status-msg"></div>
+
+    <div class="modal-actions">
+      <button class="btn btn-ghost lowercase" onclick="closePartnerForm()">batal</button>
+      <button class="btn btn-primary lowercase" id="partnerSaveBtn" onclick="savePartner()">simpan partner</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const LS_KEY = 'fk_admin_config';
 let config = null;
@@ -662,6 +706,11 @@ let testimoniData = { testimonials: [] };
 let testimoniSha = null;
 let testimoniEditingId = null;
 let testimoniLoaded = false;
+
+let partnerData = { partners: [] };
+let partnerSha = null;
+let partnerEditingId = null;
+let partnerLoaded = false;
 
 function loadConfig(){
   try {
@@ -749,10 +798,12 @@ function switchTab(tab){
   document.getElementById('tabBtnCaseStudies').classList.toggle('active', tab === 'caseStudies');
   document.getElementById('tabBtnBlog').classList.toggle('active', tab === 'blog');
   document.getElementById('tabBtnTestimoni').classList.toggle('active', tab === 'testimoni');
+  document.getElementById('tabBtnPartners').classList.toggle('active', tab === 'partners');
   document.getElementById('panelProducts').style.display = tab === 'products' ? 'block' : 'none';
   document.getElementById('panelCaseStudies').style.display = tab === 'caseStudies' ? 'block' : 'none';
   document.getElementById('panelBlog').style.display = tab === 'blog' ? 'block' : 'none';
   document.getElementById('panelTestimoni').style.display = tab === 'testimoni' ? 'block' : 'none';
+  document.getElementById('panelPartners').style.display = tab === 'partners' ? 'block' : 'none';
   if (tab === 'caseStudies' && !csLoaded){
     csLoaded = true;
     loadCaseStudies();
@@ -764,6 +815,10 @@ function switchTab(tab){
   if (tab === 'testimoni' && !testimoniLoaded){
     testimoniLoaded = true;
     loadTestimoni();
+  }
+  if (tab === 'partners' && !partnerLoaded){
+    partnerLoaded = true;
+    loadPartners();
   }
 }
 
@@ -1706,6 +1761,149 @@ async function deleteTestimoni(id){
     banner.className = 'status-msg success';
     banner.textContent = 'testimoni dihapus.';
     renderTestimoniList();
+    setTimeout(() => { banner.style.display = 'none'; }, 2000);
+  } catch(err){
+    banner.className = 'status-msg error';
+    banner.textContent = 'gagal hapus: ' + err.message;
+  }
+}
+
+async function loadPartners(){
+  const banner = document.getElementById('partnerStatusBanner');
+  banner.className = 'status-msg info';
+  banner.textContent = 'memuat partner...';
+  try {
+    const res = await ghGetFile('data/partners.json');
+    if (!res){
+      partnerData = { partners: [] };
+      partnerSha = null;
+    } else {
+      partnerSha = res.sha;
+      const decoded = decodeURIComponent(escape(atob(res.content.replace(/\n/g, ''))));
+      partnerData = JSON.parse(decoded);
+      if (!partnerData.partners) partnerData.partners = [];
+    }
+    banner.style.display = 'none';
+    renderPartnerList();
+  } catch(err){
+    banner.className = 'status-msg error';
+    banner.textContent = 'error: ' + err.message;
+  }
+}
+
+function renderPartnerList(){
+  const list = document.getElementById('partnerList');
+  const items = (partnerData.partners || []).slice().sort((a, b) => (a.order || 0) - (b.order || 0));
+  if (!items.length){
+    list.innerHTML = `<div class="empty-state lowercase">belum ada partner. klik "tambah partner" buat mulai.</div>`;
+    return;
+  }
+  list.innerHTML = items.map(p => `
+    <div class="product-row">
+      <div class="no-img lowercase">${(p.name || '-').slice(0,2)}</div>
+      <div class="info">
+        <div class="name">${p.name || '-'}</div>
+        <div class="meta lowercase">urutan ${p.order || 0}${p.url ? ' &middot; ada link' : ''}</div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-ghost btn-sm lowercase" onclick="editPartner('${p.id}')">edit</button>
+        <button class="btn btn-danger btn-sm lowercase" onclick="deletePartner('${p.id}')">hapus</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openPartnerForm(p){
+  partnerEditingId = p ? p.id : null;
+  document.getElementById('partnerFormTitle').textContent = p ? 'edit partner' : 'tambah partner';
+  document.getElementById('partnerName').value = p ? (p.name || '') : '';
+  document.getElementById('partnerOrder').value = p ? (p.order || 1) : (partnerData.partners.length + 1);
+  document.getElementById('partnerLogo').value = p ? (p.logo || '') : '';
+  document.getElementById('partnerUrl').value = p ? (p.url || '') : '';
+  document.getElementById('partnerFormStatus').style.display = 'none';
+  document.getElementById('partnerFormModal').classList.add('open');
+}
+function closePartnerForm(){
+  document.getElementById('partnerFormModal').classList.remove('open');
+}
+function editPartner(id){
+  const p = partnerData.partners.find(x => x.id === id);
+  if (p) openPartnerForm(p);
+}
+
+function setPartnerFormStatus(type, msg){
+  const el = document.getElementById('partnerFormStatus');
+  el.className = 'status-msg ' + type;
+  el.textContent = msg;
+}
+
+async function savePartner(){
+  const name = document.getElementById('partnerName').value.trim();
+  const logo = document.getElementById('partnerLogo').value.trim();
+  const url = document.getElementById('partnerUrl').value.trim();
+  const order = parseInt(document.getElementById('partnerOrder').value || '0', 10);
+
+  if (!name){
+    setPartnerFormStatus('error', 'nama partner wajib diisi.');
+    return;
+  }
+  if (!logo){
+    setPartnerFormStatus('error', 'path logo wajib diisi.');
+    return;
+  }
+
+  const slug = name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const id = partnerEditingId || slug;
+
+  const saveBtn = document.getElementById('partnerSaveBtn');
+  saveBtn.disabled = true;
+  saveBtn.innerHTML = '<span class="spinner"></span> menyimpan...';
+  setPartnerFormStatus('info', 'menyimpan partner...');
+
+  try {
+    const partnerObj = { id, name, logo, url, order };
+
+    if (partnerEditingId){
+      const idx = partnerData.partners.findIndex(x => x.id === partnerEditingId);
+      partnerData.partners[idx] = partnerObj;
+    } else {
+      partnerData.partners.push(partnerObj);
+    }
+
+    const jsonStr = JSON.stringify(partnerData, null, 2);
+    const base64Content = btoa(unescape(encodeURIComponent(jsonStr)));
+    const result = await ghPutFile('data/partners.json', base64Content, `${partnerEditingId ? 'Update' : 'Add'} partner: ${name}`, partnerSha);
+    partnerSha = result.content.sha;
+
+    setPartnerFormStatus('success', 'partner berhasil disimpan.');
+    renderPartnerList();
+    setTimeout(() => { closePartnerForm(); }, 700);
+  } catch(err){
+    setPartnerFormStatus('error', 'gagal: ' + err.message);
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.innerHTML = 'simpan partner';
+  }
+}
+
+async function deletePartner(id){
+  const p = partnerData.partners.find(x => x.id === id);
+  if (!p) return;
+  if (!confirm(`Yakin mau hapus partner "${p.name}"? Tindakan ini tidak bisa dibatalkan.`)) return;
+
+  const banner = document.getElementById('partnerStatusBanner');
+  banner.className = 'status-msg info';
+  banner.textContent = 'menghapus partner...';
+
+  try {
+    partnerData.partners = partnerData.partners.filter(x => x.id !== id);
+    const jsonStr = JSON.stringify(partnerData, null, 2);
+    const base64Content = btoa(unescape(encodeURIComponent(jsonStr)));
+    const result = await ghPutFile('data/partners.json', base64Content, `Delete partner: ${p.name}`, partnerSha);
+    partnerSha = result.content.sha;
+    banner.className = 'status-msg success';
+    banner.textContent = 'partner dihapus.';
+    renderPartnerList();
     setTimeout(() => { banner.style.display = 'none'; }, 2000);
   } catch(err){
     banner.className = 'status-msg error';

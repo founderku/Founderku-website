@@ -413,6 +413,18 @@
   </div>
 </div>
 
+<div id="partner" class="fk-section fk-reveal">
+  <div class="fk-wrap">
+    <div style="max-width:600px; margin:0 auto 36px; text-align:center;">
+      <div class="fk-eyebrow" data-i18n="partner.eyebrow">Our Partners</div>
+      <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,34px); margin-top:14px;" data-i18n="partner.h2">Studio dan brand yang udah percaya kerja bareng kami.</h2>
+    </div>
+    <div id="fkPartnerGrid" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:36px 48px;">
+      <div style="padding:20px; color:var(--text-faint);">...</div>
+    </div>
+  </div>
+</div>
+
 <div id="proyek" class="fk-section fk-reveal">
   <div class="fk-wrap">
     <div style="max-width:600px; margin:0 auto 36px; text-align:center;">
@@ -578,6 +590,7 @@
       "proses.step4.week": "Minggu 5-6", "proses.step4.title": "Luncurkan", "proses.step4.desc": "Produkmu jalan. Kamu resmi jadi founder.",
       "proyek.eyebrow": "Studi Kasus", "proyek.h2": "Project yang udah kelar dan beneran jalan.",
       "testimoni.eyebrow": "Testimoni", "testimoni.h2": "Kata mereka yang udah pernah kerja bareng kami.",
+      "partner.eyebrow": "Our Partners", "partner.h2": "Studio dan brand yang udah percaya kerja bareng kami.",
       "proyek.sub": "Bukan mockup doang, bukan janji di atas kertas. Ini bukti kalau prosesnya beneran menghasilkan produk yang jalan.",
       "proyek.link": "Lihat semua studi kasus →",
       "proyek.loading": "Memuat studi kasus...",
@@ -663,6 +676,7 @@
       "proses.step4.week": "Week 5-6", "proses.step4.title": "Launch", "proses.step4.desc": "Your product is live. You're officially a founder.",
       "proyek.eyebrow": "Case Studies", "proyek.h2": "Projects that are done and actually running.",
       "testimoni.eyebrow": "Testimonials", "testimoni.h2": "What people who've worked with us have to say.",
+      "partner.eyebrow": "Our Partners", "partner.h2": "Studios and brands that trust us to work together.",
       "proyek.sub": "Not just mockups, not just promises on paper. This is proof the process actually produces working products.",
       "proyek.link": "See all case studies →",
       "proyek.loading": "Loading case studies...",
@@ -748,6 +762,7 @@
       "proses.step4.week": "5-6. Hafta", "proses.step4.title": "Yayına al", "proses.step4.desc": "Ürünün çalışıyor. Resmen bir founder oldun.",
       "proyek.eyebrow": "Vaka Analizleri", "proyek.h2": "Tamamlanmış ve gerçekten çalışan projeler.",
       "testimoni.eyebrow": "Referanslar", "testimoni.h2": "Bizimle çalışanların söyledikleri.",
+      "partner.eyebrow": "Our Partners", "partner.h2": "Bizimle çalışmaya güvenen stüdyolar ve markalar.",
       "proyek.sub": "Sadece maket değil, kağıt üzerinde söz de değil. Sürecin gerçekten çalışan ürünler ürettiğinin kanıtı.",
       "proyek.link": "Tüm vaka analizlerini gör →",
       "proyek.loading": "Vaka analizleri yükleniyor...",
@@ -1088,6 +1103,27 @@ applyLanguage(savedLang, true);
       });
     };
   } catch (e) { console.error('testimonials fetch error', e); grid.closest('.fk-section').style.display = 'none'; }
+})();
+
+(async function () {
+  var grid = document.getElementById('fkPartnerGrid');
+  if (!grid) return;
+  function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function logoHTML(item) {
+    var img = '<img src="' + escapeHtml(item.logo) + '" alt="' + escapeHtml(item.name) + '" style="height:32px; max-width:140px; object-fit:contain; filter:grayscale(100%); opacity:0.55; transition:filter 0.2s ease, opacity 0.2s ease;" onmouseover="this.style.filter=\'none\';this.style.opacity=\'1\';" onmouseout="this.style.filter=\'grayscale(100%)\';this.style.opacity=\'0.55\';">';
+    if (item.url) {
+      return '<a href="' + escapeHtml(item.url) + '" target="_blank" rel="noopener" title="' + escapeHtml(item.name) + '">' + img + '</a>';
+    }
+    return '<span title="' + escapeHtml(item.name) + '">' + img + '</span>';
+  }
+  try {
+    var res = await fetch('data/partners.json', { cache: 'no-store' });
+    var data = await res.json();
+    var items = data.partners || [];
+    if (!items.length) { grid.closest('.fk-section').style.display = 'none'; return; }
+    items.sort(function (a, b) { return (a.order || 0) - (b.order || 0); });
+    grid.innerHTML = items.map(logoHTML).join('');
+  } catch (e) { console.error('partners fetch error', e); grid.closest('.fk-section').style.display = 'none'; }
 })();
 
 (function () {
