@@ -1110,7 +1110,7 @@ applyLanguage(savedLang, true);
   if (!grid) return;
   function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
   function logoHTML(item) {
-    var img = '<img src="' + escapeHtml(item.logo) + '" alt="' + escapeHtml(item.name) + '" style="height:32px; max-width:140px; object-fit:contain; filter:grayscale(100%); opacity:0.55; transition:filter 0.2s ease, opacity 0.2s ease;" onmouseover="this.style.filter=\'none\';this.style.opacity=\'1\';" onmouseout="this.style.filter=\'grayscale(100%)\';this.style.opacity=\'0.55\';">';
+    var img = '<img src="' + escapeHtml(item.logo) + '" alt="' + escapeHtml(item.name) + '" style="height:52px; max-width:180px; object-fit:contain; filter:grayscale(100%); opacity:0.55; transition:filter 0.2s ease, opacity 0.2s ease;" onmouseover="this.style.filter=\'none\';this.style.opacity=\'1\';" onmouseout="this.style.filter=\'grayscale(100%)\';this.style.opacity=\'0.55\';">';
     if (item.url) {
       return '<a href="' + escapeHtml(item.url) + '" target="_blank" rel="noopener" title="' + escapeHtml(item.name) + '">' + img + '</a>';
     }
