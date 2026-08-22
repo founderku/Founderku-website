@@ -664,9 +664,11 @@
       </div>
     </div>
 
+    <div class="thumb-preview" id="partnerLogoPreview" style="height:90px;">belum ada logo</div>
     <div class="field">
-      <label class="lowercase">path logo (misal: images/partners/nama-logo.png)</label>
-      <input type="text" id="partnerLogo" placeholder="images/partners/nama-logo.png">
+      <label class="lowercase">logo</label>
+      <input type="file" id="partnerLogoFile" accept="image/*" onchange="onPartnerLogoChange(event)">
+      <small class="lowercase">logo otomatis dikompres sebelum diupload.</small>
     </div>
 
     <div class="field">
@@ -711,6 +713,8 @@ let partnerData = { partners: [] };
 let partnerSha = null;
 let partnerEditingId = null;
 let partnerLoaded = false;
+let partnerPendingLogoBase64 = null;
+let partnerPendingLogoExt = null;
 
 function loadConfig(){
   try {
@@ -1221,6 +1225,30 @@ function onCsLogoChange(e){
       csPendingLogoBase64 = dataUrl.split(',')[1];
       csPendingLogoExt = 'png';
       document.getElementById('csLogoPreview').innerHTML = `<img src="${dataUrl}">`;
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function onPartnerLogoChange(e){
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    const img = new Image();
+    img.onload = function(){
+      const maxW = 500;
+      const scale = Math.min(1, maxW / img.width);
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width * scale;
+      canvas.height = img.height * scale;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const dataUrl = canvas.toDataURL('image/png');
+      partnerPendingLogoBase64 = dataUrl.split(',')[1];
+      partnerPendingLogoExt = 'png';
+      document.getElementById('partnerLogoPreview').innerHTML = `<img src="${dataUrl}">`;
     };
     img.src = ev.target.result;
   };
@@ -1815,11 +1843,14 @@ function renderPartnerList(){
 
 function openPartnerForm(p){
   partnerEditingId = p ? p.id : null;
+  partnerPendingLogoBase64 = null;
+  partnerPendingLogoExt = null;
   document.getElementById('partnerFormTitle').textContent = p ? 'edit partner' : 'tambah partner';
   document.getElementById('partnerName').value = p ? (p.name || '') : '';
   document.getElementById('partnerOrder').value = p ? (p.order || 1) : (partnerData.partners.length + 1);
-  document.getElementById('partnerLogo').value = p ? (p.logo || '') : '';
   document.getElementById('partnerUrl').value = p ? (p.url || '') : '';
+  document.getElementById('partnerLogoPreview').innerHTML = (p && p.logo) ? `<img src="${p.logo}">` : 'belum ada logo';
+  document.getElementById('partnerLogoFile').value = '';
   document.getElementById('partnerFormStatus').style.display = 'none';
   document.getElementById('partnerFormModal').classList.add('open');
 }
@@ -1839,7 +1870,6 @@ function setPartnerFormStatus(type, msg){
 
 async function savePartner(){
   const name = document.getElementById('partnerName').value.trim();
-  const logo = document.getElementById('partnerLogo').value.trim();
   const url = document.getElementById('partnerUrl').value.trim();
   const order = parseInt(document.getElementById('partnerOrder').value || '0', 10);
 
@@ -1847,13 +1877,19 @@ async function savePartner(){
     setPartnerFormStatus('error', 'nama partner wajib diisi.');
     return;
   }
-  if (!logo){
-    setPartnerFormStatus('error', 'path logo wajib diisi.');
-    return;
-  }
 
   const slug = name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
   const id = partnerEditingId || slug;
+
+  let logoPath = null;
+  if (partnerEditingId){
+    const existing = partnerData.partners.find(x => x.id === partnerEditingId);
+    logoPath = existing ? existing.logo : null;
+  }
+  if (!logoPath && !partnerPendingLogoBase64){
+    setPartnerFormStatus('error', 'logo wajib diupload.');
+    return;
+  }
 
   const saveBtn = document.getElementById('partnerSaveBtn');
   saveBtn.disabled = true;
@@ -1861,7 +1897,15 @@ async function savePartner(){
   setPartnerFormStatus('info', 'menyimpan partner...');
 
   try {
-    const partnerObj = { id, name, logo, url, order };
+    if (partnerPendingLogoBase64){
+      setPartnerFormStatus('info', 'mengupload logo...');
+      const imgPath = `images/partners/${slug}-logo.${partnerPendingLogoExt}`;
+      const existingImg = await ghGetFile(imgPath);
+      await ghPutFile(imgPath, partnerPendingLogoBase64, `Update logo for ${name}`, existingImg ? existingImg.sha : null);
+      logoPath = imgPath;
+    }
+
+    const partnerObj = { id, name, logo: logoPath, url, order };
 
     if (partnerEditingId){
       const idx = partnerData.partners.findIndex(x => x.id === partnerEditingId);
@@ -1870,6 +1914,7 @@ async function savePartner(){
       partnerData.partners.push(partnerObj);
     }
 
+    setPartnerFormStatus('info', 'menyimpan data partner...');
     const jsonStr = JSON.stringify(partnerData, null, 2);
     const base64Content = btoa(unescape(encodeURIComponent(jsonStr)));
     const result = await ghPutFile('data/partners.json', base64Content, `${partnerEditingId ? 'Update' : 'Add'} partner: ${name}`, partnerSha);
