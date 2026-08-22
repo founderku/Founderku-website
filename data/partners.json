@@ -20,6 +20,13 @@
       "logo": "images/partners/pt-surya-jaya-angseri-logo.png",
       "url": "",
       "order": 3
+    },
+    {
+      "id": "tukarskill",
+      "name": "TukarSkill",
+      "logo": "images/partners/tukarskill-logo.png",
+      "url": "",
+      "order": 4
     }
   ]
 }
