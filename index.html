@@ -208,6 +208,18 @@
   .fk-update-thumb { height:210px; position:relative; }
   .fk-update-card:hover .fk-update-thumb { transform: scale(1.015); }
   .fk-update-thumb { transition: transform .3s ease; }
+
+  /* our partners */
+  .fk-partner-item { display:flex; flex-direction:column; align-items:center; gap:6px; cursor:pointer; outline:none; padding:6px; border-radius:12px; }
+  .fk-partner-item:focus-visible { outline:2px solid var(--brand-indigo); outline-offset:2px; }
+  .fk-partner-label { max-height:0; overflow:hidden; opacity:0; transition:max-height 0.25s ease, opacity 0.2s ease; text-align:center; }
+  .fk-partner-item.is-open .fk-partner-label { max-height:60px; opacity:1; margin-top:2px; }
+  .fk-partner-name { font-weight:700; font-size:13px; white-space:nowrap; }
+  .fk-partner-visit { font-size:12px; color:var(--brand-coral); text-decoration:none; }
+  @media (max-width:640px) {
+    #fkPartnerGrid { gap:22px 26px !important; }
+    .fk-partner-item img { height:42px !important; max-width:130px !important; }
+  }
 </style>
 </head>
 <body>
@@ -419,7 +431,7 @@
       <div class="fk-eyebrow" data-i18n="partner.eyebrow">Our Partners</div>
       <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,34px); margin-top:14px;" data-i18n="partner.h2">Studio dan brand yang udah percaya kerja bareng kami.</h2>
     </div>
-    <div id="fkPartnerGrid" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:36px 48px;">
+    <div id="fkPartnerGrid" style="display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:center; gap:36px 48px;">
       <div style="padding:20px; color:var(--text-faint);">...</div>
     </div>
   </div>
@@ -1111,11 +1123,19 @@ applyLanguage(savedLang, true);
   function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
   function logoHTML(item) {
     var img = '<img src="' + escapeHtml(item.logo) + '" alt="' + escapeHtml(item.name) + '" style="height:52px; max-width:180px; object-fit:contain; filter:grayscale(100%); opacity:0.55; transition:filter 0.2s ease, opacity 0.2s ease;" onmouseover="this.style.filter=\'none\';this.style.opacity=\'1\';" onmouseout="this.style.filter=\'grayscale(100%)\';this.style.opacity=\'0.55\';">';
-    if (item.url) {
-      return '<a href="' + escapeHtml(item.url) + '" target="_blank" rel="noopener" title="' + escapeHtml(item.name) + '">' + img + '</a>';
-    }
-    return '<span title="' + escapeHtml(item.name) + '">' + img + '</span>';
+    var visitLink = item.url ? '<a class="fk-partner-visit" href="' + escapeHtml(item.url) + '" target="_blank" rel="noopener" onclick="event.stopPropagation();">visit site &rarr;</a>' : '';
+    return '<div class="fk-partner-item" tabindex="0" role="button" aria-label="' + escapeHtml(item.name) + '" ' +
+      'onclick="fkTogglePartner(this)" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();fkTogglePartner(this);}">' +
+      img +
+      '<div class="fk-partner-label"><div class="fk-partner-name">' + escapeHtml(item.name) + '</div>' + visitLink + '</div>' +
+    '</div>';
   }
+  window.fkTogglePartner = function (el) {
+    var wasOpen = el.classList.contains('is-open');
+    var openItems = grid.querySelectorAll('.fk-partner-item.is-open');
+    for (var i = 0; i < openItems.length; i++) { openItems[i].classList.remove('is-open'); }
+    if (!wasOpen) el.classList.add('is-open');
+  };
   try {
     var res = await fetch('data/partners.json', { cache: 'no-store' });
     var data = await res.json();
