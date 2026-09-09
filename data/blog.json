@@ -91,6 +91,29 @@
       "coverGradient": "amber",
       "date": "Mei 2026",
       "order": 4
+    },
+    {
+      "id": "founderku-bulan-ini-dari-training-baru-sampai-series-konten-segar",
+      "slug": "founderku-bulan-ini-dari-training-baru-sampai-series-konten-segar",
+      "title": {
+        "id": "Founderku Bulan Ini: Dari Training Baru sampai Series Konten Segar",
+        "en": "Founderku This Month: From New Training to Fresh Content Series",
+        "tr": "Founderku Bu Ay: Yeni Eğitimden Taze İçerik Serisine"
+      },
+      "excerpt": {
+        "id": "Beberapa hal yang lagi kami kerjain bulan ini - dari training internal, gaya visual baru, sampai series konten yang ngangkat cerita founder beneran.",
+        "en": "Some of the things we're working on this month, from internal training, a new visual style, to a content series that tells real founder stories.",
+        "tr": "Bu ay üzerinde çalıştığımız bazı şeyler, dahili eğitimden yeni bir görsel tarzdan, gerçek kurucu öykülerini anlatmak için bir içerik serisine kadar."
+      },
+      "content": {
+        "id": "Nggak berasa udah beberapa minggu berjalan, dan banyak hal baru yang lagi kami bangun di Founderku. Ini sedikit cerita soal apa aja yang lagi kami kerjain belakangan ini.\n\nKami baru aja ngerapiin ulang cara kerja tim internal, mulai dari training lengkap buat tim desain sampai sistem quality control yang lebih terstruktur. Tujuannya simpel, biar semua yang kami hasilkan tetap konsisten dan berkualitas, dari branding sampai produk yang kami kerjain buat klien.\n\nDi sisi konten, kami juga lagi eksplor gaya visual baru buat Instagram, lebih segar dan modern dari sebelumnya. Ada dua series yang lagi jalan, \"Istilah\" yang bahas konsep-konsep startup dan AI dengan cara yang gampang dicerna, dan \"Bedah Founder\" yang ngangkat cerita nyata di balik perjalanan founder-founder yang udah lebih dulu jalan.\n\nTim penulis konten kami juga sekarang fokus lebih dalam ke LinkedIn, berbagi insight seputar dunia startup, AI, dan pengalaman kerja nyata yang mereka sendiri jalanin di Founderku.\n\nSemua ini bagian dari misi yang sama, bantu lebih banyak anak muda paham gimana rasanya beneran bangun sesuatu, bukan cuma belajar teori. Ikutin terus perjalanan kami di sini dan di Instagram @founderku.",
+        "en": "It feels like it's only been a few weeks, but we're already building a lot of new things at Founderku. Here's a little story about what we've been working on lately.\n\nWe just revamped how our internal team works, starting with comprehensive training for our design team and a more structured quality control system. The goal is simple: to make sure everything we produce stays consistent and high quality, from branding to the products we work on for clients.\n\nOn the content side, we're also exploring a new visual style for Instagram, fresher and more modern than before. There are two series running, \"Istilah\" which breaks down startup and AI concepts in an easy-to-digest way, and \"Bedah Founder\" which tells real stories behind the journeys of founders who've already been on the path.\n\nOur content writing team is also now focusing deeper on LinkedIn, sharing insights about the startup world, AI, and real work experiences that they themselves are running at Founderku.\n\nAll of this is part of the same mission, to help more young people understand what it really feels like to build something, not just learn theory. Keep following our journey here and on Instagram at @founderku.",
+        "tr": "Birkaç hafta geçti gibi gelmiyor, ama Founderku'da zaten birçok yeni şey inşa ediyoruz. İşte son zamanlarda üzerinde çalıştığımız şeylerin küçük bir hikayesi.\n\nAz önce dahili ekibimizin çalışma şeklini yeniden yapılandırdık. Tasarım ekibimiz için kapsamlı eğitim ve daha yapılandırılmış bir kalite kontrol sisteminden başlayarak. Hedef basit, ürettiğimiz her şeyin tutarlı ve yüksek kalitede kalmasını sağlamak, markalaşmadan kliyenler için çalıştığımız ürünlere kadar.\n\nİçerik tarafında, Instagram için yeni bir görsel tarz keşfediyoruz, öncekinden daha taze ve modern. İki seri çalışıyor, \"Istilah\" başlangıç ve yapay zeka kavramlarını kolay anlaşılır bir şekilde açıklayan, ve \"Bedah Founder\" yol almış kurucuların gerçek hikayelerini anlatıyor.\n\nİçerik yazarlık ekibimiz şimdi LinkedIn'e daha derinlemesine odaklanıyor, başlangıç dünyası, yapay zeka ve Founderku'da kendileri yürüttükleri gerçek çalışma deneyimleri hakkında içgörü paylaşıyor.\n\nBütün bunlar aynı misyonun bir parçası, daha fazla genç insanın bir şey inşa etmenin gerçek hissinin ne olduğunu anlamalarına yardımcı olmak, sadece teori öğrenmek değil. Yolculuğumuzun peşinden buradan ve Instagram @founderku'da takip etmeye devam edin."
+      },
+      "category": "update",
+      "coverGradient": "amber",
+      "date": "Sept 206",
+      "order": 5
     }
   ]
 }
