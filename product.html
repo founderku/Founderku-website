@@ -340,8 +340,8 @@ var PRODUCT_I18N = {
   }
 };
 
-var fkCurrentLang = 'en';
-try { fkCurrentLang = localStorage.getItem('fk-lang') || 'en'; } catch (e) {}
+var fkCurrentLang = 'id';
+try { fkCurrentLang = localStorage.getItem('fk-lang') || 'id'; } catch (e) {}
 
 function fkProductDict() { return PRODUCT_I18N[fkCurrentLang] || PRODUCT_I18N.id; }
 

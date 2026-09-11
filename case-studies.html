@@ -284,8 +284,8 @@ var CS_I18N = {
   }
 };
 
-var fkCurrentLang = 'en';
-try { fkCurrentLang = localStorage.getItem('fk-lang') || 'en'; } catch (e) {}
+var fkCurrentLang = 'id';
+try { fkCurrentLang = localStorage.getItem('fk-lang') || 'id'; } catch (e) {}
 
 function fkCsDict() { return CS_I18N[fkCurrentLang] || CS_I18N.id; }
 

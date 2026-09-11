@@ -325,8 +325,8 @@ var STORE_I18N = {
   }
 };
 
-var fkCurrentLang = 'en';
-try { fkCurrentLang = localStorage.getItem('fk-lang') || 'en'; } catch (e) {}
+var fkCurrentLang = 'id';
+try { fkCurrentLang = localStorage.getItem('fk-lang') || 'id'; } catch (e) {}
 
 function fkStoreDict() { return STORE_I18N[fkCurrentLang] || STORE_I18N.id; }
 function fkCatLabel(catId, fallbackLabel) { var dict = fkStoreDict(); return dict['cat.' + catId] || fallbackLabel; }

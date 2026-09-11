@@ -268,8 +268,8 @@ var BLOG_I18N = {
   }
 };
 
-var fkCurrentLang = 'en';
-try { fkCurrentLang = localStorage.getItem('fk-lang') || 'en'; } catch (e) {}
+var fkCurrentLang = 'id';
+try { fkCurrentLang = localStorage.getItem('fk-lang') || 'id'; } catch (e) {}
 function fkBlogDict() { return BLOG_I18N[fkCurrentLang] || BLOG_I18N.id; }
 function pickLangText(field){
   if (field == null) return '';

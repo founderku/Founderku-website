@@ -316,21 +316,6 @@
   </div>
 </div>
 
-<div id="produkPreviewSection" class="fk-section fk-reveal" style="padding-top:0;">
-  <div class="fk-wrap">
-    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom:28px; flex-wrap:wrap;">
-      <div style="max-width:520px;">
-        <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,34px);" data-i18n="produk.h2">beberapa website yang tinggal kamu pakai buat jadi founder.</h2>
-        <p style="color:var(--text-soft); margin-top:10px; font-size:15px;" data-i18n="produk.sub">bukan mockup. ini produk siap pakai yang sudah kami rancang lengkap, dari desain sampai brand-nya.</p>
-      </div>
-      <a href="store.html" style="text-decoration:none; font-weight:700; color:var(--brand-coral); font-size:14px; white-space:nowrap;" data-i18n="produk.link">lihat semua produk →</a>
-    </div>
-    <div class="fk-slider" id="produkPreviewGrid">
-      <div style="padding:20px; color:var(--text-faint);" data-i18n="produk.loading">memuat produk...</div>
-    </div>
-  </div>
-</div>
-
 <div id="toolsPreviewSection" class="fk-section fk-reveal" style="padding-top:0;">
   <div class="fk-wrap">
     <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom:28px; flex-wrap:wrap;">
@@ -343,6 +328,21 @@
     </div>
     <div class="fk-slider" id="fkToolsPreviewGrid">
       <div style="padding:20px; color:var(--text-faint);" data-i18n="toolsPreview.loading">memuat tools...</div>
+    </div>
+  </div>
+</div>
+
+<div id="produkPreviewSection" class="fk-section fk-reveal" style="padding-top:0;">
+  <div class="fk-wrap">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom:28px; flex-wrap:wrap;">
+      <div style="max-width:520px;">
+        <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,34px);" data-i18n="produk.h2">beberapa website yang tinggal kamu pakai buat jadi founder.</h2>
+        <p style="color:var(--text-soft); margin-top:10px; font-size:15px;" data-i18n="produk.sub">bukan mockup. ini produk siap pakai yang sudah kami rancang lengkap, dari desain sampai brand-nya.</p>
+      </div>
+      <a href="store.html" style="text-decoration:none; font-weight:700; color:var(--brand-coral); font-size:14px; white-space:nowrap;" data-i18n="produk.link">lihat semua produk →</a>
+    </div>
+    <div class="fk-slider" id="produkPreviewGrid">
+      <div style="padding:20px; color:var(--text-faint);" data-i18n="produk.loading">memuat produk...</div>
     </div>
   </div>
 </div>
@@ -814,8 +814,8 @@
     }
   };
 
-var fkCurrentLang = 'en';
-try { fkCurrentLang = localStorage.getItem('fk-lang') || 'en'; } catch (e) {}
+var fkCurrentLang = 'id';
+try { fkCurrentLang = localStorage.getItem('fk-lang') || 'id'; } catch (e) {}
 
 function pickLangText(field){
   if (field == null) return '';
@@ -898,8 +898,8 @@ if (fkLangToggle && fkLangMenu) {
   });
 }
 
-var savedLang = 'en';
-try { savedLang = localStorage.getItem('fk-lang') || 'en'; } catch (e) {}
+var savedLang = 'id';
+try { savedLang = localStorage.getItem('fk-lang') || 'id'; } catch (e) {}
 applyLanguage(savedLang, true);
 
 (function () {

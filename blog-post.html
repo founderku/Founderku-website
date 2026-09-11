@@ -240,8 +240,8 @@ var BLOGPOST_I18N = {
   tr: { "nav.back": "← tüm yazılar", "notFound.text": "Bu yazı eksik görünüyor ya da taşınmış olabilir.", "notFound.link": "Bloga dön →", "footer.text": "© 2026 Founderku.", "cat.update": "Güncelleme", "cat.product": "Ürün", "cat.case-study": "Vaka Analizi" }
 };
 
-var fkCurrentLang = 'en';
-try { fkCurrentLang = localStorage.getItem('fk-lang') || 'en'; } catch (e) {}
+var fkCurrentLang = 'id';
+try { fkCurrentLang = localStorage.getItem('fk-lang') || 'id'; } catch (e) {}
 function fkPostDict() { return BLOGPOST_I18N[fkCurrentLang] || BLOGPOST_I18N.id; }
 function pickLangText(field){
   if (field == null) return '';
