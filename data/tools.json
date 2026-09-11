@@ -1,0 +1,33 @@
+{
+  "tools": [
+    {
+      "id": "pajangin",
+      "name": "Pajangin",
+      "logo": "images/tools/pajangin-logo.png",
+      "roundLogo": false,
+      "description": {
+        "id": "Bikin halaman jualan buat UMKM cuma dalam beberapa menit, transaksinya langsung lewat WhatsApp. Nggak perlu ngoprek website atau ngerti coding.",
+        "en": "Build a sales page for your small business in minutes, transactions handled straight through WhatsApp. No coding or website setup needed.",
+        "tr": "Küçük işletmen için dakikalar içinde bir satış sayfası oluştur, işlemler doğrudan WhatsApp üzerinden yürür. Kodlama ya da website kurmaya gerek yok."
+      },
+      "tags": {
+        "id": ["Landing Page", "UMKM", "WhatsApp"],
+        "en": ["Landing Page", "Small Business", "WhatsApp"],
+        "tr": ["Açılış Sayfası", "KOBİ", "WhatsApp"]
+      },
+      "note": {
+        "id": "Gratis untuk mulai, upgrade kapan aja kalau butuh lebih.",
+        "en": "Free to start, upgrade anytime you need more.",
+        "tr": "Ücretsiz başla, ihtiyaç oldukça yükselt."
+      },
+      "linkUrl": "https://pajangin.founderku.com",
+      "linkLabel": {
+        "id": "Coba Pajangin",
+        "en": "Try Pajangin",
+        "tr": "Pajangin'i Dene"
+      },
+      "external": true,
+      "order": 1
+    }
+  ]
+}

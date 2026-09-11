@@ -1,32 +1,3 @@
 {
-  "partners": [
-    {
-      "id": "youth-growth-ventures",
-      "name": "Youth Growth Ventures",
-      "logo": "images/partners/youth-growth-ventures-logo.png",
-      "url": "",
-      "order": 1
-    },
-    {
-      "id": "pt-talenthra-karya-nusantara",
-      "name": "PT Talenthra Karya Nusantara",
-      "logo": "images/partners/pt-talenthra-karya-nusantara-logo.png",
-      "url": "",
-      "order": 2
-    },
-    {
-      "id": "pt-surya-jaya-angseri",
-      "name": "PT Surya Jaya Angseri",
-      "logo": "images/partners/pt-surya-jaya-angseri-logo.png",
-      "url": "",
-      "order": 3
-    },
-    {
-      "id": "tukarskill",
-      "name": "TukarSkill",
-      "logo": "images/partners/tukarskill-logo.png",
-      "url": "",
-      "order": 4
-    }
-  ]
+  "partners": []
 }
