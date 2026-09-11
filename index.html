@@ -224,21 +224,6 @@
 </head>
 <body>
 
-<div id="fkFloatContact" style="position:fixed; left:16px; bottom:24px; z-index:60; display:flex; flex-direction:column; gap:10px;">
-  <a href="https://wa.me/6285710477257" target="_blank" rel="noopener" aria-label="Chat WhatsApp Founderku" style="width:46px; height:46px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 14px rgba(20,19,31,0.22); transition:transform 0.15s ease;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4C7.6 4 4 7.6 4 12.05c0 1.42.37 2.8 1.08 4.02L4 20l4.05-1.06a8.03 8.03 0 0 0 4 1.02h.01c4.45 0 8.05-3.6 8.05-8.05a8 8 0 0 0-2.51-5.59Zm-5.55 12.4h-.01a6.7 6.7 0 0 1-3.4-.93l-.24-.14-2.4.63.64-2.34-.16-.24a6.7 6.7 0 0 1-1.02-3.55c0-3.7 3.01-6.72 6.72-6.72 1.8 0 3.48.7 4.75 1.97a6.67 6.67 0 0 1 1.97 4.75c0 3.7-3.02 6.72-6.72 6.72Zm3.68-5.03c-.2-.1-1.19-.59-1.37-.65-.18-.07-.32-.1-.45.1-.14.2-.51.65-.63.78-.11.14-.23.15-.43.05-.2-.1-.85-.31-1.61-1a6.02 6.02 0 0 1-1.12-1.38c-.11-.2-.01-.3.09-.4.09-.1.2-.24.3-.36.1-.12.13-.2.2-.34.07-.14.03-.26-.02-.36-.05-.1-.45-1.08-.61-1.48-.16-.39-.33-.33-.45-.34-.11-.01-.25-.01-.38-.01-.13 0-.35.05-.53.25-.18.2-.7.68-.7 1.66 0 .98.72 1.92.82 2.06.1.14 1.4 2.14 3.4 3 .47.2.85.33 1.14.42.48.15.91.13 1.26.08.38-.06 1.19-.49 1.36-.96.17-.47.17-.87.12-.96-.05-.09-.18-.14-.38-.24Z" fill="#fff"/></svg>
-  </a>
-  <a href="https://instagram.com/founderku" target="_blank" rel="noopener" aria-label="Instagram Founderku" style="width:46px; height:46px; border-radius:50%; background:linear-gradient(45deg,#f9ce34,#ee2a7b,#6228d7); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 14px rgba(20,19,31,0.22); transition:transform 0.15s ease;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="#fff" stroke-width="1.8"/><circle cx="12" cy="12" r="4" stroke="#fff" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.1" fill="#fff"/></svg>
-  </a>
-</div>
-<style>
-  @media (max-width:640px) {
-    #fkFloatContact { left:10px; bottom:16px; gap:8px; }
-    #fkFloatContact a { width:40px !important; height:40px !important; }
-  }
-</style>
-
 <nav>
   <div class="fk-nav-inner">
     <a href="/" class="fk-logo">
@@ -250,6 +235,7 @@
       <a href="#layanan" data-i18n="nav.layanan">Layanan</a>
       <a href="#proses" data-i18n="nav.proses">Proses</a>
       <a href="#proyek" data-i18n="nav.proyek">Project</a>
+      <a href="tools.html" data-i18n="nav.tools">Tools</a>
       <a href="blog.html" data-i18n="nav.blog">Blog</a>
       <a href="#faq" data-i18n="nav.faq">FAQ</a>
       <a href="store.html" style="color:var(--brand-coral); font-weight:700;" data-i18n="nav.instantFounder">Founder Starterpack</a>
@@ -281,12 +267,8 @@
   <p class="fk-sub" data-i18n="hero.sub">Ide kamu, kami ubah jadi branding, website, dan produk yang beneran bisa dipakai, bukan sekadar wacana atau mockup doang.</p>
   <div class="fk-hero-ctas">
     <a href="#cta" class="fk-pill fk-pill-solid" data-i18n="hero.ctaMain">Ceritain Ide Kamu</a>
-    <a href="#layanan" class="fk-pill fk-pill-outline" data-i18n="hero.ctaSecondary">Lihat layanan →</a>
+    <a href="tools.html" class="fk-pill fk-pill-outline" data-i18n="hero.ctaSecondary">Upgrade Bisnismu ke Digital →</a>
   </div>
-  <p id="fkPajanginCta" style="margin-top:18px; font-size:14px; color:var(--text-faint);">
-    <span data-i18n="hero.pajanginLead">Butuh halaman jualan online cepat?</span>
-    <a href="https://pajangin.founderku.com/beranda" target="_blank" rel="noopener" style="color:var(--brand-coral); font-weight:700; text-decoration:none;" data-i18n="hero.pajanginCta">Coba Pajangin, produk baru kami →</a>
-  </p>
 </div>
 
 <div class="fk-trust">
@@ -345,6 +327,22 @@
     </div>
     <div class="fk-slider" id="produkPreviewGrid">
       <div style="padding:20px; color:var(--text-faint);" data-i18n="produk.loading">memuat produk...</div>
+    </div>
+  </div>
+</div>
+
+<div id="toolsPreviewSection" class="fk-section fk-reveal" style="padding-top:0;">
+  <div class="fk-wrap">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom:28px; flex-wrap:wrap;">
+      <div style="max-width:520px;">
+        <div class="fk-eyebrow" data-i18n="toolsPreview.eyebrow">Tools Kami</div>
+        <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,34px); margin-top:10px;" data-i18n="toolsPreview.h2">produk yang kami bangun dan pakai sendiri.</h2>
+        <p style="color:var(--text-soft); margin-top:10px; font-size:15px;" data-i18n="toolsPreview.sub">bukan cuma jasa. ini tools yang beneran jalan dan bisa langsung kamu coba sekarang.</p>
+      </div>
+      <a href="tools.html" style="text-decoration:none; font-weight:700; color:var(--brand-coral); font-size:14px; white-space:nowrap;" data-i18n="toolsPreview.link">lihat semua tools →</a>
+    </div>
+    <div class="fk-slider" id="fkToolsPreviewGrid">
+      <div style="padding:20px; color:var(--text-faint);" data-i18n="toolsPreview.loading">memuat tools...</div>
     </div>
   </div>
 </div>
@@ -554,11 +552,6 @@
 </div>
 
 <footer>
-  <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:18px; margin-bottom:14px; font-size:13px;">
-    <a href="mailto:founderku@gmail.com" style="color:inherit; text-decoration:none;">founderku@gmail.com</a>
-    <a href="https://wa.me/6285710477257" target="_blank" rel="noopener" style="color:inherit; text-decoration:none;">+62 857-1047-7257</a>
-    <a href="https://instagram.com/founderku" target="_blank" rel="noopener" style="color:inherit; text-decoration:none;">@founderku</a>
-  </div>
   <div data-i18n="footer.copy">© 2026 PT Talenthra Karya Nusantara. NIB 0909250086011. Hak cipta dilindungi undang-undang.</div>
 </footer>
 
@@ -566,14 +559,12 @@
   var I18N = {
     id: {
       "pageTitle": "Founderku · Startup Studio, Bantu Kamu Jadi Founder",
-      "nav.kenapa": "Kenapa", "nav.layanan": "Layanan", "nav.proses": "Proses", "nav.proyek": "Project",
+      "nav.kenapa": "Kenapa", "nav.layanan": "Layanan", "nav.proses": "Proses", "nav.proyek": "Project", "nav.tools": "Tools",
       "nav.blog": "Blog", "nav.faq": "FAQ", "nav.generator": "Generator", "nav.instantFounder": "Founder Starterpack", "nav.ngobrol": "Ngobrol",
       "hero.h1": "Semua bisa jadi founder.",
       "hero.sub": "Ide kamu, kami ubah jadi branding, website, dan produk yang beneran bisa dipakai, bukan sekadar wacana atau mockup doang.",
-      "hero.ctaMain": "Ceritain Ide Kamu", "hero.ctaSecondary": "Lihat layanan →",
+      "hero.ctaMain": "Ceritain Ide Kamu", "hero.ctaSecondary": "Upgrade Bisnismu ke Digital →",
       "hero.trust": "Dibangun satu orang, satu keyakinan, ide kamu layak jadi kenyataan",
-      "hero.pajanginLead": "Butuh halaman jualan online cepat?",
-      "hero.pajanginCta": "Coba Pajangin, produk baru kami →",
       "kenapa.eyebrow": "Kenapa Founderku",
       "kenapa.text": "Ide bagus jarang mati karena kurang niat. Yang bikin berhenti itu bagian yang paling sering dilewatin: eksekusi. Founderku ada buat nutup celah itu.",
       "timeline.h2": "Beberapa hal soal jadi founder yang jarang diomongin.",
@@ -599,6 +590,7 @@
       "produk.h2": "Beberapa website yang tinggal kamu pakai buat jadi founder.",
       "produk.sub": "Bukan mockup. Ini produk siap pakai yang sudah kami rancang lengkap, dari desain sampai brand-nya.",
       "produk.link": "Lihat semua produk →",
+      "toolsPreview.eyebrow": "Tools Kami", "toolsPreview.h2": "produk yang kami bangun dan pakai sendiri.", "toolsPreview.sub": "bukan cuma jasa. ini tools yang beneran jalan dan bisa langsung kamu coba sekarang.", "toolsPreview.link": "Lihat semua tools →", "toolsPreview.loading": "Memuat tools...",
       "produk.loading": "Memuat produk...",
       "layanan.h2": "Tiga langkah, satu tujuan.",
       "layanan.sub": "Identitas yang bikin orang percaya di detik pertama. Produk atau website yang bisa langsung dicoba orang beneran, bukan cuma dipresentasikan.",
@@ -652,14 +644,12 @@
     },
     en: {
       "pageTitle": "Founderku · Startup Studio That Helps You Become a Founder",
-      "nav.kenapa": "Why", "nav.layanan": "Services", "nav.proses": "Process", "nav.proyek": "Projects",
+      "nav.kenapa": "Why", "nav.layanan": "Services", "nav.proses": "Process", "nav.proyek": "Projects", "nav.tools": "Tools",
       "nav.blog": "Blog", "nav.faq": "FAQ", "nav.generator": "Generator", "nav.instantFounder": "Founder Starterpack", "nav.ngobrol": "Chat",
       "hero.h1": "Anyone can become a founder.",
       "hero.sub": "Your idea, turned into branding, a website, and a product people can actually use, not just talk or a mockup.",
-      "hero.ctaMain": "Tell Us Your Idea", "hero.ctaSecondary": "See services →",
+      "hero.ctaMain": "Tell Us Your Idea", "hero.ctaSecondary": "Upgrade Your Business to Digital →",
       "hero.trust": "Built by one person, one belief: your idea deserves to become real",
-      "hero.pajanginLead": "Need a fast online sales page?",
-      "hero.pajanginCta": "Try Pajangin, our new product →",
       "kenapa.eyebrow": "Why Founderku",
       "kenapa.text": "Good ideas rarely die from lack of will. What stops them is the part most people skip: execution. Founderku exists to close that gap.",
       "timeline.h2": "A few things about being a founder that rarely get talked about.",
@@ -685,6 +675,7 @@
       "produk.h2": "A few websites you can start using to become a founder.",
       "produk.sub": "Not a mockup. These are ready-to-use products we've fully designed, from the look to the brand.",
       "produk.link": "See all products →",
+      "toolsPreview.eyebrow": "Our Tools", "toolsPreview.h2": "products we build and use ourselves.", "toolsPreview.sub": "not just services. these are tools that actually run and you can try right now.", "toolsPreview.link": "See all tools →", "toolsPreview.loading": "Loading tools...",
       "produk.loading": "Loading products...",
       "layanan.h2": "Three steps, one goal.",
       "layanan.sub": "An identity that earns trust in the first second. A product or website real people can actually try, not just watch in a slide deck.",
@@ -738,14 +729,12 @@
     },
     tr: {
       "pageTitle": "Founderku · Founder Olmana Yardımcı Startup Stüdyosu",
-      "nav.kenapa": "Neden", "nav.layanan": "Hizmetler", "nav.proses": "Süreç", "nav.proyek": "Projeler",
+      "nav.kenapa": "Neden", "nav.layanan": "Hizmetler", "nav.proses": "Süreç", "nav.proyek": "Projeler", "nav.tools": "Araçlar",
       "nav.blog": "Blog", "nav.faq": "SSS", "nav.generator": "Üretici", "nav.instantFounder": "Founder Starterpack", "nav.ngobrol": "Sohbet",
       "hero.h1": "Herkes founder olabilir.",
       "hero.sub": "Fikrini, markaya, web sitesine ve gerçekten kullanılabilir bir ürüne dönüştürüyoruz, sadece laf ya da maket değil.",
-      "hero.ctaMain": "Fikrini Anlat", "hero.ctaSecondary": "Hizmetlere bak →",
+      "hero.ctaMain": "Fikrini Anlat", "hero.ctaSecondary": "İşini Dijitale Taşı →",
       "hero.trust": "Tek kişi, tek inançla kuruldu: fikrin gerçek olmayı hak ediyor",
-      "hero.pajanginLead": "Hızlı bir online satış sayfasına mı ihtiyacın var?",
-      "hero.pajanginCta": "Yeni ürünümüz Pajangin'i dene →",
       "kenapa.eyebrow": "Neden Founderku",
       "kenapa.text": "İyi fikirler nadiren isteksizlikten ölür. Onları durduran şey genelde atlanan kısım: uygulama. Founderku, o boşluğu kapatmak için var.",
       "timeline.h2": "Founder olmakla ilgili nadiren konuşulan birkaç şey.",
@@ -771,6 +760,7 @@
       "produk.h2": "Founder olmak için hemen kullanabileceğin birkaç web sitesi.",
       "produk.sub": "Maket değil. Bunlar tasarımdan markaya kadar eksiksiz hazırladığımız, kullanıma hazır ürünler.",
       "produk.link": "Tüm ürünleri gör →",
+      "toolsPreview.eyebrow": "Araçlarımız", "toolsPreview.h2": "kendimizin de kullandığı ürünler.", "toolsPreview.sub": "sadece hizmet değil. bunlar gerçekten çalışan araçlar, hemen deneyebilirsin.", "toolsPreview.link": "Tüm araçları gör →", "toolsPreview.loading": "Araçlar yükleniyor...",
       "produk.loading": "Ürünler yükleniyor...",
       "layanan.h2": "Üç adım, tek hedef.",
       "layanan.sub": "İlk saniyede güven veren bir kimlik. Sadece sunumda değil, gerçek insanların hemen deneyebileceği bir ürün ya da web sitesi.",
@@ -885,6 +875,7 @@ function applyLanguage(lang, isInitial) {
   if (window.fkRerenderTestimoni) window.fkRerenderTestimoni(lang);
   if (window.fkRerenderCaseStudies) window.fkRerenderCaseStudies(lang);
   if (window.fkRerenderBlogPreview) window.fkRerenderBlogPreview(lang);
+  if (window.fkRerenderToolsPreview) window.fkRerenderToolsPreview(lang);
 }
 
 document.querySelectorAll('.fk-lang-btn').forEach(function (btn) {
@@ -1098,6 +1089,51 @@ applyLanguage(savedLang, true);
       });
     };
   } catch (e) { console.error('case studies fetch error', e); }
+})();
+
+(async function () {
+  var grid = document.getElementById('fkToolsPreviewGrid');
+  if (!grid) return;
+  function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function pickLangArray(field) {
+    if (!field) return [];
+    if (Array.isArray(field)) return field;
+    return field[fkCurrentLang] || field.id || field.en || [];
+  }
+  function cardHTML(item) {
+    var tagsHtml = pickLangArray(item.tags).map(function (t) { return '<span style="background:var(--bg-soft); border:1px solid var(--border); padding:6px 12px; border-radius:999px; font-size:12px; font-weight:700; white-space:nowrap;">' + escapeHtml(t) + '</span>'; }).join('');
+    var logoInner = item.logo ? '<img src="' + escapeHtml(item.logo) + '" alt="' + escapeHtml(item.name) + '" style="height:28px;">' : '<strong>' + escapeHtml(item.name) + '</strong>';
+    var linkAttrs = item.external ? 'target="_blank" rel="noopener"' : '';
+    return '<div class="fk-slide" style="width:320px;">' +
+      '<div class="fk-card" style="height:100%;">' +
+        '<div style="margin-bottom:18px;">' + logoInner + '</div>' +
+        '<p class="fk-tool-prev-desc" style="font-size:14px;">' + escapeHtml(pickLangText(item.description)) + '</p>' +
+        '<div class="fk-tool-prev-tags" style="margin-bottom:16px;">' + tagsHtml + '</div>' +
+        '<div class="fk-tool-prev-note" style="font-size:13px; color:var(--text-faint); margin-bottom:16px;">' + escapeHtml(pickLangText(item.note)) + '</div>' +
+        '<a href="' + escapeHtml(item.linkUrl) + '" ' + linkAttrs + ' style="text-decoration:none; font-weight:700; color:var(--brand-coral); font-size:14px;" class="fk-tool-prev-linklabel">' + (escapeHtml(pickLangText(item.linkLabel)) || 'Coba sekarang') + ' \u2192</a>' +
+      '</div></div>';
+  }
+  try {
+    var res = await fetch('data/tools.json', { cache: 'no-store' });
+    var data = await res.json();
+    var items = data.tools || [];
+    if (!items.length) { grid.closest('.fk-section').style.display = 'none'; return; }
+    items.sort(function (a, b) { return (a.order || 0) - (b.order || 0); });
+    grid.innerHTML = items.map(cardHTML).join('');
+    window.fkRerenderToolsPreview = function (lang) {
+      if (lang) fkCurrentLang = lang;
+      var nodes = Array.prototype.slice.call(grid.querySelectorAll('.fk-slide'));
+      nodes.forEach(function (node, i) {
+        var item = items[i]; if (!item) return;
+        var descEl = node.querySelector('.fk-tool-prev-desc');
+        var noteEl = node.querySelector('.fk-tool-prev-note');
+        var linkEl = node.querySelector('.fk-tool-prev-linklabel');
+        if (descEl) descEl.textContent = pickLangText(item.description);
+        if (noteEl) noteEl.textContent = pickLangText(item.note);
+        if (linkEl) linkEl.textContent = (pickLangText(item.linkLabel) || 'Coba sekarang') + ' \u2192';
+      });
+    };
+  } catch (e) { console.error('tools fetch error', e); grid.closest('.fk-section').style.display = 'none'; }
 })();
 
 (async function () {

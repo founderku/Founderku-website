@@ -187,6 +187,7 @@
       <div class="tab-btn lowercase" id="tabBtnBlog" onclick="switchTab('blog')">blog</div>
       <div class="tab-btn lowercase" id="tabBtnTestimoni" onclick="switchTab('testimoni')">testimoni</div>
       <div class="tab-btn lowercase" id="tabBtnPartners" onclick="switchTab('partners')">partner</div>
+      <div class="tab-btn lowercase" id="tabBtnTools" onclick="switchTab('tools')">tools</div>
     </div>
 
     <div id="panelProducts">
@@ -230,6 +231,14 @@
       </div>
       <div id="partnerStatusBanner" class="status-msg"></div>
       <div id="partnerList"></div>
+    </div>
+    <div id="panelTools" style="display:none;">
+      <div class="dash-header">
+        <h1 class="lowercase">tools</h1>
+        <button class="btn btn-primary lowercase" onclick="openToolForm()">+ tambah tool</button>
+      </div>
+      <div id="toolStatusBanner" class="status-msg"></div>
+      <div id="toolList"></div>
     </div>
   </div>
 </div>
@@ -685,6 +694,116 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="toolFormModal">
+  <div class="modal">
+    <span class="modal-close" onclick="closeToolForm()">&times;</span>
+    <h2 class="lowercase" id="toolFormTitle">tambah tool</h2>
+
+    <div class="thumb-preview" id="toolLogoPreview" style="height:90px;">belum ada logo</div>
+    <div class="field">
+      <label class="lowercase">logo</label>
+      <input type="file" id="toolLogo" accept="image/*" onchange="onToolLogoChange(event)">
+      <small class="lowercase">logo otomatis dikompres sebelum diupload.</small>
+    </div>
+    <div class="checkbox-row">
+      <input type="checkbox" id="toolRoundLogo">
+      <label for="toolRoundLogo" class="lowercase">tampilkan logo bulat (buat logo icon/foto)</label>
+    </div>
+
+    <div class="form-row">
+      <div class="field">
+        <label class="lowercase">nama tool</label>
+        <input type="text" id="toolName">
+      </div>
+      <div class="field">
+        <label class="lowercase">urutan tampil (angka, kecil = duluan)</label>
+        <input type="number" id="toolOrder" value="1">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="lowercase">deskripsi · bahasa indonesia</label>
+      <textarea id="toolDescription"></textarea>
+    </div>
+    <div class="field">
+      <label class="lowercase">tags (pisahin pakai koma) · bahasa indonesia</label>
+      <input type="text" id="toolTags" placeholder="Landing Page, UMKM, WhatsApp">
+    </div>
+    <div class="field">
+      <label class="lowercase">catatan kecil (di bawah tags) · bahasa indonesia</label>
+      <input type="text" id="toolNote" placeholder="Gratis untuk mulai, upgrade kapan aja.">
+    </div>
+    <div class="field">
+      <label class="lowercase">label tombol · bahasa indonesia</label>
+      <input type="text" id="toolLinkLabel" placeholder="Coba sekarang">
+    </div>
+
+    <div style="margin:18px 0 22px; padding:16px; border:1px dashed rgba(28,27,51,0.25); border-radius:12px;">
+      <button type="button" class="btn btn-ghost lowercase" id="toolTranslateBtn" onclick="translateToolFields()" style="width:100%;">translate otomatis (en + tr)</button>
+      <div id="toolTranslateStatus" class="status-msg" style="margin-top:10px;"></div>
+    </div>
+
+    <details style="margin-bottom:22px;">
+      <summary class="lowercase" style="cursor:pointer; font-weight:700; font-size:13px; color:var(--ink-soft, #6b6880); margin-bottom:12px;">lihat / edit versi english</summary>
+      <div class="field">
+        <label class="lowercase">deskripsi · english</label>
+        <textarea id="toolDescriptionEn"></textarea>
+      </div>
+      <div class="field">
+        <label class="lowercase">tags (pisahin pakai koma) · english</label>
+        <input type="text" id="toolTagsEn">
+      </div>
+      <div class="field">
+        <label class="lowercase">catatan kecil · english</label>
+        <input type="text" id="toolNoteEn">
+      </div>
+      <div class="field">
+        <label class="lowercase">label tombol · english</label>
+        <input type="text" id="toolLinkLabelEn">
+      </div>
+    </details>
+
+    <details style="margin-bottom:22px;">
+      <summary class="lowercase" style="cursor:pointer; font-weight:700; font-size:13px; color:var(--ink-soft, #6b6880); margin-bottom:12px;">lihat / edit versi türkçe</summary>
+      <div class="field">
+        <label class="lowercase">deskripsi · türkçe</label>
+        <textarea id="toolDescriptionTr"></textarea>
+      </div>
+      <div class="field">
+        <label class="lowercase">tags (pisahin pakai koma) · türkçe</label>
+        <input type="text" id="toolTagsTr">
+      </div>
+      <div class="field">
+        <label class="lowercase">catatan kecil · türkçe</label>
+        <input type="text" id="toolNoteTr">
+      </div>
+      <div class="field">
+        <label class="lowercase">label tombol · türkçe</label>
+        <input type="text" id="toolLinkLabelTr">
+      </div>
+    </details>
+
+    <div class="form-row">
+      <div class="field">
+        <label class="lowercase">link tujuan (URL tool-nya)</label>
+        <input type="text" id="toolLinkUrl" placeholder="https://pajangin.founderku.com">
+      </div>
+    </div>
+
+    <div class="checkbox-row">
+      <input type="checkbox" id="toolExternal" checked>
+      <label for="toolExternal" class="lowercase">link keluar (buka tab baru)</label>
+    </div>
+
+    <div id="toolFormStatus" class="status-msg"></div>
+
+    <div class="modal-actions">
+      <button class="btn btn-ghost lowercase" onclick="closeToolForm()">batal</button>
+      <button class="btn btn-primary lowercase" id="toolSaveBtn" onclick="saveTool()">simpan tool</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const LS_KEY = 'fk_admin_config';
 let config = null;
@@ -715,6 +834,13 @@ let partnerEditingId = null;
 let partnerLoaded = false;
 let partnerPendingLogoBase64 = null;
 let partnerPendingLogoExt = null;
+
+let toolsData = { tools: [] };
+let toolsSha = null;
+let toolEditingId = null;
+let toolsLoaded = false;
+let toolPendingLogoBase64 = null;
+let toolPendingLogoExt = null;
 
 function loadConfig(){
   try {
@@ -803,11 +929,13 @@ function switchTab(tab){
   document.getElementById('tabBtnBlog').classList.toggle('active', tab === 'blog');
   document.getElementById('tabBtnTestimoni').classList.toggle('active', tab === 'testimoni');
   document.getElementById('tabBtnPartners').classList.toggle('active', tab === 'partners');
+  document.getElementById('tabBtnTools').classList.toggle('active', tab === 'tools');
   document.getElementById('panelProducts').style.display = tab === 'products' ? 'block' : 'none';
   document.getElementById('panelCaseStudies').style.display = tab === 'caseStudies' ? 'block' : 'none';
   document.getElementById('panelBlog').style.display = tab === 'blog' ? 'block' : 'none';
   document.getElementById('panelTestimoni').style.display = tab === 'testimoni' ? 'block' : 'none';
   document.getElementById('panelPartners').style.display = tab === 'partners' ? 'block' : 'none';
+  document.getElementById('panelTools').style.display = tab === 'tools' ? 'block' : 'none';
   if (tab === 'caseStudies' && !csLoaded){
     csLoaded = true;
     loadCaseStudies();
@@ -823,6 +951,10 @@ function switchTab(tab){
   if (tab === 'partners' && !partnerLoaded){
     partnerLoaded = true;
     loadPartners();
+  }
+  if (tab === 'tools' && !toolsLoaded){
+    toolsLoaded = true;
+    loadTools();
   }
 }
 
@@ -1949,6 +2081,296 @@ async function deletePartner(id){
     banner.className = 'status-msg success';
     banner.textContent = 'partner dihapus.';
     renderPartnerList();
+    setTimeout(() => { banner.style.display = 'none'; }, 2000);
+  } catch(err){
+    banner.className = 'status-msg error';
+    banner.textContent = 'gagal hapus: ' + err.message;
+  }
+}
+
+async function loadTools(){
+  const banner = document.getElementById('toolStatusBanner');
+  banner.className = 'status-msg info';
+  banner.textContent = 'memuat tools...';
+  try {
+    const res = await ghGetFile('data/tools.json');
+    if (!res){
+      toolsData = { tools: [] };
+      toolsSha = null;
+    } else {
+      toolsSha = res.sha;
+      const decoded = decodeURIComponent(escape(atob(res.content.replace(/\n/g, ''))));
+      toolsData = JSON.parse(decoded);
+      if (!toolsData.tools) toolsData.tools = [];
+    }
+    banner.style.display = 'none';
+    renderToolList();
+  } catch(err){
+    banner.className = 'status-msg error';
+    banner.textContent = 'error: ' + err.message;
+  }
+}
+
+function renderToolList(){
+  const list = document.getElementById('toolList');
+  const items = (toolsData.tools || []).slice().sort((a, b) => (a.order || 0) - (b.order || 0));
+  if (!items.length){
+    list.innerHTML = `<div class="empty-state lowercase">belum ada tools. klik "tambah tool" buat mulai.</div>`;
+    return;
+  }
+  list.innerHTML = items.map(t => `
+    <div class="product-row">
+      ${t.logo ? `<img src="${t.logo}?t=${Date.now()}">` : `<div class="no-img lowercase">no logo</div>`}
+      <div class="info">
+        <div class="name">${t.name}</div>
+        <div class="meta lowercase">urutan ${t.order || 0} &middot; ${t.external ? 'link keluar' : 'link internal'}</div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-ghost btn-sm lowercase" onclick="editTool('${t.id}')">edit</button>
+        <button class="btn btn-danger btn-sm lowercase" onclick="deleteTool('${t.id}')">hapus</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openToolForm(t){
+  toolEditingId = t ? t.id : null;
+  toolPendingLogoBase64 = null;
+  toolPendingLogoExt = null;
+  document.getElementById('toolFormTitle').textContent = t ? 'edit tool' : 'tambah tool';
+  document.getElementById('toolName').value = t ? t.name : '';
+  document.getElementById('toolOrder').value = t ? (t.order || 1) : (toolsData.tools.length + 1);
+  document.getElementById('toolDescription').value = t ? langText(t.description, 'id') : '';
+  document.getElementById('toolTags').value = t ? langFeatures(t.tags, 'id').join(', ') : '';
+  document.getElementById('toolNote').value = t ? langText(t.note, 'id') : '';
+  document.getElementById('toolLinkLabel').value = t ? langText(t.linkLabel, 'id') : '';
+  document.getElementById('toolDescriptionEn').value = t ? langText(t.description, 'en') : '';
+  document.getElementById('toolTagsEn').value = t ? langFeatures(t.tags, 'en').join(', ') : '';
+  document.getElementById('toolNoteEn').value = t ? langText(t.note, 'en') : '';
+  document.getElementById('toolLinkLabelEn').value = t ? langText(t.linkLabel, 'en') : '';
+  document.getElementById('toolDescriptionTr').value = t ? langText(t.description, 'tr') : '';
+  document.getElementById('toolTagsTr').value = t ? langFeatures(t.tags, 'tr').join(', ') : '';
+  document.getElementById('toolNoteTr').value = t ? langText(t.note, 'tr') : '';
+  document.getElementById('toolLinkLabelTr').value = t ? langText(t.linkLabel, 'tr') : '';
+  document.getElementById('toolLinkUrl').value = t ? (t.linkUrl || '') : '';
+  document.getElementById('toolExternal').checked = t ? !!t.external : true;
+  document.getElementById('toolRoundLogo').checked = t ? !!t.roundLogo : false;
+  document.getElementById('toolFormStatus').style.display = 'none';
+  document.getElementById('toolTranslateStatus').style.display = 'none';
+
+  const preview = document.getElementById('toolLogoPreview');
+  if (t && t.logo){
+    preview.innerHTML = `<img src="${t.logo}?t=${Date.now()}">`;
+  } else {
+    preview.innerHTML = 'belum ada logo';
+  }
+
+  document.getElementById('toolFormModal').classList.add('open');
+}
+function closeToolForm(){
+  document.getElementById('toolFormModal').classList.remove('open');
+}
+function editTool(id){
+  const t = toolsData.tools.find(x => x.id === id);
+  if (t) openToolForm(t);
+}
+
+async function translateToolFields(){
+  const btn = document.getElementById('toolTranslateBtn');
+  const statusEl = document.getElementById('toolTranslateStatus');
+
+  const name = document.getElementById('toolName').value.trim();
+  const description = document.getElementById('toolDescription').value.trim();
+  const tags = document.getElementById('toolTags').value.split(',').map(s => s.trim()).filter(Boolean);
+  const note = document.getElementById('toolNote').value.trim();
+  const linkLabel = document.getElementById('toolLinkLabel').value.trim() || 'Coba sekarang';
+
+  if (!description){
+    statusEl.style.display = 'block';
+    statusEl.className = 'status-msg error';
+    statusEl.textContent = 'isi deskripsi bahasa indonesia dulu sebelum translate.';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> lagi translate...';
+  statusEl.style.display = 'block';
+  statusEl.className = 'status-msg info';
+  statusEl.textContent = 'lagi manggil ai buat translate, tunggu sebentar...';
+
+  try {
+    const data = await callTranslateWorker(
+      name,
+      { description, note, linkLabel },
+      { tags }
+    );
+
+    document.getElementById('toolDescriptionEn').value = data.en.textFields.description || '';
+    document.getElementById('toolNoteEn').value = data.en.textFields.note || '';
+    document.getElementById('toolLinkLabelEn').value = data.en.textFields.linkLabel || '';
+    document.getElementById('toolTagsEn').value = (data.en.arrayFields.tags || []).join(', ');
+    document.getElementById('toolDescriptionTr').value = data.tr.textFields.description || '';
+    document.getElementById('toolNoteTr').value = data.tr.textFields.note || '';
+    document.getElementById('toolLinkLabelTr').value = data.tr.textFields.linkLabel || '';
+    document.getElementById('toolTagsTr').value = (data.tr.arrayFields.tags || []).join(', ');
+
+    statusEl.className = 'status-msg success';
+    statusEl.textContent = 'berhasil, versi english dan türkçe udah keisi. cek dulu di bagian "lihat / edit" di bawah sebelum simpan.';
+  } catch(err){
+    statusEl.className = 'status-msg error';
+    statusEl.textContent = 'gagal translate: ' + err.message;
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = 'translate otomatis (en + tr)';
+  }
+}
+
+function onToolLogoChange(e){
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    const img = new Image();
+    img.onload = function(){
+      const maxW = 500;
+      const scale = Math.min(1, maxW / img.width);
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width * scale;
+      canvas.height = img.height * scale;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const dataUrl = canvas.toDataURL('image/png');
+      toolPendingLogoBase64 = dataUrl.split(',')[1];
+      toolPendingLogoExt = 'png';
+      document.getElementById('toolLogoPreview').innerHTML = `<img src="${dataUrl}">`;
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+async function saveTool(){
+  const name = document.getElementById('toolName').value.trim();
+  const order = parseInt(document.getElementById('toolOrder').value || '0', 10);
+
+  const descId = document.getElementById('toolDescription').value.trim();
+  const descEn = document.getElementById('toolDescriptionEn').value.trim();
+  const descTr = document.getElementById('toolDescriptionTr').value.trim();
+  const description = (descEn || descTr) ? { id: descId, en: descEn, tr: descTr } : descId;
+
+  const tagsId = document.getElementById('toolTags').value.split(',').map(s => s.trim()).filter(Boolean);
+  const tagsEn = document.getElementById('toolTagsEn').value.split(',').map(s => s.trim()).filter(Boolean);
+  const tagsTr = document.getElementById('toolTagsTr').value.split(',').map(s => s.trim()).filter(Boolean);
+  const tags = (tagsEn.length || tagsTr.length) ? { id: tagsId, en: tagsEn, tr: tagsTr } : tagsId;
+
+  const noteId = document.getElementById('toolNote').value.trim();
+  const noteEn = document.getElementById('toolNoteEn').value.trim();
+  const noteTr = document.getElementById('toolNoteTr').value.trim();
+  const note = (noteEn || noteTr) ? { id: noteId, en: noteEn, tr: noteTr } : noteId;
+
+  const linkLabelId = document.getElementById('toolLinkLabel').value.trim() || 'Coba sekarang';
+  const linkLabelEn = document.getElementById('toolLinkLabelEn').value.trim();
+  const linkLabelTr = document.getElementById('toolLinkLabelTr').value.trim();
+  const linkLabel = (linkLabelEn || linkLabelTr) ? { id: linkLabelId, en: linkLabelEn, tr: linkLabelTr } : linkLabelId;
+
+  const linkUrl = document.getElementById('toolLinkUrl').value.trim();
+  const external = document.getElementById('toolExternal').checked;
+  const roundLogo = document.getElementById('toolRoundLogo').checked;
+
+  if (!name){
+    setToolFormStatus('error', 'nama tool wajib diisi.');
+    return;
+  }
+  if (!linkUrl){
+    setToolFormStatus('error', 'link tujuan wajib diisi.');
+    return;
+  }
+
+  const slug = name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const id = toolEditingId || slug;
+
+  const saveBtn = document.getElementById('toolSaveBtn');
+  saveBtn.disabled = true;
+  saveBtn.innerHTML = '<span class="spinner"></span> menyimpan...';
+  setToolFormStatus('info', 'menyimpan tool...');
+
+  try {
+    let logoPath = null;
+    if (toolEditingId){
+      const existing = toolsData.tools.find(x => x.id === toolEditingId);
+      logoPath = existing ? existing.logo : null;
+    }
+
+    if (toolPendingLogoBase64){
+      setToolFormStatus('info', 'mengupload logo...');
+      const imgPath = `images/tools/${slug}-logo.${toolPendingLogoExt}`;
+      const existingImg = await ghGetFile(imgPath);
+      await ghPutFile(imgPath, toolPendingLogoBase64, `Update logo for ${name}`, existingImg ? existingImg.sha : null);
+      logoPath = imgPath;
+    }
+
+    const toolObj = {
+      id,
+      name,
+      logo: logoPath,
+      roundLogo,
+      description,
+      tags,
+      note,
+      linkUrl,
+      linkLabel,
+      external,
+      order
+    };
+
+    if (toolEditingId){
+      const idx = toolsData.tools.findIndex(x => x.id === toolEditingId);
+      toolsData.tools[idx] = toolObj;
+    } else {
+      toolsData.tools.push(toolObj);
+    }
+
+    setToolFormStatus('info', 'menyimpan data tools...');
+    const jsonStr = JSON.stringify(toolsData, null, 2);
+    const base64Content = btoa(unescape(encodeURIComponent(jsonStr)));
+    const result = await ghPutFile('data/tools.json', base64Content, `${toolEditingId ? 'Update' : 'Add'} tool: ${name}`, toolsSha);
+    toolsSha = result.content.sha;
+
+    setToolFormStatus('success', 'tool berhasil disimpan.');
+    renderToolList();
+    setTimeout(() => { closeToolForm(); }, 700);
+  } catch(err){
+    setToolFormStatus('error', 'gagal: ' + err.message);
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.innerHTML = 'simpan tool';
+  }
+}
+
+function setToolFormStatus(type, msg){
+  const el = document.getElementById('toolFormStatus');
+  el.className = 'status-msg ' + type;
+  el.textContent = msg;
+}
+
+async function deleteTool(id){
+  const t = toolsData.tools.find(x => x.id === id);
+  if (!t) return;
+  if (!confirm(`Yakin mau hapus tool "${t.name}"? Tindakan ini tidak bisa dibatalkan.`)) return;
+
+  const banner = document.getElementById('toolStatusBanner');
+  banner.className = 'status-msg info';
+  banner.textContent = 'menghapus tool...';
+
+  try {
+    toolsData.tools = toolsData.tools.filter(x => x.id !== id);
+    const jsonStr = JSON.stringify(toolsData, null, 2);
+    const base64Content = btoa(unescape(encodeURIComponent(jsonStr)));
+    const result = await ghPutFile('data/tools.json', base64Content, `Delete tool: ${t.name}`, toolsSha);
+    toolsSha = result.content.sha;
+    banner.className = 'status-msg success';
+    banner.textContent = 'tool dihapus.';
+    renderToolList();
     setTimeout(() => { banner.style.display = 'none'; }, 2000);
   } catch(err){
     banner.className = 'status-msg error';
