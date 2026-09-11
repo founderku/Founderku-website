@@ -11,9 +11,21 @@
         "tr": "Küçük işletmen için dakikalar içinde bir satış sayfası oluştur, işlemler doğrudan WhatsApp üzerinden yürür. Kodlama ya da website kurmaya gerek yok."
       },
       "tags": {
-        "id": ["Landing Page", "UMKM", "WhatsApp"],
-        "en": ["Landing Page", "Small Business", "WhatsApp"],
-        "tr": ["Açılış Sayfası", "KOBİ", "WhatsApp"]
+        "id": [
+          "Landing Page",
+          "UMKM",
+          "WhatsApp"
+        ],
+        "en": [
+          "Landing Page",
+          "Small Business",
+          "WhatsApp"
+        ],
+        "tr": [
+          "Açılış Sayfası",
+          "KOBİ",
+          "WhatsApp"
+        ]
       },
       "note": {
         "id": "Gratis untuk mulai, upgrade kapan aja kalau butuh lebih.",
