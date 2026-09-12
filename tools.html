@@ -192,16 +192,17 @@
   .fk-tool-header p { color:var(--text-soft); margin-top:14px; font-size:16px; }
   .fk-tool-grid { max-width:1160px; margin:0 auto; padding:30px 26px 100px; display:grid; grid-template-columns:1fr 1fr; gap:24px; }
   @media (max-width:760px) { .fk-tool-grid { grid-template-columns:1fr; } }
-  .fk-tool-card { background:var(--card-bg); border:1px solid var(--border); border-radius:22px; padding:36px; transition: transform .3s cubic-bezier(.22,.9,.35,1.2), box-shadow .3s ease; display:flex; flex-direction:column; gap:20px; }
+  .fk-tool-card { background:var(--card-bg); border:1px solid var(--border); border-radius:22px; overflow:hidden; transition: transform .3s cubic-bezier(.22,.9,.35,1.2), box-shadow .3s ease; display:flex; flex-direction:column; }
   .fk-tool-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px -20px rgba(0,0,0,0.18); }
-  .fk-tool-logo-chip { display:inline-flex; align-items:center; min-height:40px; margin-bottom:2px; background:#FFFFFF; border-radius:12px; padding:8px 14px; align-self:flex-start; }
-  .fk-tool-logo-chip img { height:26px; width:auto; display:block; }
-  .fk-tool-logo-chip strong { color:#14131F; font-size:15px; }
-  .fk-tool-desc { font-size:15px; line-height:1.7; color:var(--text-soft); margin:0; }
+  .fk-tool-image { width:100%; height:200px; object-fit:cover; display:block; background:var(--bg-soft); }
+  .fk-tool-image-fallback { width:100%; height:200px; display:flex; align-items:center; justify-content:center; background:var(--bg-soft); }
+  .fk-tool-image-fallback strong { color:#14131F; font-size:22px; }
+  .fk-tool-body { padding:26px; display:flex; flex-direction:column; gap:14px; }
+  .fk-tool-name { font-size:18px; font-weight:800; margin:0; }
+  .fk-tool-desc { font-size:14.5px; line-height:1.6; color:var(--text-soft); margin:0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
   .fk-tool-tags { display:flex; gap:8px; flex-wrap:wrap; margin:0; }
-  .fk-tool-tags span { background:var(--bg-soft); border:1px solid var(--border); padding:6px 13px; border-radius:999px; font-size:12px; font-weight:700; white-space:nowrap; }
-  .fk-tool-note { font-size:13px; color:var(--text-faint); margin:0; line-height:1.6; }
-  .fk-tool-cta { text-decoration:none; display:inline-flex; align-items:center; gap:8px; color:var(--text); font-weight:700; font-size:14px; border-bottom:2px solid var(--brand-amber); padding-bottom:2px; }
+  .fk-tool-tags span { background:var(--bg-soft); border:1px solid var(--border); padding:5px 12px; border-radius:999px; font-size:11.5px; font-weight:700; white-space:nowrap; }
+  .fk-tool-cta { text-decoration:none; display:inline-flex; align-self:flex-start; align-items:center; gap:8px; margin-top:4px; }
   .fk-empty-state, .fk-error-state { grid-column:1/-1; text-align:center; color:var(--text-faint); font-size:14.5px; padding:60px 20px; }
 </style>
 </head>
@@ -358,18 +359,20 @@ function applyToolsStaticI18n() {
       return;
     }
     grid.innerHTML = items.map(function (item) {
-      var tagsHtml = pickLangArray(item.tags).map(function (tag) { return '<span>' + escapeHtml(tag) + '</span>'; }).join('');
-      var logoInner = item.logo
-        ? '<img src="' + escapeHtml(item.logo) + '" alt="' + escapeHtml(item.name) + ' logo" loading="lazy" decoding="async"' + (item.roundLogo ? ' style="border-radius:50%;"' : '') + '>'
-        : '<strong>' + escapeHtml(item.name) + '</strong>';
+      var tagsHtml = pickLangArray(item.tags).slice(0, 3).map(function (tag) { return '<span>' + escapeHtml(tag) + '</span>'; }).join('');
+      var imgHtml = item.logo
+        ? '<img class="fk-tool-image" src="' + escapeHtml(item.logo) + '" alt="' + escapeHtml(item.name) + '" loading="lazy" decoding="async">'
+        : '<div class="fk-tool-image-fallback"><strong>' + escapeHtml(item.name) + '</strong></div>';
       var linkAttrs = item.external ? 'target="_blank" rel="noopener"' : '';
       return (
         '<div class="fk-tool-card">' +
-          '<div class="fk-tool-logo-chip">' + logoInner + '</div>' +
-          '<p class="fk-tool-desc">' + escapeHtml(pickLangText(item.description)) + '</p>' +
-          '<div class="fk-tool-tags">' + tagsHtml + '</div>' +
-          '<div class="fk-tool-note">' + escapeHtml(pickLangText(item.note)) + '</div>' +
-          '<a href="' + escapeHtml(item.linkUrl) + '" ' + linkAttrs + ' class="fk-tool-cta">' + escapeHtml(pickLangText(item.linkLabel) || dict.linkLabel) + ' &rarr;</a>' +
+          imgHtml +
+          '<div class="fk-tool-body">' +
+            '<h3 class="fk-tool-name">' + escapeHtml(item.name) + '</h3>' +
+            '<p class="fk-tool-desc">' + escapeHtml(pickLangText(item.description)) + '</p>' +
+            '<div class="fk-tool-tags">' + tagsHtml + '</div>' +
+            '<a href="' + escapeHtml(item.linkUrl) + '" ' + linkAttrs + ' class="fk-pill fk-pill-solid fk-tool-cta" style="font-size:13px; padding:10px 20px;">' + escapeHtml(pickLangText(item.linkLabel) || dict.linkLabel) + ' &rarr;</a>' +
+          '</div>' +
         '</div>'
       );
     }).join('');
