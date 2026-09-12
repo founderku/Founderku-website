@@ -1,3 +1,11 @@
 {
-  "partners": []
+  "partners": [
+    {
+      "id": "youth-growth-ventures",
+      "name": "Youth Growth Ventures",
+      "logo": "images/partners/youth-growth-ventures-logo.png",
+      "url": "",
+      "order": 1
+    }
+  ]
 }
