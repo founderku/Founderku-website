@@ -13,6 +13,13 @@
       "logo": "images/partners/pt-talenthra-karya-nusantara-logo.png",
       "url": "",
       "order": 2
+    },
+    {
+      "id": "pt-surya-jaya-angseri",
+      "name": "PT Surya Jaya Angseri",
+      "logo": "images/partners/pt-surya-jaya-angseri-logo.png",
+      "url": "",
+      "order": 3
     }
   ]
 }
