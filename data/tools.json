@@ -57,6 +57,23 @@
       "linkLabel": "Coba sekarang",
       "external": true,
       "order": 2
+    },
+    {
+      "id": "pajakin",
+      "name": "Pajakin",
+      "logo": "images/tools/pajakin-logo.png",
+      "roundLogo": false,
+      "description": "Simulasi PPh Final UMKM (0,5%) sesuai aturan terbaru, termasuk jatah bebas pajak Rp500 juta pertama per tahun. Tanpa perlu daftar akun.",
+      "tags": [
+        "Pajak",
+        "UMKM",
+        "PPh Final"
+      ],
+      "note": "Gratis, tanpa perlu daftar akun.",
+      "linkUrl": "https://pajakin.founderku.com",
+      "linkLabel": "Coba sekarang",
+      "external": true,
+      "order": 3
     }
   ]
 }
