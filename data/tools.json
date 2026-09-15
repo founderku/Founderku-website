@@ -74,6 +74,24 @@
       "linkLabel": "Coba sekarang",
       "external": true,
       "order": 3
+    },
+    {
+      "id": "kontrakin",
+      "name": "Kontrakin",
+      "logo": "images/tools/kontrakin-logo.png",
+      "roundLogo": false,
+      "description": "Bikin surat perjanjian kerjasama/MOU sederhana untuk UMKM, lengkap dengan pasal-pasal siap edit. Tanpa perlu daftar akun.",
+      "tags": [
+        "Kontrak",
+        "MOU",
+        "Perjanjian",
+        "UMKM"
+      ],
+      "note": "Gratis, tanpa perlu daftar akun.",
+      "linkUrl": "https://kontrakin.founderku.com",
+      "linkLabel": "Coba sekarang",
+      "external": true,
+      "order": 4
     }
   ]
 }
