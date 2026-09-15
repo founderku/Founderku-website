@@ -40,6 +40,23 @@
       },
       "external": true,
       "order": 1
+    },
+    {
+      "id": "notain",
+      "name": "Notain",
+      "logo": "images/tools/notain-logo.png",
+      "roundLogo": false,
+      "description": "Bikin invoice dan kwitansi profesional buat UMKM dalam hitungan menit. Tanpa perlu daftar akun, bisa langsung dipakai.",
+      "tags": [
+        "Invoice",
+        "Kwitansi",
+        "UMKM"
+      ],
+      "note": "Gratis, tanpa perlu daftar akun.",
+      "linkUrl": "https://notain.founderku.com",
+      "linkLabel": "Coba sekarang",
+      "external": true,
+      "order": 2
     }
   ]
 }
