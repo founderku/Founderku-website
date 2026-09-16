@@ -92,6 +92,24 @@
       "linkLabel": "Coba sekarang",
       "external": true,
       "order": 4
+    },
+    {
+      "id": "jalanin",
+      "name": "Jalanin",
+      "logo": "images/tools/jalanin-logo.png",
+      "roundLogo": false,
+      "description": "Checklist interaktif tahap-tahap membangun usaha, dari validasi ide sampai scale up, lengkap dengan progress tracker. Tanpa perlu daftar akun.",
+      "tags": [
+        "Roadmap",
+        "Checklist",
+        "UMKM",
+        "Startup"
+      ],
+      "note": "Gratis, tanpa perlu daftar akun.",
+      "linkUrl": "https://jalanin.founderku.com",
+      "linkLabel": "Coba sekarang",
+      "external": true,
+      "order": 1
     }
   ]
 }
