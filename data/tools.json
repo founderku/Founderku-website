@@ -110,6 +110,24 @@
       "linkLabel": "Coba sekarang",
       "external": true,
       "order": 1
+    },
+    {
+      "id": "sehatin",
+      "name": "Sehatin",
+      "logo": "images/tools/sehatin-logo.png",
+      "roundLogo": false,
+      "description": "Kuis interaktif buat cek kesehatan usaha kamu di 5 aspek: keuangan, legalitas, pemasaran, operasional, dan tim. Hasilnya divisualisasikan pakai radar chart, plus rekomendasi tool yang cocok. Tanpa perlu daftar akun.",
+      "tags": [
+        "Kuis",
+        "Kesehatan Bisnis",
+        "UMKM",
+        "Radar Chart"
+      ],
+      "note": "Gratis, tanpa perlu daftar akun.",
+      "linkUrl": "https://sehatin.founderku.com/",
+      "linkLabel": "Coba sekarang",
+      "external": true,
+      "order": 6
     }
   ]
 }
