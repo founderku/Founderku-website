@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { bersihkanSaatLogout } from "@/lib/tools/cloud";
 
 export function LogoutButton() {
   const [loading, setLoading] = useState(false);
@@ -10,6 +11,8 @@ export function LogoutButton() {
     setLoading(true);
     const supabase = createClient();
     await supabase.auth.signOut();
+    // Data tools milik akun ini jangan ketinggalan di browser
+    bersihkanSaatLogout();
     // "/" itu halaman statis (bukan halaman Next.js), jadi pakai reload penuh.
     window.location.assign("/");
   }

@@ -11,7 +11,7 @@ import { LogoutButton } from "@/components/LogoutButton";
 import { DeleteAccountSection } from "@/components/DeleteAccountSection";
 import { ToolIcon, TOOL_SHORT } from "@/components/ToolIcon";
 import { NameEditor } from "@/components/NameEditor";
-import toolsData from "../../../public/data/tools.json";
+import toolsData from "@public/data/tools.json";
 
 export const metadata: Metadata = {
   title: "Akun · Founderku",
@@ -30,6 +30,11 @@ interface ToolItem {
 // sampai dipindahkan juga.
 const INTERNAL_TOOL_URLS: Record<string, string> = {
   pajangin: "/pajangin/dashboard",
+  notain: "/tools/notain",
+  pajakin: "/tools/pajakin",
+  kontrakin: "/tools/kontrakin",
+  jalanin: "/tools/jalanin",
+  sehatin: "/tools/sehatin",
 };
 
 interface SubscriptionRow {
@@ -216,6 +221,15 @@ export default async function AkunPage({
                 </>
               );
               const style = { animationDelay: `${260 + i * 60}ms` };
+              // /tools/... punya layout sendiri (bukan layout situs), jadi
+              // dibuka pakai <a> biasa (muat ulang penuh), bukan <Link>.
+              if (internal?.startsWith("/tools/")) {
+                return (
+                  <a key={tool.id} href={internal} className={className} style={style}>
+                    {inner}
+                  </a>
+                );
+              }
               return internal ? (
                 <Link key={tool.id} href={internal} className={className} style={style}>
                   {inner}

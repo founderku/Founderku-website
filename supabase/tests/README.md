@@ -23,8 +23,8 @@ Supabase beneran.
 
 ```sql
 select
-  (select count(*) from pg_tables where schemaname = 'public' and rowsecurity) as tabel_rls_aktif, -- harus 6
-  (select count(*) from pg_policies where schemaname = 'public') as jumlah_aturan,                  -- harus 14
+  (select count(*) from pg_tables where schemaname = 'public' and rowsecurity) as tabel_rls_aktif, -- harus 7
+  (select count(*) from pg_policies where schemaname = 'public') as jumlah_aturan,                  -- harus 18
   (select count(*) from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-     where n.nspname = 'public') as jumlah_fungsi;                                                   -- harus 10
+     where n.nspname = 'public') as jumlah_fungsi;                                                   -- harus 12
 ```

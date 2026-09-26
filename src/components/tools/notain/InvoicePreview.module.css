@@ -1,0 +1,175 @@
+.panel {
+  background: white;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  padding: 32px 30px;
+}
+
+.letterhead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 18px;
+  border-bottom: 2px solid var(--color-ink);
+  margin-bottom: 20px;
+}
+
+.businessName {
+  font-size: 19px;
+  margin-bottom: 4px;
+}
+
+.businessDetail {
+  font-size: 12px;
+  color: var(--color-ink-soft);
+  line-height: 1.5;
+}
+
+.invoiceLabel {
+  text-align: right;
+}
+
+.invoiceLabelTitle {
+  font-family: var(--font-display);
+  font-size: 22px;
+  letter-spacing: 1px;
+  color: var(--color-gold);
+}
+
+.invoiceMeta {
+  font-size: 12px;
+  color: var(--color-ink-soft);
+  margin-top: 6px;
+}
+
+.invoiceMeta div {
+  margin-top: 2px;
+}
+
+.billTo {
+  margin-bottom: 22px;
+}
+
+.billToLabel {
+  font-size: 11px;
+  color: var(--color-ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.billToName {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.billToAddress {
+  font-size: 13px;
+  color: var(--color-ink-soft);
+  margin-top: 2px;
+}
+
+.itemsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.itemsTable th {
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-ink-soft);
+  padding: 0 6px 8px 0;
+  border-bottom: 1px solid var(--color-ink);
+}
+
+.itemsTable th.num,
+.itemsTable td.num {
+  text-align: right;
+}
+
+.itemsTable td {
+  padding: 8px 6px 8px 0;
+  border-bottom: 1px solid var(--color-rule);
+  font-size: 13px;
+}
+
+.itemsTable td.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.emptyPreview {
+  font-size: 13px;
+  color: var(--color-ink-soft);
+  font-style: italic;
+  padding: 16px 0;
+  text-align: center;
+}
+
+.summary {
+  margin-left: auto;
+  width: 260px;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 4px 0;
+  color: var(--color-ink-soft);
+}
+
+.summaryRow span:last-child {
+  font-family: var(--font-mono);
+  color: var(--color-ink);
+}
+
+.summaryTotal {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding-top: 10px;
+  border-top: 2px solid var(--color-ink);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.summaryTotal span:last-child {
+  font-family: var(--font-mono);
+  color: var(--color-gold);
+}
+
+.catatanBlock {
+  margin-top: 28px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--color-rule);
+  font-size: 12px;
+  color: var(--color-ink-soft);
+  white-space: pre-wrap;
+}
+
+.printBtn {
+  width: 100%;
+  margin-top: 18px;
+  padding: 11px;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.printBtn:hover {
+  background: #2f3c4d;
+}
+
+@media print {
+  .panel {
+    border: none;
+    padding: 0;
+  }
+}

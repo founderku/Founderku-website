@@ -150,3 +150,58 @@ set request.jwt.claim.sub = '33333333-3333-3333-3333-333333333333';
 select 'T31 hasil: ' || case when count(*)=0 then 'LULUS' else 'GAGAL' end from public.subscriptions where user_id = '22222222-2222-2222-2222-222222222222';
 select 'T31b user tetap lihat langganan sendiri: ' || case when count(*)=1 then 'LULUS' else 'GAGAL' end from public.subscriptions;
 reset role;
+
+-- ===================== tool_data (simpan ke akun) =====================
+reset role;
+update public.profiles set trial_ends_at = null, pro_expires_at = null where email = 'lain@x.com';
+update public.profiles set trial_ends_at = now() + interval '3 days' where email = 'andi@x.com';
+set role authenticated;
+set request.jwt.claim.sub = '11111111-1111-1111-1111-111111111111';
+insert into public.tool_data (user_id, key, value) values (auth.uid(), 'notain-draft-v1', '{"a":1}');
+select 'T40 Pro/trial bisa simpan data tools: ' || case when count(*)=1 then 'LULUS' else 'GAGAL' end from public.tool_data where key='notain-draft-v1';
+update public.tool_data set value = '{"a":2}' where key = 'notain-draft-v1';
+select 'T41 Pro/trial bisa ubah data tools: ' || case when value->>'a'='2' then 'LULUS' else 'GAGAL' end from public.tool_data where key='notain-draft-v1';
+insert into public.tool_data (user_id, key, value) values (auth.uid(), 'notain-draft-v1', '{"a":5}')
+  on conflict (user_id, key) do update set user_id = excluded.user_id, key = excluded.key, value = excluded.value;
+select 'T41b upsert (cara simpan dari browser) jalan: ' || case when value->>'a'='5' then 'LULUS' else 'GAGAL' end from public.tool_data where key='notain-draft-v1';
+update public.tool_data set value = '{"a":2}' where key = 'notain-draft-v1';
+do $$ begin
+  update public.tool_data set user_id = '33333333-3333-3333-3333-333333333333' where key = 'notain-draft-v1';
+  raise notice 'T41c pindahkan data ke akun orang lain: GAGAL';
+exception when insufficient_privilege then raise notice 'T41c pindahkan data ke akun orang lain: LULUS (ditolak)'; end $$;
+do $$ begin
+  update public.tool_data set updated_at = now() - interval '1 year' where key = 'notain-draft-v1';
+  raise notice 'T41d user ubah waktu simpan sendiri: GAGAL';
+exception when insufficient_privilege then raise notice 'T41d user ubah waktu simpan sendiri: LULUS (ditolak)'; end $$;
+do $$ begin
+  insert into public.tool_data (user_id, key, value) values (auth.uid(), 'rahasia-lain', '{}');
+  raise notice 'T42 kunci di luar 5 tools ditolak: GAGAL';
+exception when check_violation then raise notice 'T42 kunci di luar 5 tools ditolak: LULUS'; end $$;
+do $$ begin
+  insert into public.tool_data (user_id, key, value) values (auth.uid(), 'notain-besar', to_jsonb(repeat('x', 210000)));
+  raise notice 'T43 data terlalu besar ditolak: GAGAL';
+exception when check_violation then raise notice 'T43 data terlalu besar ditolak: LULUS'; end $$;
+do $$ begin
+  insert into public.tool_data (user_id, key, value) values ('33333333-3333-3333-3333-333333333333', 'notain-draft-v1', '{}');
+  raise notice 'T44 simpan atas nama orang lain: GAGAL';
+exception when insufficient_privilege then raise notice 'T44 simpan atas nama orang lain: LULUS (ditolak)'; end $$;
+-- user Free
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '33333333-3333-3333-3333-333333333333';
+do $$ begin
+  insert into public.tool_data (user_id, key, value) values (auth.uid(), 'jalanin-progress-v1', '[]');
+  raise notice 'T45 akun Free tidak bisa simpan ke akun: GAGAL';
+exception when insufficient_privilege then raise notice 'T45 akun Free tidak bisa simpan ke akun: LULUS (ditolak)'; end $$;
+select 'T46 user lain tidak bisa baca data tools orang: ' || case when count(*)=0 then 'LULUS' else 'GAGAL' end from public.tool_data;
+-- Pro habis: data lama tetap bisa dibaca & dihapus, tapi tidak bisa diubah
+reset role;
+update public.profiles set trial_ends_at = now() - interval '1 minute', pro_expires_at = null where email = 'andi@x.com';
+set role authenticated;
+set request.jwt.claim.sub = '11111111-1111-1111-1111-111111111111';
+select 'T47 Pro habis: data lama tetap bisa dibaca: ' || case when count(*)=1 then 'LULUS' else 'GAGAL' end from public.tool_data;
+update public.tool_data set value = '{"a":3}' where key = 'notain-draft-v1';
+select 'T48 Pro habis: tidak bisa ubah data: ' || case when value->>'a'='2' then 'LULUS' else 'GAGAL' end from public.tool_data where key='notain-draft-v1';
+delete from public.tool_data where key = 'notain-draft-v1';
+select 'T49 Pro habis: tetap bisa hapus data sendiri: ' || case when count(*)=0 then 'LULUS' else 'GAGAL' end from public.tool_data;
+reset role;

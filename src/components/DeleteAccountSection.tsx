@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { hapusDataToolLokal } from "@/lib/tools/cloud";
 import { Pill } from "@/components/ui/Pill";
 
 const CONFIRM_WORD = "HAPUS";
@@ -29,6 +30,7 @@ export function DeleteAccountSection() {
     // gak nyisa token yang udah gak valid, terus balik ke landing page.
     const supabase = createClient();
     await supabase.auth.signOut();
+    hapusDataToolLokal();
     // "/" itu halaman statis (bukan halaman Next.js), jadi pakai reload penuh.
     window.location.assign("/");
   }

@@ -34,6 +34,8 @@ const nextConfig: NextConfig = {
       { source: "/register", destination: "/daftar", permanent: true },
       { source: "/dashboard/:path*", destination: "/pajangin/dashboard/:path*", permanent: true },
       { source: "/beranda", destination: "/pajangin", permanent: true },
+      // Daftar tools ada di halaman statis tools.html
+      { source: "/tools", destination: "/tools.html", permanent: false },
     ];
   },
   async headers() {

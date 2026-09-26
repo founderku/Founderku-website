@@ -53,9 +53,9 @@
         "UMKM"
       ],
       "note": "Gratis, tanpa perlu daftar akun.",
-      "linkUrl": "https://notain.founderku.com",
+      "linkUrl": "/tools/notain",
       "linkLabel": "Coba sekarang",
-      "external": true,
+      "external": false,
       "order": 2
     },
     {
@@ -70,9 +70,9 @@
         "PPh Final"
       ],
       "note": "Gratis, tanpa perlu daftar akun.",
-      "linkUrl": "https://pajakin.founderku.com",
+      "linkUrl": "/tools/pajakin",
       "linkLabel": "Coba sekarang",
-      "external": true,
+      "external": false,
       "order": 3
     },
     {
@@ -88,9 +88,9 @@
         "UMKM"
       ],
       "note": "Gratis, tanpa perlu daftar akun.",
-      "linkUrl": "https://kontrakin.founderku.com",
+      "linkUrl": "/tools/kontrakin",
       "linkLabel": "Coba sekarang",
-      "external": true,
+      "external": false,
       "order": 4
     },
     {
@@ -106,9 +106,9 @@
         "Startup"
       ],
       "note": "Gratis, tanpa perlu daftar akun.",
-      "linkUrl": "https://jalanin.founderku.com",
+      "linkUrl": "/tools/jalanin",
       "linkLabel": "Coba sekarang",
-      "external": true,
+      "external": false,
       "order": 1
     },
     {
@@ -124,9 +124,9 @@
         "Radar Chart"
       ],
       "note": "Gratis, tanpa perlu daftar akun.",
-      "linkUrl": "https://sehatin.founderku.com/",
+      "linkUrl": "/tools/sehatin",
       "linkLabel": "Coba sekarang",
-      "external": true,
+      "external": false,
       "order": 6
     }
   ]

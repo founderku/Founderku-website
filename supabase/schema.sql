@@ -20,6 +20,7 @@ create extension if not exists pgcrypto;
 -- ============================================================
 drop trigger if exists on_auth_user_created on auth.users;
 drop view if exists public.store_profiles;
+drop table if exists public.tool_data cascade;
 drop table if exists public.page_click_log cascade;
 drop table if exists public.takedowns cascade;
 drop table if exists public.subscriptions cascade;
@@ -38,6 +39,8 @@ drop function if exists public.enforce_page_limit() cascade;
 drop function if exists public.admin_set_page_status(uuid, text, text) cascade;
 drop function if exists public.activate_subscription(text, numeric) cascade;
 drop function if exists public.start_trial(uuid, integer) cascade;
+drop function if exists public.tool_data_touch() cascade;
+drop function if exists public.current_user_has_pro() cascade;
 
 -- ============================================================
 -- 1. TABEL: profiles
@@ -491,6 +494,78 @@ create policy "Semua orang bisa baca blocklist"
   on public.slug_blocklist for select using (true);
 
 -- page_click_log: sengaja tanpa policy (cuma lewat increment_page_click)
+
+-- ============================================================
+-- TABEL: tool_data (data 5 tools yang "disimpan ke akun")
+-- Satu baris = satu kunci penyimpanan tool (misal notain-draft-v1)
+-- milik satu user. Isinya JSON yang sama persis dengan yang disimpan
+-- tool di browser (localStorage).
+-- ============================================================
+create table public.tool_data (
+  user_id uuid not null references public.profiles(id) on delete cascade,
+  key text not null
+    check (key ~ '^(notain|pajakin|kontrakin|jalanin|sehatin)-[a-z0-9-]{1,40}$'),
+  value jsonb not null
+    check (octet_length(value::text) <= 200000),
+  updated_at timestamptz not null default now(),
+  primary key (user_id, key)
+);
+
+-- Waktu ubah selalu diisi server (bukan jam HP user)
+create function public.tool_data_touch()
+returns trigger
+language plpgsql
+set search_path = public
+as $$
+begin
+  new.updated_at := now();
+  return new;
+end;
+$$;
+
+create trigger tool_data_touch
+  before insert or update on public.tool_data
+  for each row execute function public.tool_data_touch();
+
+-- Apakah user yang sedang login punya trial/Pro aktif (dipakai policy).
+-- Tanpa parameter, jadi gak bisa dipakai ngecek akun orang lain.
+create function public.current_user_has_pro()
+returns boolean
+language sql
+security definer
+set search_path = public
+stable
+as $$
+  select public.has_pro_access(auth.uid());
+$$;
+
+revoke execute on function public.tool_data_touch() from public, anon, authenticated;
+revoke execute on function public.current_user_has_pro() from public, anon;
+grant execute on function public.current_user_has_pro() to authenticated;
+
+alter table public.tool_data enable row level security;
+revoke all on public.tool_data from anon;
+revoke all on public.tool_data from authenticated;
+grant select, insert, delete on public.tool_data to authenticated;
+-- user_id & key ikut di-grant karena "upsert" dari browser (PostgREST)
+-- menulis ulang semua kolom yang dikirim. Aman: policy di bawah tetap
+-- memaksa user_id = akun sendiri, dan check di tabel tetap membatasi key.
+-- updated_at tidak bisa diubah user (selalu diisi server).
+grant update (user_id, key, value) on public.tool_data to authenticated;
+
+-- Baca & hapus data sendiri: selalu boleh (juga setelah Pro habis)
+create policy "User baca data tools sendiri"
+  on public.tool_data for select using (auth.uid() = user_id);
+create policy "User hapus data tools sendiri"
+  on public.tool_data for delete using (auth.uid() = user_id);
+-- Simpan / ubah: cuma kalau trial/Pro aktif
+create policy "User simpan data tools (Pro/trial)"
+  on public.tool_data for insert
+  with check (auth.uid() = user_id and public.current_user_has_pro());
+create policy "User ubah data tools (Pro/trial)"
+  on public.tool_data for update
+  using (auth.uid() = user_id and public.current_user_has_pro())
+  with check (auth.uid() = user_id and public.current_user_has_pro());
 
 -- ============================================================
 -- SETELAH RUN: jadikan akun kamu admin (ganti emailnya)
