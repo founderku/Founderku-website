@@ -1,0 +1,73 @@
+/* Gaya global Notain, dikurung di .tool-notain supaya tidak bocor ke halaman lain. */
+
+.tool-notain {
+  --color-paper: #f5f1e6;
+  --color-paper-raised: #fbf8f0;
+  --color-ink: #202b39;
+  --color-ink-soft: #5b6472;
+  --color-rule: #d9d0b8;
+  --color-gold: #b3781f;
+  --color-gold-soft: #e8cfa0;
+  --color-teal: #2b6a5c;
+  --color-teal-soft: #d9e9e3;
+  --color-red: #a13c30;
+  --color-red-soft: #f0dcd6;
+
+  --font-display: 'IBM Plex Serif', Georgia, serif;
+  --font-body: 'IBM Plex Sans', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  --radius-sm: 3px;
+  --radius-md: 5px;
+}
+
+.tool-notain * {
+  box-sizing: border-box;
+}
+
+.tool-notain {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.tool-notain h1, .tool-notain h2, .tool-notain h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-ink);
+}
+
+.tool-notain button {
+  font-family: inherit;
+}
+
+.tool-notain input, .tool-notain select, .tool-notain textarea {
+  font-family: var(--font-mono);
+}
+
+.tool-notain :focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tool-notain * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  .tool-notain {
+    background: white;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
+
+.tool-notain { min-height: 100vh; }

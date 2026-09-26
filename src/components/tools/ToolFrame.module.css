@@ -1,0 +1,177 @@
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(20, 19, 31, 0.08);
+  font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  color: #14131f;
+  box-sizing: border-box;
+}
+
+.kiri {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.logo {
+  display: inline-flex;
+  transition: transform 0.2s ease;
+}
+
+.logo:hover {
+  transform: translateY(-1px);
+}
+
+.logo img {
+  display: block;
+}
+
+.balik {
+  color: rgba(20, 19, 31, 0.62);
+  text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.balik:hover {
+  color: #14131f;
+}
+
+.garis {
+  width: 1px;
+  height: 16px;
+  background: rgba(20, 19, 31, 0.15);
+}
+
+.nama {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.teks {
+  color: rgba(20, 19, 31, 0.62);
+}
+
+.aksi {
+  flex-shrink: 0;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: #f2a623;
+  color: #14131f;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.aksi:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(242, 166, 35, 0.35);
+}
+
+.ok,
+.redup {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+
+.ok {
+  color: #1f7a4d;
+  font-weight: 500;
+}
+
+.redup {
+  color: rgba(20, 19, 31, 0.5);
+}
+
+.gagal {
+  color: #b4532a;
+}
+
+.titik {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.titikJalan {
+  animation: kedip 1s ease-in-out infinite;
+}
+
+@keyframes kedip {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.tunggu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 60vh;
+  font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  color: rgba(20, 19, 31, 0.55);
+}
+
+.putar {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(20, 19, 31, 0.15);
+  border-top-color: #f2a623;
+  border-radius: 50%;
+  animation: putar 0.8s linear infinite;
+}
+
+@keyframes putar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 560px) {
+  .bar {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  .status {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .titikJalan,
+  .putar {
+    animation: none;
+  }
+}
+
+@media print {
+  .bar {
+    display: none !important;
+  }
+}

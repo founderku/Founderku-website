@@ -1,0 +1,62 @@
+/* Gaya global Sehatin, dikurung di .tool-sehatin supaya tidak bocor ke halaman lain. */
+
+.tool-sehatin {
+  --color-paper: #faf6ee;
+  --color-paper-raised: #fffdf9;
+  --color-ink: #202b39;
+  --color-ink-soft: #5b6472;
+  --color-rule: #d9d0b8;
+  --color-gold: #b3781f;
+  --color-gold-soft: #e8cfa0;
+  --color-teal: #2b6a5c;
+  --color-teal-soft: #d9e9e3;
+  --color-red: #a13c30;
+  --color-red-soft: #f0dcd6;
+
+  --font-display: 'IBM Plex Serif', Georgia, serif;
+  --font-body: 'IBM Plex Sans', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  --radius-sm: 3px;
+  --radius-md: 5px;
+}
+
+.tool-sehatin * {
+  box-sizing: border-box;
+}
+
+.tool-sehatin {
+  margin: 0;
+  background-color: var(--color-paper);
+  background-image: radial-gradient(circle, #dcd2b4 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.tool-sehatin h1, .tool-sehatin h2, .tool-sehatin h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-ink);
+}
+
+.tool-sehatin button {
+  font-family: inherit;
+}
+
+.tool-sehatin :focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tool-sehatin * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.tool-sehatin { min-height: 100vh; }

@@ -1,0 +1,148 @@
+.section {
+  margin-bottom: 28px;
+}
+
+.sectionTitle {
+  font-size: 17px;
+  margin-bottom: 4px;
+}
+
+.sectionHint {
+  font-size: 12px;
+  color: var(--color-ink-soft);
+  margin: 0 0 14px;
+}
+
+.fieldGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.field:last-child {
+  margin-bottom: 0;
+}
+
+.fieldFull {
+  grid-column: 1 / -1;
+}
+
+.label {
+  font-size: 12px;
+  color: var(--color-ink-soft);
+}
+
+.textInput,
+.textarea {
+  border: 1px solid var(--color-rule);
+  background: var(--color-paper-raised);
+  padding: 9px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  width: 100%;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 80px;
+  font-family: var(--font-body);
+}
+
+.textInput:focus,
+.textarea:focus {
+  border-color: var(--color-gold);
+}
+
+.pihakCard {
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-paper-raised);
+  padding: 16px;
+}
+
+.pihakCardTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-ink);
+  margin-bottom: 10px;
+}
+
+.pasalCard {
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-paper-raised);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+}
+
+.pasalCardTop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.pasalTitleInput {
+  flex: 1;
+  border: none;
+  border-bottom: 1px solid var(--color-rule);
+  background: transparent;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 14px;
+  padding: 4px 2px;
+  color: var(--color-ink);
+}
+
+.pasalTitleInput:focus {
+  border-color: var(--color-gold);
+}
+
+.removeBtn {
+  border: none;
+  background: transparent;
+  color: var(--color-ink-soft);
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  padding: 4px 6px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.removeBtn:hover {
+  color: var(--color-red);
+  background: var(--color-red-soft);
+}
+
+.addBtn {
+  border: 1px dashed var(--color-rule);
+  background: transparent;
+  color: var(--color-ink-soft);
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.addBtn:hover {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+}
+
+.emptyRow {
+  color: var(--color-ink-soft);
+  font-size: 13px;
+  padding: 6px 0 12px;
+  font-style: italic;
+}

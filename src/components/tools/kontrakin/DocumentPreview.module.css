@@ -1,0 +1,149 @@
+.panel {
+  background: white;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  padding: 36px 34px;
+}
+
+.docTitle {
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.docTitleMain {
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.docNomor {
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-ink-soft);
+  margin-bottom: 24px;
+}
+
+.pembukaan {
+  font-size: 13px;
+  line-height: 1.7;
+  margin-bottom: 18px;
+  text-align: justify;
+}
+
+.pihakBlock {
+  margin-bottom: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.pihakBlockLabel {
+  font-weight: 600;
+}
+
+.pihakBlockDetail {
+  color: var(--color-ink-soft);
+}
+
+.penutupPembukaan {
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 18px 0 26px;
+  text-align: justify;
+}
+
+.pasal {
+  margin-bottom: 18px;
+}
+
+.pasalJudul {
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.pasalNomor {
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.pasalIsi {
+  font-size: 13px;
+  line-height: 1.7;
+  text-align: justify;
+  white-space: pre-wrap;
+}
+
+.penutup {
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 24px 0 40px;
+  text-align: justify;
+}
+
+.tandaTangan {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.ttdBlock {
+  flex: 1;
+  text-align: center;
+  font-size: 13px;
+}
+
+.ttdLabel {
+  margin-bottom: 70px;
+}
+
+.ttdNama {
+  font-weight: 600;
+  border-top: 1px solid var(--color-ink);
+  display: inline-block;
+  padding-top: 4px;
+  min-width: 180px;
+}
+
+.emptyPreview {
+  font-size: 13px;
+  color: var(--color-ink-soft);
+  font-style: italic;
+  text-align: center;
+  padding: 30px 0;
+}
+
+.disclaimer {
+  margin-top: 30px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--color-rule);
+  font-size: 11px;
+  color: var(--color-ink-soft);
+  line-height: 1.6;
+}
+
+.printBtn {
+  width: 100%;
+  margin-top: 18px;
+  padding: 11px;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.printBtn:hover {
+  background: #2f3c4d;
+}
+
+@media print {
+  .panel {
+    border: none;
+    padding: 0;
+  }
+}

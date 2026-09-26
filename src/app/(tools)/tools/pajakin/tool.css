@@ -1,0 +1,64 @@
+/* Gaya global Pajakin, dikurung di .tool-pajakin supaya tidak bocor ke halaman lain. */
+
+.tool-pajakin {
+  --color-paper: #f5f1e6;
+  --color-paper-raised: #fbf8f0;
+  --color-ink: #202b39;
+  --color-ink-soft: #5b6472;
+  --color-rule: #d9d0b8;
+  --color-gold: #b3781f;
+  --color-gold-soft: #e8cfa0;
+  --color-teal: #2b6a5c;
+  --color-teal-soft: #d9e9e3;
+  --color-red: #a13c30;
+  --color-red-soft: #f0dcd6;
+
+  --font-display: 'IBM Plex Serif', Georgia, serif;
+  --font-body: 'IBM Plex Sans', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  --radius-sm: 3px;
+  --radius-md: 5px;
+}
+
+.tool-pajakin * {
+  box-sizing: border-box;
+}
+
+.tool-pajakin {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.tool-pajakin h1, .tool-pajakin h2, .tool-pajakin h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-ink);
+}
+
+.tool-pajakin button {
+  font-family: inherit;
+}
+
+.tool-pajakin input {
+  font-family: var(--font-mono);
+}
+
+.tool-pajakin :focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tool-pajakin * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.tool-pajakin { min-height: 100vh; }

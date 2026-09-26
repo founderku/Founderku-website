@@ -1,0 +1,210 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  border-bottom: 1px solid var(--color-rule);
+  padding: 22px 24px;
+}
+
+.header h1 {
+  font-size: 22px;
+}
+
+.headerTagline {
+  font-size: 13px;
+  color: var(--color-ink-soft);
+  margin: 4px 0 0;
+  max-width: 60ch;
+}
+
+.body {
+  flex: 1;
+  max-width: 640px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px 24px 60px;
+}
+
+.inputCard {
+  background: var(--color-paper-raised);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  padding: 24px 22px;
+  margin-bottom: 24px;
+}
+
+.field {
+  margin-bottom: 18px;
+}
+
+.field:last-child {
+  margin-bottom: 0;
+}
+
+.label {
+  display: block;
+  font-size: 13px;
+  color: var(--color-ink-soft);
+  margin-bottom: 6px;
+}
+
+.labelHint {
+  display: block;
+  font-size: 12px;
+  color: var(--color-ink-soft);
+  margin-top: 2px;
+  font-style: italic;
+}
+
+.inputWrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--color-rule);
+  background: white;
+  border-radius: var(--radius-sm);
+  padding: 4px 12px;
+}
+
+.inputWrap:focus-within {
+  border-color: var(--color-gold);
+}
+
+.rpPrefix {
+  font-family: var(--font-mono);
+  color: var(--color-ink-soft);
+  font-size: 15px;
+}
+
+.numberInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 10px 0;
+  font-size: 16px;
+  color: var(--color-ink);
+  background: transparent;
+}
+
+.progressWrap {
+  margin-top: 6px;
+}
+
+.progressBar {
+  height: 6px;
+  background: var(--color-rule);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--color-teal);
+  border-radius: 3px;
+  transition: width 0.2s ease;
+}
+
+.progressLabel {
+  font-size: 11px;
+  color: var(--color-ink-soft);
+  margin-top: 4px;
+}
+
+/* Result panel */
+.resultCard {
+  background: white;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  padding: 24px 22px;
+}
+
+.resultTitle {
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 6px 0;
+  font-size: 14px;
+}
+
+.rowLabel {
+  color: var(--color-ink-soft);
+}
+
+.rowValue {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink);
+}
+
+.divider {
+  border: none;
+  border-top: 1px dashed var(--color-rule);
+  margin: 8px 0;
+}
+
+.pajakBox {
+  margin-top: 14px;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  text-align: center;
+}
+
+.pajakBoxNol {
+  background: var(--color-teal-soft);
+}
+
+.pajakBoxAdaPajak {
+  background: var(--color-gold-soft);
+}
+
+.pajakBoxLabel {
+  font-size: 12px;
+  color: var(--color-ink-soft);
+  margin-bottom: 4px;
+}
+
+.pajakBoxValue {
+  font-family: var(--font-mono);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.pajakBoxNote {
+  font-size: 12px;
+  color: var(--color-ink-soft);
+  margin-top: 6px;
+}
+
+.warningBox {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: var(--color-red-soft);
+  color: var(--color-red);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+}
+
+.warningTitle {
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.footnote {
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--color-ink-soft);
+  line-height: 1.6;
+}
+
+.footnote a {
+  color: var(--color-gold);
+}

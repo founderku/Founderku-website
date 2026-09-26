@@ -1,0 +1,386 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #14131f;
+  --color-amber: #f2a623;
+  --color-coral: #e15c3e;
+  --color-indigo: #7a78c4;
+  --color-bg-soft: #f5f4f1;
+  --color-text-soft: rgba(20, 19, 31, 0.65);
+  --color-text-faint: rgba(20, 19, 31, 0.45);
+  --color-border: rgba(20, 19, 31, 0.1);
+  --color-ink-soft: rgba(245, 244, 241, 0.65);
+  --color-ink-faint: rgba(245, 244, 241, 0.45);
+  --color-ink-border: rgba(245, 244, 241, 0.14);
+  --font-manrope: var(--font-manrope);
+  --font-inter: var(--font-inter);
+}
+
+/* Background halaman dashboard/form (gradien "berawan" hangat) sekarang
+   dirender langsung di komponen PageBackdrop.tsx pakai CSS gradient
+   murni (bukan div + filter blur - itu berat buat GPU HP), biar posisinya
+   gampang dibedain per halaman lewat prop `variant`. */
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Pajangin sengaja belum didesain buat dark mode - semua warna komponen
+   (teks abu-abu, border tipis, dll) diracik cuma buat background putih.
+   Makanya --background/--foreground TIDAK ikut prefers-color-scheme:
+   dark, biar tidak ada teks gelap ketiban background gelap. */
+
+html {
+  scroll-behavior: smooth;
+  /* Pengaman global: apa pun yang gak sengaja lebih lebar dari layar
+     (dropdown, dekorasi, dll) gak akan bikin halaman bisa di-scroll ke
+     samping / kepotong aneh. Ini jaring pengaman terakhir, bukan
+     pengganti bikin tiap elemen responsif dengan benar dari awal. */
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Animasi "muncul pelan-pelan" saat elemen masuk viewport saat discroll.
+   Dipicu lewat class .is-visible yang ditambahkan komponen Reveal
+   (src/components/ui/Reveal.tsx) via IntersectionObserver. */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Efek "melayang" halus buat tumpukan kartu foto di card "Satu layout,
+   langsung rapi", dan buat badge/lingkaran di card "Upgrade kapan aja".
+   Tiap elemen dikasih delay beda (lewat inline style --float-delay)
+   biar geraknya nggak seragam/kaku, lebih kerasa hidup. */
+@keyframes gentle-float {
+  0%, 100% { transform: var(--float-base, translateY(0)); }
+  50% { transform: var(--float-base, translateY(0)) translateY(-7px); }
+}
+.animate-float {
+  animation: gentle-float 4.5s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+
+/* Garis grafik di card "Upgrade kapan aja": digambar dari kiri ke kanan
+   sekali (nyambung sama animasi Reveal pas section masuk viewport),
+   lalu ada denyut halus terus-menerus biar kerasa "hidup", bukan statis. */
+@keyframes draw-growth-line {
+  from { stroke-dashoffset: 260; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+.animate-draw-line {
+  stroke-dasharray: 260;
+  animation: draw-growth-line 1.8s ease-out 0.3s both,
+    pulse-glow 3s ease-in-out 2.1s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-draw-line {
+    animation: none;
+  }
+}
+
+/* Collage foto hero yang bergerak terus-menerus kayak video (bukan
+   ngikutin scroll) - dipakai di PhotoMarquee.tsx. Tiap kolom isinya
+   list foto yang diduplikasi 2x, digeser dari 0 sampai -50% supaya
+   loop-nya mulus tanpa keliatan sambungannya. */
+@keyframes marquee-up {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+@keyframes marquee-down {
+  from { transform: translateY(-50%); }
+  to { transform: translateY(0); }
+}
+.marquee-col {
+  animation: marquee-up linear infinite;
+}
+.marquee-col.reverse {
+  animation-name: marquee-down;
+}
+
+@keyframes marquee-horizontal {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-row {
+  animation: marquee-horizontal 40s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-row {
+    animation: none;
+  }
+  .marquee-col {
+    animation: none;
+  }
+}
+
+/* Popup/modal preview contoh halaman */
+@keyframes modal-in {
+  from { opacity: 0; transform: scale(0.94) translateY(12px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.modal-panel {
+  animation: modal-in 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.modal-backdrop {
+  animation: backdrop-in 0.2s ease;
+}
+
+/* Kotak CTA mengambang (sticky), slide-in dari bawah pas pertama muncul */
+@keyframes sticky-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.sticky-cta {
+  animation: sticky-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.6s backwards;
+}
+
+/* Tekstur grain halus di seluruh halaman (landing + panel dashboard),
+   biar background tidak terasa polos/flat. Dibikin dari SVG noise,
+   sangat ringan (blend multiply, opacity rendah), bergerak pelan biar
+   tidak kelihatan statis/kaku, tidak ganggu keterbacaan teks di
+   atasnya. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -50px;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain-shift 8s steps(8) infinite;
+}
+
+@keyframes grain-shift {
+  0% { transform: translate(0, 0); }
+  12% { transform: translate(-3%, 2%); }
+  24% { transform: translate(2%, -4%); }
+  36% { transform: translate(-4%, 3%); }
+  48% { transform: translate(3%, 1%); }
+  60% { transform: translate(-2%, -3%); }
+  72% { transform: translate(4%, 2%); }
+  84% { transform: translate(-3%, -1%); }
+  100% { transform: translate(0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    animation: none;
+  }
+}
+
+/* Tombol/badge amber gaya "kaca" (glass) - dipakai ganti isian amber
+   solid polos yang kerasa datar. Tetap kuat kontrasnya (opacity
+   tinggi), cuma dikasih efek blur + highlight tipis di sisi atas biar
+   kesannya mengkilap/berlapis, bukan flat block warna doang. */
+.glass-amber {
+  background: linear-gradient(
+    160deg,
+    rgba(242, 166, 35, 0.95),
+    rgba(225, 92, 62, 0.88)
+  );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 24px -8px rgba(225, 92, 62, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+.glass-amber:hover {
+  box-shadow: 0 12px 28px -8px rgba(225, 92, 62, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Panel kaca gelap (dipakai buat popover, badge FREE/PRO, dsb) */
+.glass-dark {
+  background: rgba(20, 19, 31, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Trik accordion FAQ: animasi height mulus pakai grid-template-rows,
+   tanpa perlu ngukur height lewat JS. */
+.accordion-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+.accordion-body.open {
+  grid-template-rows: 1fr;
+}
+.accordion-body > div {
+  overflow: hidden;
+}
+
+/* ============================================================
+   TEMA HALAMAN AKUN & HARGA (terang / gelap)
+   Tema disimpan di localStorage "fk-theme" (SAMA dengan beranda
+   statis), dipasang ke <html data-theme="..."> oleh script kecil di
+   layout.tsx sebelum halaman tampil (biar gak "kedip" putih).
+   Cuma berlaku di dalam wrapper .fk-app, jadi dashboard Pajangin yang
+   belum didesain buat gelap tetap terang.
+   ============================================================ */
+.fk-app {
+  --app-bg: #f7f2ea;
+  --app-card: rgba(255, 255, 255, 0.86);
+  --app-card-strong: #ffffff;
+  --app-border: rgba(20, 19, 31, 0.09);
+  --app-text: #14131f;
+  --app-soft: rgba(20, 19, 31, 0.64);
+  --app-faint: rgba(20, 19, 31, 0.44);
+  --app-dot: rgba(20, 19, 31, 0.07);
+  --blob-a: rgba(242, 166, 35, 0.28);
+  --blob-b: rgba(225, 92, 62, 0.2);
+  --blob-c: rgba(122, 120, 196, 0.24);
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  color: var(--app-text);
+  background: var(--app-bg);
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+[data-theme="dark"] .fk-app {
+  --app-bg: #0b0a12;
+  --app-card: rgba(255, 255, 255, 0.055);
+  --app-card-strong: #17161f;
+  --app-border: rgba(255, 255, 255, 0.1);
+  --app-text: #fbf6ee;
+  --app-soft: rgba(251, 246, 238, 0.7);
+  --app-faint: rgba(251, 246, 238, 0.46);
+  --app-dot: rgba(255, 255, 255, 0.06);
+  --blob-a: rgba(242, 166, 35, 0.2);
+  --blob-b: rgba(225, 92, 62, 0.18);
+  --blob-c: rgba(122, 120, 196, 0.26);
+}
+/* Komponen lama (Card, tombol outline, dll) ikut tema tanpa diubah satu-satu */
+.fk-app .bg-white { background-color: var(--app-card); }
+.fk-app .bg-bg-soft { background-color: var(--app-card); }
+.fk-app .border-border { border-color: var(--app-border); }
+.fk-app .divide-border > * + * { border-color: var(--app-border); }
+.fk-app .text-text-soft { color: var(--app-soft); }
+.fk-app .text-text-faint { color: var(--app-faint); }
+.fk-app .text-ink { color: var(--app-text); }
+/* ...kecuali teks gelap di atas tombol oranye, harus tetap gelap */
+.fk-app .glass-amber.text-ink,
+.fk-app .glass-amber .text-ink,
+.fk-app .bg-amber.text-ink { color: #14131f; }
+.fk-app input,
+.fk-app textarea,
+.fk-app select { background: var(--app-card-strong); color: var(--app-text); }
+.fk-app input::placeholder,
+.fk-app textarea::placeholder { color: var(--app-faint); }
+/* Tombol gelap (bg-ink) tetap kelihatan di mode gelap */
+[data-theme="dark"] .fk-app .bg-ink { background-color: #2a2840; }
+[data-theme="dark"] .fk-app .bg-ink:hover { background-color: #34324d; }
+
+/* Pratinjau halaman jualan penjual: SELALU tampil terang seperti aslinya,
+   walau dashboard sedang mode gelap. */
+.fk-keep-light {
+  --app-card: #ffffff;
+  --app-card-strong: #ffffff;
+  --app-border: rgba(20, 19, 31, 0.09);
+  --app-text: #14131f;
+  --app-soft: rgba(20, 19, 31, 0.64);
+  --app-faint: rgba(20, 19, 31, 0.44);
+  color: #14131f;
+}
+
+.fk-app-card {
+  background: var(--app-card);
+  border: 1px solid var(--app-border);
+  border-radius: 24px;
+  transition: transform 0.3s cubic-bezier(0.22, 0.9, 0.35, 1.2),
+    box-shadow 0.3s ease, background-color 0.35s ease, border-color 0.35s ease;
+}
+.fk-app-card:hover {
+  box-shadow: 0 18px 40px -24px rgba(20, 19, 31, 0.35);
+}
+
+/* Latar bergerak: 3 "gumpalan" warna yang melayang pelan + titik-titik.
+   Sengaja TANPA filter blur (berat buat HP), cuma radial-gradient yang
+   digeser pakai transform (murah, dikerjakan GPU). */
+.fk-backdrop { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.fk-blob {
+  position: absolute;
+  width: 70vmax;
+  height: 70vmax;
+  border-radius: 50%;
+  will-change: transform;
+}
+.fk-blob-a { background: radial-gradient(circle, var(--blob-a), transparent 62%); top: -30vmax; left: -22vmax; animation: fk-drift-a 26s ease-in-out infinite alternate; }
+.fk-blob-b { background: radial-gradient(circle, var(--blob-b), transparent 62%); top: 10vmax; right: -30vmax; animation: fk-drift-b 32s ease-in-out infinite alternate; }
+.fk-blob-c { background: radial-gradient(circle, var(--blob-c), transparent 62%); bottom: -34vmax; left: 10vmax; animation: fk-drift-c 38s ease-in-out infinite alternate; }
+.fk-dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--app-dot) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 75%);
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 75%);
+}
+@keyframes fk-drift-a { to { transform: translate(14vmax, 10vmax) scale(1.1); } }
+@keyframes fk-drift-b { to { transform: translate(-12vmax, 14vmax) scale(0.92); } }
+@keyframes fk-drift-c { to { transform: translate(10vmax, -12vmax) scale(1.08); } }
+
+/* Animasi masuk bertahap (dipakai kartu di halaman akun) */
+@keyframes fk-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+/* "backwards" (bukan "both"): setelah selesai, animasi lepas, jadi efek
+   hover (kartu terangkat) tetap jalan. */
+.fk-rise { animation: fk-rise 0.65s cubic-bezier(0.22, 0.9, 0.35, 1) backwards; }
+
+/* Lambaian tangan di sapaan */
+@keyframes fk-wave {
+  0%, 60%, 100% { transform: rotate(0deg); }
+  10%, 30% { transform: rotate(16deg); }
+  20% { transform: rotate(-8deg); }
+  40% { transform: rotate(-4deg); }
+}
+.fk-wave { display: inline-block; transform-origin: 70% 70%; animation: fk-wave 2.4s ease-in-out 0.6s 2; }
+
+/* Bar sisa trial */
+@keyframes fk-grow { from { transform: scaleX(0); } }
+.fk-bar-fill { transform-origin: left; animation: fk-grow 1s cubic-bezier(0.22, 0.9, 0.35, 1) 0.3s both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fk-blob, .fk-rise, .fk-wave, .fk-bar-fill { animation: none !important; }
+  .fk-app-card { transition: none; }
+}
