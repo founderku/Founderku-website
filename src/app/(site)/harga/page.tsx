@@ -1,13 +1,9 @@
-import Link from "next/link";
 import type { Metadata } from "next";
+import Script from "next/script";
 import { createClient } from "@/lib/supabase/server";
-import { getAccessStatus, formatTanggal } from "@/lib/access";
-import { PRICING, formatRupiah, periodSuffix } from "@/lib/pricing";
-import { AnimatedBackdrop } from "@/components/AnimatedBackdrop";
-import { SiteHeader } from "@/components/SiteHeader";
-import { Card } from "@/components/ui/Card";
-import { Pill } from "@/components/ui/Pill";
-import { UpgradePlanPicker } from "@/components/UpgradePlanPicker";
+import { getAccessStatus } from "@/lib/access";
+import { PRICING } from "@/lib/pricing";
+import { HargaView } from "@/components/HargaView";
 import type { Profile } from "@/lib/types";
 
 export const metadata: Metadata = {
@@ -15,6 +11,8 @@ export const metadata: Metadata = {
   description: PRICING.description.id,
 };
 
+// Tampilan sama dengan beranda: gaya dan navigasi diambil dari
+// /assets/fk-site.css dan /assets/fk-site.js (dipakai juga halaman statis).
 export default async function HargaPage({
   searchParams,
 }: {
@@ -37,93 +35,34 @@ export default async function HargaPage({
   const access = getAccessStatus(profile);
 
   return (
-    <div className="fk-app">
-      <AnimatedBackdrop />
-      <div className="max-w-3xl mx-auto px-5 sm:px-6 py-8 sm:py-10">
-        <SiteHeader isLoggedIn={!!user} />
-
-        <p className="fk-rise font-manrope text-xs font-bold uppercase tracking-wide text-text-faint mb-1">
-          Harga
-        </p>
-        <h1 className="font-manrope font-extrabold text-3xl sm:text-4xl tracking-tight mb-2">
-          {PRICING.planName}
-        </h1>
-        <p className="text-text-soft mb-8">{PRICING.description.id}</p>
-
-        {failed === "1" && (
-          <p className="text-sm text-coral bg-coral/10 rounded-2xl px-4 py-3 mb-6">
-            Pembayaran belum berhasil atau dibatalkan. Kamu bisa coba lagi
-            di bawah.
-          </p>
-        )}
-
-        <Card className="fk-rise mb-6 bg-white">
-          <h2 className="font-manrope font-extrabold text-base mb-3">
-            Yang kamu dapat
-          </h2>
-          <ul className="space-y-2">
-            {PRICING.features.map((f) => (
-              <li key={f.id} className="flex gap-2 text-sm">
-                <span className="text-amber font-bold">✓</span>
-                {f.id}
-              </li>
-            ))}
-          </ul>
-        </Card>
-
-        {user ? (
-          <Card className="fk-rise bg-white">
-            {access.hasPro && access.activeUntil && (
-              <p className="text-sm bg-amber/10 rounded-xl px-4 py-3 mb-5">
-                {access.onTrial
-                  ? `Trial kamu aktif sampai ${formatTanggal(access.activeUntil)}. Bayar sekarang, masa aktif langsung jalan dan trial nggak hangus sia-sia.`
-                  : `${PRICING.planName} kamu aktif sampai ${formatTanggal(access.activeUntil)}. Kalau bayar lagi sekarang, masa aktifnya ditambahkan setelah tanggal itu (sisa hari nggak hangus).`}
-              </p>
-            )}
-            <UpgradePlanPicker />
-          </Card>
-        ) : (
-          <Card className="fk-rise bg-white">
-            <div className="grid sm:grid-cols-2 gap-4 mb-6">
-              {PRICING.prices.map((price) => (
-                <div key={price.id} className="rounded-2xl p-5 border-2 border-border">
-                  <p className="font-manrope font-bold text-sm mb-1">
-                    {price.label.id}
-                    {price.note?.id && (
-                      <span className="ml-2 text-[10px] glass-amber text-ink px-2 py-0.5 rounded-full">
-                        {price.note.id}
-                      </span>
-                    )}
-                  </p>
-                  <p className="font-manrope font-extrabold text-2xl">
-                    {formatRupiah(price.amount)}
-                    <span className="text-xs font-normal text-text-faint">
-                      {periodSuffix(price.days)}
-                    </span>
-                  </p>
-                </div>
-              ))}
-            </div>
-            <Link href="/daftar?next=/akun" className="block">
-              <Pill variant="solid-amber" className="w-full">
-                Coba Gratis {PRICING.trialDays} Hari
-              </Pill>
-            </Link>
-            <p className="text-xs text-text-soft text-center mt-3">
-              Tanpa kartu, tanpa bayar di awal. Sudah punya akun?{" "}
-              <Link href="/masuk?next=/harga" className="font-bold text-ink underline">
-                Masuk
-              </Link>
-            </p>
-          </Card>
-        )}
-
-        <p className="text-xs text-text-faint mt-6">
-          Setelah trial atau langganan habis, akun kamu otomatis balik ke
-          versi gratis. Data kamu nggak dihapus. Di Pajangin, versi gratis
-          tetap bisa dipakai untuk 2 halaman jualan (dengan watermark).
-        </p>
+    <>
+      {/* Gaya bersama dengan halaman statis (file di public/), jadi tidak bisa di-import */}
+      {/* eslint-disable-next-line @next/next/no-css-tags */}
+      <link rel="stylesheet" href="/assets/fk-site.css" precedence="default" />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+      {/* Font Poppins cuma dipakai halaman ini di dalam aplikasi (sama dengan beranda) */}
+      {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        precedence="default"
+      />
+      <div className="fk-page">
+        {/* Diisi oleh fk-site.js setelah halaman aktif */}
+        <header className="nav" id="nav" data-fk-nav suppressHydrationWarning />
+        <main className="frame">
+          <HargaView
+            loggedIn={!!user}
+            hasPro={access.hasPro}
+            onTrial={access.onTrial}
+            activeUntil={access.activeUntil ? access.activeUntil.toISOString() : null}
+            failed={failed === "1"}
+          />
+          <footer className="band" data-fk-foot suppressHydrationWarning />
+        </main>
       </div>
-    </div>
+      <Script src="/assets/fk-site.js" strategy="afterInteractive" />
+    </>
   );
 }
