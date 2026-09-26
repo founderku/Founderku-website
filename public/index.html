@@ -188,7 +188,7 @@ img{max-width:100%}
 .hello::before{content:"";width:28px;height:2px;border-radius:2px;background:var(--orange)}
 
 .stage{margin-top:clamp(36px,4vw,56px);border-radius:30px;background:var(--panel);border:1px solid var(--line);padding:8px;overflow:hidden;position:relative}
-.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.tabs{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
 .tab{display:flex;align-items:center;justify-content:center;gap:10px;padding:13px;border-radius:22px;border:0;background:transparent;color:var(--soft);font-size:16px;cursor:pointer;transition:background-color .25s,color .25s,box-shadow .25s}
 .tab .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
 .tab[aria-selected="true"]{background:var(--card);color:var(--text);box-shadow:0 6px 16px -10px rgba(14,12,26,.35)}
@@ -214,15 +214,223 @@ img{max-width:100%}
 .chip[aria-pressed="true"]{background:var(--card);color:var(--text);box-shadow:0 4px 12px -8px rgba(14,12,26,.4)}
 .chips .btn{margin-left:auto}
 
-.demo{position:absolute;inset:66px 8px 8px;border-radius:20px;background:var(--glass);border:1px solid var(--line);
+/* Panel demo: cerita animasi 4 langkah saat bola diputar */
+.demo{position:absolute;inset:66px 8px 8px;border-radius:20px;background:var(--menu-bg);border:1px solid var(--line);
   -webkit-backdrop-filter:blur(30px) saturate(170%);backdrop-filter:blur(30px) saturate(170%);
-  transform:translateY(105%);visibility:hidden;transition:transform .55s cubic-bezier(.2,.9,.25,1),visibility .55s;display:grid;grid-template-columns:200px 1fr;gap:24px;padding:24px;z-index:5;overflow:auto}
+  transform:translateY(105%);visibility:hidden;transition:transform .55s cubic-bezier(.2,.9,.25,1),visibility .55s;display:grid;grid-template-columns:280px 1fr;gap:24px;padding:24px;z-index:5;overflow:auto}
 .demo.show{transform:none;visibility:visible}
-.demo .side .orb{width:110px;height:110px}
-.demo .side h3{font-size:26px;margin-top:16px;font-weight:500}
-.demo .side p{font-size:13px;color:var(--soft);margin-top:6px}
-.demo .close{position:absolute;right:14px;top:14px}
-.demo-body{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-content:start}
+.demo .close{position:absolute;right:14px;top:14px;z-index:2}
+.demo .side{display:flex;flex-direction:column;gap:16px;min-height:0}
+.demo .who{display:flex;gap:14px;align-items:center;padding-right:44px}
+.demo .who .orb{width:58px;height:58px}
+.demo .who h3{font-size:24px;font-weight:500;color:var(--text)}
+.demo .who p{font-size:13px;color:var(--soft);margin-top:2px;line-height:1.45}
+.bars{display:flex;gap:5px}
+.bars button{flex:1;border:0;background:none;padding:7px 0;cursor:pointer}
+.bars button span{display:block;height:4px;border-radius:4px;background:var(--line-2);overflow:hidden}
+.bars button i{display:block;height:100%;width:0;background:var(--orange);border-radius:4px}
+.st-cap small{display:block;font-size:12.5px;color:var(--faint);margin-bottom:4px}
+.st-cap b{display:block;font-size:22px;font-weight:500;letter-spacing:-.02em;line-height:1.3;min-height:2.6em}
+.st-ctl{display:flex;gap:8px}
+.st-cta{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+.st-cta.glow .btn-solid{animation:glow 1.6s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 0 8px rgba(242,169,62,.3)}}
+.demo-body{min-height:0}
+.demo-body.form{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-content:start}
+.scene{position:relative;height:100%;min-height:340px;border-radius:22px;overflow:hidden;border:1px solid var(--line);
+  background:radial-gradient(55% 65% at 88% 12%,rgba(242,169,62,.22),transparent 70%),radial-gradient(50% 60% at 8% 92%,rgba(138,133,184,.24),transparent 70%),var(--panel)}
+.scene::before{content:"+";position:absolute;left:20px;top:10px;color:var(--orange);font-size:22px}
+.scene::after{content:"+";position:absolute;right:22px;bottom:10px;color:var(--faint);font-size:17px}
+.cv{position:absolute;left:50%;top:50%;width:460px;height:340px;transform:translate(-50%,-50%) scale(var(--k,1));font-size:14px;line-height:1.45;color:var(--text)}
+.cv > *{position:absolute}
+.cv [data-at]{opacity:0;transform:translateY(14px) scale(.97);transition:opacity .45s ease,transform .6s cubic-bezier(.2,.9,.3,1.25)}
+.cv [data-at].in{opacity:1;transform:none}
+.cv .k{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 22px 44px -26px rgba(14,12,26,.55)}
+.cv .lb{display:block;font-size:11.5px;color:var(--faint);margin-bottom:5px}
+.cv .inp{border:1px solid var(--line-2);border-radius:10px;padding:7px 10px;min-height:36px;font-size:14px;background:var(--bg);font-variant-numeric:tabular-nums;margin-bottom:10px}
+.cv .inp:last-child{margin-bottom:0}
+.cv .typing::after{content:"";display:inline-block;width:2px;height:1em;background:var(--orange);margin-left:2px;vertical-align:-2px;animation:blink .8s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.cv .big{font-size:30px;font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.2}
+.cv .good{color:var(--pill-text);font-size:12.5px;font-weight:500;margin-top:6px;display:block}
+.cv .trk{height:10px;border-radius:10px;background:var(--panel-2);overflow:hidden}
+.cv .trk i{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,var(--orange),var(--coral))}
+.cv .grow[data-at]{opacity:1;transform:none;width:0;transition:width 1.3s cubic-bezier(.3,.8,.3,1)}
+.cv .grow[data-at].in{width:var(--w)}
+.cv .rw{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px dashed var(--line);font-size:13px;font-variant-numeric:tabular-nums}
+.cv .rw:last-child{border-bottom:0}
+.cv .arr{width:44px;height:24px;color:var(--orange)}
+/* HP tiruan */
+.cv .phone{background:#1A1730;border-radius:30px;padding:7px;box-shadow:0 30px 60px -30px rgba(14,12,26,.75)}
+.cv .scr{background:#FFFFFF;color:#1A1730;border-radius:24px;height:100%;overflow:hidden;position:relative;font-size:12.5px}
+.cv .scr .url{font-size:9.5px;text-align:center;padding:9px 8px 6px;color:rgba(26,23,48,.5);border-bottom:1px solid rgba(26,23,48,.08)}
+.cv .hero-ph{height:118px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(242,169,62,.35),rgba(232,95,61,.3))}
+.cv .hero-ph .orb{width:76px;height:76px}
+.cv .pbody{padding:12px;display:grid;gap:3px}
+.cv .pbody b{font-size:14px;font-weight:600;line-height:1.3}
+.cv .pr{font-weight:600}
+.cv .pr s{font-weight:400;color:rgba(26,23,48,.45);font-size:11px;margin-left:4px}
+.cv .pbody small{color:rgba(26,23,48,.6);font-size:11px}
+.cv .wa-b{margin-top:8px;display:block;text-align:center;padding:9px;border-radius:12px;background:#1A1730;color:#FFFFFF;font-size:11.5px;font-weight:500}
+.cv .lnk{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500}
+.cv .lnk svg{width:16px;height:16px;color:var(--orange);flex-shrink:0}
+.cv .share{display:flex;gap:6px;margin-top:10px}
+.cv .share span{font-size:11px;padding:5px 10px;border-radius:999px;background:var(--panel-2)}
+.cv .th{display:flex;gap:10px;align-items:center}
+.cv .th small{display:block;font-size:11px;color:var(--faint)}
+.cv .av{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--purple);color:#FFFFFF;font-weight:600;font-size:13px;flex-shrink:0}
+.cv .msg{margin-top:8px;font-size:13.5px}
+.cv .badge{padding:6px 12px;border-radius:999px;background:var(--orange);color:#1A1730;font-size:12px;font-weight:600;box-shadow:0 10px 24px -10px rgba(232,95,61,.7);white-space:nowrap}
+/* Jalanin */
+.cv .goal{font-size:20px;font-weight:500;letter-spacing:-.02em;min-height:1.45em}
+.cv .li{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:13.5px}
+.cv .cb{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--line-2);flex-shrink:0;position:relative}
+.cv .cb i{position:absolute;inset:-1.5px;border-radius:6px;background:var(--orange);display:grid;place-items:center}
+.cv .cb i::after{content:"";width:9px;height:5px;border-left:2px solid #1A1730;border-bottom:2px solid #1A1730;transform:translate(0,-1px) rotate(-45deg)}
+.cv .pct{display:grid;place-items:center;text-align:center;align-content:center;gap:6px}
+.cv .pct .big{font-size:46px}
+.cv .pct small{font-size:12.5px;color:var(--soft)}
+/* Notain */
+.cv .ih{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:6px}
+.cv .ih b{letter-spacing:.14em;font-size:13px}
+.cv .ih small,.cv .to{font-size:11px;color:var(--faint)}
+.cv .to{display:block;margin-bottom:8px}
+.cv .tot{margin-top:10px;padding-top:10px;border-top:1px solid var(--line-2);display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.cv .tot .big{font-size:24px}
+.cv .stamp{position:absolute;right:16px;bottom:22px}
+.cv .stamp span{display:block;border:3px solid var(--coral);color:var(--coral);font-weight:700;font-size:22px;letter-spacing:.14em;padding:3px 14px;border-radius:10px;transform:rotate(-12deg);background:var(--card)}
+.cv .stamp[data-at]{transform:scale(1.9);transition:opacity .2s,transform .35s cubic-bezier(.3,1.6,.5,1)}
+.cv .stamp.in{transform:none}
+.cv .chat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:10px;box-shadow:0 22px 44px -26px rgba(14,12,26,.55);display:grid;gap:8px}
+.cv .chat .th{font-size:12px;font-weight:500}
+.cv .chat .av{width:26px;height:26px;font-size:11px}
+.cv .bb{padding:8px 10px;border-radius:14px;font-size:12px}
+.cv .bb.mine{background:rgba(242,169,62,.2);border-bottom-right-radius:4px}
+.cv .bb.them{background:var(--panel-2);border-bottom-left-radius:4px}
+.cv .bb small{display:block;font-size:10px;color:var(--faint);text-align:right;margin-top:3px}
+.cv .file{display:flex;gap:8px;align-items:center;font-size:11px}
+.cv .file i{width:24px;height:30px;border-radius:5px;background:var(--coral);flex-shrink:0}
+/* Kontrakin */
+.cv .types{display:flex;gap:8px}
+.cv .pill,.cv .opt{padding:8px 14px;border-radius:999px;background:var(--card);border:1px solid var(--line-2);font-size:13px}
+.cv .opt{padding:6px 12px;font-size:12.5px}
+.cv .pill,.cv .opt{color:var(--text);font-weight:400;text-transform:none;letter-spacing:0}
+.cv .in .on,.cv .in.on{animation:pick .45s .8s both}
+@keyframes pick{to{background:var(--btn);color:var(--btn-text);border-color:var(--btn)}}
+.cv .doc{background:#FFFFFF;color:#1A1730;border-radius:10px;padding:16px;box-shadow:0 24px 50px -26px rgba(14,12,26,.6);border:1px solid rgba(26,23,48,.08)}
+.cv .doc .dt{display:block;text-align:center;font-size:11.5px;letter-spacing:.12em}
+.cv .doc .pt{display:block;text-align:center;font-size:9.5px;color:rgba(26,23,48,.55);margin:2px 0 12px}
+.cv .art{margin-bottom:9px}
+.cv .art b{font-size:10px;display:block;margin-bottom:4px}
+.cv .art i{display:block;height:5px;border-radius:4px;background:rgba(26,23,48,.12);margin-bottom:4px}
+.cv .sig{position:absolute;left:16px;right:16px;bottom:12px}
+.cv .sig svg{width:120px;height:40px;display:block}
+.cv .sig path{fill:none;stroke:#1A1730;stroke-width:2.2;stroke-linecap:round}
+.cv .sig .ln{display:block;height:1px;background:rgba(26,23,48,.3)}
+.cv .sig small{display:block;font-size:10px;color:#9A5F0C;margin-top:4px;font-weight:500}
+.cv .draw[data-at]{opacity:1;transform:none}
+.cv .draw path{stroke-dasharray:320;stroke-dashoffset:320;transition:stroke-dashoffset 1.4s ease .3s}
+.cv .draw.in path{stroke-dashoffset:0}
+/* Sehatin */
+.cv .q{font-weight:500;font-size:14.5px;margin-bottom:10px;line-height:1.35}
+.cv .opts{display:flex;gap:6px;flex-wrap:wrap}
+.cv .radar svg{width:100%;height:100%;overflow:visible}
+.cv .radar .g{fill:none;stroke:var(--line-2)}
+.cv .radar .poly{fill:rgba(242,169,62,.35);stroke:var(--orange);stroke-width:2;transform-origin:112px 112px;transform:scale(0);transition:transform 1s cubic-bezier(.2,.9,.3,1.2) .2s}
+.cv .radar.in .poly{transform:scale(1)}
+.cv .radar text{font-size:10.5px;fill:var(--soft);font-family:inherit}
+.cv .tip{display:flex;gap:12px;align-items:center}
+.cv .tipi{width:34px;height:34px;border-radius:50%;background:var(--orange);color:#1A1730;display:grid;place-items:center;font-weight:700;flex-shrink:0}
+.cv .tip small{display:block;font-size:11px;color:var(--faint)}
+.cv .tip p{font-size:13.5px}
+.cv .score{display:flex;align-items:baseline;gap:4px;margin-bottom:8px}
+.cv .score small{color:var(--faint)}
+/* Branding */
+.cv .bub{padding:11px 14px;border-radius:18px;font-size:13.5px;box-shadow:0 14px 30px -22px rgba(14,12,26,.5);max-width:260px}
+.cv .bub.me{background:var(--card);border:1px solid var(--line);border-bottom-left-radius:5px}
+.cv .bub.us{background:#1A1730;color:#FFFFFF;border-bottom-right-radius:5px}
+.cv .logo{display:grid;justify-items:center;align-content:center;text-align:center;gap:3px}
+.cv .mark{width:58px;height:58px;border-radius:50%;background:#C8553D;color:#F3E3C3;display:grid;place-items:center;font-size:28px;font-weight:700;font-family:Georgia,serif;margin-bottom:4px}
+.cv .logo.in .mark{animation:pop .7s cubic-bezier(.3,1.6,.5,1) .2s both}
+@keyframes pop{from{transform:scale(0) rotate(-40deg)}}
+.cv .logo b{font-size:19px;font-weight:600;letter-spacing:-.02em;color:#C8553D;min-height:1.3em;font-family:Georgia,serif}
+.cv .logo small{font-size:11.5px;color:var(--soft)}
+.cv .sw{display:flex;gap:12px}
+.cv .sw > span{display:grid;gap:4px;justify-items:center;font-size:9.5px;color:var(--faint)}
+.cv .sw i{width:44px;height:44px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(26,23,48,.12)}
+.cv .mocks{display:flex;gap:14px}
+.cv .mk{flex:1;display:grid;gap:6px;justify-items:center;font-size:11px;color:var(--soft)}
+.cv .mk > div{width:100%;height:112px;border-radius:14px;display:grid;place-items:center;box-shadow:0 18px 36px -24px rgba(14,12,26,.6);text-align:center;padding:10px;font-family:Georgia,serif}
+.cv .jar{background:#F3E3C3}
+.cv .jar span{width:74px;height:74px;border-radius:50%;background:#C8553D;color:#F3E3C3;display:grid;place-items:center;font-size:11px;line-height:1.2;border:3px solid #F3E3C3;box-shadow:0 0 0 2px #C8553D}
+.cv .bcard{background:#3B2A2F;color:#F3E3C3;font-size:14px}
+.cv .bcard small{display:block;font-family:Poppins,system-ui,sans-serif;font-size:9.5px;opacity:.75;margin-top:4px}
+.cv .post{background:#C8553D;color:#FFF6E6;font-size:14px;line-height:1.25}
+/* Website */
+.cv .browser{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 22px 44px -26px rgba(14,12,26,.55)}
+.cv .bt{display:flex;gap:5px;align-items:center;padding:8px 10px;border-bottom:1px solid var(--line)}
+.cv .bt i{width:8px;height:8px;border-radius:50%;background:var(--line-2)}
+.cv .addr{margin-left:10px;font-size:10.5px;color:var(--faint);background:var(--panel-2);padding:2px 10px;border-radius:999px}
+.cv .pg{padding:10px;display:grid;gap:8px}
+.cv .wf{position:relative;border-radius:8px;background:var(--panel-2);overflow:hidden}
+.cv .wf.nv{height:14px}
+.cv .wf.hr{height:96px}
+.cv .row3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.cv .row3 .wf{height:50px}
+.cv .fill{position:absolute;inset:0}
+.cv .hr .fill{background:linear-gradient(120deg,#C8553D,#E0A26A);color:#FFF6E6;padding:12px 14px;display:grid;align-content:center;justify-items:start;gap:2px}
+.cv .hr .fill b{font-size:16px;font-family:Georgia,serif;font-weight:600}
+.cv .hr .fill small{font-size:10px;opacity:.92}
+.cv .hr .fill span{margin-top:4px;font-size:9.5px;background:#FFF6E6;color:#3B2A2F;padding:3px 9px;border-radius:999px}
+.cv .row3 .fill{background:linear-gradient(135deg,#F3E3C3,#E0A26A)}
+.cv .phone.sm{border-radius:22px;padding:5px}
+.cv .phone.sm .scr{border-radius:18px;font-size:10px}
+.cv .m-hr{height:92px;background:linear-gradient(120deg,#C8553D,#E0A26A);color:#FFF6E6;padding:26px 10px 8px;display:grid;align-content:center;gap:1px}
+.cv .m-hr b{font-family:Georgia,serif;font-size:13px}
+.cv .m-c{height:34px;margin:7px 8px 0;border-radius:7px;background:linear-gradient(135deg,#F3E3C3,#E0A26A)}
+.cv .live{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12.5px}
+.cv .dl{width:9px;height:9px;border-radius:50%;background:var(--orange);display:inline-block;margin-right:6px;animation:ping 1.6s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(242,169,62,.6)}70%,100%{box-shadow:0 0 0 9px rgba(242,169,62,0)}}
+/* MVP */
+.cv .paper{background:#FFFDF6;color:#1A1730;border-radius:6px;padding:14px;box-shadow:0 22px 40px -26px rgba(14,12,26,.55)}
+.cv .paper p{font-family:"Segoe Print","Bradley Hand","Comic Sans MS",cursive;font-size:13px;margin-bottom:8px;line-height:1.3}
+.cv .paper svg{width:100%;height:150px;display:block}
+.cv .paper .sk{fill:none;stroke:rgba(26,23,48,.55);stroke-width:1.6;stroke-linecap:round}
+.cv .app-h{padding:26px 12px 10px;font-weight:600;font-size:13px;background:#1A1730;color:#FFFFFF}
+.cv .mi{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:9px 10px;border-bottom:1px solid rgba(26,23,48,.08);font-size:11px;white-space:nowrap}
+.cv .mi span{display:flex;align-items:center;gap:8px}
+.cv .mi i{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,#F2A93E,#E85F3D);flex-shrink:0}
+.cv .mbtn{position:relative;margin:12px;padding:10px;text-align:center;border-radius:12px;background:#F2A93E;color:#1A1730;font-weight:600;font-size:12px}
+.cv .tap{position:absolute;left:50%;top:50%;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:rgba(26,23,48,.35)}
+.cv .tap[data-at]{transform:none;transition:none}
+.cv .tap.in{animation:tap 1s ease-out .3s both}
+@keyframes tap{0%{transform:scale(.4);opacity:1}100%{transform:scale(2.8);opacity:0}}
+.cv .mtoast{position:absolute;left:10px;right:10px;bottom:14px;padding:10px;border-radius:12px;background:#1A1730;color:#FFFFFF;font-size:11.5px;text-align:center}
+.cv .avs{display:flex;flex-shrink:0}
+.cv .users{display:flex;align-items:center;gap:12px;font-size:12px;line-height:1.3}
+.cv .avs .av{margin-left:-8px;border:2px solid var(--card)}
+.cv .avs .av:first-child{margin-left:0}
+/* Ngobrol */
+.cv .plan{padding:12px 14px}
+.cv .plan .li{padding:4px 0;font-size:13px}
+.cv .num{width:22px;height:22px;border-radius:50%;background:var(--panel-2);display:grid;place-items:center;font-size:11px;font-weight:600;flex-shrink:0}
+.cv .li small{margin-left:auto;color:var(--faint);font-size:11px;white-space:nowrap}
+.cv .wab{display:grid;gap:6px;justify-items:center;text-align:center}
+.cv .wab span{padding:12px 18px;border-radius:999px;background:var(--btn);color:var(--btn-text);font-weight:500;font-size:13px;animation:glow 1.6s ease-in-out infinite}
+.cv .wab small{font-size:11px;color:var(--faint)}
+
+/* Starterpack: kartu produk dengan foto */
+.sp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.sp{display:flex;flex-direction:column;border-radius:24px;background:var(--card);border:1px solid var(--line);overflow:hidden;text-decoration:none;color:inherit;transition:transform .3s,box-shadow .3s}
+.sp:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.sp .ph{display:block;aspect-ratio:4/3;background:var(--panel-2);overflow:hidden}
+.sp .ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.sp:hover .ph img{transform:scale(1.04)}
+.sp .tx{display:flex;flex-direction:column;gap:6px;padding:18px 20px 20px;flex:1}
+.sp b{font-size:18px;font-weight:500;letter-spacing:-.02em}
+.sp .ds{font-size:14px;color:var(--soft);line-height:1.5;flex:1}
+.sp .pr{font-weight:600;font-size:17px;margin-top:8px;font-variant-numeric:tabular-nums}
+.sp .pr small{display:block;font-size:12px;font-weight:400;color:var(--faint)}
 .field{display:grid;gap:6px;font-size:14px;color:var(--soft)}
 .field input,.field select{font-size:16px;color:var(--text);background:var(--card);border:1px solid var(--line-2);border-radius:12px;padding:10px 12px;width:100%}
 .out{border-radius:18px;background:var(--card);border:1px solid var(--line);padding:18px;font-size:14.5px}
@@ -415,10 +623,19 @@ footer .legal{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap
   .bento,.plans{grid-template-columns:1fr}
   .news{grid-template-columns:1fr 1fr}
   footer .cols{grid-template-columns:1fr 1fr}
-  .demo{grid-template-columns:1fr}
-  .demo .side{display:flex;gap:14px;align-items:center}
-  .demo .side h3{margin-top:0}
-  .demo .side p{display:none}
+  .sp-grid{grid-template-columns:repeat(2,1fr)}
+  .demo{position:fixed;inset:0;z-index:120;border-radius:0;border:0;grid-template-columns:1fr;align-content:center;gap:14px;padding:16px 16px calc(18px + env(safe-area-inset-bottom,0px));background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none}
+  .demo .who .orb{width:44px;height:44px}
+  .demo .who h3{font-size:20px}
+  .demo .who p{display:none}
+  .demo .side{display:contents}
+  #storyUi{order:1}
+  .demo-body{order:2}
+  .st-cta{order:3}
+  .scene{min-height:0}
+  .st-cap b{font-size:18px;min-height:0}
+  .st-cta{margin-top:0}
+  html.demo-open,html.demo-open body{overflow:hidden}
 }
 @media (max-width:600px){
   .frame{border-inline:0}
@@ -428,11 +645,13 @@ footer .legal{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap
   .logo{font-size:17px}
   .logo img{width:28px;height:28px}
   .band::before,.band::after{display:none}
-  .tabs{grid-template-columns:repeat(3,auto);overflow-x:auto}
+  .tabs{grid-template-columns:repeat(2,1fr)}
   .screens{grid-template-columns:1fr}
   .screens .win:last-child{display:none}
   .trust,.news{grid-template-columns:1fr}
-  .demo-body{grid-template-columns:1fr}
+  .demo-body.form{grid-template-columns:1fr}
+  .sp-grid{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:80%;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}
+  .sp{scroll-snap-align:start}
   body{font-size:15px}
   .btn{padding:11px 20px;font-size:15px}
   .btn-sm{padding:7px 14px;font-size:14px}
@@ -534,8 +753,7 @@ footer .legal{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap
     <div class="stage" id="stage">
       <div class="tabs" role="tablist">
         <button class="tab" role="tab" aria-selected="true" data-set="tools"><span class="dot" style="background:#F2A93E"></span><span data-i18n="tab.tools">Founderku Tools</span></button>
-        <button class="tab" role="tab" aria-selected="false" data-set="studio"><span class="dot" style="background:#8A85B8"></span><span data-i18n="tab.studio">Founderku Studio</span></button>
-        <button class="tab" role="tab" aria-selected="false" data-set="starter"><span class="dot" style="background:#E85F3D"></span><span data-i18n="tab.starter">Starterpack</span></button>
+        <button class="tab" role="tab" aria-selected="false" data-set="studio"><span class="dot" style="background:#8A85B8"></span><span data-i18n="tab.studio">Founderku</span></button>
       </div>
       <div class="carousel">
         <div class="track" id="track"></div>
@@ -545,7 +763,18 @@ footer .legal{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap
       <div class="chips" id="chips"></div>
       <div class="demo" id="demo" aria-hidden="true">
         <button class="icon-btn close" id="demoClose" type="button" data-i18n-aria="demo.close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-        <div class="side"><span class="orb spin" id="demoOrb"><i></i></span><div><h3 id="demoTitle"></h3><p id="demoDesc"></p></div></div>
+        <div class="side">
+          <div class="who"><span class="orb spin" id="demoOrb"><i></i></span><div><h3 id="demoTitle"></h3><p id="demoDesc"></p></div></div>
+          <div id="storyUi">
+            <div class="bars" id="stBars"></div>
+            <p class="st-cap" aria-live="polite"><small id="stNum"></small><b id="stCap"></b></p>
+            <div class="st-ctl">
+              <button class="icon-btn" id="stPlay" type="button" data-i18n-aria="st.pause"></button>
+              <button class="icon-btn" id="stAgain" type="button" data-i18n-aria="st.replay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button>
+            </div>
+          </div>
+          <div class="st-cta" id="stCta"></div>
+        </div>
         <div class="demo-body" id="demoBody"></div>
       </div>
     </div>
@@ -560,7 +789,7 @@ footer .legal{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap
     <h2 class="h2" style="max-width:17ch;margin-bottom:26px" data-i18n="two.h2" data-dot></h2>
     <div class="two">
       <div><b>Founderku Tools</b><span data-i18n="two.tools"></span></div>
-      <div><b>Founderku Studio</b><span data-i18n="two.studio"></span></div>
+      <div><b>Founderku</b><span data-i18n="two.studio"></span></div>
     </div>
     <div class="screens" id="screens">
       <span class="tag" data-i18n="mock.note">Contoh tampilan</span>
@@ -644,6 +873,14 @@ footer .legal{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap
     <div id="caseStrip"></div>
   </div>
 
+  <div class="band" id="starterpack" hidden>
+    <div class="sec-head rv">
+      <div><div class="eyebrow" data-i18n="starter.eyebrow"></div><h2 class="h2" data-i18n="starter.h2" data-dot></h2><a class="btn btn-line" href="store.html" data-i18n="starter.all">Lihat semua</a></div>
+      <p data-i18n="starter.sub"></p>
+    </div>
+    <div class="sp-grid" id="starterGrid"></div>
+  </div>
+
   <div class="band" id="generator">
     <div class="gen">
       <div class="rv">
@@ -712,14 +949,6 @@ footer .legal{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap
     <div class="pricing-more rv"><a href="/harga" data-i18n="pricing.full">Lihat detail harga</a></div>
   </div>
 
-  <div class="band" id="starterpack" hidden>
-    <div class="sec-head rv">
-      <div><div class="eyebrow" data-i18n="starter.eyebrow"></div><h2 class="h2" data-i18n="starter.h2" data-dot></h2><a class="btn btn-line" href="store.html" data-i18n="starter.all">Lihat semua</a></div>
-      <p data-i18n="starter.sub"></p>
-    </div>
-    <div class="grid-auto" id="starterGrid"></div>
-  </div>
-
   <div class="band" id="faq">
     <div class="sec-head rv" style="margin-bottom:18px"><div><div class="eyebrow" data-i18n="faq.eyebrow">FAQ</div><h2 class="h2" data-i18n="faq.h2" data-dot></h2></div></div>
     <div class="faq rv">
@@ -777,7 +1006,7 @@ footer .legal{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap
   var root=document.documentElement;
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var WA='6285710477257';
-  var I18N={"id": {"harga.eyebrow": "Harga", "harga.freeName": "Free", "harga.freeDesc": "Buat coba-coba dan baru mulai.", "harga.free1": "Satu akun Founderku", "harga.free2": "Tools dasar langsung bisa dipakai", "harga.free3": "Pajangin: 2 halaman jualan (dengan watermark)", "harga.freeCta": "Daftar Gratis", "faq.qTrial": "Trial gratisnya gimana?", "faq.aTrial": "Begitu daftar, kamu langsung dapat {days} hari Founderku Pro, tanpa kartu dan tanpa bayar di awal. Setelah itu akun otomatis balik ke versi gratis, kecuali kamu berlangganan.", "faq.qPay": "Bayarnya gimana? Ada tagihan otomatis?", "faq.aPay": "Bayar per bulan atau per tahun lewat halaman pembayaran Xendit (transfer bank, e-wallet, dan lainnya). Nggak ada tagihan otomatis, jadi kamu sendiri yang putuskan kapan perpanjang.", "faq.eyebrow": "FAQ", "faq.h2": "Pertanyaan yang sering muncul", "faq.q1": "Aku gak punya background teknis, bisa gak?", "faq.a1": "Bisa banget, dan ini justru kenapa Founderku ada. Fokus aja ke ide dan visi kamu, kami yang urus branding sampai eksekusi produknya sampai kelar.", "faq.q2": "Berapa lama proses dari ide sampai MVP jadi?", "faq.a2": "Rata-rata 4-6 minggu, mulai dari ngobrol awal sampai produk siap didemokan ke user atau investor pertama kamu.", "faq.q3": "Apa bedanya paket Branding dan MVP?", "faq.a3": "Branding fokus bikin orang percaya sejak lihat pertama, MVP fokus bikin produkmu bisa dicoba beneran. Bisa ambil salah satu, atau dua-duanya sekaligus biar makin lengkap.", "faq.q4": "Setelah MVP jadi, apakah Founderku masih bisa bantu?", "faq.a4": "Bisa, dan memang di situ Founderku paling sering kepakai. Banyak klien lanjut ke tahap pengembangan produk atau growth begitu MVP-nya tervalidasi.", "faq.q5": "Gimana cara mulainya?", "faq.a5": "Gampang. Klik tombol Ceritain Ide Kamu, cerita 30 menit gratis, dan kami bantu petakan langkah pertama yang paling masuk akal buat kamu.", "gen.h2": "Coba lihat brand kamu jadi, sekarang juga.", "gen.sub": "Pilih industri, ceritain target user kamu, klik generate. Nama, tagline, sama warna langsung muncul di depan mata. Gratis, cuma buat mancing ide, tanpa daftar apa pun.", "gen.labelIndustri": "Industri", "gen.labelTarget": "Target user kamu", "gen.placeholderTarget": "misal: anak muda, ibu rumah tangga…", "gen.labelVibe": "Vibe", "gen.vibePlayful": "Playful", "gen.vibeProfessional": "Professional", "gen.vibeBold": "Bold", "gen.vibeMinimalis": "Minimalis", "gen.btn": "Generate ✨", "gen.hint": "Belum sreg? Klik generate lagi. Hasilnya beda terus. Atau langsung aja ngobrol bareng kita.", "gen.optEdukasi": "Edukasi", "gen.optKesehatan": "Kesehatan", "gen.optFnb": "F&B", "gen.optTeknologi": "Teknologi / SaaS", "gen.optKreatif": "Kreatif / Desain", "gen.optFashion": "Fashion / Lifestyle", "gen.optSosial": "Sosial / NGO", "gen.optFinansial": "Finansial", "cta.h2": "Ide kamu udah cukup lama nunggu. Sekarang giliran jalan.", "cta.sub": "Cerita 30 menit, gratis, tanpa tekanan. Kita cari langkah pertama yang paling masuk akal buat kamu.", "cta.btn": "Chat di WhatsApp", "footer.copy": "© 2026 PT Talenthra Karya Nusantara. NIB 0909250086011. Hak cipta dilindungi undang-undang.", "nav.tools": "Tools", "nav.studio": "Studio", "nav.learn": "Belajar", "nav.starter": "Starterpack", "nav.pricing": "Harga", "nav.login": "Masuk", "nav.signup": "Daftar", "nav.account": "Akun Saya", "nav.menu": "Buka menu", "nav.close": "Tutup menu", "nav.theme": "Ganti tema terang/gelap", "nav.lang": "Pilih bahasa", "mega.toolsFoot": "Semua tools, satu akun. Trial {days} hari.", "mega.seePricing": "Lihat harga", "mega.allTools": "Semua tools", "mega.studioFoot": "Rata-rata 4-6 minggu dari ide ke MVP.", "mega.cases": "Studi kasus", "svc.brand": "Branding", "svc.brandD": "Logo, warna, dan suara brand", "svc.web": "Website", "svc.webD": "Situs yang bikin orang percaya", "svc.mvp": "MVP", "svc.mvpD": "Produk yang bisa dicoba beneran", "svc.talk": "Ngobrol 30 menit", "svc.talkD": "Gratis, tanpa tekanan", "learn.blog": "Blog", "learn.blogD": "Cerita dan update dari Founderku", "learn.cases": "Studi Kasus", "learn.casesD": "Project yang udah kelar dan jalan", "learn.catalog": "Katalog Program", "learn.catalogD": "Program dan kesempatan buat founder", "hero.h1": "Semua bisa jadi founder.", "hero.sub": "Satu akun untuk tools yang bikin usaha jalan: halaman jualan, invoice, hitung pajak, sampai kontrak. Butuh lebih? Studio kami bantu dari branding sampai MVP.", "hero.cta1": "Coba gratis {days} hari", "hero.cta1In": "Buka akun kamu", "hero.cta2": "Ngobrol dengan studio", "hero.hello": "Hai, {name}! Lanjut dari akun kamu.", "tab.tools": "Founderku Tools", "tab.studio": "Founderku Studio", "tab.starter": "Starterpack", "car.prev": "Sebelumnya", "car.next": "Berikutnya", "car.try": "Coba {name}", "demo.close": "Tutup demo", "demo.taxBefore": "Omzet Januari sampai bulan lalu", "demo.taxNow": "Omzet bulan ini", "demo.taxFree": "Masih bebas pajak", "demo.taxed": "Kena PPh Final 0,5%", "demo.taxDue": "Pajak bulan ini", "demo.taxNote": "Simulasi: omzet kumulatif sampai Rp500 juta setahun tidak kena pajak. Bukan nasihat pajak.", "demo.prodName": "Nama produk", "demo.price": "Harga", "demo.orderWa": "Pesan lewat WhatsApp", "demo.item": "Barang / jasa", "demo.qty": "Jumlah", "demo.unit": "Harga satuan", "demo.total": "Total", "demo.open": "Buka {name} lengkap", "demo.other": "Coba versi lengkapnya. Gratis, tanpa daftar.", "demo.time": "Perkiraan waktu", "demo.start": "Mulai dari", "demo.startV": "Ngobrol 30 menit, gratis", "demo.wa": "Chat di WhatsApp", "demo.included": "Termasuk", "demo.includedV": "Website dan branding siap pakai", "demo.detail": "Lihat detail", "week.1": "Minggu 1", "week.12": "Minggu 1-2", "week.24": "Minggu 2-4", "week.25": "Minggu 2-5", "week.today": "Hari ini", "sample.pajangin": "Nastar Keju 250 gr", "sample.notain": "Nastar keju 250 gr", "trust.head": "Dipercaya founder dan brand yang udah jalan bareng kami", "trust.more": "Lihat studi kasus", "trust.partner": "Partner", "two.h2": "Dua lini, satu akun Founderku.", "two.tools": "Tools buat usahamu. Gratis dicoba, simpan ke akun dengan Pro.", "two.studio": "Tim yang bantu kamu bikin branding, website, dan MVP sampai beneran dipakai orang.", "mock.hello": "Hai, Rina 👋", "mock.plan": "Paket: Founderku Pro", "mock.trial": "Trial {days} hari", "mock.pajangin": "2 halaman aktif, 48 klik minggu ini", "mock.notain": "INV/20260926/004 tersimpan di akun", "mock.pajakin": "Pajak bulan ini Rp 0, masih bebas pajak", "mock.to": "Untuk: Bu Rina · 26 Sep 2026", "mock.ship": "Ongkir", "mock.note": "Contoh tampilan", "tools.eyebrow": "Founderku Tools", "tools.h2": "Bikin, hitung, dan rapikan usahamu di satu tempat.", "tools.sub": "Tools yang kami bangun dan pakai sendiri. Bisa langsung dipakai tanpa daftar. Login dengan Pro, datamu ikut tersimpan di akun dan bisa dibuka dari HP mana pun.", "tools.cta": "Mulai gratis", "tools.pre": "Pre-order H-2", "tools.ship": "Bisa kirim sekota", "tools.within": "Masih dalam jatah bebas pajak", "tools.yes": "Ya", "studio.eyebrow": "Founderku Studio", "studio.h2": "Bangun produk yang beneran dipakai orang.", "studio.sub": "Kamu fokus ke ide dan visi. Kami urus branding, website, sampai MVP. Rata-rata 4-6 minggu dari ngobrol pertama sampai produk siap didemokan.", "studio.cta": "Ceritain ide kamu", "chat.1": "Aku punya ide jualan kue, tapi gak ngerti bikin website.", "chat.2": "Bisa banget. Kita mulai dari brand dulu, ya.", "chat.3": "Berapa lama kira-kira?", "chat.4": "Biasanya 4-6 minggu sampai jalan.", "studio.talkD": "Gratis, tanpa tekanan. Kita cari langkah pertama yang paling masuk akal buat kamu.", "step.1": "Ngobrol ide", "step.2": "Bangun brand", "step.3": "Rancang & bangun MVP", "step.cap": "Cara kerja", "step.capD": "Tiga langkah yang jelas dari hari pertama sampai kamu resmi jadi founder.", "svc.brandL": "Bikin orang percaya sejak lihat pertama.", "svc.webL": "Situs cepat, rapi, dan gampang diurus sendiri.", "svc.mvpL": "Produk fungsional yang bisa dicoba user atau investor.", "gen.eyebrow": "Generator Nama Brand", "gen.opt": "Opsi", "gen.like": "Suka ini? Chat kita →", "pricing.h2": "Mulai gratis. Upgrade kalau perlu.", "pricing.sub": "Satu langganan membuka semua tools. Trial {days} hari otomatis saat daftar, tanpa kartu dan tanpa tagihan otomatis.", "pricing.proCta": "Mulai trial {days} hari", "pricing.period": "Pilih periode", "pricing.month": "bulan", "pricing.year": "tahun", "pricing.full": "Lihat detail harga", "card.member": "Member", "card.owner": "Pemilik", "card.you": "Kamu", "card.free": "{days} hari gratis", "starter.eyebrow": "Founder Starterpack", "starter.h2": "Produk siap jalan, tinggal kamu pakai.", "starter.sub": "Website dan platform yang sudah jadi, lengkap dengan branding. Cocok kalau kamu mau langsung mulai tanpa bangun dari nol.", "starter.all": "Lihat semua", "news.h2": "Update terbaru", "news.all": "Semua artikel", "cat.update": "Update", "cat.product": "Produk", "cat.case-study": "Studi kasus", "cta.tools": "Coba tools gratis", "footer.tag": "Semua bisa jadi founder. Tools dan studio buat UMKM dan founder baru.", "footer.company": "Perusahaan", "footer.terms": "Syarat & Ketentuan", "footer.privacy": "Kebijakan Privasi", "sheet.signup": "Daftar, gratis {days} hari"}, "en": {"harga.eyebrow": "Pricing", "harga.freeName": "Free", "harga.freeDesc": "For trying things out and just getting started.", "harga.free1": "One Founderku account", "harga.free2": "Basic tools, ready to use", "harga.free3": "Pajangin: 2 sales pages (with watermark)", "harga.freeCta": "Sign Up Free", "faq.qTrial": "How does the free trial work?", "faq.aTrial": "As soon as you sign up, you get {days} days of Founderku Pro, no card and no upfront payment. After that your account goes back to the free version unless you subscribe.", "faq.qPay": "How do I pay? Is there automatic billing?", "faq.aPay": "Pay monthly or yearly through the Xendit payment page (bank transfer, e-wallets, and more). There is no automatic billing, so you decide when to renew.", "faq.eyebrow": "FAQ", "faq.h2": "Frequently asked questions", "faq.q1": "I don't have a technical background, can I still do this?", "faq.a1": "Absolutely, and this is exactly why Founderku exists. Just focus on your idea and vision, we handle the branding through to execution.", "faq.q2": "How long does it take from idea to a finished MVP?", "faq.a2": "4-6 weeks on average, from our first conversation until the product is ready to demo to users or your first investors.", "faq.q3": "What's the difference between the Branding and MVP package?", "faq.a3": "Branding focuses on making people trust you at first glance, MVP focuses on making your product something people can actually try. You can take either one, or both together for a more complete package.", "faq.q4": "Once the MVP is done, can Founderku still help?", "faq.a4": "Yes, and that's actually where Founderku is used most. Many clients continue into product development or growth once their MVP is validated.", "faq.q5": "How do I get started?", "faq.a5": "Easy. Click the Tell Us Your Idea button, have a free 30-minute conversation, and we'll help map out the most sensible first step for you.", "gen.h2": "See your brand come to life, right now.", "gen.sub": "Pick an industry, describe your target user, click generate. A name, tagline, and colors appear right in front of you. Free, just to spark ideas, no sign-up needed.", "gen.labelIndustri": "Industry", "gen.labelTarget": "Your target user", "gen.placeholderTarget": "e.g. young adults, busy parents…", "gen.labelVibe": "Vibe", "gen.vibePlayful": "Playful", "gen.vibeProfessional": "Professional", "gen.vibeBold": "Bold", "gen.vibeMinimalis": "Minimalist", "gen.btn": "Generate ✨", "gen.hint": "Not quite right? Click generate again. The results change every time. Or just chat with us directly.", "gen.optEdukasi": "Education", "gen.optKesehatan": "Health", "gen.optFnb": "F&B", "gen.optTeknologi": "Technology / SaaS", "gen.optKreatif": "Creative / Design", "gen.optFashion": "Fashion / Lifestyle", "gen.optSosial": "Social / NGO", "gen.optFinansial": "Finance", "cta.h2": "Your idea has waited long enough. It's time to move.", "cta.sub": "A free 30-minute conversation, no pressure. We'll find the first step that makes the most sense for you.", "cta.btn": "Chat on WhatsApp", "footer.copy": "© 2026 PT Talenthra Karya Nusantara. Business ID (NIB) 0909250086011. All rights reserved.", "nav.tools": "Tools", "nav.studio": "Studio", "nav.learn": "Learn", "nav.starter": "Starterpack", "nav.pricing": "Pricing", "nav.login": "Log in", "nav.signup": "Sign up", "nav.account": "My Account", "nav.menu": "Open menu", "nav.close": "Close menu", "nav.theme": "Switch light/dark theme", "nav.lang": "Choose language", "mega.toolsFoot": "Every tool, one account. {days}-day trial.", "mega.seePricing": "See pricing", "mega.allTools": "All tools", "mega.studioFoot": "Usually 4-6 weeks from idea to MVP.", "mega.cases": "Case studies", "svc.brand": "Branding", "svc.brandD": "Logo, colours, and brand voice", "svc.web": "Website", "svc.webD": "A site that earns trust", "svc.mvp": "MVP", "svc.mvpD": "A product people can actually try", "svc.talk": "30-minute chat", "svc.talkD": "Free, no pressure", "learn.blog": "Blog", "learn.blogD": "Stories and updates from Founderku", "learn.cases": "Case Studies", "learn.casesD": "Projects that shipped and run", "learn.catalog": "Program Catalog", "learn.catalogD": "Programs and opportunities for founders", "hero.h1": "Anyone can become a founder.", "hero.sub": "One account for the tools that keep a business running: sales pages, invoices, tax estimates, and contracts. Need more? Our studio helps from branding to MVP.", "hero.cta1": "Try free for {days} days", "hero.cta1In": "Open your account", "hero.cta2": "Talk to the studio", "hero.hello": "Hi, {name}! Pick up where you left off.", "tab.tools": "Founderku Tools", "tab.studio": "Founderku Studio", "tab.starter": "Starterpack", "car.prev": "Previous", "car.next": "Next", "car.try": "Try {name}", "demo.close": "Close demo", "demo.taxBefore": "Revenue from January to last month", "demo.taxNow": "Revenue this month", "demo.taxFree": "Still tax-free", "demo.taxed": "Subject to 0.5% final tax", "demo.taxDue": "Tax this month", "demo.taxNote": "Estimate: the first Rp500 million of revenue each year is tax-free under Indonesian rules. Not tax advice.", "demo.prodName": "Product name", "demo.price": "Price", "demo.orderWa": "Order via WhatsApp", "demo.item": "Item / service", "demo.qty": "Quantity", "demo.unit": "Unit price", "demo.total": "Total", "demo.open": "Open full {name}", "demo.other": "Try the full version. Free, no sign-up.", "demo.time": "Estimated time", "demo.start": "Starts with", "demo.startV": "A free 30-minute chat", "demo.wa": "Chat on WhatsApp", "demo.included": "Includes", "demo.includedV": "A ready-to-use website and branding", "demo.detail": "See details", "week.1": "Week 1", "week.12": "Week 1-2", "week.24": "Week 2-4", "week.25": "Week 2-5", "week.today": "Today", "sample.pajangin": "Cheese Nastar Cookies 250 g", "sample.notain": "Cheese nastar cookies 250 g", "trust.head": "Trusted by founders and brands we've built with", "trust.more": "See case studies", "trust.partner": "Partner", "two.h2": "Two lines, one Founderku account.", "two.tools": "Tools for your business. Free to try, saved to your account with Pro.", "two.studio": "A team that helps you build branding, websites, and MVPs people actually use.", "mock.hello": "Hi, Rina 👋", "mock.plan": "Plan: Founderku Pro", "mock.trial": "{days}-day trial", "mock.pajangin": "2 active pages, 48 clicks this week", "mock.notain": "INV/20260926/004 saved to account", "mock.pajakin": "Tax this month Rp 0, still tax-free", "mock.to": "To: Bu Rina · 26 Sep 2026", "mock.ship": "Delivery", "mock.note": "Example view", "tools.eyebrow": "Founderku Tools", "tools.h2": "Build, calculate, and organize your business in one place.", "tools.sub": "Tools we build and use ourselves. Use them right away, no sign-up. With Pro, your data is saved to your account and opens on any phone.", "tools.cta": "Start free", "tools.pre": "Pre-order 2 days ahead", "tools.ship": "Same-city delivery", "tools.within": "Within the tax-free allowance", "tools.yes": "Yes", "studio.eyebrow": "Founderku Studio", "studio.h2": "Build a product people actually use.", "studio.sub": "You focus on the idea and the vision. We handle branding, the website, and the MVP. Usually 4-6 weeks from the first chat to a demo-ready product.", "studio.cta": "Tell us your idea", "chat.1": "I have an idea to sell cakes, but I don't know how to build a website.", "chat.2": "Absolutely. Let's start with the brand.", "chat.3": "How long does it take?", "chat.4": "Usually 4-6 weeks to launch.", "studio.talkD": "Free, no pressure. We'll find the most sensible first step for you.", "step.1": "Talk through the idea", "step.2": "Build the brand", "step.3": "Design & build the MVP", "step.cap": "How it works", "step.capD": "Three clear steps from day one until you're officially a founder.", "svc.brandL": "Earn trust at first glance.", "svc.webL": "A fast, tidy site you can manage yourself.", "svc.mvpL": "A working product users or investors can try.", "gen.eyebrow": "Brand Name Generator", "gen.opt": "Option", "gen.like": "Like this one? Chat with us →", "pricing.h2": "Start free. Upgrade when you need to.", "pricing.sub": "One subscription unlocks every tool. A {days}-day trial starts automatically when you sign up, no card and no automatic billing.", "pricing.proCta": "Start {days}-day trial", "pricing.period": "Choose billing period", "pricing.month": "month", "pricing.year": "year", "pricing.full": "See full pricing", "card.member": "Member", "card.owner": "Owner", "card.you": "You", "card.free": "{days} days free", "starter.eyebrow": "Founder Starterpack", "starter.h2": "Ready-to-run products, just make them yours.", "starter.sub": "Finished websites and platforms, complete with branding. Great if you want to start without building from scratch.", "starter.all": "See all", "news.h2": "Latest updates", "news.all": "All articles", "cat.update": "Update", "cat.product": "Product", "cat.case-study": "Case study", "cta.tools": "Try the tools free", "footer.tag": "Anyone can become a founder. Tools and a studio for small businesses and new founders.", "footer.company": "Company", "footer.terms": "Terms (Indonesian)", "footer.privacy": "Privacy (Indonesian)", "sheet.signup": "Sign up, {days} days free"}, "tr": {"harga.eyebrow": "Fiyatlar", "harga.freeName": "Ücretsiz", "harga.freeDesc": "Denemek ve yeni başlamak için.", "harga.free1": "Tek bir Founderku hesabı", "harga.free2": "Temel araçlar hemen kullanıma hazır", "harga.free3": "Pajangin: 2 satış sayfası (filigranlı)", "harga.freeCta": "Ücretsiz Kaydol", "faq.qTrial": "Ücretsiz deneme nasıl işliyor?", "faq.aTrial": "Kaydolur olmaz {days} gün Founderku Pro alırsın, kart ve ön ödeme gerekmez. Sonrasında abone olmazsan hesabın ücretsiz sürüme döner.", "faq.qPay": "Nasıl ödeme yaparım? Otomatik ödeme var mı?", "faq.aPay": "Xendit ödeme sayfası üzerinden aylık veya yıllık ödersin (banka havalesi, e-cüzdan ve diğerleri). Otomatik ödeme yok, ne zaman yenileyeceğine sen karar verirsin.", "faq.eyebrow": "SSS", "faq.h2": "Sıkça sorulan sorular", "faq.q1": "Teknik bir geçmişim yok, yine de olur mu?", "faq.a1": "Kesinlikle olur, Founderku'nun var olma sebebi de bu. Sen sadece fikrine ve vizyonuna odaklan, marka kimliğinden ürünün tamamlanmasına kadar biz hallederiz.", "faq.q2": "Fikirden bitmiş bir MVP'ye kadar süreç ne kadar sürüyor?", "faq.a2": "Ortalama 4-6 hafta, ilk konuşmamızdan, ürünün kullanıcılara veya ilk yatırımcılarına gösterilmeye hazır olmasına kadar.", "faq.q3": "Marka Kimliği ve MVP paketi arasındaki fark nedir?", "faq.a3": "Marka Kimliği, insanların seni ilk bakışta güvenmesini sağlamaya odaklanır, MVP ise ürününü gerçekten denenebilir hale getirmeye odaklanır. İkisinden birini alabilir, ya da daha eksiksiz bir paket için ikisini birlikte alabilirsin.", "faq.q4": "MVP bittikten sonra Founderku hâlâ yardımcı olabilir mi?", "faq.a4": "Evet, Founderku'nun en çok kullanıldığı nokta da tam olarak burası. Birçok müşteri, MVP'si doğrulandıktan sonra ürün geliştirme veya büyüme aşamasına geçiyor.", "faq.q5": "Nasıl başlarım?", "faq.a5": "Kolay. Fikrini Anlat butonuna tıkla, ücretsiz 30 dakikalık bir sohbet yapalım, sana en mantıklı ilk adımı birlikte belirleyelim.", "gen.h2": "Markanın nasıl olacağını hemen şimdi gör.", "gen.sub": "Bir sektör seç, hedef kullanıcını anlat, generate'e tıkla. İsim, slogan ve renkler anında karşında beliriyor. Ücretsiz, sadece fikir vermek için, kayıt gerekmiyor.", "gen.labelIndustri": "Sektör", "gen.labelTarget": "Hedef kullanıcın", "gen.placeholderTarget": "örn: gençler, çalışan anneler…", "gen.labelVibe": "Tarz", "gen.vibePlayful": "Eğlenceli", "gen.vibeProfessional": "Profesyonel", "gen.vibeBold": "Cesur", "gen.vibeMinimalis": "Minimalist", "gen.btn": "Oluştur ✨", "gen.hint": "Tam olmadı mı? Tekrar generate'e tıkla. Sonuçlar her seferinde değişiyor. Ya da direkt bizimle sohbet et.", "gen.optEdukasi": "Eğitim", "gen.optKesehatan": "Sağlık", "gen.optFnb": "Yiyecek & İçecek", "gen.optTeknologi": "Teknoloji / SaaS", "gen.optKreatif": "Kreatif / Tasarım", "gen.optFashion": "Moda / Yaşam Tarzı", "gen.optSosial": "Sosyal / STK", "gen.optFinansial": "Finans", "cta.h2": "Fikrin yeterince bekledi. Şimdi sıra harekete geçmekte.", "cta.sub": "Ücretsiz, baskısız 30 dakikalık bir sohbet. Senin için en mantıklı ilk adımı birlikte bulalım.", "cta.btn": "WhatsApp'ta Sohbet Et", "footer.copy": "© 2026 PT Talenthra Karya Nusantara. İşletme No (NIB) 0909250086011. Tüm hakları saklıdır.", "nav.tools": "Araçlar", "nav.studio": "Stüdyo", "nav.learn": "Öğren", "nav.starter": "Starterpack", "nav.pricing": "Fiyatlar", "nav.login": "Giriş", "nav.signup": "Kaydol", "nav.account": "Hesabım", "nav.menu": "Menüyü aç", "nav.close": "Menüyü kapat", "nav.theme": "Açık/koyu tema", "nav.lang": "Dil seç", "mega.toolsFoot": "Tüm araçlar, tek hesap. {days} günlük deneme.", "mega.seePricing": "Fiyatları gör", "mega.allTools": "Tüm araçlar", "mega.studioFoot": "Fikirden MVP'ye genellikle 4-6 hafta.", "mega.cases": "Vaka çalışmaları", "svc.brand": "Markalaşma", "svc.brandD": "Logo, renkler ve marka dili", "svc.web": "Web sitesi", "svc.webD": "Güven veren bir site", "svc.mvp": "MVP", "svc.mvpD": "Gerçekten denenebilen bir ürün", "svc.talk": "30 dakikalık sohbet", "svc.talkD": "Ücretsiz, baskı yok", "learn.blog": "Blog", "learn.blogD": "Founderku'dan hikayeler ve güncellemeler", "learn.cases": "Vaka Çalışmaları", "learn.casesD": "Tamamlanıp yayında olan projeler", "learn.catalog": "Program Kataloğu", "learn.catalogD": "Kurucular için programlar ve fırsatlar", "hero.h1": "Herkes kurucu olabilir.", "hero.sub": "İşini yürüten araçlar için tek hesap: satış sayfası, fatura, vergi hesabı ve sözleşme. Daha fazlası mı lazım? Stüdyomuz markalaşmadan MVP'ye kadar yardım eder.", "hero.cta1": "{days} gün ücretsiz dene", "hero.cta1In": "Hesabını aç", "hero.cta2": "Stüdyoyla konuş", "hero.hello": "Merhaba {name}! Kaldığın yerden devam et.", "tab.tools": "Founderku Araçları", "tab.studio": "Founderku Stüdyo", "tab.starter": "Starterpack", "car.prev": "Önceki", "car.next": "Sonraki", "car.try": "{name} dene", "demo.close": "Demoyu kapat", "demo.taxBefore": "Ocak'tan geçen aya kadar ciro", "demo.taxNow": "Bu ayki ciro", "demo.taxFree": "Hâlâ vergisiz", "demo.taxed": "%0,5 nihai vergiye tabi", "demo.taxDue": "Bu ayın vergisi", "demo.taxNote": "Tahmin: Endonezya kurallarına göre yıllık ilk 500 milyon Rp ciro vergiden muaftır. Vergi tavsiyesi değildir.", "demo.prodName": "Ürün adı", "demo.price": "Fiyat", "demo.orderWa": "WhatsApp ile sipariş ver", "demo.item": "Ürün / hizmet", "demo.qty": "Adet", "demo.unit": "Birim fiyat", "demo.total": "Toplam", "demo.open": "{name} aracını aç", "demo.other": "Tam sürümü dene. Ücretsiz, kayıt yok.", "demo.time": "Tahmini süre", "demo.start": "Başlangıç", "demo.startV": "Ücretsiz 30 dakikalık sohbet", "demo.wa": "WhatsApp'tan yaz", "demo.included": "İçerik", "demo.includedV": "Kullanıma hazır web sitesi ve marka", "demo.detail": "Detayları gör", "week.1": "1. hafta", "week.12": "1-2. hafta", "week.24": "2-4. hafta", "week.25": "2-5. hafta", "week.today": "Bugün", "sample.pajangin": "Peynirli Nastar Kurabiye 250 g", "sample.notain": "Peynirli nastar kurabiye 250 g", "trust.head": "Birlikte çalıştığımız kurucular ve markalar güveniyor", "trust.more": "Vaka çalışmalarını gör", "trust.partner": "Partner", "two.h2": "İki hat, tek Founderku hesabı.", "two.tools": "İşin için araçlar. Denemesi ücretsiz, Pro ile hesabına kaydedilir.", "two.studio": "İnsanların gerçekten kullandığı marka, web sitesi ve MVP'yi birlikte kuran ekip.", "mock.hello": "Merhaba Rina 👋", "mock.plan": "Plan: Founderku Pro", "mock.trial": "{days} günlük deneme", "mock.pajangin": "2 aktif sayfa, bu hafta 48 tıklama", "mock.notain": "INV/20260926/004 hesaba kaydedildi", "mock.pajakin": "Bu ay vergi Rp 0, hâlâ vergisiz", "mock.to": "Alıcı: Bu Rina · 26 Eyl 2026", "mock.ship": "Kargo", "mock.note": "Örnek görünüm", "tools.eyebrow": "Founderku Araçları", "tools.h2": "İşini tek yerde kur, hesapla ve düzenle.", "tools.sub": "Kendi geliştirip kullandığımız araçlar. Kayıt olmadan hemen kullan. Pro ile verilerin hesabına kaydedilir ve her telefondan açılır.", "tools.cta": "Ücretsiz başla", "tools.pre": "2 gün önceden sipariş", "tools.ship": "Şehir içi teslimat", "tools.within": "Vergisiz limit içinde", "tools.yes": "Evet", "studio.eyebrow": "Founderku Stüdyo", "studio.h2": "İnsanların gerçekten kullandığı bir ürün kur.", "studio.sub": "Sen fikre ve vizyona odaklan. Markalaşma, web sitesi ve MVP'yi biz üstleniriz. İlk sohbetten demoya hazır ürüne genellikle 4-6 hafta.", "studio.cta": "Fikrini anlat", "chat.1": "Pasta satma fikrim var ama web sitesi yapmayı bilmiyorum.", "chat.2": "Tabii ki. Önce markayla başlayalım.", "chat.3": "Ne kadar sürer?", "chat.4": "Genellikle 4-6 haftada yayında.", "studio.talkD": "Ücretsiz, baskı yok. Senin için en mantıklı ilk adımı birlikte buluruz.", "step.1": "Fikri konuşalım", "step.2": "Markayı kur", "step.3": "MVP'yi tasarla ve kur", "step.cap": "Nasıl çalışır", "step.capD": "İlk günden resmen kurucu olana kadar üç net adım.", "svc.brandL": "İlk bakışta güven kazan.", "svc.webL": "Kendin yönetebileceğin hızlı ve düzenli bir site.", "svc.mvpL": "Kullanıcıların veya yatırımcıların deneyebileceği çalışan bir ürün.", "gen.eyebrow": "Marka Adı Üretici", "gen.opt": "Seçenek", "gen.like": "Beğendin mi? Bize yaz →", "pricing.h2": "Ücretsiz başla. Gerekince yükselt.", "pricing.sub": "Tek abonelik tüm araçları açar. Kaydolunca {days} günlük deneme otomatik başlar; kart yok, otomatik ödeme yok.", "pricing.proCta": "{days} günlük denemeyi başlat", "pricing.period": "Ödeme dönemi seç", "pricing.month": "ay", "pricing.year": "yıl", "pricing.full": "Tüm fiyat detayları", "card.member": "Üye", "card.owner": "Sahibi", "card.you": "Sen", "card.free": "{days} gün ücretsiz", "starter.eyebrow": "Founder Starterpack", "starter.h2": "Çalışmaya hazır ürünler, sadece sahiplen.", "starter.sub": "Markasıyla birlikte hazır web siteleri ve platformlar. Sıfırdan kurmadan başlamak istersen ideal.", "starter.all": "Tümünü gör", "news.h2": "Son güncellemeler", "news.all": "Tüm yazılar", "cat.update": "Güncelleme", "cat.product": "Ürün", "cat.case-study": "Vaka çalışması", "cta.tools": "Araçları ücretsiz dene", "footer.tag": "Herkes kurucu olabilir. Küçük işletmeler ve yeni kurucular için araçlar ve stüdyo.", "footer.company": "Şirket", "footer.terms": "Koşullar (Endonezce)", "footer.privacy": "Gizlilik (Endonezce)", "sheet.signup": "Kaydol, {days} gün ücretsiz"}};
+  var I18N={"id": {"harga.eyebrow": "Harga", "harga.freeName": "Free", "harga.freeDesc": "Buat coba-coba dan baru mulai.", "harga.free1": "Satu akun Founderku", "harga.free2": "Tools dasar langsung bisa dipakai", "harga.free3": "Pajangin: 2 halaman jualan (dengan watermark)", "harga.freeCta": "Daftar Gratis", "faq.qTrial": "Trial gratisnya gimana?", "faq.aTrial": "Begitu daftar, kamu langsung dapat {days} hari Founderku Pro, tanpa kartu dan tanpa bayar di awal. Setelah itu akun otomatis balik ke versi gratis, kecuali kamu berlangganan.", "faq.qPay": "Bayarnya gimana? Ada tagihan otomatis?", "faq.aPay": "Bayar per bulan atau per tahun lewat halaman pembayaran Xendit (transfer bank, e-wallet, dan lainnya). Nggak ada tagihan otomatis, jadi kamu sendiri yang putuskan kapan perpanjang.", "faq.eyebrow": "FAQ", "faq.h2": "Pertanyaan yang sering muncul", "faq.q1": "Aku gak punya background teknis, bisa gak?", "faq.a1": "Bisa banget, dan ini justru kenapa Founderku ada. Fokus aja ke ide dan visi kamu, kami yang urus branding sampai eksekusi produknya sampai kelar.", "faq.q2": "Berapa lama proses dari ide sampai MVP jadi?", "faq.a2": "Rata-rata 4-6 minggu, mulai dari ngobrol awal sampai produk siap didemokan ke user atau investor pertama kamu.", "faq.q3": "Apa bedanya paket Branding dan MVP?", "faq.a3": "Branding fokus bikin orang percaya sejak lihat pertama, MVP fokus bikin produkmu bisa dicoba beneran. Bisa ambil salah satu, atau dua-duanya sekaligus biar makin lengkap.", "faq.q4": "Setelah MVP jadi, apakah Founderku masih bisa bantu?", "faq.a4": "Bisa, dan memang di situ Founderku paling sering kepakai. Banyak klien lanjut ke tahap pengembangan produk atau growth begitu MVP-nya tervalidasi.", "faq.q5": "Gimana cara mulainya?", "faq.a5": "Gampang. Klik tombol Ceritain Ide Kamu, cerita 30 menit gratis, dan kami bantu petakan langkah pertama yang paling masuk akal buat kamu.", "gen.h2": "Coba lihat brand kamu jadi, sekarang juga.", "gen.sub": "Pilih industri, ceritain target user kamu, klik generate. Nama, tagline, sama warna langsung muncul di depan mata. Gratis, cuma buat mancing ide, tanpa daftar apa pun.", "gen.labelIndustri": "Industri", "gen.labelTarget": "Target user kamu", "gen.placeholderTarget": "misal: anak muda, ibu rumah tangga…", "gen.labelVibe": "Vibe", "gen.vibePlayful": "Playful", "gen.vibeProfessional": "Professional", "gen.vibeBold": "Bold", "gen.vibeMinimalis": "Minimalis", "gen.btn": "Generate ✨", "gen.hint": "Belum sreg? Klik generate lagi. Hasilnya beda terus. Atau langsung aja ngobrol bareng kita.", "gen.optEdukasi": "Edukasi", "gen.optKesehatan": "Kesehatan", "gen.optFnb": "F&B", "gen.optTeknologi": "Teknologi / SaaS", "gen.optKreatif": "Kreatif / Desain", "gen.optFashion": "Fashion / Lifestyle", "gen.optSosial": "Sosial / NGO", "gen.optFinansial": "Finansial", "cta.h2": "Ide kamu udah cukup lama nunggu. Sekarang giliran jalan.", "cta.sub": "Cerita 30 menit, gratis, tanpa tekanan. Kita cari langkah pertama yang paling masuk akal buat kamu.", "cta.btn": "Chat di WhatsApp", "footer.copy": "© 2026 PT Talenthra Karya Nusantara. NIB 0909250086011. Hak cipta dilindungi undang-undang.", "nav.tools": "Tools", "nav.studio": "Studio", "nav.learn": "Belajar", "nav.starter": "Starterpack", "nav.pricing": "Harga", "nav.login": "Masuk", "nav.signup": "Daftar", "nav.account": "Akun Saya", "nav.menu": "Buka menu", "nav.close": "Tutup menu", "nav.theme": "Ganti tema terang/gelap", "nav.lang": "Pilih bahasa", "mega.toolsFoot": "Semua tools, satu akun. Trial {days} hari.", "mega.seePricing": "Lihat harga", "mega.allTools": "Semua tools", "mega.studioFoot": "Rata-rata 4-6 minggu dari ide ke MVP.", "mega.cases": "Studi kasus", "svc.brand": "Branding", "svc.brandD": "Logo, warna, dan suara brand", "svc.web": "Website", "svc.webD": "Situs yang bikin orang percaya", "svc.mvp": "MVP", "svc.mvpD": "Produk yang bisa dicoba beneran", "svc.talk": "Ngobrol 30 menit", "svc.talkD": "Gratis, tanpa tekanan", "learn.blog": "Blog", "learn.blogD": "Cerita dan update dari Founderku", "learn.cases": "Studi Kasus", "learn.casesD": "Project yang udah kelar dan jalan", "learn.catalog": "Katalog Program", "learn.catalogD": "Program dan kesempatan buat founder", "hero.h1": "Semua bisa jadi founder.", "hero.sub": "Satu akun untuk tools yang bikin usaha jalan: halaman jualan, invoice, hitung pajak, sampai kontrak. Butuh lebih? Studio kami bantu dari branding sampai MVP.", "hero.cta1": "Coba gratis {days} hari", "hero.cta1In": "Buka akun kamu", "hero.cta2": "Ngobrol dengan studio", "hero.hello": "Hai, {name}! Lanjut dari akun kamu.", "tab.tools": "Founderku Tools", "tab.studio": "Founderku", "tab.starter": "Starterpack", "car.prev": "Sebelumnya", "car.next": "Berikutnya", "car.try": "Coba {name}", "demo.close": "Tutup demo", "demo.taxBefore": "Omzet Januari sampai bulan lalu", "demo.taxNow": "Omzet bulan ini", "demo.taxFree": "Masih bebas pajak", "demo.taxed": "Kena PPh Final 0,5%", "demo.taxDue": "Pajak bulan ini", "demo.taxNote": "Simulasi: omzet kumulatif sampai Rp500 juta setahun tidak kena pajak. Bukan nasihat pajak.", "demo.prodName": "Nama produk", "demo.price": "Harga", "demo.orderWa": "Pesan lewat WhatsApp", "demo.item": "Barang / jasa", "demo.qty": "Jumlah", "demo.unit": "Harga satuan", "demo.total": "Total", "demo.open": "Buka {name} lengkap", "demo.other": "Coba versi lengkapnya. Gratis, tanpa daftar.", "demo.time": "Perkiraan waktu", "demo.start": "Mulai dari", "demo.startV": "Ngobrol 30 menit, gratis", "demo.wa": "Chat di WhatsApp", "demo.included": "Termasuk", "demo.includedV": "Website dan branding siap pakai", "demo.detail": "Lihat detail", "week.1": "Minggu 1", "week.12": "Minggu 1-2", "week.24": "Minggu 2-4", "week.25": "Minggu 2-5", "week.today": "Hari ini", "sample.pajangin": "Nastar Keju 250 gr", "sample.notain": "Nastar keju 250 gr", "trust.head": "Dipercaya founder dan brand yang udah jalan bareng kami", "trust.more": "Lihat studi kasus", "trust.partner": "Partner", "two.h2": "Dua lini, satu akun Founderku.", "two.tools": "Tools buat usahamu. Gratis dicoba, simpan ke akun dengan Pro.", "two.studio": "Tim yang bantu kamu bikin branding, website, dan MVP sampai beneran dipakai orang.", "mock.hello": "Hai, Rina 👋", "mock.plan": "Paket: Founderku Pro", "mock.trial": "Trial {days} hari", "mock.pajangin": "2 halaman aktif, 48 klik minggu ini", "mock.notain": "INV/20260926/004 tersimpan di akun", "mock.pajakin": "Pajak bulan ini Rp 0, masih bebas pajak", "mock.to": "Untuk: Bu Rina · 26 Sep 2026", "mock.ship": "Ongkir", "mock.note": "Contoh tampilan", "tools.eyebrow": "Founderku Tools", "tools.h2": "Bikin, hitung, dan rapikan usahamu di satu tempat.", "tools.sub": "Tools yang kami bangun dan pakai sendiri. Bisa langsung dipakai tanpa daftar. Login dengan Pro, datamu ikut tersimpan di akun dan bisa dibuka dari HP mana pun.", "tools.cta": "Mulai gratis", "tools.pre": "Pre-order H-2", "tools.ship": "Bisa kirim sekota", "tools.within": "Masih dalam jatah bebas pajak", "tools.yes": "Ya", "studio.eyebrow": "Founderku", "studio.h2": "Bangun produk yang beneran dipakai orang.", "studio.sub": "Kamu fokus ke ide dan visi. Kami urus branding, website, sampai MVP. Rata-rata 4-6 minggu dari ngobrol pertama sampai produk siap didemokan.", "studio.cta": "Ceritain ide kamu", "chat.1": "Aku punya ide jualan kue, tapi gak ngerti bikin website.", "chat.2": "Bisa banget. Kita mulai dari brand dulu, ya.", "chat.3": "Berapa lama kira-kira?", "chat.4": "Biasanya 4-6 minggu sampai jalan.", "studio.talkD": "Gratis, tanpa tekanan. Kita cari langkah pertama yang paling masuk akal buat kamu.", "step.1": "Ngobrol ide", "step.2": "Bangun brand", "step.3": "Rancang & bangun MVP", "step.cap": "Cara kerja", "step.capD": "Tiga langkah yang jelas dari hari pertama sampai kamu resmi jadi founder.", "svc.brandL": "Bikin orang percaya sejak lihat pertama.", "svc.webL": "Situs cepat, rapi, dan gampang diurus sendiri.", "svc.mvpL": "Produk fungsional yang bisa dicoba user atau investor.", "gen.eyebrow": "Generator Nama Brand", "gen.opt": "Opsi", "gen.like": "Suka ini? Chat kita →", "pricing.h2": "Mulai gratis. Upgrade kalau perlu.", "pricing.sub": "Satu langganan membuka semua tools. Trial {days} hari otomatis saat daftar, tanpa kartu dan tanpa tagihan otomatis.", "pricing.proCta": "Mulai trial {days} hari", "pricing.period": "Pilih periode", "pricing.month": "bulan", "pricing.year": "tahun", "pricing.full": "Lihat detail harga", "card.member": "Member", "card.owner": "Pemilik", "card.you": "Kamu", "card.free": "{days} hari gratis", "starter.eyebrow": "Founder Starterpack", "starter.h2": "Produk siap jalan, tinggal kamu pakai.", "starter.sub": "Website dan platform yang sudah jadi, lengkap dengan branding. Cocok kalau kamu mau langsung mulai tanpa bangun dari nol.", "starter.all": "Lihat semua", "news.h2": "Update terbaru", "news.all": "Semua artikel", "cat.update": "Update", "cat.product": "Produk", "cat.case-study": "Studi kasus", "cta.tools": "Coba tools gratis", "footer.tag": "Semua bisa jadi founder. Tools dan studio buat UMKM dan founder baru.", "footer.company": "Perusahaan", "footer.terms": "Syarat & Ketentuan", "footer.privacy": "Kebijakan Privasi", "sheet.signup": "Daftar, gratis {days} hari", "starter.from": "Mulai dari", "st.stepOf": "Langkah {n} dari {total}", "st.pause": "Jeda", "st.play": "Putar", "st.replay": "Putar lagi", "st.try": "Coba sendiri", "st.goto": "Ke langkah {n}", "st.pajangin.1": "Ketik nama dan harga produkmu.", "st.pajangin.2": "Halaman jualan langsung jadi, rapi di HP.", "st.pajangin.3": "Bagikan link-nya ke pelanggan.", "st.pajangin.4": "Pesanan masuk langsung ke WhatsApp kamu.", "st.jalanin.1": "Tulis tujuan usahamu.", "st.jalanin.2": "Dapat langkah-langkah yang jelas.", "st.jalanin.3": "Centang yang sudah beres.", "st.jalanin.4": "Lihat progresmu naik terus.", "st.notain.1": "Isi barang dan jumlahnya.", "st.notain.2": "Total dihitung otomatis.", "st.notain.3": "Kirim invoice ke pelanggan.", "st.notain.4": "Tandai lunas, catatan tetap rapi.", "st.pajakin.1": "Masukkan omzet bulan ini.", "st.pajakin.2": "Lihat sisa jatah bebas pajak setahun.", "st.pajakin.3": "Pajakmu dihitung otomatis.", "st.pajakin.4": "Lewat Rp500 juta? Cuma 0,5% dari omzet.", "st.kontrakin.1": "Pilih jenis perjanjian.", "st.kontrakin.2": "Isi data seperlunya.", "st.kontrakin.3": "Dokumen tersusun rapi otomatis.", "st.kontrakin.4": "Tinggal tanda tangan, beres.", "st.sehatin.1": "Jawab pertanyaan singkat.", "st.sehatin.2": "5 aspek usahamu dipetakan.", "st.sehatin.3": "Dapat skor kesehatan usaha.", "st.sehatin.4": "Plus saran yang bisa langsung dipakai.", "st.brand.1": "Ceritain usahamu ke kami.", "st.brand.2": "Kami racik nama dan logonya.", "st.brand.3": "Pilih warna yang pas.", "st.brand.4": "Brand siap dipakai di mana saja.", "st.web.1": "Rancang struktur halamannya.", "st.web.2": "Desain yang bikin orang percaya.", "st.web.3": "Rapi di laptop dan HP.", "st.web.4": "Online, siap didatangi pelanggan.", "st.mvp.1": "Mulai dari ide dan sketsa.", "st.mvp.2": "Kami ubah jadi aplikasi beneran.", "st.mvp.3": "Bisa diklik dan dipakai.", "st.mvp.4": "Diuji ke user pertamamu.", "st.talk.1": "Ceritain idemu, sesantai ngobrol.", "st.talk.2": "Kami dengarkan dan tanya balik.", "st.talk.3": "Kamu pulang bawa rencana yang jelas.", "st.talk.4": "Gratis, mulai dari WhatsApp.", "sc.copied": "Link disalin", "sc.now": "baru saja", "sc.waMsg": "Kak, pesan 2 toples ya. Bisa kirim besok?", "sc.newOrder": "pesanan baru", "sc.goal": "Tujuan", "sc.goalV": "Buka usaha kue rumahan", "sc.j1": "Tentukan menu andalan", "sc.j2": "Hitung modal awal", "sc.j3": "Urus NIB online", "sc.j4": "Buka pre-order pertama", "sc.progress": "Progres", "sc.almost": "Tinggal 1 langkah lagi!", "sc.invTo": "Untuk: Bu Rina", "sc.sent": "Terkirim", "sc.transferred": "Sudah transfer ya, kak.", "sc.paid": "LUNAS", "sc.allow": "Jatah bebas pajak setahun", "sc.used": "Rp48 juta terpakai", "sc.left": "sisa Rp452 juta", "sc.over": "Kalau omzet sudah lewat Rp500 juta", "sc.revenue": "Omzet", "sc.tax": "Pajak", "sc.rate": "0,5%", "sc.kType1": "Perjanjian Kerja", "sc.kType2": "Sewa", "sc.kType3": "Kerja Sama", "sc.kName": "Nama", "sc.kRole": "Posisi", "sc.kRoleV": "Admin toko online", "sc.kPay": "Gaji per bulan", "sc.kDoc": "PERJANJIAN KERJA", "sc.kArt": "Pasal", "sc.signed": "Ditandatangani", "sc.hQ": "Uang usaha dan uang pribadi sudah dipisah?", "sc.hA1": "Sudah", "sc.hA2": "Kadang", "sc.hA3": "Belum", "sc.a1": "Keuangan", "sc.a2": "Pemasaran", "sc.a3": "Operasional", "sc.a4": "Produk", "sc.a5": "Legal", "sc.score": "Skor kesehatan usaha", "sc.tip": "Saran", "sc.tipV": "Pisahkan rekening usaha biar arus kas kelihatan jelas.", "sc.bBrief": "Aku jualan kue rumahan, targetnya ibu muda.", "sc.bTag": "Kue rumahan, rasa pulang.", "sc.bColors": "Palet warna", "sc.bLabel": "Label toples", "sc.bCard": "Kartu nama", "sc.bPost": "Postingan IG", "sc.wBtn": "Pesan sekarang", "sc.wLive": "Online", "sc.wVisit": "pengunjung minggu ini", "sc.mIdea": "Ide: aplikasi pre-order kue", "sc.mDone": "Pesanan dibuat", "sc.mUsers": "user pertama sudah mencoba", "sc.plan": "Rencanamu", "sc.free30": "Gratis 30 menit"}, "en": {"harga.eyebrow": "Pricing", "harga.freeName": "Free", "harga.freeDesc": "For trying things out and just getting started.", "harga.free1": "One Founderku account", "harga.free2": "Basic tools, ready to use", "harga.free3": "Pajangin: 2 sales pages (with watermark)", "harga.freeCta": "Sign Up Free", "faq.qTrial": "How does the free trial work?", "faq.aTrial": "As soon as you sign up, you get {days} days of Founderku Pro, no card and no upfront payment. After that your account goes back to the free version unless you subscribe.", "faq.qPay": "How do I pay? Is there automatic billing?", "faq.aPay": "Pay monthly or yearly through the Xendit payment page (bank transfer, e-wallets, and more). There is no automatic billing, so you decide when to renew.", "faq.eyebrow": "FAQ", "faq.h2": "Frequently asked questions", "faq.q1": "I don't have a technical background, can I still do this?", "faq.a1": "Absolutely, and this is exactly why Founderku exists. Just focus on your idea and vision, we handle the branding through to execution.", "faq.q2": "How long does it take from idea to a finished MVP?", "faq.a2": "4-6 weeks on average, from our first conversation until the product is ready to demo to users or your first investors.", "faq.q3": "What's the difference between the Branding and MVP package?", "faq.a3": "Branding focuses on making people trust you at first glance, MVP focuses on making your product something people can actually try. You can take either one, or both together for a more complete package.", "faq.q4": "Once the MVP is done, can Founderku still help?", "faq.a4": "Yes, and that's actually where Founderku is used most. Many clients continue into product development or growth once their MVP is validated.", "faq.q5": "How do I get started?", "faq.a5": "Easy. Click the Tell Us Your Idea button, have a free 30-minute conversation, and we'll help map out the most sensible first step for you.", "gen.h2": "See your brand come to life, right now.", "gen.sub": "Pick an industry, describe your target user, click generate. A name, tagline, and colors appear right in front of you. Free, just to spark ideas, no sign-up needed.", "gen.labelIndustri": "Industry", "gen.labelTarget": "Your target user", "gen.placeholderTarget": "e.g. young adults, busy parents…", "gen.labelVibe": "Vibe", "gen.vibePlayful": "Playful", "gen.vibeProfessional": "Professional", "gen.vibeBold": "Bold", "gen.vibeMinimalis": "Minimalist", "gen.btn": "Generate ✨", "gen.hint": "Not quite right? Click generate again. The results change every time. Or just chat with us directly.", "gen.optEdukasi": "Education", "gen.optKesehatan": "Health", "gen.optFnb": "F&B", "gen.optTeknologi": "Technology / SaaS", "gen.optKreatif": "Creative / Design", "gen.optFashion": "Fashion / Lifestyle", "gen.optSosial": "Social / NGO", "gen.optFinansial": "Finance", "cta.h2": "Your idea has waited long enough. It's time to move.", "cta.sub": "A free 30-minute conversation, no pressure. We'll find the first step that makes the most sense for you.", "cta.btn": "Chat on WhatsApp", "footer.copy": "© 2026 PT Talenthra Karya Nusantara. Business ID (NIB) 0909250086011. All rights reserved.", "nav.tools": "Tools", "nav.studio": "Studio", "nav.learn": "Learn", "nav.starter": "Starterpack", "nav.pricing": "Pricing", "nav.login": "Log in", "nav.signup": "Sign up", "nav.account": "My Account", "nav.menu": "Open menu", "nav.close": "Close menu", "nav.theme": "Switch light/dark theme", "nav.lang": "Choose language", "mega.toolsFoot": "Every tool, one account. {days}-day trial.", "mega.seePricing": "See pricing", "mega.allTools": "All tools", "mega.studioFoot": "Usually 4-6 weeks from idea to MVP.", "mega.cases": "Case studies", "svc.brand": "Branding", "svc.brandD": "Logo, colours, and brand voice", "svc.web": "Website", "svc.webD": "A site that earns trust", "svc.mvp": "MVP", "svc.mvpD": "A product people can actually try", "svc.talk": "30-minute chat", "svc.talkD": "Free, no pressure", "learn.blog": "Blog", "learn.blogD": "Stories and updates from Founderku", "learn.cases": "Case Studies", "learn.casesD": "Projects that shipped and run", "learn.catalog": "Program Catalog", "learn.catalogD": "Programs and opportunities for founders", "hero.h1": "Anyone can become a founder.", "hero.sub": "One account for the tools that keep a business running: sales pages, invoices, tax estimates, and contracts. Need more? Our studio helps from branding to MVP.", "hero.cta1": "Try free for {days} days", "hero.cta1In": "Open your account", "hero.cta2": "Talk to the studio", "hero.hello": "Hi, {name}! Pick up where you left off.", "tab.tools": "Founderku Tools", "tab.studio": "Founderku", "tab.starter": "Starterpack", "car.prev": "Previous", "car.next": "Next", "car.try": "Try {name}", "demo.close": "Close demo", "demo.taxBefore": "Revenue from January to last month", "demo.taxNow": "Revenue this month", "demo.taxFree": "Still tax-free", "demo.taxed": "Subject to 0.5% final tax", "demo.taxDue": "Tax this month", "demo.taxNote": "Estimate: the first Rp500 million of revenue each year is tax-free under Indonesian rules. Not tax advice.", "demo.prodName": "Product name", "demo.price": "Price", "demo.orderWa": "Order via WhatsApp", "demo.item": "Item / service", "demo.qty": "Quantity", "demo.unit": "Unit price", "demo.total": "Total", "demo.open": "Open full {name}", "demo.other": "Try the full version. Free, no sign-up.", "demo.time": "Estimated time", "demo.start": "Starts with", "demo.startV": "A free 30-minute chat", "demo.wa": "Chat on WhatsApp", "demo.included": "Includes", "demo.includedV": "A ready-to-use website and branding", "demo.detail": "See details", "week.1": "Week 1", "week.12": "Week 1-2", "week.24": "Week 2-4", "week.25": "Week 2-5", "week.today": "Today", "sample.pajangin": "Cheese Nastar Cookies 250 g", "sample.notain": "Cheese nastar cookies 250 g", "trust.head": "Trusted by founders and brands we've built with", "trust.more": "See case studies", "trust.partner": "Partner", "two.h2": "Two lines, one Founderku account.", "two.tools": "Tools for your business. Free to try, saved to your account with Pro.", "two.studio": "A team that helps you build branding, websites, and MVPs people actually use.", "mock.hello": "Hi, Rina 👋", "mock.plan": "Plan: Founderku Pro", "mock.trial": "{days}-day trial", "mock.pajangin": "2 active pages, 48 clicks this week", "mock.notain": "INV/20260926/004 saved to account", "mock.pajakin": "Tax this month Rp 0, still tax-free", "mock.to": "To: Bu Rina · 26 Sep 2026", "mock.ship": "Delivery", "mock.note": "Example view", "tools.eyebrow": "Founderku Tools", "tools.h2": "Build, calculate, and organize your business in one place.", "tools.sub": "Tools we build and use ourselves. Use them right away, no sign-up. With Pro, your data is saved to your account and opens on any phone.", "tools.cta": "Start free", "tools.pre": "Pre-order 2 days ahead", "tools.ship": "Same-city delivery", "tools.within": "Within the tax-free allowance", "tools.yes": "Yes", "studio.eyebrow": "Founderku", "studio.h2": "Build a product people actually use.", "studio.sub": "You focus on the idea and the vision. We handle branding, the website, and the MVP. Usually 4-6 weeks from the first chat to a demo-ready product.", "studio.cta": "Tell us your idea", "chat.1": "I have an idea to sell cakes, but I don't know how to build a website.", "chat.2": "Absolutely. Let's start with the brand.", "chat.3": "How long does it take?", "chat.4": "Usually 4-6 weeks to launch.", "studio.talkD": "Free, no pressure. We'll find the most sensible first step for you.", "step.1": "Talk through the idea", "step.2": "Build the brand", "step.3": "Design & build the MVP", "step.cap": "How it works", "step.capD": "Three clear steps from day one until you're officially a founder.", "svc.brandL": "Earn trust at first glance.", "svc.webL": "A fast, tidy site you can manage yourself.", "svc.mvpL": "A working product users or investors can try.", "gen.eyebrow": "Brand Name Generator", "gen.opt": "Option", "gen.like": "Like this one? Chat with us →", "pricing.h2": "Start free. Upgrade when you need to.", "pricing.sub": "One subscription unlocks every tool. A {days}-day trial starts automatically when you sign up, no card and no automatic billing.", "pricing.proCta": "Start {days}-day trial", "pricing.period": "Choose billing period", "pricing.month": "month", "pricing.year": "year", "pricing.full": "See full pricing", "card.member": "Member", "card.owner": "Owner", "card.you": "You", "card.free": "{days} days free", "starter.eyebrow": "Founder Starterpack", "starter.h2": "Ready-to-run products, just make them yours.", "starter.sub": "Finished websites and platforms, complete with branding. Great if you want to start without building from scratch.", "starter.all": "See all", "news.h2": "Latest updates", "news.all": "All articles", "cat.update": "Update", "cat.product": "Product", "cat.case-study": "Case study", "cta.tools": "Try the tools free", "footer.tag": "Anyone can become a founder. Tools and a studio for small businesses and new founders.", "footer.company": "Company", "footer.terms": "Terms (Indonesian)", "footer.privacy": "Privacy (Indonesian)", "sheet.signup": "Sign up, {days} days free", "starter.from": "From", "st.stepOf": "Step {n} of {total}", "st.pause": "Pause", "st.play": "Play", "st.replay": "Play again", "st.try": "Try it yourself", "st.goto": "Go to step {n}", "st.pajangin.1": "Type your product name and price.", "st.pajangin.2": "Your sales page is ready, neat on any phone.", "st.pajangin.3": "Share the link with your customers.", "st.pajangin.4": "Orders land straight in your WhatsApp.", "st.jalanin.1": "Write down your business goal.", "st.jalanin.2": "Get clear, step-by-step tasks.", "st.jalanin.3": "Tick off what is done.", "st.jalanin.4": "Watch your progress climb.", "st.notain.1": "Add the item and quantity.", "st.notain.2": "The total is calculated for you.", "st.notain.3": "Send the invoice to your customer.", "st.notain.4": "Mark it paid, records stay tidy.", "st.pajakin.1": "Enter this month's revenue.", "st.pajakin.2": "See how much of your yearly tax-free allowance is left.", "st.pajakin.3": "Your tax is calculated automatically.", "st.pajakin.4": "Over Rp500 million? Just 0.5% of revenue.", "st.kontrakin.1": "Pick the type of agreement.", "st.kontrakin.2": "Fill in just the basics.", "st.kontrakin.3": "The document is drafted neatly for you.", "st.kontrakin.4": "Just sign it, done.", "st.sehatin.1": "Answer a few quick questions.", "st.sehatin.2": "Five areas of your business get mapped.", "st.sehatin.3": "Get a business health score.", "st.sehatin.4": "Plus tips you can use right away.", "st.brand.1": "Tell us about your business.", "st.brand.2": "We craft the name and logo.", "st.brand.3": "Pick colours that fit.", "st.brand.4": "Your brand is ready to use anywhere.", "st.web.1": "Plan the page structure.", "st.web.2": "A design that earns trust.", "st.web.3": "Neat on laptops and phones.", "st.web.4": "Live and ready for customers.", "st.mvp.1": "Start with an idea and a sketch.", "st.mvp.2": "We turn it into a real app.", "st.mvp.3": "People can tap and use it.", "st.mvp.4": "Tested with your first users.", "st.talk.1": "Tell us your idea, as casual as a chat.", "st.talk.2": "We listen and ask the right questions.", "st.talk.3": "You leave with a clear plan.", "st.talk.4": "Free, and it starts on WhatsApp.", "sc.copied": "Link copied", "sc.now": "just now", "sc.waMsg": "Hi, 2 jars please. Can you deliver tomorrow?", "sc.newOrder": "new order", "sc.goal": "Goal", "sc.goalV": "Start a home bakery", "sc.j1": "Choose your signature menu", "sc.j2": "Work out starting capital", "sc.j3": "Register your business ID (NIB)", "sc.j4": "Open your first pre-order", "sc.progress": "Progress", "sc.almost": "Just one step to go!", "sc.invTo": "To: Bu Rina", "sc.sent": "Sent", "sc.transferred": "Payment sent!", "sc.paid": "PAID", "sc.allow": "Yearly tax-free allowance", "sc.used": "Rp48 million used", "sc.left": "Rp452 million left", "sc.over": "Once revenue passes Rp500 million", "sc.revenue": "Revenue", "sc.tax": "Tax", "sc.rate": "0.5%", "sc.kType1": "Employment", "sc.kType2": "Rental", "sc.kType3": "Partnership", "sc.kName": "Name", "sc.kRole": "Role", "sc.kRoleV": "Online shop admin", "sc.kPay": "Monthly pay", "sc.kDoc": "EMPLOYMENT AGREEMENT", "sc.kArt": "Article", "sc.signed": "Signed", "sc.hQ": "Are business and personal money kept separate?", "sc.hA1": "Yes", "sc.hA2": "Sometimes", "sc.hA3": "Not yet", "sc.a1": "Finance", "sc.a2": "Marketing", "sc.a3": "Operations", "sc.a4": "Product", "sc.a5": "Legal", "sc.score": "Business health score", "sc.tip": "Tip", "sc.tipV": "Open a separate business account so your cash flow is clear.", "sc.bBrief": "I sell home-baked cakes to young mums.", "sc.bTag": "Home-baked, tastes like home.", "sc.bColors": "Colour palette", "sc.bLabel": "Jar label", "sc.bCard": "Business card", "sc.bPost": "IG post", "sc.wBtn": "Order now", "sc.wLive": "Live", "sc.wVisit": "visitors this week", "sc.mIdea": "Idea: a cake pre-order app", "sc.mDone": "Order placed", "sc.mUsers": "first users tried it", "sc.plan": "Your plan", "sc.free30": "Free, 30 minutes"}, "tr": {"harga.eyebrow": "Fiyatlar", "harga.freeName": "Ücretsiz", "harga.freeDesc": "Denemek ve yeni başlamak için.", "harga.free1": "Tek bir Founderku hesabı", "harga.free2": "Temel araçlar hemen kullanıma hazır", "harga.free3": "Pajangin: 2 satış sayfası (filigranlı)", "harga.freeCta": "Ücretsiz Kaydol", "faq.qTrial": "Ücretsiz deneme nasıl işliyor?", "faq.aTrial": "Kaydolur olmaz {days} gün Founderku Pro alırsın, kart ve ön ödeme gerekmez. Sonrasında abone olmazsan hesabın ücretsiz sürüme döner.", "faq.qPay": "Nasıl ödeme yaparım? Otomatik ödeme var mı?", "faq.aPay": "Xendit ödeme sayfası üzerinden aylık veya yıllık ödersin (banka havalesi, e-cüzdan ve diğerleri). Otomatik ödeme yok, ne zaman yenileyeceğine sen karar verirsin.", "faq.eyebrow": "SSS", "faq.h2": "Sıkça sorulan sorular", "faq.q1": "Teknik bir geçmişim yok, yine de olur mu?", "faq.a1": "Kesinlikle olur, Founderku'nun var olma sebebi de bu. Sen sadece fikrine ve vizyonuna odaklan, marka kimliğinden ürünün tamamlanmasına kadar biz hallederiz.", "faq.q2": "Fikirden bitmiş bir MVP'ye kadar süreç ne kadar sürüyor?", "faq.a2": "Ortalama 4-6 hafta, ilk konuşmamızdan, ürünün kullanıcılara veya ilk yatırımcılarına gösterilmeye hazır olmasına kadar.", "faq.q3": "Marka Kimliği ve MVP paketi arasındaki fark nedir?", "faq.a3": "Marka Kimliği, insanların seni ilk bakışta güvenmesini sağlamaya odaklanır, MVP ise ürününü gerçekten denenebilir hale getirmeye odaklanır. İkisinden birini alabilir, ya da daha eksiksiz bir paket için ikisini birlikte alabilirsin.", "faq.q4": "MVP bittikten sonra Founderku hâlâ yardımcı olabilir mi?", "faq.a4": "Evet, Founderku'nun en çok kullanıldığı nokta da tam olarak burası. Birçok müşteri, MVP'si doğrulandıktan sonra ürün geliştirme veya büyüme aşamasına geçiyor.", "faq.q5": "Nasıl başlarım?", "faq.a5": "Kolay. Fikrini Anlat butonuna tıkla, ücretsiz 30 dakikalık bir sohbet yapalım, sana en mantıklı ilk adımı birlikte belirleyelim.", "gen.h2": "Markanın nasıl olacağını hemen şimdi gör.", "gen.sub": "Bir sektör seç, hedef kullanıcını anlat, generate'e tıkla. İsim, slogan ve renkler anında karşında beliriyor. Ücretsiz, sadece fikir vermek için, kayıt gerekmiyor.", "gen.labelIndustri": "Sektör", "gen.labelTarget": "Hedef kullanıcın", "gen.placeholderTarget": "örn: gençler, çalışan anneler…", "gen.labelVibe": "Tarz", "gen.vibePlayful": "Eğlenceli", "gen.vibeProfessional": "Profesyonel", "gen.vibeBold": "Cesur", "gen.vibeMinimalis": "Minimalist", "gen.btn": "Oluştur ✨", "gen.hint": "Tam olmadı mı? Tekrar generate'e tıkla. Sonuçlar her seferinde değişiyor. Ya da direkt bizimle sohbet et.", "gen.optEdukasi": "Eğitim", "gen.optKesehatan": "Sağlık", "gen.optFnb": "Yiyecek & İçecek", "gen.optTeknologi": "Teknoloji / SaaS", "gen.optKreatif": "Kreatif / Tasarım", "gen.optFashion": "Moda / Yaşam Tarzı", "gen.optSosial": "Sosyal / STK", "gen.optFinansial": "Finans", "cta.h2": "Fikrin yeterince bekledi. Şimdi sıra harekete geçmekte.", "cta.sub": "Ücretsiz, baskısız 30 dakikalık bir sohbet. Senin için en mantıklı ilk adımı birlikte bulalım.", "cta.btn": "WhatsApp'ta Sohbet Et", "footer.copy": "© 2026 PT Talenthra Karya Nusantara. İşletme No (NIB) 0909250086011. Tüm hakları saklıdır.", "nav.tools": "Araçlar", "nav.studio": "Stüdyo", "nav.learn": "Öğren", "nav.starter": "Starterpack", "nav.pricing": "Fiyatlar", "nav.login": "Giriş", "nav.signup": "Kaydol", "nav.account": "Hesabım", "nav.menu": "Menüyü aç", "nav.close": "Menüyü kapat", "nav.theme": "Açık/koyu tema", "nav.lang": "Dil seç", "mega.toolsFoot": "Tüm araçlar, tek hesap. {days} günlük deneme.", "mega.seePricing": "Fiyatları gör", "mega.allTools": "Tüm araçlar", "mega.studioFoot": "Fikirden MVP'ye genellikle 4-6 hafta.", "mega.cases": "Vaka çalışmaları", "svc.brand": "Markalaşma", "svc.brandD": "Logo, renkler ve marka dili", "svc.web": "Web sitesi", "svc.webD": "Güven veren bir site", "svc.mvp": "MVP", "svc.mvpD": "Gerçekten denenebilen bir ürün", "svc.talk": "30 dakikalık sohbet", "svc.talkD": "Ücretsiz, baskı yok", "learn.blog": "Blog", "learn.blogD": "Founderku'dan hikayeler ve güncellemeler", "learn.cases": "Vaka Çalışmaları", "learn.casesD": "Tamamlanıp yayında olan projeler", "learn.catalog": "Program Kataloğu", "learn.catalogD": "Kurucular için programlar ve fırsatlar", "hero.h1": "Herkes kurucu olabilir.", "hero.sub": "İşini yürüten araçlar için tek hesap: satış sayfası, fatura, vergi hesabı ve sözleşme. Daha fazlası mı lazım? Stüdyomuz markalaşmadan MVP'ye kadar yardım eder.", "hero.cta1": "{days} gün ücretsiz dene", "hero.cta1In": "Hesabını aç", "hero.cta2": "Stüdyoyla konuş", "hero.hello": "Merhaba {name}! Kaldığın yerden devam et.", "tab.tools": "Founderku Araçları", "tab.studio": "Founderku", "tab.starter": "Starterpack", "car.prev": "Önceki", "car.next": "Sonraki", "car.try": "{name} dene", "demo.close": "Demoyu kapat", "demo.taxBefore": "Ocak'tan geçen aya kadar ciro", "demo.taxNow": "Bu ayki ciro", "demo.taxFree": "Hâlâ vergisiz", "demo.taxed": "%0,5 nihai vergiye tabi", "demo.taxDue": "Bu ayın vergisi", "demo.taxNote": "Tahmin: Endonezya kurallarına göre yıllık ilk 500 milyon Rp ciro vergiden muaftır. Vergi tavsiyesi değildir.", "demo.prodName": "Ürün adı", "demo.price": "Fiyat", "demo.orderWa": "WhatsApp ile sipariş ver", "demo.item": "Ürün / hizmet", "demo.qty": "Adet", "demo.unit": "Birim fiyat", "demo.total": "Toplam", "demo.open": "{name} aracını aç", "demo.other": "Tam sürümü dene. Ücretsiz, kayıt yok.", "demo.time": "Tahmini süre", "demo.start": "Başlangıç", "demo.startV": "Ücretsiz 30 dakikalık sohbet", "demo.wa": "WhatsApp'tan yaz", "demo.included": "İçerik", "demo.includedV": "Kullanıma hazır web sitesi ve marka", "demo.detail": "Detayları gör", "week.1": "1. hafta", "week.12": "1-2. hafta", "week.24": "2-4. hafta", "week.25": "2-5. hafta", "week.today": "Bugün", "sample.pajangin": "Peynirli Nastar Kurabiye 250 g", "sample.notain": "Peynirli nastar kurabiye 250 g", "trust.head": "Birlikte çalıştığımız kurucular ve markalar güveniyor", "trust.more": "Vaka çalışmalarını gör", "trust.partner": "Partner", "two.h2": "İki hat, tek Founderku hesabı.", "two.tools": "İşin için araçlar. Denemesi ücretsiz, Pro ile hesabına kaydedilir.", "two.studio": "İnsanların gerçekten kullandığı marka, web sitesi ve MVP'yi birlikte kuran ekip.", "mock.hello": "Merhaba Rina 👋", "mock.plan": "Plan: Founderku Pro", "mock.trial": "{days} günlük deneme", "mock.pajangin": "2 aktif sayfa, bu hafta 48 tıklama", "mock.notain": "INV/20260926/004 hesaba kaydedildi", "mock.pajakin": "Bu ay vergi Rp 0, hâlâ vergisiz", "mock.to": "Alıcı: Bu Rina · 26 Eyl 2026", "mock.ship": "Kargo", "mock.note": "Örnek görünüm", "tools.eyebrow": "Founderku Araçları", "tools.h2": "İşini tek yerde kur, hesapla ve düzenle.", "tools.sub": "Kendi geliştirip kullandığımız araçlar. Kayıt olmadan hemen kullan. Pro ile verilerin hesabına kaydedilir ve her telefondan açılır.", "tools.cta": "Ücretsiz başla", "tools.pre": "2 gün önceden sipariş", "tools.ship": "Şehir içi teslimat", "tools.within": "Vergisiz limit içinde", "tools.yes": "Evet", "studio.eyebrow": "Founderku", "studio.h2": "İnsanların gerçekten kullandığı bir ürün kur.", "studio.sub": "Sen fikre ve vizyona odaklan. Markalaşma, web sitesi ve MVP'yi biz üstleniriz. İlk sohbetten demoya hazır ürüne genellikle 4-6 hafta.", "studio.cta": "Fikrini anlat", "chat.1": "Pasta satma fikrim var ama web sitesi yapmayı bilmiyorum.", "chat.2": "Tabii ki. Önce markayla başlayalım.", "chat.3": "Ne kadar sürer?", "chat.4": "Genellikle 4-6 haftada yayında.", "studio.talkD": "Ücretsiz, baskı yok. Senin için en mantıklı ilk adımı birlikte buluruz.", "step.1": "Fikri konuşalım", "step.2": "Markayı kur", "step.3": "MVP'yi tasarla ve kur", "step.cap": "Nasıl çalışır", "step.capD": "İlk günden resmen kurucu olana kadar üç net adım.", "svc.brandL": "İlk bakışta güven kazan.", "svc.webL": "Kendin yönetebileceğin hızlı ve düzenli bir site.", "svc.mvpL": "Kullanıcıların veya yatırımcıların deneyebileceği çalışan bir ürün.", "gen.eyebrow": "Marka Adı Üretici", "gen.opt": "Seçenek", "gen.like": "Beğendin mi? Bize yaz →", "pricing.h2": "Ücretsiz başla. Gerekince yükselt.", "pricing.sub": "Tek abonelik tüm araçları açar. Kaydolunca {days} günlük deneme otomatik başlar; kart yok, otomatik ödeme yok.", "pricing.proCta": "{days} günlük denemeyi başlat", "pricing.period": "Ödeme dönemi seç", "pricing.month": "ay", "pricing.year": "yıl", "pricing.full": "Tüm fiyat detayları", "card.member": "Üye", "card.owner": "Sahibi", "card.you": "Sen", "card.free": "{days} gün ücretsiz", "starter.eyebrow": "Founder Starterpack", "starter.h2": "Çalışmaya hazır ürünler, sadece sahiplen.", "starter.sub": "Markasıyla birlikte hazır web siteleri ve platformlar. Sıfırdan kurmadan başlamak istersen ideal.", "starter.all": "Tümünü gör", "news.h2": "Son güncellemeler", "news.all": "Tüm yazılar", "cat.update": "Güncelleme", "cat.product": "Ürün", "cat.case-study": "Vaka çalışması", "cta.tools": "Araçları ücretsiz dene", "footer.tag": "Herkes kurucu olabilir. Küçük işletmeler ve yeni kurucular için araçlar ve stüdyo.", "footer.company": "Şirket", "footer.terms": "Koşullar (Endonezce)", "footer.privacy": "Gizlilik (Endonezce)", "sheet.signup": "Kaydol, {days} gün ücretsiz", "starter.from": "Başlangıç", "st.stepOf": "Adım {n}/{total}", "st.pause": "Duraklat", "st.play": "Oynat", "st.replay": "Tekrar oynat", "st.try": "Kendin dene", "st.goto": "{n}. adıma git", "st.pajangin.1": "Ürün adını ve fiyatını yaz.", "st.pajangin.2": "Satış sayfan hazır, telefonda da düzgün.", "st.pajangin.3": "Linki müşterilerinle paylaş.", "st.pajangin.4": "Siparişler doğrudan WhatsApp'ına gelir.", "st.jalanin.1": "İş hedefini yaz.", "st.jalanin.2": "Net, adım adım görevler al.", "st.jalanin.3": "Bitenleri işaretle.", "st.jalanin.4": "İlerlemenin arttığını gör.", "st.notain.1": "Ürünü ve adedini gir.", "st.notain.2": "Toplam otomatik hesaplanır.", "st.notain.3": "Faturayı müşterine gönder.", "st.notain.4": "Ödendi olarak işaretle, kayıtlar düzenli kalsın.", "st.pajakin.1": "Bu ayki ciroyu gir.", "st.pajakin.2": "Yıllık vergisiz limitinden ne kaldığını gör.", "st.pajakin.3": "Vergin otomatik hesaplanır.", "st.pajakin.4": "500 milyon Rp'yi geçtin mi? Cironun sadece %0,5'i.", "st.kontrakin.1": "Sözleşme türünü seç.", "st.kontrakin.2": "Sadece temel bilgileri gir.", "st.kontrakin.3": "Belge otomatik ve düzenli hazırlanır.", "st.kontrakin.4": "Sadece imzala, bitti.", "st.sehatin.1": "Birkaç kısa soruyu yanıtla.", "st.sehatin.2": "İşinin 5 alanı haritalanır.", "st.sehatin.3": "İş sağlığı puanını al.", "st.sehatin.4": "Üstüne hemen uygulanabilir öneriler.", "st.brand.1": "Bize işini anlat.", "st.brand.2": "İsmi ve logoyu biz tasarlarız.", "st.brand.3": "Uygun renkleri seç.", "st.brand.4": "Markan her yerde kullanıma hazır.", "st.web.1": "Sayfa yapısını planla.", "st.web.2": "Güven veren bir tasarım.", "st.web.3": "Dizüstünde ve telefonda düzgün.", "st.web.4": "Yayında, müşterilere hazır.", "st.mvp.1": "Bir fikir ve eskizle başla.", "st.mvp.2": "Onu gerçek bir uygulamaya çeviririz.", "st.mvp.3": "Dokunulup kullanılabilir.", "st.mvp.4": "İlk kullanıcılarınla test edilir.", "st.talk.1": "Fikrini anlat, sohbet eder gibi.", "st.talk.2": "Dinler ve doğru soruları sorarız.", "st.talk.3": "Net bir planla ayrılırsın.", "st.talk.4": "Ücretsiz, WhatsApp'tan başlar.", "sc.copied": "Link kopyalandı", "sc.now": "şimdi", "sc.waMsg": "Merhaba, 2 kavanoz lütfen. Yarın gönderebilir misiniz?", "sc.newOrder": "yeni sipariş", "sc.goal": "Hedef", "sc.goalV": "Evde pastane açmak", "sc.j1": "İmza menünü belirle", "sc.j2": "Başlangıç sermayesini hesapla", "sc.j3": "İşletme numarası (NIB) al", "sc.j4": "İlk ön siparişi aç", "sc.progress": "İlerleme", "sc.almost": "Son bir adım kaldı!", "sc.invTo": "Alıcı: Bu Rina", "sc.sent": "Gönderildi", "sc.transferred": "Ödemeyi yaptım!", "sc.paid": "ÖDENDİ", "sc.allow": "Yıllık vergisiz limit", "sc.used": "48 milyon Rp kullanıldı", "sc.left": "452 milyon Rp kaldı", "sc.over": "Ciro 500 milyon Rp'yi geçince", "sc.revenue": "Ciro", "sc.tax": "Vergi", "sc.rate": "%0,5", "sc.kType1": "İş Sözleşmesi", "sc.kType2": "Kira", "sc.kType3": "Ortaklık", "sc.kName": "Ad", "sc.kRole": "Pozisyon", "sc.kRoleV": "Online mağaza yöneticisi", "sc.kPay": "Aylık maaş", "sc.kDoc": "İŞ SÖZLEŞMESİ", "sc.kArt": "Madde", "sc.signed": "İmzalandı", "sc.hQ": "İş ve kişisel paran ayrı mı?", "sc.hA1": "Evet", "sc.hA2": "Bazen", "sc.hA3": "Henüz değil", "sc.a1": "Finans", "sc.a2": "Pazarlama", "sc.a3": "Operasyon", "sc.a4": "Ürün", "sc.a5": "Hukuk", "sc.score": "İş sağlığı puanı", "sc.tip": "Öneri", "sc.tipV": "Nakit akışını net görmek için ayrı bir iş hesabı aç.", "sc.bBrief": "Genç annelere ev yapımı kek satıyorum.", "sc.bTag": "Ev yapımı, ev tadında.", "sc.bColors": "Renk paleti", "sc.bLabel": "Kavanoz etiketi", "sc.bCard": "Kartvizit", "sc.bPost": "IG gönderisi", "sc.wBtn": "Sipariş ver", "sc.wLive": "Yayında", "sc.wVisit": "ziyaretçi bu hafta", "sc.mIdea": "Fikir: kek ön sipariş uygulaması", "sc.mDone": "Sipariş oluşturuldu", "sc.mUsers": "ilk kullanıcı denedi", "sc.plan": "Planın", "sc.free30": "Ücretsiz, 30 dakika"}};
 
   // ---------- Keadaan ----------
   var lang=root.getAttribute('lang')||'id'; if(!I18N[lang]) lang='id';
@@ -785,7 +1014,7 @@ footer .legal{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap
 
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
   function t(key,vars){var s=(I18N[lang]&&I18N[lang][key]);if(s==null)s=I18N.id[key];if(s==null)return '';
-    s=String(s).replace('{days}',state.days).replace('{name}',vars&&vars.name!=null?vars.name:(state.name||''));return s;}
+    s=String(s).replace('{days}',state.days).replace('{name}',vars&&vars.name!=null?vars.name:(state.name||''));if(vars)Object.keys(vars).forEach(function(k){s=s.split('{'+k+'}').join(vars[k]);});return s;}
   function pick(field){if(field==null)return '';if(typeof field==='string')return field;return field[lang]||field.id||field.en||'';}
   function rp(n){return 'Rp '+Math.round(n).toLocaleString('id-ID');}
   function num(v){return Number(String(v).replace(/[^0-9]/g,''))||0;}
@@ -876,10 +1105,11 @@ footer .legal{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap
   function productsSorted(){return state.products.slice().sort(function(a,b){return (a.price||0)-(b.price||0);});}
   function productName(p){return pick(p.name).split(' - ')[0];}
   function renderStarter(){
-    var list=productsSorted().slice(0,3);
+    var list=productsSorted().slice(0,4);
     document.getElementById('starterpack').hidden=!list.length;
-    document.getElementById('starterGrid').innerHTML=list.map(function(p,i){return '<a class="sm" href="product.html?slug='+encodeURIComponent(p.slug)+'"><span class="orb o-g'+((i+3)%6)+'"><i></i></span><div><small>'+esc(productName(p))+' · '+esc(productPrice(p))+'</small><span>'+esc(firstSentence(pick(p.shortDescription)))+'</span></div></a>';}).join('');
+    document.getElementById('starterGrid').innerHTML=list.map(function(p){return '<a class="sp" href="product.html?slug='+encodeURIComponent(p.slug)+'"><span class="ph">'+(p.thumbnail?'<img src="'+esc(p.thumbnail)+'" alt="" loading="lazy">':'')+'</span><span class="tx"><b>'+esc(productName(p))+'</b><span class="ds">'+esc(firstSentence(pick(p.shortDescription)))+'</span><span class="pr"><small>'+esc(t('starter.from'))+'</small>'+esc(productPrice(p))+'</span></span></a>';}).join('');
   }
+
 
   // ---------- Kepercayaan: testimoni + partner ----------
   var trustData={t:[],p:[]};
@@ -918,7 +1148,7 @@ footer .legal{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap
       {key:'web',orb:'o-web',n:t('svc.web'),d:t('svc.webD'),week:t('week.24')},
       {key:'mvp',orb:'o-mvp',n:t('svc.mvp'),d:t('svc.mvpD'),week:t('week.25')},
       {key:'talk',orb:'o-talk',n:t('svc.talk'),d:t('svc.talkD'),week:t('week.today')}];
-    return productsSorted().map(function(p,i){return {key:p.slug,orb:'o-g'+((i+3)%6),n:productName(p),d:firstSentence(pick(p.shortDescription)),price:productPrice(p),href:'product.html?slug='+encodeURIComponent(p.slug)};});
+    return [];
   }
   function renderCarousel(keep){
     var list=items();
@@ -951,46 +1181,241 @@ footer .legal{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap
     set=tb.dataset.set; closeDemo(); renderCarousel(false);
   });});
 
-  // ---------- Demo mini ----------
-  var demo=document.getElementById('demo');
+  // ---------- Demo: cerita animasi 4 langkah saat bola diputar ----------
+  // Elemen dengan data-at="n" muncul di langkah n (0 sampai 3). data-type = efek mengetik,
+  // data-count = angka naik, data-delay = jeda dalam milidetik.
+  var demo=document.getElementById('demo'), stage=document.getElementById('demoBody');
+  function T(k){return esc(t(k));}
+  function A(at,cls,style,inner,attr){return '<div data-at="'+at+'" class="'+cls+'" style="'+style+'"'+(attr||'')+'>'+inner+'</div>';}
+  function D(s){return ' style="transition-delay:'+s+'s"';}
+  var ICON_LINK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>';
+  var ICON_ARR='<svg class="arr" viewBox="0 0 44 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 12h36M30 4l8 8-8 8"/></svg>';
+  function radar(vals){
+    var c=112,R=70,ang=function(i){return (-90+72*i)*Math.PI/180;};
+    var pts=function(fr){return [0,1,2,3,4].map(function(i){var r=R*(typeof fr==='number'?fr:fr[i]);return (c+r*Math.cos(ang(i))).toFixed(1)+','+(c+r*Math.sin(ang(i))).toFixed(1);}).join(' ');};
+    var lab=[['sc.a1',c,26,'middle'],['sc.a2',c+R+8,c-20,'start'],['sc.a3',c+44,c+R+22,'middle'],['sc.a4',c-44,c+R+22,'middle'],['sc.a5',c-R-8,c-20,'end']];
+    return '<svg viewBox="0 0 224 224" aria-hidden="true"><polygon class="g" points="'+pts(1)+'"/><polygon class="g" points="'+pts(.66)+'"/><polygon class="g" points="'+pts(.33)+'"/><polygon class="poly" points="'+pts(vals)+'"/>'+
+      lab.map(function(l){return '<text x="'+l[1]+'" y="'+l[2]+'" text-anchor="'+l[3]+'">'+T(l[0])+'</text>';}).join('')+'</svg>';
+  }
+  var SCENES={
+    pajangin:function(){return ''+
+      A(0,'k','left:0;top:24px;width:218px','<span class="lb">'+T('demo.prodName')+'</span><div class="inp" data-type>'+T('sample.pajangin')+'</div><span class="lb">'+T('demo.price')+'</span><div class="inp" data-count="45000" data-fmt="rp" data-delay="1100">Rp 45.000</div>',' data-out="2"')+
+      A(1,'','left:220px;top:150px',ICON_ARR,' data-out="2"')+
+      A(1,'phone','left:270px;top:0;width:178px;height:340px','<div class="scr"><div class="url">founderku.com/l/rasa-rumah</div><div class="hero-ph"><span class="orb spin o-pajangin"><i></i></span></div><div class="pbody"><b>'+T('sample.pajangin')+'</b><span class="pr">Rp 45.000<s>Rp 55.000</s></span><small>✓ '+T('tools.pre')+'</small><small>✓ '+T('tools.ship')+'</small><span class="wa-b">'+T('demo.orderWa')+'</span></div></div>')+
+      A(2,'k','left:0;top:70px;width:250px','<div class="lnk">'+ICON_LINK+'founderku.com/l/rasa-rumah</div><div class="share"><span>WhatsApp</span><span>Instagram</span><span>TikTok</span></div><span class="good">✓ '+T('sc.copied')+'</span>')+
+      A(3,'k','left:0;top:210px;width:282px','<div class="th"><span class="av">S</span><div><b>Bu Sari</b><small>WhatsApp · '+T('sc.now')+'</small></div></div><p class="msg">'+T('sc.waMsg')+'</p>')+
+      A(3,'badge','left:300px;top:-8px;transition-delay:.6s','+1 '+T('sc.newOrder'));},
+    jalanin:function(){var it=['sc.j1','sc.j2','sc.j3','sc.j4'];return ''+
+      A(0,'k','left:0;top:0;width:460px','<span class="lb">'+T('sc.goal')+'</span><div class="goal" data-type>'+T('sc.goalV')+'</div>')+
+      A(1,'k','left:0;top:92px;width:296px',it.map(function(k,i){return '<div class="li" data-at="1"'+D(i*.25)+'><span class="cb">'+(i<3?'<i data-at="2"'+D(i*.45)+'></i>':'')+'</span>'+T(k)+'</div>';}).join('')+
+        '<span class="lb" style="margin-top:10px">'+T('sc.progress')+'</span><div class="trk"><i class="grow" data-at="2" style="--w:75%;transition-delay:.5s"></i></div>')+
+      A(3,'k pct','left:312px;top:92px;width:148px;height:220px','<div class="big" data-count="75" data-fmt="pct">75%</div><small>'+T('sc.almost')+'</small>');},
+    notain:function(){return ''+
+      A(0,'k','left:10px;top:0;width:280px;height:340px','<div class="ih"><b>INVOICE</b><small>INV/20260926/001</small></div><span class="to">'+T('sc.invTo')+'</span>'+
+        '<div class="rw"><span data-type>'+T('sample.notain')+' × 3</span><span data-at="1" data-count="135000" data-fmt="rp">Rp 135.000</span></div>'+
+        '<div class="rw" data-at="1"'+D(.4)+'><span>'+T('mock.ship')+'</span><span>Rp 10.000</span></div>'+
+        '<div class="tot" data-at="1"'+D(.8)+'><span>'+T('demo.total')+'</span><span class="big" data-count="145000" data-fmt="rp" data-delay="800">Rp 145.000</span></div>'+
+        '<div class="stamp" data-at="3"'+D(.9)+'><span>'+T('sc.paid')+'</span></div>')+
+      A(2,'chat','left:306px;top:30px;width:154px','<div class="th"><span class="av">R</span>Bu Rina</div><div class="bb mine"><div class="file"><i></i><div>INV/..001.pdf<br><b>Rp 145.000</b></div></div><small>'+T('sc.sent')+' ✓✓</small></div><div class="bb them" data-at="3">'+T('sc.transferred')+'</div>');},
+    pajakin:function(){return ''+
+      A(0,'k','left:0;top:0;width:460px','<span class="lb">'+T('demo.taxNow')+'</span><div class="big" data-count="12000000" data-fmt="rp">Rp 12.000.000</div>')+
+      A(1,'k','left:0;top:100px;width:460px','<div class="rw" style="border:0;padding-top:0"><span class="lb" style="margin:0">'+T('sc.allow')+'</span><b>Rp 500.000.000</b></div><div class="trk"><i class="grow" data-at="1" style="--w:9.6%;transition-delay:.3s"></i></div><div class="rw" style="border:0;padding-bottom:0"><small>'+T('sc.used')+'</small><small>'+T('sc.left')+'</small></div>')+
+      A(2,'k','left:0;top:206px;width:218px','<span class="lb">'+T('demo.taxDue')+'</span><div class="big" data-count="0" data-fmt="rp">Rp 0</div><span class="good">✓ '+T('demo.taxFree')+'</span>')+
+      A(3,'k','left:234px;top:206px;width:226px','<span class="lb">'+T('sc.over')+'</span><div class="rw"><span>'+T('sc.revenue')+'</span><b>Rp 10.000.000</b></div><div class="rw"><span>'+T('sc.tax')+' '+T('sc.rate')+'</span><b data-count="50000" data-fmt="rp" data-delay="500">Rp 50.000</b></div>');},
+    kontrakin:function(){return ''+
+      A(0,'types','left:0;top:0;width:460px','<span class="pill on">'+T('sc.kType1')+'</span><span class="pill">'+T('sc.kType2')+'</span><span class="pill">'+T('sc.kType3')+'</span>')+
+      A(1,'k','left:0;top:54px;width:212px','<span class="lb">'+T('sc.kName')+'</span><div class="inp" data-type>Dimas Pratama</div><span class="lb">'+T('sc.kRole')+'</span><div class="inp" data-type data-delay="800">'+T('sc.kRoleV')+'</div><span class="lb">'+T('sc.kPay')+'</span><div class="inp" data-count="2500000" data-fmt="rp" data-delay="1700">Rp 2.500.000</div>')+
+      A(2,'doc','left:228px;top:54px;width:232px;height:286px','<b class="dt">'+T('sc.kDoc')+'</b><span class="pt">Rasa Rumah &amp; Dimas Pratama</span>'+
+        [1,2,3].map(function(n){return '<div class="art" data-at="2"'+D(n*.3)+'><b>'+T('sc.kArt')+' '+n+'</b><i style="width:94%"></i><i style="width:'+(88-n*9)+'%"></i></div>';}).join('')+
+        '<div class="sig"><svg class="draw" data-at="3" viewBox="0 0 120 40" aria-hidden="true"><path d="M4 30 C 14 6, 22 6, 24 22 S 34 36, 42 18 S 56 4, 60 24 S 74 34, 84 14 S 100 10, 116 20"/></svg><span class="ln"></span><small data-at="3"'+D(1.5)+'>✓ '+T('sc.signed')+'</small></div>');},
+    sehatin:function(){return ''+
+      A(0,'k','left:0;top:0;width:220px','<p class="q">'+T('sc.hQ')+'</p><div class="opts"><span class="opt">'+T('sc.hA1')+'</span><span class="opt on">'+T('sc.hA2')+'</span><span class="opt">'+T('sc.hA3')+'</span></div>')+
+      A(1,'radar','left:236px;top:0;width:224px;height:224px',radar([.55,.8,.75,.9,.6]))+
+      A(2,'k','left:0;top:152px;width:220px','<span class="lb">'+T('sc.score')+'</span><div class="score"><span class="big" data-count="72">72</span><small>/100</small></div><div class="trk"><i class="grow" data-at="2" style="--w:72%;transition-delay:.2s"></i></div>')+
+      A(3,'k tip','left:0;top:264px;width:460px','<span class="tipi">!</span><div><small>'+T('sc.tip')+'</small><p>'+T('sc.tipV')+'</p></div>');},
+    brand:function(){var sw=[['#C8553D','Terracotta'],['#F3E3C3','Cream'],['#3B2A2F','Cocoa'],['#8C9A6B','Sage']];return ''+
+      A(0,'bub me','left:0;top:4px',T('sc.bBrief'))+
+      A(1,'k logo','left:270px;top:0;width:190px;height:160px','<span class="mark">R</span><b data-type data-delay="500">Rasa Rumah</b><small>'+T('sc.bTag')+'</small>')+
+      A(2,'','left:0;top:92px;width:250px','<span class="lb">'+T('sc.bColors')+'</span><div class="sw">'+sw.map(function(s,i){return '<span data-at="2"'+D(i*.2)+'><i style="background:'+s[0]+'"></i>'+s[1]+'</span>';}).join('')+'</div>')+
+      A(3,'mocks','left:0;top:190px;width:460px',
+        '<div class="mk" data-at="3"><div class="jar"><span>Rasa<br>Rumah</span></div>'+T('sc.bLabel')+'</div>'+
+        '<div class="mk" data-at="3"'+D(.25)+'><div class="bcard"><span>Rasa Rumah<small>Bu Rina · 0812 0000 0000</small></span></div>'+T('sc.bCard')+'</div>'+
+        '<div class="mk" data-at="3"'+D(.5)+'><div class="post">'+T('sc.bTag')+'</div>'+T('sc.bPost')+'</div>');},
+    web:function(){return ''+
+      A(0,'browser','left:0;top:0;width:318px;height:236px','<div class="bt"><i></i><i></i><i></i><span class="addr">rasarumah.com</span></div><div class="pg"><div class="wf nv"></div>'+
+        '<div class="wf hr"><div class="fill" data-at="1"><b>Rasa Rumah</b><small>'+T('sc.bTag')+'</small><span>'+T('sc.wBtn')+'</span></div></div>'+
+        '<div class="row3">'+[0,1,2].map(function(i){return '<div class="wf"><div class="fill" data-at="1"'+D(.3+i*.2)+'></div></div>';}).join('')+'</div></div>')+
+      A(2,'phone sm','left:336px;top:36px;width:122px;height:236px','<div class="scr"><div class="m-hr"><b>Rasa Rumah</b>'+T('sc.bTag')+'</div><div class="m-c"></div><div class="m-c"></div><div class="m-c"></div></div>')+
+      A(3,'k live','left:0;top:252px;width:318px','<span><span class="dl"></span><b>'+T('sc.wLive')+'</b> · rasarumah.com</span><span><b data-count="128" data-delay="300">128</b> '+T('sc.wVisit')+'</span>');},
+    mvp:function(){return ''+
+      A(0,'paper','left:0;top:6px;width:206px;height:236px','<p>'+T('sc.mIdea')+'</p><svg viewBox="0 0 178 150" aria-hidden="true"><rect class="sk" x="44" y="4" width="90" height="142" rx="12"/><path class="sk" d="M56 26h66M56 50h40M56 66h54M56 82h46M60 118h58v14H60z"/><path class="sk" d="M146 40c14 6 20 20 14 34M160 74l-4-8M160 74l-8-2"/></svg>')+
+      A(1,'','left:208px;top:120px',ICON_ARR)+
+      A(1,'phone','left:262px;top:0;width:176px;height:340px','<div class="scr"><div class="app-h">Rasa Rumah</div>'+
+        [['Nastar Keju','Rp 45.000'],['Kue Lapis','Rp 60.000'],['Brownies','Rp 50.000']].map(function(m){return '<div class="mi"><span><i></i>'+m[0]+'</span><b>'+m[1]+'</b></div>';}).join('')+
+        '<div class="mbtn">Pre-order<span class="tap" data-at="2"></span></div><div class="mtoast" data-at="2"'+D(.9)+'>✓ '+T('sc.mDone')+'</div></div>')+
+      A(3,'k users','left:0;top:258px;width:250px','<div class="avs"><span class="av">A</span><span class="av" style="background:var(--coral)">D</span><span class="av" style="background:var(--orange);color:#1A1730">S</span><span class="av" style="background:#1A1730">R</span></div><div><b class="big" data-count="24" style="font-size:22px">24</b> <span>'+T('sc.mUsers')+'</span></div>');},
+    talk:function(){return ''+
+      A(0,'bub me','left:0;top:0',T('chat.1'))+
+      A(1,'bub us','left:170px;top:52px',T('chat.2'))+
+      A(1,'bub me','left:0;top:98px;transition-delay:.9s',T('chat.3'))+
+      A(1,'bub us','left:200px;top:136px;transition-delay:1.8s',T('chat.4'))+
+      A(2,'k plan','left:0;top:190px;width:300px','<span class="lb">'+T('sc.plan')+'</span>'+[['step.1','week.1'],['step.2','week.12'],['step.3','week.25']].map(function(s,i){return '<div class="li" data-at="2"'+D(.2+i*.3)+'><span class="num">'+(i+1)+'</span>'+T(s[0])+'<small>'+T(s[1])+'</small></div>';}).join(''))+
+      A(3,'wab','left:312px;top:238px;width:148px','<span>'+T('demo.wa')+'</span><small>'+T('sc.free30')+'</small>');}
+  };
+  var TRY={pajakin:1,pajangin:1,notain:1};
+  var ST={on:false,done:false,i:0,t:0,n:4,raf:0,last:0,timers:[],key:'',it:null};
+  var STEP_MS=3200, LAST_MS=4200;
+  function clearTimers(){ST.timers.forEach(function(x){clearTimeout(x);clearInterval(x);});ST.timers=[];}
+  function showCount(e,v){var f=e.dataset.fmt;e.textContent=f==='rp'?rp(v):f==='pct'?Math.round(v)+'%':Math.round(v).toLocaleString('id-ID');}
+  function runFx(root){
+    var list=[root].concat([].slice.call(root.querySelectorAll('[data-type],[data-count]')));
+    list.forEach(function(e){
+      if(e!==root&&e.closest('[data-at]')!==root) return;
+      var d=+(e.dataset.delay||0);
+      if(e.hasAttribute('data-type')){
+        var full=e.dataset.full||(e.dataset.full=e.textContent);
+        if(reduce){e.textContent=full;return;}
+        e.textContent='';e.classList.add('typing');
+        ST.timers.push(setTimeout(function(){var k=0,iv=setInterval(function(){k++;e.textContent=full.slice(0,k);if(k>=full.length){clearInterval(iv);e.classList.remove('typing');}},Math.max(24,Math.min(60,1000/full.length)));ST.timers.push(iv);},d));
+      } else if(e.hasAttribute('data-count')){
+        var to=+e.dataset.count;
+        if(reduce||!to){showCount(e,to);return;}
+        showCount(e,0);
+        ST.timers.push(setTimeout(function(){var s=performance.now(),iv=setInterval(function(){var p=Math.min(1,(performance.now()-s)/900);showCount(e,to*(1-Math.pow(1-p,3)));if(p>=1)clearInterval(iv);},30);ST.timers.push(iv);},d));
+      }
+    });
+  }
+  function finishFx(){
+    clearTimers();
+    [].forEach.call(stage.querySelectorAll('[data-full]'),function(e){e.textContent=e.dataset.full;e.classList.remove('typing');});
+    [].forEach.call(stage.querySelectorAll('[data-count]'),function(e){showCount(e,+e.dataset.count);});
+  }
+  function setStep(i){
+    ST.i=i;ST.t=0;
+    [].forEach.call(stage.querySelectorAll('[data-at]'),function(e){
+      var on=+e.dataset.at<=i&&!(e.dataset.out!=null&&+e.dataset.out<=i);
+      if(on&&!e.classList.contains('in')){e.classList.add('in');runFx(e);}
+      else if(!on) e.classList.remove('in');
+    });
+    document.getElementById('stNum').textContent=t('st.stepOf',{n:i+1,total:ST.n});
+    document.getElementById('stCap').textContent=t('st.'+ST.key+'.'+(i+1));
+    paintBars();
+  }
+  function paintBars(){
+    var dur=ST.i===ST.n-1?LAST_MS:STEP_MS;
+    [].forEach.call(document.querySelectorAll('#stBars i'),function(b,k){b.style.width=(k<ST.i?100:k>ST.i?0:Math.min(100,ST.t/dur*100))+'%';});
+  }
+  var ICON_PAUSE='<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 3h3v10H4zM9 3h3v10H9z"/></svg>';
+  var ICON_PLAY='<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M5 3.5v9l7.5-4.5z"/></svg>';
+  function setPlayBtn(){var b=document.getElementById('stPlay');b.innerHTML=ST.on?ICON_PAUSE:ICON_PLAY;b.setAttribute('aria-label',t(ST.on?'st.pause':'st.play'));}
+  function tick(now){
+    ST.raf=requestAnimationFrame(tick);
+    var dt=Math.min(100,now-(ST.last||now));ST.last=now;
+    if(!ST.on) return;
+    ST.t+=dt;
+    var dur=ST.i===ST.n-1?LAST_MS:STEP_MS;
+    if(ST.t>=dur){
+      if(ST.i<ST.n-1) setStep(ST.i+1);
+      else {ST.t=dur;ST.on=false;ST.done=true;setPlayBtn();document.getElementById('stCta').classList.add('glow');}
+    }
+    paintBars();
+  }
+  function jump(i){finishFx();ST.done=false;document.getElementById('stCta').classList.remove('glow');ST.on=true;setStep(i);setPlayBtn();}
+  function replay(){
+    clearTimers();
+    [].forEach.call(stage.querySelectorAll('[data-at]'),function(e){e.classList.remove('in');});
+    [].forEach.call(stage.querySelectorAll('[data-full]'),function(e){e.textContent='';});
+    ST.done=false;ST.on=true;document.getElementById('stCta').classList.remove('glow');
+    setStep(0);setPlayBtn();
+  }
+  function fitScene(){
+    var sc=stage.querySelector('.scene'),cv=stage.querySelector('.cv'); if(!sc||!cv) return;
+    // Di HP dan tablet tinggi panggung mengikuti lebar layar, supaya tidak ada ruang kosong
+    var narrow=window.innerWidth<=920, r=sc.getBoundingClientRect();
+    var k=narrow?Math.min((r.width-16)/460,1.3):Math.min((r.width-24)/460,(r.height-24)/340,1.3);
+    sc.style.height=narrow?Math.round(340*k+24)+'px':'';
+    cv.style.setProperty('--k',k.toFixed(3));
+  }
+  function ctaHtml(it,inTry){
+    if(set==='studio') return '<a class="btn btn-solid" href="'+esc(waHref())+'" target="_blank" rel="noopener">'+T('demo.wa')+'</a>';
+    var h='';
+    if(inTry&&SCENES[it.demo]) h+='<button type="button" class="btn btn-line" id="stBack">'+T('st.replay')+'</button>';
+    else if(TRY[it.demo]) h+='<button type="button" class="btn btn-solid" id="stTry">'+T('st.try')+'</button>';
+    if(it.href) h+='<a class="btn '+(TRY[it.demo]||inTry?'btn-line':'btn-solid')+'" href="'+esc(it.href)+'">'+esc(t('demo.open',{name:it.n}))+'</a>';
+    return h;
+  }
+  function bindCta(it){
+    var tr=document.getElementById('stTry'),bk=document.getElementById('stBack');
+    if(tr) tr.addEventListener('click',function(){tryDemo(it);});
+    if(bk) bk.addEventListener('click',function(){startStory(it);});
+  }
+  function startStory(it){
+    var key=set==='tools'?it.demo:it.key;
+    ST.key=key;ST.it=it;
+    stage.className='demo-body';
+    stage.innerHTML='<div class="scene"><div class="cv">'+SCENES[key]()+'</div></div>';
+    document.getElementById('storyUi').hidden=false;
+    document.getElementById('stBars').innerHTML=[0,1,2,3].map(function(k){return '<button type="button" aria-label="'+esc(t('st.goto',{n:k+1}))+'"><span><i></i></span></button>';}).join('');
+    [].forEach.call(document.querySelectorAll('#stBars button'),function(b,k){b.addEventListener('click',function(){jump(k);});});
+    var cta=document.getElementById('stCta');cta.classList.remove('glow');cta.innerHTML=ctaHtml(it,false);bindCta(it);
+    fitScene();
+    cancelAnimationFrame(ST.raf);ST.last=0;ST.raf=requestAnimationFrame(tick);
+    replay();
+  }
   function fmtInput(el,cb){el.addEventListener('input',function(){var v=num(el.value);el.value=v?v.toLocaleString('id-ID'):'';cb();});}
+  function tryDemo(it){
+    ST.on=false;clearTimers();cancelAnimationFrame(ST.raf);
+    document.getElementById('storyUi').hidden=true;
+    var cta=document.getElementById('stCta');cta.classList.remove('glow');cta.innerHTML=ctaHtml(it,true);bindCta(it);
+    var body=stage, $=function(id){return document.getElementById(id);};
+    body.className='demo-body form';
+    if(it.demo==='pajakin'){
+      body.innerHTML='<label class="field">'+esc(t('demo.taxBefore'))+'<input id="dA" inputmode="numeric" value="36.000.000"></label><label class="field">'+esc(t('demo.taxNow'))+'<input id="dB" inputmode="numeric" value="12.000.000"></label>'+
+        '<div class="out" style="grid-column:1/-1"><div class="row"><span>'+esc(t('demo.taxFree'))+'</span><span id="r1"></span></div><div class="row"><span>'+esc(t('demo.taxed'))+'</span><span id="r2"></span></div><div class="row"><span>'+esc(t('demo.taxDue'))+'</span><span class="big" id="r3"></span></div></div>'+
+        '<p class="note">'+esc(t('demo.taxNote'))+'</p>';
+      var calc=function(){var a=num($('dA').value),b=num($('dB').value);var sisa=Math.max(0,500000000-a);var bebas=Math.min(b,sisa);var kena=b-bebas;$('r1').textContent=rp(bebas);$('r2').textContent=rp(kena);$('r3').textContent=rp(kena*0.005);};
+      fmtInput($('dA'),calc);fmtInput($('dB'),calc);calc();
+    } else if(it.demo==='pajangin'){
+      body.innerHTML='<div style="display:grid;gap:12px;align-content:start"><label class="field">'+esc(t('demo.prodName'))+'<input id="pN" maxlength="60"></label><label class="field">'+esc(t('demo.price'))+'<input id="pH" inputmode="numeric" value="45.000"></label></div>'+
+        '<div class="mini-page"><div class="ph"></div><div class="in"><div id="pvN" style="font-weight:600"></div><div id="pvH" style="font-size:13px"></div><span class="wa">'+esc(t('demo.orderWa'))+'</span></div></div>';
+      $('pN').value=t('sample.pajangin');
+      var up=function(){$('pvN').textContent=$('pN').value||t('demo.prodName');var h=num($('pH').value);$('pvH').textContent=h?rp(h):t('demo.price');};
+      $('pN').addEventListener('input',up);fmtInput($('pH'),up);up();
+    } else if(it.demo==='notain'){
+      body.innerHTML='<div style="display:grid;gap:12px;align-content:start"><label class="field">'+esc(t('demo.item'))+'<input id="nI" maxlength="60"></label><label class="field">'+esc(t('demo.qty'))+'<input id="nQ" inputmode="numeric" value="3"></label><label class="field">'+esc(t('demo.unit'))+'<input id="nH" inputmode="numeric" value="45.000"></label></div>'+
+        '<div class="out"><div style="font-weight:600">INV/20260926/001</div><div class="row"><span id="nL"></span><span id="nS"></span></div><div class="row"><span>'+esc(t('demo.total'))+'</span><span class="big" id="nT"></span></div></div>';
+      $('nI').value=t('sample.notain');
+      var inv=function(){var q=num($('nQ').value),h=num($('nH').value);$('nL').textContent=($('nI').value||t('demo.item'))+' × '+q;$('nS').textContent=rp(q*h);$('nT').textContent=rp(q*h);};
+      $('nI').addEventListener('input',inv);$('nQ').addEventListener('input',inv);fmtInput($('nH'),inv);inv();
+    } else {
+      body.innerHTML='<div class="out" style="grid-column:1/-1">'+esc(t('demo.other'))+'</div>';
+    }
+    var f=body.querySelector('input'); if(f) f.focus({preventScroll:true});
+  }
   function openDemo(){
     var it=items()[idx]; if(!it) return;
     document.getElementById('demoOrb').className='orb spin '+it.orb;
     document.getElementById('demoTitle').textContent=it.n;
     document.getElementById('demoDesc').textContent=it.d;
-    var body=document.getElementById('demoBody'), $=function(id){return document.getElementById(id);};
-    var openBtn=it.href?'<div><a class="btn btn-solid" href="'+esc(it.href)+'">'+esc(t('demo.open',{name:it.n}))+'</a></div>':'';
-    if(set==='tools'&&it.demo==='pajakin'){
-      body.innerHTML='<label class="field">'+esc(t('demo.taxBefore'))+'<input id="dA" inputmode="numeric" value="36.000.000"></label><label class="field">'+esc(t('demo.taxNow'))+'<input id="dB" inputmode="numeric" value="12.000.000"></label>'+
-        '<div class="out" style="grid-column:1/-1"><div class="row"><span>'+esc(t('demo.taxFree'))+'</span><span id="r1"></span></div><div class="row"><span>'+esc(t('demo.taxed'))+'</span><span id="r2"></span></div><div class="row"><span>'+esc(t('demo.taxDue'))+'</span><span class="big" id="r3"></span></div></div>'+
-        '<p class="note">'+esc(t('demo.taxNote'))+'</p>'+openBtn;
-      var calc=function(){var a=num($('dA').value),b=num($('dB').value);var sisa=Math.max(0,500000000-a);var bebas=Math.min(b,sisa);var kena=b-bebas;$('r1').textContent=rp(bebas);$('r2').textContent=rp(kena);$('r3').textContent=rp(kena*0.005);};
-      fmtInput($('dA'),calc);fmtInput($('dB'),calc);calc();
-    } else if(set==='tools'&&it.demo==='pajangin'){
-      body.innerHTML='<div style="display:grid;gap:12px"><label class="field">'+esc(t('demo.prodName'))+'<input id="pN" maxlength="60"></label><label class="field">'+esc(t('demo.price'))+'<input id="pH" inputmode="numeric" value="45.000"></label></div>'+
-        '<div class="mini-page"><div class="ph"></div><div class="in"><div id="pvN" style="font-weight:600"></div><div id="pvH" style="font-size:13px"></div><span class="wa">'+esc(t('demo.orderWa'))+'</span></div></div>'+openBtn;
-      $('pN').value=t('sample.pajangin');
-      var up=function(){$('pvN').textContent=$('pN').value||t('demo.prodName');var h=num($('pH').value);$('pvH').textContent=h?rp(h):t('demo.price');};
-      $('pN').addEventListener('input',up);fmtInput($('pH'),up);up();
-    } else if(set==='tools'&&it.demo==='notain'){
-      body.innerHTML='<div style="display:grid;gap:12px"><label class="field">'+esc(t('demo.item'))+'<input id="nI" maxlength="60"></label><label class="field">'+esc(t('demo.qty'))+'<input id="nQ" inputmode="numeric" value="3"></label><label class="field">'+esc(t('demo.unit'))+'<input id="nH" inputmode="numeric" value="45.000"></label></div>'+
-        '<div class="out"><div style="font-weight:600">INV/20260926/001</div><div class="row"><span id="nL"></span><span id="nS"></span></div><div class="row"><span>'+esc(t('demo.total'))+'</span><span class="big" id="nT"></span></div></div>'+openBtn;
-      $('nI').value=t('sample.notain');
-      var inv=function(){var q=num($('nQ').value),h=num($('nH').value);$('nL').textContent=($('nI').value||t('demo.item'))+' × '+q;$('nS').textContent=rp(q*h);$('nT').textContent=rp(q*h);};
-      $('nI').addEventListener('input',inv);$('nQ').addEventListener('input',inv);fmtInput($('nH'),inv);inv();
-    } else if(set==='studio'){
-      body.innerHTML='<div class="out" style="grid-column:1/-1"><div class="row"><span>'+esc(t('demo.time'))+'</span><span>'+esc(it.week)+'</span></div><div class="row"><span>'+esc(t('demo.start'))+'</span><span>'+esc(t('demo.startV'))+'</span></div></div><div><a class="btn btn-solid" href="'+esc(waHref())+'" target="_blank" rel="noopener">'+esc(t('demo.wa'))+'</a></div>';
-    } else if(set==='starter'){
-      body.innerHTML='<div class="out" style="grid-column:1/-1"><div class="row"><span>'+esc(t('demo.price'))+'</span><span class="big">'+esc(it.price)+'</span></div><div class="row"><span>'+esc(t('demo.included'))+'</span><span>'+esc(t('demo.includedV'))+'</span></div></div><div><a class="btn btn-solid" href="'+esc(it.href)+'">'+esc(t('demo.detail'))+'</a></div>';
-    } else {
-      body.innerHTML='<div class="out" style="grid-column:1/-1">'+esc(t('demo.other'))+'</div>'+openBtn;
-    }
     demo.classList.add('show');demo.setAttribute('aria-hidden','false');
+    document.documentElement.classList.add('demo-open');
+    var key=set==='tools'?it.demo:it.key;
+    if(SCENES[key]) startStory(it); else tryDemo(it);
     document.getElementById('demoClose').focus({preventScroll:true});
   }
-  function closeDemo(){demo.classList.remove('show');demo.setAttribute('aria-hidden','true');}
+  function closeDemo(){
+    ST.on=false;clearTimers();cancelAnimationFrame(ST.raf);
+    demo.classList.remove('show');demo.setAttribute('aria-hidden','true');
+    document.documentElement.classList.remove('demo-open');
+  }
   document.getElementById('demoClose').addEventListener('click',closeDemo);
+  document.getElementById('stPlay').addEventListener('click',function(){
+    if(ST.done){replay();return;}
+    ST.on=!ST.on;setPlayBtn();
+  });
+  document.getElementById('stAgain').addEventListener('click',replay);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&demo.classList.contains('show'))closeDemo();});
+  window.addEventListener('resize',fitScene);
 
   // ---------- Generator nama brand (bank kata dari versi lama) ----------
   var BANK = {
