@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 
 export default function NewPageLoading() {
   return (
-    <div className="relative min-h-screen">
+    <div className="fk-app">
       <PageBackdrop variant="form" />
       <div className="max-w-5xl mx-auto px-6 py-10">
         <Skeleton className="w-28 h-8 mb-6" />

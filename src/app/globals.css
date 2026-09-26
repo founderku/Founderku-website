@@ -300,7 +300,26 @@ body::before {
 .fk-app .glass-amber.text-ink,
 .fk-app .glass-amber .text-ink,
 .fk-app .bg-amber.text-ink { color: #14131f; }
-.fk-app input { background: var(--app-card-strong); color: var(--app-text); }
+.fk-app input,
+.fk-app textarea,
+.fk-app select { background: var(--app-card-strong); color: var(--app-text); }
+.fk-app input::placeholder,
+.fk-app textarea::placeholder { color: var(--app-faint); }
+/* Tombol gelap (bg-ink) tetap kelihatan di mode gelap */
+[data-theme="dark"] .fk-app .bg-ink { background-color: #2a2840; }
+[data-theme="dark"] .fk-app .bg-ink:hover { background-color: #34324d; }
+
+/* Pratinjau halaman jualan penjual: SELALU tampil terang seperti aslinya,
+   walau dashboard sedang mode gelap. */
+.fk-keep-light {
+  --app-card: #ffffff;
+  --app-card-strong: #ffffff;
+  --app-border: rgba(20, 19, 31, 0.09);
+  --app-text: #14131f;
+  --app-soft: rgba(20, 19, 31, 0.64);
+  --app-faint: rgba(20, 19, 31, 0.44);
+  color: #14131f;
+}
 
 .fk-app-card {
   background: var(--app-card);

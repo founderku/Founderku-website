@@ -8,6 +8,7 @@ import { StoreSlugEditor } from "@/components/StoreSlugEditor";
 import { PlanBadge } from "@/components/PlanBadge";
 import { PageBackdrop } from "@/components/PageBackdrop";
 import { LogoutButton } from "@/components/LogoutButton";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { ProductCard } from "@/components/ProductCard";
 import { WelcomeModal } from "@/components/WelcomeModal";
 import { PublishToast } from "@/components/PublishToast";
@@ -54,7 +55,7 @@ export default async function DashboardPage({
   const totalClicks = (pages ?? []).reduce((sum, p) => sum + p.click_count, 0);
 
   return (
-    <div className="relative min-h-screen">
+    <div className="fk-app">
       <PageBackdrop variant="dashboard" />
       <WelcomeModal hasPages={(pages?.length ?? 0) > 0} />
       {firstPublish === "1" && publishedSlug && (
@@ -88,6 +89,7 @@ export default async function DashboardPage({
             Akun
           </Link>
           <LogoutButton />
+          <ThemeToggle />
         </div>
       </div>
 

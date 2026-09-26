@@ -40,7 +40,7 @@ export function ProductCard({
 
   return (
     <div
-      className={`${s.card} overflow-hidden shadow-[0_30px_60px_-30px_rgba(20,19,31,0.22)]`}
+      className={`fk-keep-light ${s.card} overflow-hidden shadow-[0_30px_60px_-30px_rgba(20,19,31,0.22)]`}
     >
       {/* Foto produk jadi elemen utama - ukuran dominan, bukan sekadar aksen */}
       <div

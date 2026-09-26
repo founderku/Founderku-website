@@ -224,7 +224,7 @@ export default function EditPagePage() {
 
   if (loadState === "loading") {
     return (
-      <div className="relative min-h-screen">
+      <div className="fk-app">
         <PageBackdrop variant="form" />
         <div className="max-w-5xl mx-auto px-6 py-10">
           <p className="text-sm text-text-soft">Memuat data halaman...</p>
@@ -235,7 +235,7 @@ export default function EditPagePage() {
 
   if (loadState === "not-found") {
     return (
-      <div className="relative min-h-screen">
+      <div className="fk-app">
         <PageBackdrop variant="form" />
         <div className="max-w-5xl mx-auto px-6 py-10">
           <p className="text-sm text-text-soft mb-4">
@@ -253,7 +253,7 @@ export default function EditPagePage() {
   }
 
   return (
-    <div className="relative min-h-screen">
+    <div className="fk-app">
       <PageBackdrop variant="form" />
       <div className="max-w-5xl mx-auto px-6 py-10">
       <div className="mb-6">

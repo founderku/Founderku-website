@@ -236,7 +236,7 @@ export default function NewPagePage() {
   }
 
   return (
-    <div className="relative min-h-screen">
+    <div className="fk-app">
       <PageBackdrop variant="form" />
       <div className="max-w-5xl mx-auto px-6 py-10">
       <div className="mb-6">
@@ -259,7 +259,7 @@ export default function NewPagePage() {
       </Link>
 
       <p className="font-manrope text-xs font-bold uppercase tracking-wide text-text-faint mb-1">
-        Wireframe jadi kode nyata
+        Pajangin
       </p>
       <h1 className="font-manrope font-extrabold text-3xl tracking-tight mb-1">
         Buat Halaman Baru

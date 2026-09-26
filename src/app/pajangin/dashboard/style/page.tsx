@@ -20,7 +20,7 @@ export default async function StylePage() {
     .single<Profile>();
 
   return (
-    <div className="relative min-h-screen">
+    <div className="fk-app">
       <PageBackdrop variant="style" />
       <div className="max-w-5xl mx-auto px-6 py-10">
 
