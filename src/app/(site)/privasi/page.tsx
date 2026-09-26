@@ -74,8 +74,9 @@ export default function PrivasiPage() {
           <li>
             <strong className={b}>Data teknis:</strong> untuk penghitung klik
             halaman Pajangin, alamat IP pengunjung diubah dulu menjadi kode
-            acak satu arah (hash) sebelum disimpan, dan hanya dipakai untuk
-            mencegah satu pengunjung terhitung berkali-kali. Penyedia hosting
+            acak satu arah (dengan kunci rahasia server) sebelum disimpan,
+            hanya dipakai untuk mencegah satu pengunjung terhitung
+            berkali-kali, dan dihapus otomatis setelah 1 hari. Penyedia hosting
             kami juga mencatat log server standar (seperti alamat IP dan jenis
             browser) untuk keamanan dan perbaikan gangguan.
           </li>

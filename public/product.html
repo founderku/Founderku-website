@@ -421,14 +421,14 @@ function applyProductStaticI18n() {
     if (lang === 'tr' && p.priceTRY) return '\u20ba' + Number(p.priceTRY).toLocaleString('tr-TR');
     return formatPriceLang(p.price, lang);
   }
-  function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function escapeHtml(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 
   function renderProductText(){
     if (!currentProduct) return;
     var dict = fkProductDict();
     var p = currentProduct;
     var catLabel = p.categoryLabel || p.category;
-    breadcrumb.innerHTML = '<a href="store.html">' + dict['breadcrumb.store'] + '</a><span class="sep">/</span><a href="store.html">' + catLabel + '</a><span class="sep">/</span><span class="current">' + pickLangText(p.name) + '</span>';
+    breadcrumb.innerHTML = '<a href="store.html">' + dict['breadcrumb.store'] + '</a><span class="sep">/</span><a href="store.html">' + escapeHtml(catLabel) + '</a><span class="sep">/</span><span class="current">' + escapeHtml(pickLangText(p.name)) + '</span>';
     document.getElementById('buyTitle').textContent = pickLangText(p.name);
     document.getElementById('buyPrice').textContent = getDisplayPrice(p, fkCurrentLang);
     document.getElementById('buyPriceNote').textContent = dict['buy.priceNote'];
@@ -449,7 +449,7 @@ function applyProductStaticI18n() {
     var langFeatures = pickLangArray(p.featureTags);
     if (langFeatures && langFeatures.length) {
       featureBlock.style.display = '';
-      featureGrid.innerHTML = langFeatures.map(function(f){return '<div class="fk-feature-item"><div class="dot"></div>' + f + '</div>';}).join('');
+      featureGrid.innerHTML = langFeatures.map(function(f){return '<div class="fk-feature-item"><div class="dot"></div>' + escapeHtml(f) + '</div>';}).join('');
     } else {
       featureBlock.style.display = 'none';
     }
@@ -504,7 +504,7 @@ function applyProductStaticI18n() {
 
     var thumbRow = document.getElementById('thumbRow');
     if (p.gallery && p.gallery.length > 1) {
-      thumbRow.innerHTML = p.gallery.map(function(g, i){ return '<div class="' + (i===0?'active':'') + '" data-src="' + g + '"><img src="' + g + '" alt="foto ' + (i+1) + '"></div>'; }).join('');
+      thumbRow.innerHTML = p.gallery.map(function(g, i){ return '<div class="' + (i===0?'active':'') + '" data-src="' + escapeHtml(g) + '"><img src="' + escapeHtml(g) + '" alt="foto ' + (i+1) + '"></div>'; }).join('');
       thumbRow.querySelectorAll('div[data-src]').forEach(function (thumbEl) {
         thumbEl.addEventListener('click', function () {
           var galMainEl = document.getElementById('galMain');

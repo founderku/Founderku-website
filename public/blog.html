@@ -322,6 +322,8 @@ function applyBlogStaticI18n() {
   var posts = [];
   var GRADIENTS = { amber: 'fk-orb-amber', indigo: 'fk-orb-indigo', coral: 'fk-orb-coral' };
 
+  // Teks dari data dijadikan teks biasa sebelum masuk HTML
+  function fkEsc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function renderGrid() {
     var dict = fkBlogDict();
     if (!posts.length) { grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:60px 0; color:var(--text-faint);">' + dict.empty + '</div>'; return; }
@@ -330,9 +332,9 @@ function applyBlogStaticI18n() {
       var gradClass = GRADIENTS[p.coverGradient] || 'fk-orb-amber';
       var catLabel = dict['cat.' + p.category] || p.category || '';
       return '<a href="blog-post.html?slug=' + encodeURIComponent(p.slug) + '" class="fk-blog-card">' +
-        '<div class="fk-blog-thumb ' + gradClass + '" style="animation:none;"><div class="fk-blog-thumb-title">' + pickLangText(p.title) + '</div></div>' +
-        '<div class="fk-blog-meta"><span class="cat">' + catLabel + '</span> · ' + (p.date || '') + '</div>' +
-        '<div class="fk-blog-title">' + pickLangText(p.title) + '</div>' +
+        '<div class="fk-blog-thumb ' + gradClass + '" style="animation:none;"><div class="fk-blog-thumb-title">' + fkEsc(pickLangText(p.title)) + '</div></div>' +
+        '<div class="fk-blog-meta"><span class="cat">' + fkEsc(catLabel) + '</span> · ' + fkEsc(p.date || '') + '</div>' +
+        '<div class="fk-blog-title">' + fkEsc(pickLangText(p.title)) + '</div>' +
       '</a>';
     }).join('');
   }

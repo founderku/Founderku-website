@@ -149,8 +149,10 @@ export default function EditPagePage() {
     // tetap dipakai (kolom image_url tidak disentuh sama sekali).
     let imageUrl: string | undefined = undefined;
     if (photoFile) {
-      const ext = photoFile.name.split(".").pop();
-      const path = `${user.id}/${slug}-${Date.now()}.${ext}`;
+      // Nama file acak (bukan nama produk/waktu) supaya alamat foto gak
+      // bisa ditebak. Folder = id akun (diwajibkan aturan storage).
+      const ext = photoFile.type === "image/png" ? "png" : "jpg";
+      const path = `${user.id}/${crypto.randomUUID()}.${ext}`;
       const { error: uploadError } = await supabase.storage
         .from("product-photos")
         .upload(path, photoFile);

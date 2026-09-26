@@ -54,8 +54,11 @@ export function toWhatsAppLink(number: string, message: string): string {
 // founderku.com sendiri (diawali "/" tapi bukan "//" atau "/\"),
 // biar link login gak bisa disalahgunakan buat ngelempar orang ke
 // situs penipuan.
+// Spasi, tab, baris baru, dan "\" ditolak di mana pun: browser membuang
+// tab/baris baru dari alamat, jadi "/<tab>/situs-lain.com" bisa berubah
+// jadi "//situs-lain.com".
 export function safeNextPath(next: string | null | undefined): string {
-  if (!next || !next.startsWith("/") || next.startsWith("//") || next.startsWith("/\\")) {
+  if (!next || !/^\/(?![/\\])[^\s\\]*$/.test(next)) {
     return "/akun";
   }
   return next;

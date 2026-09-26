@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { headers } from "next/headers";
-import { createHash } from "crypto";
+import { createHmac } from "crypto";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { EtalasePage } from "@/components/etalase/EtalasePage";
@@ -65,7 +65,12 @@ export default async function PublicPage({
     headerList.get("x-forwarded-for")?.split(",")[0].trim() ??
     headerList.get("x-real-ip") ??
     "unknown";
-  const visitorHash = createHash("sha256").update(ip).digest("hex");
+  // Pakai HMAC dengan kunci rahasia server (bukan hash biasa): alamat IP
+  // cuma sekitar 4 miliar kemungkinan, jadi hash biasa bisa ditebak balik
+  // dengan mencoba semuanya. Tanpa kunci rahasia, itu tidak mungkin.
+  const visitorHash = createHmac("sha256", process.env.SUPABASE_SERVICE_ROLE_KEY ?? "")
+    .update("page-click:" + ip)
+    .digest("hex");
   // Dipanggil pakai kunci server (service_role): fungsi ini sengaja gak
   // bisa dipanggil langsung dari browser, biar jumlah klik gak bisa
   // dipalsukan.

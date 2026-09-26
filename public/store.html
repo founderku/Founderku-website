@@ -405,20 +405,22 @@ function applyStoreStaticI18n() {
   var categories = [];
   var activeCategory = 'all';
 
+  // Teks dari data dijadikan teks biasa sebelum masuk HTML
+  function fkEsc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function cardHTML(p) {
     var dict = fkStoreDict();
     var catLabel = fkCatLabel(p.category, p.categoryLabel || p.category);
     var thumbInner = p.thumbnail && !p.thumbnail.includes('placeholder')
-      ? '<img src="' + p.thumbnail + '" alt="' + pickLangText(p.name) + '">'
+      ? '<img src="' + fkEsc(p.thumbnail) + '" alt="' + fkEsc(pickLangText(p.name)) + '">'
       : '<span style="font-size:12px;color:var(--text-faint);font-weight:600;">' + dict.comingSoon + '</span>';
     var featClass = p.featured ? ' featured' : '';
-    var tags = pickLangArray(p.featureTags).slice(0, 4).map(function (t) { return '<span>' + t + '</span>'; }).join('');
+    var tags = pickLangArray(p.featureTags).slice(0, 4).map(function (t) { return '<span>' + fkEsc(t) + '</span>'; }).join('');
     return '<a href="product.html?slug=' + encodeURIComponent(p.slug) + '" class="fk-p-card' + featClass + '">' +
-      '<div class="fk-p-thumb"><div class="fk-p-cat-badge">' + catLabel + '</div>' + thumbInner + '</div>' +
+      '<div class="fk-p-thumb"><div class="fk-p-cat-badge">' + fkEsc(catLabel) + '</div>' + thumbInner + '</div>' +
       '<div class="fk-p-body">' +
-        '<div class="fk-p-cat">' + catLabel + '</div>' +
-        '<div class="fk-p-title">' + pickLangText(p.name) + '</div>' +
-        '<div class="fk-p-desc">' + pickLangText(p.shortDescription) + '</div>' +
+        '<div class="fk-p-cat">' + fkEsc(catLabel) + '</div>' +
+        '<div class="fk-p-title">' + fkEsc(pickLangText(p.name)) + '</div>' +
+        '<div class="fk-p-desc">' + fkEsc(pickLangText(p.shortDescription)) + '</div>' +
         '<div class="fk-p-tags">' + tags + '</div>' +
         '<div class="fk-p-footer">' +
           '<div class="fk-p-price">' + getDisplayPrice(p, fkCurrentLang) + '<small>' + dict.priceNote + '</small></div>' +

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { timingSafeEqual } from "crypto";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { createXenditClient } from "@/lib/xendit";
 
 function isValidToken(received: string | null): boolean {
   const expected = process.env.XENDIT_CALLBACK_TOKEN;
@@ -42,15 +43,46 @@ export async function POST(request: Request) {
     return NextResponse.json({ received: true });
   }
 
+  const invoiceId = String(body.id);
+
+  // Tagihan yang bukan buatan kita (misal tombol "Test" di dashboard
+  // Xendit): cukup dibalas, gak perlu tanya ke Xendit.
+  const { data: sub } = await admin
+    .from("subscriptions")
+    .select("user_id")
+    .eq("xendit_invoice_id", invoiceId)
+    .maybeSingle();
+  if (!sub) {
+    return NextResponse.json({ received: true, result: "not_found" });
+  }
+
+  // Lapis pengaman kedua: JANGAN percaya isi pesan begitu saja. Tanya
+  // langsung ke Xendit (pakai Secret Key) apakah tagihan ini memang
+  // lunas dan berapa nominalnya. Jadi walaupun token webhook suatu saat
+  // bocor, orang tetap gak bisa memalsukan pembayaran.
+  let verifiedAmount: number;
+  try {
+    const invoice = await createXenditClient().Invoice.getInvoiceById({ invoiceId });
+    const lunas = invoice.status === "PAID" || invoice.status === "SETTLED";
+    const milikUser = invoice.externalId?.startsWith(`founderku-${sub.user_id}-`);
+    if (!lunas || !milikUser) {
+      return NextResponse.json({ received: true, result: "not_verified" });
+    }
+    verifiedAmount = Number(invoice.amount);
+  } catch (err) {
+    // Xendit sedang gangguan: balas 500 supaya Xendit kirim ulang nanti
+    console.error("Cek tagihan ke Xendit gagal:", err instanceof Error ? err.message : err);
+    return NextResponse.json({ error: "Gagal memverifikasi." }, { status: 500 });
+  }
+
   // Semua pengecekan penting (nominal cocok, belum pernah diproses,
   // perpanjangan dari tanggal habis lama) dikerjakan di dalam SATU
   // fungsi database activate_subscription (lihat supabase/schema.sql),
   // jadi webhook yang dikirim dobel oleh Xendit gak bisa bikin masa
   // aktif nambah dua kali.
-  const paidAmount = Number(body.paid_amount ?? body.amount);
   const { data: result, error } = await admin.rpc("activate_subscription", {
-    invoice_id: body.id,
-    paid_amount: paidAmount,
+    invoice_id: invoiceId,
+    paid_amount: verifiedAmount,
   });
 
   if (error) {

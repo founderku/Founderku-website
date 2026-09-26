@@ -80,15 +80,20 @@ export async function POST(request: Request) {
     });
 
     if (dbError) {
+      // Detail error cuma dicatat di log server, gak dikirim ke browser
+      console.error("Simpan langganan gagal:", dbError.message);
       return NextResponse.json(
-        { error: "Gagal menyimpan data langganan: " + dbError.message },
+        { error: "Gagal menyiapkan pembayaran. Coba lagi sebentar lagi." },
         { status: 500 }
       );
     }
 
     return NextResponse.json({ url: invoice.invoiceUrl });
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Gagal membuat invoice.";
-    return NextResponse.json({ error: message }, { status: 500 });
+    console.error("Buat invoice Xendit gagal:", err instanceof Error ? err.message : err);
+    return NextResponse.json(
+      { error: "Gagal membuat tagihan. Coba lagi sebentar lagi." },
+      { status: 500 }
+    );
   }
 }

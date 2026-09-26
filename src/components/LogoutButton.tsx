@@ -14,6 +14,9 @@ export function LogoutButton() {
     // Data tools milik akun ini jangan ketinggalan di browser
     bersihkanSaatLogout();
     // "/" itu halaman statis (bukan halaman Next.js), jadi pakai reload penuh.
+    // Sengaja muat ulang penuh: "/" halaman statis, dan sisa data sesi
+    // di memori browser ikut hilang.
+    // eslint-disable-next-line @next/next/no-location-assign-relative-destination
     window.location.assign("/");
   }
 

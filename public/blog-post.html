@@ -313,7 +313,11 @@ function applyPostStaticI18n() {
     document.getElementById('postTitle').textContent = pickLangText(p.title);
     var contentText = pickLangText(p.content) || pickLangText(p.excerpt) || '';
     var paragraphs = contentText.split(/\n+/).map(function (s) { return s.trim(); }).filter(Boolean);
-    document.getElementById('postContent').innerHTML = paragraphs.map(function (para) { return '<p>' + para + '</p>'; }).join('');
+    // Isi artikel ditampilkan sebagai teks biasa (bukan HTML), supaya
+    // tanda < > di artikel gak pernah bisa jadi kode yang dijalankan.
+    var postContent = document.getElementById('postContent');
+    postContent.textContent = '';
+    paragraphs.forEach(function (para) { var el = document.createElement('p'); el.textContent = para; postContent.appendChild(el); });
   }
 
   document.querySelectorAll('.fk-lang-btn').forEach(function (btn) {

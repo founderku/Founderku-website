@@ -389,6 +389,12 @@ begin
   insert into public.page_click_log (page_id, visitor_hash)
   values (target_page_id, increment_page_click.visitor_hash);
 
+  -- Catatan klik cuma perlu untuk cek 60 detik terakhir: yang lebih dari
+  -- 1 hari dibuang, supaya data pengunjung tidak menumpuk selamanya.
+  delete from public.page_click_log
+  where page_id = target_page_id
+    and clicked_at < now() - interval '1 day';
+
   update public.pages
   set click_count = click_count + 1
   where id = target_page_id;

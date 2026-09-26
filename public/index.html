@@ -1653,7 +1653,8 @@ applyLanguage(savedLang, true);
 (function () {
   if (!location.hash) return;
   function scrollToHash() {
-    var el = document.querySelector(location.hash);
+    var el = null;
+    try { el = document.querySelector(location.hash); } catch (e) { return; }
     if (el) el.scrollIntoView();
   }
   // konten testimoni, studi kasus, produk, dan blog dimuat async dan mengubah
