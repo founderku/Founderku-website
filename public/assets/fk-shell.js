@@ -4,9 +4,9 @@
    - Di beranda (yang sudah punya laci sendiri) cuma latarnya yang dipasang. */
 (function () {
   var LABELS = {
-    id: { talk: 'Ngobrol soal proyek', menu: 'Menu', home: 'Beranda', tools: 'Tools', pricing: 'Harga', catalog: 'Katalog', blog: 'Blog', cases: 'Studi Kasus', store: 'Founder Starterpack', login: 'Masuk', account: 'Akun Saya', open: 'buka menu', close: 'tutup menu' },
-    en: { talk: 'Talk about a project', menu: 'Menu', home: 'Home', tools: 'Tools', pricing: 'Pricing', catalog: 'Catalog', blog: 'Blog', cases: 'Case Studies', store: 'Founder Starterpack', login: 'Sign in', account: 'My Account', open: 'open menu', close: 'close menu' },
-    tr: { talk: 'Proje hakkında konuş', menu: 'Menü', home: 'Ana Sayfa', tools: 'Araçlar', pricing: 'Fiyatlar', catalog: 'Katalog', blog: 'Blog', cases: 'Vaka Çalışmaları', store: 'Founder Starterpack', login: 'Giriş', account: 'Hesabım', open: 'menüyü aç', close: 'menüyü kapat' }
+    id: { talk: 'Ngobrol soal proyek', menu: 'Menu', home: 'Beranda', tools: 'Tools', pricing: 'Harga', catalog: 'Katalog', blog: 'Blog', cases: 'Studi Kasus', store: 'Founder Starterpack', login: 'Masuk', account: 'Akun Saya', open: 'buka menu', close: 'tutup menu', terms: 'Syarat & Ketentuan', privacy: 'Kebijakan Privasi' },
+    en: { talk: 'Talk about a project', menu: 'Menu', home: 'Home', tools: 'Tools', pricing: 'Pricing', catalog: 'Catalog', blog: 'Blog', cases: 'Case Studies', store: 'Founder Starterpack', login: 'Sign in', account: 'My Account', open: 'open menu', close: 'close menu', terms: 'Terms', privacy: 'Privacy' },
+    tr: { talk: 'Proje hakkında konuş', menu: 'Menü', home: 'Ana Sayfa', tools: 'Araçlar', pricing: 'Fiyatlar', catalog: 'Katalog', blog: 'Blog', cases: 'Vaka Çalışmaları', store: 'Founder Starterpack', login: 'Giriş', account: 'Hesabım', open: 'menüyü aç', close: 'menüyü kapat', terms: 'Koşullar', privacy: 'Gizlilik' }
   };
   var LINKS = [
     { key: 'home', href: '/' },
@@ -70,7 +70,8 @@
       '<button type="button" class="fk-ctrl-btn" data-close aria-label="' + t.close + '">&times;</button></div>' +
       '<ul class="fk-shell-list">' + items + '</ul>' +
       '<a class="fk-shell-cta" href="/akun">' + (loggedIn ? t.account : t.login) + '</a>' +
-      '<a class="fk-shell-cta fk-shell-cta-alt" href="https://wa.me/6285710477257" target="_blank" rel="noopener">' + t.talk + '</a>';
+      '<a class="fk-shell-cta fk-shell-cta-alt" href="https://wa.me/6285710477257" target="_blank" rel="noopener">' + t.talk + '</a>' +
+      '<div class="fk-shell-legal"><a href="/syarat">' + t.terms + '</a><span aria-hidden="true">·</span><a href="/privasi">' + t.privacy + '</a></div>';
     drawer.querySelector('[data-close]').addEventListener('click', close);
   }
 

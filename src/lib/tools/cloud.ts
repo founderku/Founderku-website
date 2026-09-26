@@ -27,7 +27,10 @@ export type ToolId = (typeof TOOL_IDS)[number];
 const META_KEY = "fk-sync-meta";
 const TUNDA_MS = 1200;
 
-type Meta = { owner: string | null; dirty: string[]; synced: string[] };
+// hapus: kunci yang pernah DIHAPUS user (tombol reset) dan belum dihapus
+// juga di akun. Tools biasanya langsung menyimpan isian kosong sesudah
+// reset, jadi niat "hapus" ini perlu diingat terpisah.
+type Meta = { owner: string | null; dirty: string[]; synced: string[]; hapus: string[] };
 
 export type StatusSinkron =
   | "memuat"
@@ -49,12 +52,13 @@ function bacaMeta(): Meta {
         owner: typeof m.owner === "string" ? m.owner : null,
         dirty: Array.isArray(m.dirty) ? m.dirty.filter(kunciTool) : [],
         synced: Array.isArray(m.synced) ? m.synced.filter(kunciTool) : [],
+        hapus: Array.isArray(m.hapus) ? m.hapus.filter(kunciTool) : [],
       };
     }
   } catch {
     // abaikan, pakai data kosong
   }
-  return { owner: null, dirty: [], synced: [] };
+  return { owner: null, dirty: [], synced: [], hapus: [] };
 }
 
 function tulisMeta(m: Meta) {
@@ -148,8 +152,14 @@ function kanonikMentah(mentah: string | null): string | null {
 
 // ---- Kirim perubahan ----
 
-// Akun yang sedang aktif sinkron (null = tamu / Free / belum siap)
-let aktif: { userId: string } | null = null;
+// Akun yang sedang aktif sinkron (null = tamu / belum siap).
+// bolehSimpan false = trial/Pro habis: cuma PENGHAPUSAN yang dikirim
+// (data lama di akun tetap bisa dihapus user kapan pun).
+let aktif: { userId: string; bolehSimpan: boolean } | null = null;
+
+function statusDiam(): StatusSinkron {
+  return aktif?.bolehSimpan === false ? "free" : "tersimpan";
+}
 let timer: ReturnType<typeof setTimeout> | null = null;
 let sedangKirim = false;
 
@@ -159,9 +169,14 @@ export function catatPerubahan(key: string) {
   // Selama belum ada akun yang punya data ini (tamu), gak perlu dicatat.
   // Nanti saat login, semua kunci lokal dianggap perlu dikirim.
   if (!m.owner) return;
+  if (window.localStorage.getItem(key) === null && !m.hapus.includes(key)) {
+    m.hapus = [...m.hapus, key];
+    tulisMeta(m);
+  }
   if (isiAkun.has(key) && kanonikMentah(window.localStorage.getItem(key)) === isiAkun.get(key)) {
     // Isinya sama persis dengan yang sudah ada di akun
     if (m.dirty.includes(key)) tulisMeta({ ...m, dirty: buang(m.dirty, key) });
+    if (aktif && !aktif.bolehSimpan && m.hapus.length) jadwalkanKirim();
     return;
   }
   tulisMeta({ ...m, dirty: tambah(m.dirty, key) });
@@ -170,7 +185,7 @@ export function catatPerubahan(key: string) {
 
 function jadwalkanKirim() {
   if (timer) clearTimeout(timer);
-  setStatus("menyimpan");
+  if (aktif?.bolehSimpan !== false) setStatus("menyimpan");
   timer = setTimeout(() => {
     timer = null;
     void kirimSekarang();
@@ -188,22 +203,31 @@ export async function kirimSekarang(): Promise<void> {
     jadwalkanKirim();
     return;
   }
-  const { userId } = aktif;
+  const { userId, bolehSimpan } = aktif;
   const m = bacaMeta();
-  if (m.owner !== userId || m.dirty.length === 0) {
-    setStatus("tersimpan");
+  if (m.owner !== userId || (m.dirty.length === 0 && m.hapus.length === 0)) {
+    setStatus(statusDiam());
     return;
   }
   sedangKirim = true;
-  setStatus("menyimpan");
+  if (bolehSimpan) setStatus("menyimpan");
   const supabase = createClient();
   const kunci = [...m.dirty];
   const naik: { user_id: string; key: string; value: unknown }[] = [];
-  const hapus: string[] = [];
+  // Pro habis: kunci yang pernah di-reset tetap dihapus di akun walau
+  // sekarang sudah terisi lagi (isian baru belum boleh dikirim).
+  const hapus: string[] = bolehSimpan ? [] : [...m.hapus];
+  const dilewati = new Set<string>();
   for (const key of kunci) {
     const mentah = window.localStorage.getItem(key);
     if (mentah === null) {
-      hapus.push(key);
+      if (!hapus.includes(key)) hapus.push(key);
+      continue;
+    }
+    if (!bolehSimpan) {
+      // Pro habis: perubahan disimpan di browser dulu, dikirim nanti
+      // kalau Pro aktif lagi
+      dilewati.add(key);
       continue;
     }
     try {
@@ -223,7 +247,7 @@ export async function kirimSekarang(): Promise<void> {
   }
   sedangKirim = false;
   if (!berhasil) {
-    setStatus("gagal");
+    if (bolehSimpan) setStatus("gagal");
     // Coba lagi sebentar lagi (misal sinyal sempat putus)
     if (!timer) {
       timer = setTimeout(() => {
@@ -252,9 +276,12 @@ export async function kirimSekarang(): Promise<void> {
       synced = buang(synced, key);
     }
   }
-  tulisMeta({ ...sesudah, dirty, synced });
-  if (dirty.length && aktif) jadwalkanKirim();
-  else setStatus("tersimpan");
+  // Niat hapus sudah terwujud: baris dihapus, atau (Pro) ditimpa isi terbaru
+  const beres = new Set([...hapus, ...naik.map((i) => i.key)]);
+  tulisMeta({ ...sesudah, dirty, synced, hapus: sesudah.hapus.filter((k) => !beres.has(k)) });
+  const sisaHapus = sesudah.hapus.filter((k) => !beres.has(k));
+  if (aktif && (dirty.some((k) => !dilewati.has(k)) || (!bolehSimpan && sisaHapus.length))) jadwalkanKirim();
+  else setStatus(statusDiam());
 }
 
 // ---- Ambil data dari akun waktu tool dibuka ----
@@ -290,7 +317,7 @@ export async function siapkanSinkron(toolId: ToolId, masihDitunggu: () => boolea
   if (m.owner && m.owner !== userId) {
     // Data di browser ini milik akun lain: buang dulu
     hapusDataToolLokal();
-    m = { owner: null, dirty: [], synced: [] };
+    m = { owner: null, dirty: [], synced: [], hapus: [] };
   }
 
   // Belum ada pemilik: data tamu di browser ini dianggap milik akun ini
@@ -301,7 +328,7 @@ export async function siapkanSinkron(toolId: ToolId, masihDitunggu: () => boolea
       return;
     }
     const dirtyAwal = semuaKunciToolLokal().filter((k) => !rows.some((r) => r.key === k));
-    m = { owner: userId, dirty: dirtyAwal, synced: [] };
+    m = { owner: userId, dirty: dirtyAwal, synced: [], hapus: [] };
   }
 
   const dariAkun = new Map(rows.map((r) => [r.key, r.value]));
@@ -330,18 +357,15 @@ export async function siapkanSinkron(toolId: ToolId, masihDitunggu: () => boolea
       dirty = tambah(dirty, key);
     }
   }
-  tulisMeta({ owner: userId, dirty, synced });
+  tulisMeta({ owner: userId, dirty, synced, hapus: m.hapus });
 
-  if (!isPro) {
-    setStatus("free");
-    return;
-  }
-  aktif = { userId };
-  if (dirty.length) await kirimSekarang();
-  else setStatus("tersimpan");
+  aktif = { userId, bolehSimpan: isPro };
+  if (dirty.length || m.hapus.length) await kirimSekarang();
+  else setStatus(statusDiam());
 }
 
 // Dipanggil saat user pindah tab / tutup halaman: kirim yang tertunda
 export function kirimSebelumPergi() {
-  if (aktif && (timer || bacaMeta().dirty.length)) void kirimSekarang();
+  const m = bacaMeta();
+  if (aktif && (timer || m.dirty.length || m.hapus.length)) void kirimSekarang();
 }
