@@ -64,6 +64,10 @@ dialihkan ke alamat baru.
      SQL Editor:
      `update public.profiles set is_admin = true where email = 'email-kamu';`
 2. **Vercel**
+   - SUDAH DIKERJAKAN (26 Sep 2026): project `founderku` di tim
+     Founderku, 5 environment variable terpasang (Production + Preview).
+     Kunci Xendit yang dipasang sekarang kunci mode TEST; ganti ke kunci
+     LIVE sebelum pindah DNS.
    - Project baru, sambungkan ke repo `founderku/Founderku-website`
      (bukan repo Tokify lagi).
    - Environment Variables (salin dari project Pajangin lama):
