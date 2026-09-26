@@ -252,6 +252,49 @@
     #fkPartnerGrid { gap:22px 26px !important; }
     .fk-partner-item img { height:42px !important; max-width:130px !important; }
   }
+
+  /* ===== laci menu samping ===== */
+  @media (max-width:480px) { .fk-nav-masuk { display:none; } }
+  .fk-drawer-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.45); opacity:0; visibility:hidden; transition:opacity .25s ease, visibility .25s; z-index:90; }
+  .fk-drawer { position:fixed; top:0; right:0; height:100%; width:min(480px,100%); background:var(--bg); border-left:1px solid var(--border); z-index:100; transform:translateX(100%); visibility:hidden; transition:transform .3s cubic-bezier(.22,.9,.35,1), visibility .3s; overflow-y:auto; overscroll-behavior:contain; box-shadow:-24px 0 48px -24px rgba(0,0,0,0.35); }
+  body.fk-drawer-open { overflow:hidden; }
+  body.fk-drawer-open .fk-drawer { transform:none; visibility:visible; }
+  body.fk-drawer-open .fk-drawer-overlay { opacity:1; visibility:visible; }
+  .fk-drawer-head { position:sticky; top:0; z-index:2; display:flex; align-items:center; justify-content:space-between; padding:16px 20px; background:var(--bg); border-bottom:1px solid var(--border); }
+  .fk-drawer-title { font-family:'Manrope',sans-serif; font-weight:800; font-size:16px; }
+  .fk-drawer-links { display:grid; grid-template-columns:1fr 1fr; gap:8px; padding:16px 20px 20px; }
+  .fk-drawer-links a { padding:11px 14px; border:1px solid var(--border); border-radius:12px; text-decoration:none; color:var(--text); font-family:'Manrope',sans-serif; font-weight:700; font-size:14px; background:var(--bg-soft); }
+  .fk-drawer-links a.is-primary { background:var(--brand-amber); border-color:var(--brand-amber); color:#14131F; }
+  .fk-dw-item { border-top:1px solid var(--border); }
+  .fk-dw-item > summary { list-style:none; cursor:pointer; padding:17px 20px; font-family:'Manrope',sans-serif; font-weight:700; font-size:15px; display:flex; justify-content:space-between; align-items:center; }
+  .fk-dw-item > summary::-webkit-details-marker { display:none; }
+  .fk-dw-item > summary::after { content:'+'; font-size:20px; color:var(--text-faint); }
+  .fk-dw-item[open] > summary::after { content:'\00d7'; }
+  .fk-drawer .fk-section { padding:0 20px 26px !important; }
+  .fk-drawer .fk-wrap { max-width:none !important; }
+  .fk-drawer .fk-grid-3, .fk-drawer .fk-grid-2 { grid-template-columns:1fr !important; }
+  .fk-drawer .fk-reveal { opacity:1 !important; transform:none !important; }
+  .fk-drawer .fk-h2 { font-size:20px !important; }
+  .fk-drawer .fk-card { padding:20px; }
+  .fk-drawer .fk-lay-orbs { transform:scale(.7); }
+  /* ===== harga ===== */
+  .fk-price-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:880px; margin:40px auto 0; text-align:left; }
+  @media (max-width:760px) { .fk-price-grid { grid-template-columns:1fr; } }
+  .fk-price-card { position:relative; background:var(--card-bg); border:1px solid var(--border); border-radius:24px; padding:32px; display:flex; flex-direction:column; }
+  .fk-price-card.is-pro { border:2px solid var(--brand-amber); }
+  .fk-price-badge { position:absolute; top:20px; right:20px; background:var(--brand-amber); color:#14131F; font-family:'Manrope',sans-serif; font-weight:800; font-size:11px; letter-spacing:.04em; text-transform:uppercase; padding:5px 10px; border-radius:8px; }
+  .fk-price-name { font-family:'Manrope',sans-serif; font-weight:800; font-size:20px; }
+  .fk-price-desc { color:var(--text-soft); font-size:14px; margin-top:6px; padding-right:90px; }
+  .fk-price-card:not(.is-pro) .fk-price-desc { padding-right:0; }
+  .fk-price-amount { font-family:'Manrope',sans-serif; font-weight:800; font-size:34px; margin-top:20px; }
+  .fk-price-amount span { font-size:15px; font-weight:600; color:var(--text-soft); }
+  .fk-price-alt { font-size:13px; color:var(--text-faint); margin-top:2px; min-height:18px; }
+  .fk-price-list { list-style:none; padding:0; margin:22px 0 26px; flex:1; }
+  .fk-price-list li { padding:6px 0 6px 24px; font-size:14px; position:relative; }
+  .fk-price-list li::before { content:'\2713'; position:absolute; left:0; color:var(--brand-amber); font-weight:800; }
+  .fk-price-card .fk-pill { justify-content:center; text-align:center; }
+  .fk-price-cta { background:var(--brand-amber) !important; color:#14131F !important; }
+  .fk-price-note { font-size:12px; color:var(--text-faint); margin-top:12px; text-align:center; }
 </style>
 </head>
 <body>
@@ -263,13 +306,9 @@
       founder<span style="color:var(--brand-coral)">ku</span>
     </a>
     <div class="fk-nav-links">
-      <a href="#kenapa" data-i18n="nav.kenapa">Kenapa</a>
-      <a href="#layanan" data-i18n="nav.layanan">Layanan</a>
-      <a href="#proses" data-i18n="nav.proses">Proses</a>
-      <a href="#proyek" data-i18n="nav.proyek">Project</a>
       <a href="tools.html" data-i18n="nav.tools">Tools</a>
+      <a href="#harga" data-i18n="nav.harga">Harga</a>
       <a href="katalog.html" data-i18n="nav.katalog">Katalog</a>
-      <a href="/harga" data-i18n="nav.harga">Harga</a>
       <a href="blog.html" data-i18n="nav.blog">Blog</a>
       <a href="#faq" data-i18n="nav.faq">FAQ</a>
       <a href="store.html" style="color:var(--brand-coral); font-weight:700;" data-i18n="nav.instantFounder">Founder Starterpack</a>
@@ -286,8 +325,9 @@
           <button type="button" class="fk-lang-btn" data-lang="tr">TR</button>
         </div>
       </div>
-      <a href="/akun" class="fk-pill fk-pill-outline fk-pill-sm" data-i18n="nav.masuk">Masuk</a>
+      <a href="/akun" class="fk-pill fk-pill-outline fk-pill-sm fk-nav-masuk" data-i18n="nav.masuk">Masuk</a>
       <a href="#cta" class="fk-pill fk-pill-solid fk-pill-sm fk-nav-ngobrol" data-i18n="nav.ngobrol">Ngobrol</a>
+      <button type="button" class="fk-ctrl-btn" id="fkMenuBtn" aria-label="buka menu" aria-controls="fkDrawer" aria-expanded="false">&#9776;</button>
     </div>
   </div>
 </nav>
@@ -301,8 +341,8 @@
   <h1 class="fk-h1" data-i18n="hero.h1">Semua bisa jadi founder.</h1>
   <p class="fk-sub" data-i18n="hero.sub">Ide kamu, kami ubah jadi branding, website, dan produk yang beneran bisa dipakai, bukan cuma mockup.</p>
   <div class="fk-hero-ctas">
-    <a href="tools.html" class="fk-pill fk-pill-solid" data-i18n="hero.ctaSecondary">Coba Tools Kami, Gratis →</a>
-    <a href="#cta" class="fk-pill fk-pill-outline" data-i18n="hero.ctaMain">Atau, Ceritain Ide Kamu</a>
+    <a href="/daftar?next=/akun" class="fk-pill fk-pill-solid" data-i18n="hero.ctaTrial">Coba Gratis 7 Hari</a>
+    <a href="#harga" class="fk-pill fk-pill-outline" data-i18n="hero.ctaPricing">Lihat Harga</a>
   </div>
 </div>
 
@@ -317,13 +357,122 @@
   </div>
 </div>
 
+<div id="toolsPreviewSection" class="fk-section fk-reveal" style="padding-top:0;">
+  <div class="fk-wrap">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom:28px; flex-wrap:wrap;">
+      <div style="max-width:520px;">
+        <div class="fk-eyebrow" data-i18n="toolsPreview.eyebrow">Tools Kami</div>
+        <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,34px); margin-top:10px;" data-i18n="toolsPreview.h2">produk yang kami bangun dan pakai sendiri.</h2>
+        <p style="color:var(--text-soft); margin-top:10px; font-size:15px;" data-i18n="toolsPreview.sub">bukan cuma jasa. ini tools yang beneran jalan dan bisa langsung kamu coba sekarang.</p>
+      </div>
+      <a href="tools.html" style="text-decoration:none; font-weight:700; color:var(--brand-coral); font-size:14px; white-space:nowrap;" data-i18n="toolsPreview.link">lihat semua tools →</a>
+    </div>
+    <div class="fk-slider" id="fkToolsPreviewGrid">
+      <div style="padding:20px; color:var(--text-faint);" data-i18n="toolsPreview.loading">memuat tools...</div>
+    </div>
+  </div>
+</div>
+
+<div id="harga" class="fk-section fk-reveal">
+  <div class="fk-wrap" style="text-align:center;">
+    <div class="fk-eyebrow" data-i18n="harga.eyebrow">Harga</div>
+    <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,34px); margin-top:14px;" data-i18n="harga.h2">Mulai gratis, upgrade kalau perlu.</h2>
+    <div class="fk-price-grid">
+      <div class="fk-price-card">
+        <div class="fk-price-name" data-i18n="harga.freeName">Free</div>
+        <div class="fk-price-desc" data-i18n="harga.freeDesc">Buat coba-coba dan baru mulai.</div>
+        <div class="fk-price-amount">Rp 0</div>
+        <div class="fk-price-alt">&nbsp;</div>
+        <ul class="fk-price-list">
+          <li data-i18n="harga.free1">Satu akun Founderku</li>
+          <li data-i18n="harga.free2">Tools dasar langsung bisa dipakai</li>
+          <li data-i18n="harga.free3">Pajangin: 2 halaman jualan (dengan watermark)</li>
+        </ul>
+        <a href="/daftar" class="fk-pill fk-pill-outline" data-i18n="harga.freeCta">Daftar Gratis</a>
+      </div>
+      <div class="fk-price-card is-pro">
+        <div class="fk-price-badge" data-i18n="harga.popular">Paling lengkap</div>
+        <div class="fk-price-name" id="fkProName">Founderku Pro</div>
+        <div class="fk-price-desc" id="fkProDesc">Satu langganan buat buka semua tools Founderku.</div>
+        <div class="fk-price-amount" id="fkProAmount">Rp 39.000<span>/bulan</span></div>
+        <div class="fk-price-alt" id="fkProAlt">atau Rp 299.000/tahun</div>
+        <ul class="fk-price-list" id="fkProFeatures">
+          <li>Akses semua tools Founderku</li>
+        </ul>
+        <a href="/daftar?next=/akun" class="fk-pill fk-pill-solid fk-price-cta" data-i18n="harga.proCta">Coba Gratis 7 Hari</a>
+        <div class="fk-price-note" data-i18n="harga.proNote">Tanpa kartu. Setelah trial, bayar per bulan atau per tahun, tanpa tagihan otomatis.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="testimoni" class="fk-section fk-reveal">
+  <div class="fk-wrap">
+    <div style="max-width:600px; margin:0 auto 36px; text-align:center;">
+      <div class="fk-eyebrow" data-i18n="testimoni.eyebrow">Testimoni</div>
+      <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,34px); margin-top:14px;" data-i18n="testimoni.h2">Kata mereka yang udah pernah kerja bareng kami.</h2>
+    </div>
+    <div class="fk-grid-3" id="fkTestimoniGrid">
+      <div style="padding:20px; color:var(--text-faint);">...</div>
+    </div>
+  </div>
+</div>
+
+<div id="blog" class="fk-section fk-reveal" style="display:none;">
+  <div class="fk-wrap">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom:30px; flex-wrap:wrap;">
+      <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,32px);" data-i18n="updates.h2">Latest updates</h2>
+      <a href="blog.html" class="fk-pill fk-pill-outline fk-pill-sm" data-i18n="updates.all">All posts</a>
+    </div>
+    <div class="fk-grid-3" id="blogPreviewGrid"></div>
+  </div>
+</div>
+
+<div id="faq" class="fk-section fk-reveal">
+  <div class="fk-wrap" style="max-width:720px;">
+    <div style="text-align:center; margin-bottom:36px;">
+      <div class="fk-eyebrow" data-i18n="faq.eyebrow">FAQ</div>
+      <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,34px); margin-top:14px;" data-i18n="faq.h2">Pertanyaan yang sering ditanyain.</h2>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:12px;">
+      <details class="fk-card" style="cursor:pointer;"><summary style="font-weight:700; font-size:16px;" data-i18n="faq.q1">Berapa lama prosesnya?</summary><p style="margin-top:14px;" data-i18n="faq.a1">Rata-rata 4-6 minggu tergantung kompleksitas, katalog siap pakai bisa online dalam hitungan hari.</p></details>
+      <details class="fk-card" style="cursor:pointer;"><summary style="font-weight:700; font-size:16px;" data-i18n="faq.qTrial">Trial gratisnya gimana?</summary><p style="margin-top:14px;" data-i18n="faq.aTrial">Begitu daftar, kamu langsung dapat 7 hari Founderku Pro.</p></details>
+      <details class="fk-card" style="cursor:pointer;"><summary style="font-weight:700; font-size:16px;" data-i18n="faq.qPay">Bayarnya gimana? Ada tagihan otomatis?</summary><p style="margin-top:14px;" data-i18n="faq.aPay">Bayar per bulan atau per tahun, tanpa tagihan otomatis.</p></details>
+      <details class="fk-card" style="cursor:pointer;"><summary style="font-weight:700; font-size:16px;" data-i18n="faq.q5">Gimana cara mulainya?</summary><p style="margin-top:14px;" data-i18n="faq.a5">Gampang. Klik tombol Ceritain Ide Kamu, cerita 30 menit gratis, dan kami bantu petakan langkah pertama yang paling masuk akal buat kamu.</p></details>
+    </div>
+  </div>
+</div>
+
+<div id="cta" class="fk-section fk-reveal" style="text-align:center;">
+  <div class="fk-wrap" style="max-width:640px;">
+    <h2 class="fk-h2" style="font-size:clamp(26px,4vw,40px);" data-i18n="cta.h2">Siap ceritain ide kamu?</h2>
+    <p style="color:var(--text-soft); margin-top:14px;" data-i18n="cta.sub">30 menit ngobrol santai, gratis, tanpa komitmen.</p>
+    <a href="https://wa.me/6285710477257" target="_blank" rel="noopener" class="fk-pill fk-pill-solid" style="margin-top:20px; background:var(--brand-amber); color:#14131F;" data-i18n="cta.btn">Chat di WhatsApp</a>
+  </div>
+</div>
+
+<div class="fk-drawer-overlay" id="fkDrawerOverlay"></div>
+<aside class="fk-drawer" id="fkDrawer" aria-hidden="true" aria-label="Menu">
+  <div class="fk-drawer-head">
+    <span class="fk-drawer-title" data-i18n="drawer.title">Menu</span>
+    <button type="button" class="fk-ctrl-btn" id="fkDrawerClose" aria-label="tutup menu">&times;</button>
+  </div>
+  <div class="fk-drawer-links">
+    <a href="tools.html" data-i18n="nav.tools">Tools</a>
+    <a href="#harga" data-i18n="nav.harga">Harga</a>
+    <a href="katalog.html" data-i18n="nav.katalog">Katalog</a>
+    <a href="blog.html" data-i18n="nav.blog">Blog</a>
+    <a href="store.html" data-i18n="nav.instantFounder">Founder Starterpack</a>
+    <a href="/akun" class="is-primary" data-i18n="nav.masuk">Masuk</a>
+  </div>
+  <details class="fk-dw-item" data-dw="tentang">
+    <summary data-i18n="drawer.tentang">Tentang Founderku</summary>
 <div id="kenapa" class="fk-section fk-reveal">
   <div class="fk-wrap" style="max-width:720px; text-align:center;">
     <div class="fk-eyebrow" data-i18n="kenapa.eyebrow">Kenapa Founderku</div>
     <p class="fk-h2" style="font-size:clamp(22px,3vw,30px); margin-top:14px;" data-i18n="kenapa.text">Ide bagus jarang mati karena kurang niat. Yang bikin berhenti itu bagian yang paling sering dilewatin: eksekusi. Founderku ada buat nutup celah itu.</p>
   </div>
 </div>
-
 <div class="fk-section fk-reveal">
   <div class="fk-wrap">
     <div style="max-width:640px; margin:0 auto 40px;">
@@ -350,46 +499,9 @@
     </div>
   </div>
 </div>
-
-<div id="toolsPreviewSection" class="fk-section fk-reveal" style="padding-top:0;">
-  <div class="fk-wrap">
-    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom:28px; flex-wrap:wrap;">
-      <div style="max-width:520px;">
-        <div class="fk-eyebrow" data-i18n="toolsPreview.eyebrow">Tools Kami</div>
-        <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,34px); margin-top:10px;" data-i18n="toolsPreview.h2">produk yang kami bangun dan pakai sendiri.</h2>
-        <p style="color:var(--text-soft); margin-top:10px; font-size:15px;" data-i18n="toolsPreview.sub">bukan cuma jasa. ini tools yang beneran jalan dan bisa langsung kamu coba sekarang.</p>
-      </div>
-      <a href="tools.html" style="text-decoration:none; font-weight:700; color:var(--brand-coral); font-size:14px; white-space:nowrap;" data-i18n="toolsPreview.link">lihat semua tools →</a>
-    </div>
-    <div class="fk-slider" id="fkToolsPreviewGrid">
-      <div style="padding:20px; color:var(--text-faint);" data-i18n="toolsPreview.loading">memuat tools...</div>
-    </div>
-  </div>
-</div>
-
-<div id="produkPreviewSection" class="fk-section fk-reveal" style="padding-top:0;">
-  <div class="fk-wrap">
-    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom:28px; flex-wrap:wrap;">
-      <div style="max-width:520px;">
-        <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,34px);" data-i18n="produk.h2">beberapa website yang tinggal kamu pakai buat jadi founder.</h2>
-      </div>
-      <a href="store.html" style="text-decoration:none; font-weight:700; color:var(--brand-coral); font-size:14px; white-space:nowrap;" data-i18n="produk.link">lihat semua produk →</a>
-    </div>
-    <div class="fk-slider" id="produkPreviewGrid">
-      <div style="padding:20px; color:var(--text-faint);" data-i18n="produk.loading">memuat produk...</div>
-    </div>
-  </div>
-</div>
-
-<div class="fk-section fk-reveal">
-  <div class="fk-wrap" style="max-width:760px; text-align:center;">
-    <div class="fk-eyebrow" data-i18n="banner.eyebrow">founder starterpack</div>
-    <h2 class="fk-h2" style="font-size:clamp(24px,3.6vw,36px); margin-top:14px;" data-i18n="banner.h2">sudah dipaketkan lengkap, kamu tinggal jadi founder.</h2>
-    <p style="color:var(--text-soft); margin-top:14px;" data-i18n="banner.sub">website jadi, branding jadi, tone warna juga jadi. tinggal pilih, kami dampingi sampai online.</p>
-    <a href="store.html" class="fk-pill fk-pill-solid" style="margin-top:22px; background:var(--brand-amber); color:#14131F;" data-i18n="banner.cta">lihat katalog →</a>
-  </div>
-</div>
-
+  </details>
+  <details class="fk-dw-item" data-dw="layanan">
+    <summary data-i18n="drawer.layanan">Layanan</summary>
 <div id="layanan" class="fk-section fk-reveal">
   <div class="fk-wrap">
     <div style="max-width:600px; margin:0 auto 40px; text-align:center;">
@@ -443,7 +555,9 @@
     </div>
   </div>
 </div>
-
+  </details>
+  <details class="fk-dw-item" data-dw="proses">
+    <summary data-i18n="drawer.proses">Proses</summary>
 <div id="proses" class="fk-section fk-reveal">
   <div class="fk-wrap" style="text-align:center;">
     <div class="fk-eyebrow" data-i18n="proses.eyebrow">Proses</div>
@@ -467,31 +581,33 @@
     </div>
   </div>
 </div>
-
-<div id="testimoni" class="fk-section fk-reveal">
+  </details>
+  <details class="fk-dw-item" data-dw="starterpack">
+    <summary data-i18n="drawer.starterpack">Founder Starterpack</summary>
+<div class="fk-section fk-reveal">
+  <div class="fk-wrap" style="max-width:760px; text-align:center;">
+    <div class="fk-eyebrow" data-i18n="banner.eyebrow">founder starterpack</div>
+    <h2 class="fk-h2" style="font-size:clamp(24px,3.6vw,36px); margin-top:14px;" data-i18n="banner.h2">sudah dipaketkan lengkap, kamu tinggal jadi founder.</h2>
+    <p style="color:var(--text-soft); margin-top:14px;" data-i18n="banner.sub">website jadi, branding jadi, tone warna juga jadi. tinggal pilih, kami dampingi sampai online.</p>
+    <a href="store.html" class="fk-pill fk-pill-solid" style="margin-top:22px; background:var(--brand-amber); color:#14131F;" data-i18n="banner.cta">lihat katalog →</a>
+  </div>
+</div>
+<div id="produkPreviewSection" class="fk-section fk-reveal" style="padding-top:0;">
   <div class="fk-wrap">
-    <div style="max-width:600px; margin:0 auto 36px; text-align:center;">
-      <div class="fk-eyebrow" data-i18n="testimoni.eyebrow">Testimoni</div>
-      <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,34px); margin-top:14px;" data-i18n="testimoni.h2">Kata mereka yang udah pernah kerja bareng kami.</h2>
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom:28px; flex-wrap:wrap;">
+      <div style="max-width:520px;">
+        <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,34px);" data-i18n="produk.h2">beberapa website yang tinggal kamu pakai buat jadi founder.</h2>
+      </div>
+      <a href="store.html" style="text-decoration:none; font-weight:700; color:var(--brand-coral); font-size:14px; white-space:nowrap;" data-i18n="produk.link">lihat semua produk →</a>
     </div>
-    <div class="fk-grid-3" id="fkTestimoniGrid">
-      <div style="padding:20px; color:var(--text-faint);">...</div>
+    <div class="fk-slider" id="produkPreviewGrid">
+      <div style="padding:20px; color:var(--text-faint);" data-i18n="produk.loading">memuat produk...</div>
     </div>
   </div>
 </div>
-
-<div id="partner" class="fk-section fk-reveal">
-  <div class="fk-wrap">
-    <div style="max-width:600px; margin:0 auto 36px; text-align:center;">
-      <div class="fk-eyebrow" data-i18n="partner.eyebrow">Our Partners</div>
-      <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,34px); margin-top:14px;" data-i18n="partner.h2">Studio dan brand yang udah percaya kerja bareng kami.</h2>
-    </div>
-    <div id="fkPartnerGrid" style="display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:center; gap:36px 48px;">
-      <div style="padding:20px; color:var(--text-faint);">...</div>
-    </div>
-  </div>
-</div>
-
+  </details>
+  <details class="fk-dw-item" data-dw="studikasus">
+    <summary data-i18n="drawer.studikasus">Studi Kasus</summary>
 <div id="proyek" class="fk-section fk-reveal">
   <div class="fk-wrap">
     <div style="max-width:600px; margin:0 auto 36px; text-align:center;">
@@ -506,30 +622,23 @@
     </div>
   </div>
 </div>
-
-<div id="blog" class="fk-section fk-reveal" style="display:none;">
+  </details>
+  <details class="fk-dw-item" data-dw="partner">
+    <summary data-i18n="drawer.partner">Partner</summary>
+<div id="partner" class="fk-section fk-reveal">
   <div class="fk-wrap">
-    <div style="display:flex; justify-content:space-between; align-items:flex-end; gap:20px; margin-bottom:30px; flex-wrap:wrap;">
-      <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,32px);" data-i18n="updates.h2">Latest updates</h2>
-      <a href="blog.html" class="fk-pill fk-pill-outline fk-pill-sm" data-i18n="updates.all">All posts</a>
+    <div style="max-width:600px; margin:0 auto 36px; text-align:center;">
+      <div class="fk-eyebrow" data-i18n="partner.eyebrow">Our Partners</div>
+      <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,34px); margin-top:14px;" data-i18n="partner.h2">Studio dan brand yang udah percaya kerja bareng kami.</h2>
     </div>
-    <div class="fk-grid-3" id="blogPreviewGrid"></div>
-  </div>
-</div>
-
-<div id="faq" class="fk-section fk-reveal">
-  <div class="fk-wrap" style="max-width:720px;">
-    <div style="text-align:center; margin-bottom:36px;">
-      <div class="fk-eyebrow" data-i18n="faq.eyebrow">FAQ</div>
-      <h2 class="fk-h2" style="font-size:clamp(24px,3.4vw,34px); margin-top:14px;" data-i18n="faq.h2">Pertanyaan yang sering ditanyain.</h2>
-    </div>
-    <div style="display:flex; flex-direction:column; gap:12px;">
-      <details class="fk-card" style="cursor:pointer;"><summary style="font-weight:700; font-size:16px;" data-i18n="faq.q1">Berapa lama prosesnya?</summary><p style="margin-top:14px;" data-i18n="faq.a1">Rata-rata 4-6 minggu tergantung kompleksitas, katalog siap pakai bisa online dalam hitungan hari.</p></details>
-      <details class="fk-card" style="cursor:pointer;"><summary style="font-weight:700; font-size:16px;" data-i18n="faq.q5">Gimana cara mulainya?</summary><p style="margin-top:14px;" data-i18n="faq.a5">Gampang. Klik tombol Ceritain Ide Kamu, cerita 30 menit gratis, dan kami bantu petakan langkah pertama yang paling masuk akal buat kamu.</p></details>
+    <div id="fkPartnerGrid" style="display:flex; flex-wrap:wrap; align-items:flex-start; justify-content:center; gap:36px 48px;">
+      <div style="padding:20px; color:var(--text-faint);">...</div>
     </div>
   </div>
 </div>
-
+  </details>
+  <details class="fk-dw-item" data-dw="generator">
+    <summary data-i18n="drawer.generator">Generator Nama Brand</summary>
 <div id="generator" class="fk-section fk-reveal">
   <div class="fk-wrap" style="max-width:760px;">
     <div style="text-align:center; margin-bottom:40px;">
@@ -574,14 +683,9 @@
     <p id="fk-gen-hint" style="display:none; text-align:center; font-size:14px; color:var(--text-faint); margin-top:24px;" data-i18n="gen.hint">Belum sreg? Klik generate lagi. Hasilnya beda terus.</p>
   </div>
 </div>
+  </details>
+</aside>
 
-<div id="cta" class="fk-section fk-reveal" style="text-align:center;">
-  <div class="fk-wrap" style="max-width:640px;">
-    <h2 class="fk-h2" style="font-size:clamp(26px,4vw,40px);" data-i18n="cta.h2">Siap ceritain ide kamu?</h2>
-    <p style="color:var(--text-soft); margin-top:14px;" data-i18n="cta.sub">30 menit ngobrol santai, gratis, tanpa komitmen.</p>
-    <a href="https://wa.me/6285710477257" target="_blank" rel="noopener" class="fk-pill fk-pill-solid" style="margin-top:20px; background:var(--brand-amber); color:#14131F;" data-i18n="cta.btn">Chat di WhatsApp</a>
-  </div>
-</div>
 
 <footer>
   <div data-i18n="footer.copy">© 2026 PT Talenthra Karya Nusantara. NIB 0909250086011. Hak cipta dilindungi undang-undang.</div>
@@ -594,6 +698,18 @@
       "nav.kenapa": "Kenapa", "nav.layanan": "Layanan", "nav.proses": "Proses", "nav.proyek": "Project", "nav.tools": "Tools",
       "nav.blog": "Blog", "nav.faq": "FAQ", "nav.generator": "Generator", "nav.instantFounder": "Founder Starterpack", "nav.ngobrol": "Ngobrol",
       "nav.katalog": "Katalog", "nav.harga": "Harga", "nav.masuk": "Masuk",
+      "hero.ctaTrial": "Coba Gratis {days} Hari", "hero.ctaPricing": "Lihat Harga",
+      "harga.eyebrow": "Harga", "harga.h2": "Mulai gratis, upgrade kalau perlu.",
+      "harga.freeName": "Free", "harga.freeDesc": "Buat coba-coba dan baru mulai.",
+      "harga.free1": "Satu akun Founderku", "harga.free2": "Tools dasar langsung bisa dipakai", "harga.free3": "Pajangin: 2 halaman jualan (dengan watermark)",
+      "harga.freeCta": "Daftar Gratis", "harga.popular": "Paling lengkap", "harga.proCta": "Coba Gratis {days} Hari",
+      "harga.proNote": "Tanpa kartu. Setelah trial, bayar per bulan atau per tahun, tanpa tagihan otomatis.",
+      "faq.qTrial": "Trial gratisnya gimana?",
+      "faq.aTrial": "Begitu daftar, kamu langsung dapat {days} hari Founderku Pro, tanpa kartu dan tanpa bayar di awal. Setelah itu akun otomatis balik ke versi gratis, kecuali kamu berlangganan.",
+      "faq.qPay": "Bayarnya gimana? Ada tagihan otomatis?",
+      "faq.aPay": "Bayar per bulan atau per tahun lewat halaman pembayaran Xendit (transfer bank, e-wallet, dan lainnya). Nggak ada tagihan otomatis, jadi kamu sendiri yang putuskan kapan perpanjang.",
+      "drawer.title": "Menu", "drawer.tentang": "Tentang Founderku", "drawer.layanan": "Layanan", "drawer.proses": "Proses",
+      "drawer.starterpack": "Founder Starterpack", "drawer.studikasus": "Studi Kasus", "drawer.partner": "Partner", "drawer.generator": "Generator Nama Brand",
       "hero.h1": "Semua bisa jadi founder.",
       "hero.sub": "Ide kamu, kami ubah jadi branding, website, dan produk yang beneran bisa dipakai, bukan cuma mockup.",
       "hero.ctaMain": "Atau, Ceritain Ide Kamu", "hero.ctaSecondary": "Coba Tools Kami, Gratis →",
@@ -677,6 +793,18 @@
       "nav.kenapa": "Why", "nav.layanan": "Services", "nav.proses": "Process", "nav.proyek": "Projects", "nav.tools": "Tools",
       "nav.blog": "Blog", "nav.faq": "FAQ", "nav.generator": "Generator", "nav.instantFounder": "Founder Starterpack", "nav.ngobrol": "Chat",
       "nav.katalog": "Catalog", "nav.harga": "Pricing", "nav.masuk": "Sign in",
+      "hero.ctaTrial": "Try Free for {days} Days", "hero.ctaPricing": "See Pricing",
+      "harga.eyebrow": "Pricing", "harga.h2": "Start free, upgrade when you need it.",
+      "harga.freeName": "Free", "harga.freeDesc": "For trying things out and just getting started.",
+      "harga.free1": "One Founderku account", "harga.free2": "Basic tools, ready to use", "harga.free3": "Pajangin: 2 sales pages (with watermark)",
+      "harga.freeCta": "Sign Up Free", "harga.popular": "Most complete", "harga.proCta": "Try Free for {days} Days",
+      "harga.proNote": "No card needed. After the trial, pay monthly or yearly, with no automatic billing.",
+      "faq.qTrial": "How does the free trial work?",
+      "faq.aTrial": "As soon as you sign up, you get {days} days of Founderku Pro, no card and no upfront payment. After that your account goes back to the free version unless you subscribe.",
+      "faq.qPay": "How do I pay? Is there automatic billing?",
+      "faq.aPay": "Pay monthly or yearly through the Xendit payment page (bank transfer, e-wallets, and more). There is no automatic billing, so you decide when to renew.",
+      "drawer.title": "Menu", "drawer.tentang": "About Founderku", "drawer.layanan": "Services", "drawer.proses": "Process",
+      "drawer.starterpack": "Founder Starterpack", "drawer.studikasus": "Case Studies", "drawer.partner": "Partners", "drawer.generator": "Brand Name Generator",
       "hero.h1": "Anyone can become a founder.",
       "hero.sub": "Your idea, turned into branding, a website, and a product people can actually use, not just a mockup.",
       "hero.ctaMain": "Or, Tell Us Your Idea", "hero.ctaSecondary": "Try Our Tools, Free →",
@@ -760,6 +888,18 @@
       "nav.kenapa": "Neden", "nav.layanan": "Hizmetler", "nav.proses": "Süreç", "nav.proyek": "Projeler", "nav.tools": "Araçlar",
       "nav.blog": "Blog", "nav.faq": "SSS", "nav.generator": "Üretici", "nav.instantFounder": "Founder Starterpack", "nav.ngobrol": "Sohbet",
       "nav.katalog": "Katalog", "nav.harga": "Fiyatlar", "nav.masuk": "Giriş",
+      "hero.ctaTrial": "{days} Gün Ücretsiz Dene", "hero.ctaPricing": "Fiyatları Gör",
+      "harga.eyebrow": "Fiyatlar", "harga.h2": "Ücretsiz başla, ihtiyacın olunca yükselt.",
+      "harga.freeName": "Ücretsiz", "harga.freeDesc": "Denemek ve yeni başlamak için.",
+      "harga.free1": "Tek bir Founderku hesabı", "harga.free2": "Temel araçlar hemen kullanıma hazır", "harga.free3": "Pajangin: 2 satış sayfası (filigranlı)",
+      "harga.freeCta": "Ücretsiz Kaydol", "harga.popular": "En kapsamlı", "harga.proCta": "{days} Gün Ücretsiz Dene",
+      "harga.proNote": "Kart gerekmez. Denemeden sonra aylık veya yıllık öde, otomatik ödeme yok.",
+      "faq.qTrial": "Ücretsiz deneme nasıl işliyor?",
+      "faq.aTrial": "Kaydolur olmaz {days} gün Founderku Pro alırsın, kart ve ön ödeme gerekmez. Sonrasında abone olmazsan hesabın ücretsiz sürüme döner.",
+      "faq.qPay": "Nasıl ödeme yaparım? Otomatik ödeme var mı?",
+      "faq.aPay": "Xendit ödeme sayfası üzerinden aylık veya yıllık ödersin (banka havalesi, e-cüzdan ve diğerleri). Otomatik ödeme yok, ne zaman yenileyeceğine sen karar verirsin.",
+      "drawer.title": "Menü", "drawer.tentang": "Founderku Hakkında", "drawer.layanan": "Hizmetler", "drawer.proses": "Süreç",
+      "drawer.starterpack": "Founder Starterpack", "drawer.studikasus": "Vaka Çalışmaları", "drawer.partner": "Partnerler", "drawer.generator": "Marka Adı Üretici",
       "hero.h1": "Herkes founder olabilir.",
       "hero.sub": "Fikrini, markaya, web sitesine ve gerçekten kullanılabilir bir ürüne dönüştürüyoruz, sadece maket değil.",
       "hero.ctaMain": "Ya da, Fikrini Anlat", "hero.ctaSecondary": "Araçlarımızı Dene, Ücretsiz →",
@@ -882,7 +1022,7 @@ function applyLanguage(lang, isInitial) {
   if (dict.pageTitle) document.title = dict.pageTitle;
   document.querySelectorAll('[data-i18n]').forEach(function (el) {
     var key = el.getAttribute('data-i18n');
-    if (dict[key]) el.textContent = dict[key];
+    if (dict[key]) el.textContent = dict[key].replace('{days}', window.fkTrialDays || 7);
   });
   document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
     var key = el.getAttribute('data-i18n-placeholder');
@@ -902,6 +1042,7 @@ function applyLanguage(lang, isInitial) {
   if (window.fkRerenderCaseStudies) window.fkRerenderCaseStudies(lang);
   if (window.fkRerenderBlogPreview) window.fkRerenderBlogPreview(lang);
   if (window.fkRerenderToolsPreview) window.fkRerenderToolsPreview(lang);
+  if (window.fkRerenderPricing) window.fkRerenderPricing(lang);
 }
 
 document.querySelectorAll('.fk-lang-btn').forEach(function (btn) {
@@ -1310,6 +1451,100 @@ applyLanguage(savedLang, true);
     document.getElementById('fk-gen-hint').style.display = 'block';
   }
   document.getElementById('fk-gen-form').addEventListener('submit', function (e) { e.preventDefault(); generate(); });
+})();
+
+(function () {
+  // ===== Kartu harga: angka dibaca dari data/pricing.json (diatur di admin panel, tab "harga")
+  var WORDS = {
+    id: { month: 'bulan', year: 'tahun', days: 'hari', or: 'atau' },
+    en: { month: 'month', year: 'year', days: 'days', or: 'or' },
+    tr: { month: 'ay', year: 'yıl', days: 'gün', or: 'veya' }
+  };
+  var data = null;
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function txt(field, lang) { if (field == null) return ''; if (typeof field === 'string') return field; return field[lang] || field.id || ''; }
+  function rupiah(n) { return 'Rp ' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+  function period(days, w) {
+    if (days === 30 || days === 31) return '/' + w.month;
+    if (days === 365 || days === 366) return '/' + w.year;
+    return '/' + days + ' ' + w.days;
+  }
+  function render(lang) {
+    if (!data || !data.prices || !data.prices.length) return;
+    var w = WORDS[lang] || WORDS.id;
+    var main = data.prices[0];
+    document.getElementById('fkProName').textContent = data.planName || 'Founderku Pro';
+    document.getElementById('fkProDesc').textContent = txt(data.description, lang);
+    document.getElementById('fkProAmount').innerHTML = esc(rupiah(main.amount)) + '<span>' + esc(period(main.days, w)) + '</span>';
+    document.getElementById('fkProAlt').textContent = data.prices.slice(1).map(function (p) {
+      var note = txt(p.note, lang);
+      return w.or + ' ' + rupiah(p.amount) + period(p.days, w) + (note ? ' (' + note + ')' : '');
+    }).join(' · ') || ' ';
+    document.getElementById('fkProFeatures').innerHTML = (data.features || []).map(function (f) {
+      return '<li>' + esc(txt(f, lang)) + '</li>';
+    }).join('');
+  }
+  window.fkRerenderPricing = render;
+  fetch('data/pricing.json')
+    .then(function (r) { if (!r.ok) throw new Error('gagal'); return r.json(); })
+    .then(function (json) {
+      data = json;
+      if (typeof json.trialDays === 'number' && json.trialDays > 0) window.fkTrialDays = json.trialDays;
+      var lang = document.documentElement.getAttribute('lang') || 'id';
+      applyLanguage(lang, true);
+    })
+    .catch(function (e) { console.error('pricing fetch error', e); });
+})();
+
+(function () {
+  // ===== Laci menu samping
+  var drawer = document.getElementById('fkDrawer');
+  var overlay = document.getElementById('fkDrawerOverlay');
+  var openBtn = document.getElementById('fkMenuBtn');
+  var closeBtn = document.getElementById('fkDrawerClose');
+  if (!drawer || !openBtn) return;
+  function open() {
+    document.body.classList.add('fk-drawer-open');
+    drawer.setAttribute('aria-hidden', 'false');
+    openBtn.setAttribute('aria-expanded', 'true');
+  }
+  function close() {
+    document.body.classList.remove('fk-drawer-open');
+    drawer.setAttribute('aria-hidden', 'true');
+    openBtn.setAttribute('aria-expanded', 'false');
+  }
+  openBtn.addEventListener('click', open);
+  if (closeBtn) closeBtn.addEventListener('click', close);
+  if (overlay) overlay.addEventListener('click', close);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  // Buka bagian di dalam laci yang berisi elemen dengan id tertentu
+  function revealInDrawer(el) {
+    var item = el.closest('.fk-dw-item');
+    if (item) item.open = true;
+    open();
+    setTimeout(function () { el.scrollIntoView({ block: 'start' }); }, 320);
+  }
+  // Link "#..." : kalau tujuannya di dalam laci, buka lacinya.
+  // Kalau tujuannya di halaman utama (dan link-nya di dalam laci), tutup laci dulu.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var id = a.getAttribute('href').slice(1);
+    if (!id) return;
+    var target = document.getElementById(id);
+    if (!target) return;
+    if (drawer.contains(target)) {
+      e.preventDefault();
+      revealInDrawer(target);
+    } else if (drawer.contains(a)) {
+      close();
+    }
+  });
+  // Buka laci otomatis kalau alamatnya langsung ke bagian di dalam laci (misal founderku.com/#proses)
+  if (location.hash) {
+    var t = document.getElementById(location.hash.slice(1));
+    if (t && drawer.contains(t)) revealInDrawer(t);
+  }
 })();
 
 (function () {
