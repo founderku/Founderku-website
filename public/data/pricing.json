@@ -1,0 +1,47 @@
+{
+  "planName": "Founderku Pro",
+  "trialDays": 7,
+  "description": {
+    "id": "Satu langganan buat buka semua tools Founderku.",
+    "en": "One subscription to unlock every Founderku tool.",
+    "tr": "Tüm Founderku araçlarının kilidini açan tek abonelik."
+  },
+  "features": [
+    {
+      "id": "Akses semua tools Founderku (Pajangin dan tools lain)",
+      "en": "Access to every Founderku tool (Pajangin and more)",
+      "tr": "Tüm Founderku araçlarına erişim (Pajangin ve diğerleri)"
+    },
+    {
+      "id": "Pajangin: halaman jualan tanpa batas",
+      "en": "Pajangin: unlimited sales pages",
+      "tr": "Pajangin: sınırsız satış sayfası"
+    },
+    {
+      "id": "Data tools tersimpan di akun, bisa dibuka dari perangkat mana saja",
+      "en": "Tool data saved to your account, open it from any device",
+      "tr": "Araç verileri hesabına kaydedilir, her cihazdan açabilirsin"
+    },
+    {
+      "id": "Pajangin: tanpa watermark",
+      "en": "Pajangin: no watermark",
+      "tr": "Pajangin: filigran yok"
+    }
+  ],
+  "prices": [
+    {
+      "id": "monthly",
+      "label": { "id": "Bulanan", "en": "Monthly", "tr": "Aylık" },
+      "amount": 39000,
+      "days": 30,
+      "note": { "id": "", "en": "", "tr": "" }
+    },
+    {
+      "id": "yearly",
+      "label": { "id": "Tahunan", "en": "Yearly", "tr": "Yıllık" },
+      "amount": 299000,
+      "days": 365,
+      "note": { "id": "Hemat 36%", "en": "Save 36%", "tr": "%36 tasarruf" }
+    }
+  ]
+}
