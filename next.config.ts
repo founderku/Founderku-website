@@ -63,7 +63,29 @@ const nextConfig: NextConfig = {
     return [{ source: "/", destination: "/index.html" }];
   },
   async redirects() {
+    // Alamat lama tools (subdomain) diarahkan ke alamat baru di founderku.com
+    const toolLama = ["notain", "pajakin", "kontrakin", "jalanin", "sehatin"].map((id) => ({
+      source: "/:path*",
+      has: [{ type: "host" as const, value: `${id}.founderku.com` }],
+      destination: `https://founderku.com/tools/${id}`,
+      permanent: true,
+    }));
     return [
+      ...toolLama,
+      // Pajangin lama: beranda ke /pajangin, alamat lain (misal /l/nama-produk,
+      // /toko/nama-toko) tetap sama di founderku.com
+      {
+        source: "/",
+        has: [{ type: "host", value: "pajangin.founderku.com" }],
+        destination: "https://founderku.com/pajangin",
+        permanent: true,
+      },
+      {
+        source: "/:path+",
+        has: [{ type: "host", value: "pajangin.founderku.com" }],
+        destination: "https://founderku.com/:path+",
+        permanent: true,
+      },
       // Alamat lama Pajangin, jaga-jaga kalau ada yang nyimpen link-nya.
       { source: "/login", destination: "/masuk", permanent: true },
       { source: "/register", destination: "/daftar", permanent: true },
