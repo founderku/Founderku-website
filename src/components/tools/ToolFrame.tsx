@@ -8,13 +8,15 @@ import {
   type StatusSinkron,
   type ToolId,
 } from "@/lib/tools/cloud";
+import { FkNavMount } from "@/components/shell/FkNavMount";
 import styles from "./ToolFrame.module.css";
 
 // Paling lama nunggu data dari akun sebelum tool tetap ditampilkan
 const BATAS_TUNGGU_MS = 4000;
 
-// Bingkai semua tools: bar tipis di atas (logo, balik ke daftar tools,
-// status simpan ke akun) + tool-nya. Tool baru ditampilkan setelah data
+// Bingkai semua tools: navigasi yang sama dengan beranda (fk-nav.css +
+// fk-site.js), bar tipis (Tools / nama tool, status simpan ke akun), lalu
+// tool-nya. Tool baru ditampilkan setelah data
 // dari akun selesai diambil, supaya tool langsung baca data terbaru.
 export function ToolFrame({
   toolId,
@@ -66,18 +68,20 @@ export function ToolFrame({
 
   return (
     <>
-      <header className={`${styles.bar} no-print`}>
-        <div className={styles.kiri}>
-          <a href="/" className={styles.logo} aria-label="Founderku, ke beranda">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/favicon.svg" alt="" width={26} height={26} />
-          </a>
+      {/* Navigasi bersama (file di public/, jadi tidak bisa di-import). Cuma
+          gaya nav, tanpa aturan elemen dasar, supaya tampilan tool tetap. */}
+      {/* eslint-disable-next-line @next/next/no-css-tags */}
+      <link rel="stylesheet" href="/assets/fk-nav.css" precedence="default" />
+      <header className="nav no-print" id="nav" data-fk-nav suppressHydrationWarning />
+      <FkNavMount />
+      <div className={`${styles.bar} no-print`} data-tool-bar>
+        <nav className={styles.kiri} aria-label="Lokasi">
           <a href="/tools.html" className={styles.balik}>
-            <span aria-hidden="true">←</span> Tools
+            Tools
           </a>
-          <span className={styles.garis} aria-hidden="true" />
+          <span className={styles.garis} aria-hidden="true">/</span>
           <span className={styles.nama}>{toolName}</span>
-        </div>
+        </nav>
         <div className={styles.status} role="status" aria-live="polite">
           {status === "memuat" && <span className={styles.redup}>Menyiapkan...</span>}
           {status === "tamu" && (
@@ -112,7 +116,7 @@ export function ToolFrame({
             <span className={styles.gagal}>Belum tersimpan ke akun, data aman di browser ini</span>
           )}
         </div>
-      </header>
+      </div>
       {siap ? (
         children
       ) : (
