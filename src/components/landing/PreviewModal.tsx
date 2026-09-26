@@ -82,7 +82,7 @@ export function PreviewModal() {
                     </span>
                   </div>
                   <Link
-                    href="/masuk"
+                    href="/pajangin/dashboard"
                     className="glass-amber block text-center text-ink font-manrope font-extrabold text-sm py-3 rounded-xl"
                   >
                     💬 Chat via WhatsApp

@@ -46,16 +46,16 @@ export function StickyCta({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
       ) : (
         <>
           <p className="font-manrope font-extrabold text-sm text-white mb-1 pr-4">
-            Mulai gratis hari ini
+            Mulai pajang produkmu
           </p>
           <p className="text-xs text-white/70 mb-3">
-            2 halaman jualan pertama, nggak perlu kartu kredit.
+            Pakai akun Founderku kamu, jadi dalam hitungan menit.
           </p>
           <Link
-            href="/daftar"
+            href="/pajangin/dashboard"
             className="block text-center font-manrope font-bold text-sm glass-amber text-ink py-2.5 rounded-xl hover:-translate-y-0.5 active:scale-95 transition-all"
           >
-            Daftar Gratis
+            Mulai Pakai
           </Link>
         </>
       )}

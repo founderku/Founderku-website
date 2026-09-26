@@ -7,12 +7,16 @@ import { safeNextPath } from "@/lib/validators";
 import { PRICING } from "@/lib/pricing";
 import { Pill } from "@/components/ui/Pill";
 import { Card } from "@/components/ui/Card";
+import { OtpVerify } from "@/components/OtpVerify";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
+  const [alreadyRegistered, setAlreadyRegistered] = useState(false);
+  const nextPath = () =>
+    safeNextPath(new URLSearchParams(window.location.search).get("next"));
   const [loading, setLoading] = useState(false);
 
   async function handleRegister(e: React.FormEvent) {
@@ -20,11 +24,13 @@ export default function RegisterPage() {
     setError(null);
     setLoading(true);
     const supabase = createClient();
-    const { error } = await supabase.auth.signUp({
+    setAlreadyRegistered(false);
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(safeNextPath(new URLSearchParams(window.location.search).get("next")))}`,
+        // Cadangan kalau template email masih pakai link, bukan kode.
+        emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath())}`,
       },
     });
     if (error) {
@@ -32,6 +38,20 @@ export default function RegisterPage() {
       setError(error.message);
       return;
     }
+    // Email sudah terdaftar: Supabase sengaja tetap bilang "berhasil" tapi
+    // tidak kirim email apa pun (tandanya: identities kosong). Kasih tahu
+    // user supaya masuk, bukan nunggu email yang tidak akan datang.
+    if (data.user && data.user.identities && data.user.identities.length === 0) {
+      setLoading(false);
+      setAlreadyRegistered(true);
+      return;
+    }
+    // Kalau verifikasi email dimatikan di Supabase, sesi langsung aktif.
+    if (data.session) {
+      window.location.assign(nextPath());
+      return;
+    }
+    setLoading(false);
     setDone(true);
   }
 
@@ -94,14 +114,8 @@ export default function RegisterPage() {
             Founderku
           </span>
         </a>
-        <Card className="relative z-10 w-full max-w-sm bg-white text-center">
-          <h1 className="font-manrope font-extrabold text-xl mb-2">
-            Cek email kamu
-          </h1>
-          <p className="text-sm text-text-soft">
-            Kami sudah kirim link verifikasi ke <b>{email}</b>. Klik link itu
-            dulu sebelum bisa publish halaman.
-          </p>
+        <Card className="relative z-10 w-full max-w-sm bg-white">
+          <OtpVerify email={email} nextPath={nextPath()} />
         </Card>
         {trustFooter}
       </div>
@@ -168,6 +182,16 @@ export default function RegisterPage() {
           </div>
 
           {error && <p className="text-xs text-coral">{error}</p>}
+          {alreadyRegistered && (
+            <p className="text-xs text-coral">
+              Email ini sudah terdaftar.{" "}
+              <Link href="/masuk" className="font-bold underline">
+                Masuk di sini
+              </Link>
+              . Kalau dulu daftar pakai Google, pilih &quot;Masuk dengan
+              Google&quot;.
+            </p>
+          )}
 
           <Pill
             type="submit"

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { safeNextPath } from "@/lib/validators";
+import { OtpVerify } from "@/components/OtpVerify";
 import { Pill } from "@/components/ui/Pill";
 import { Card } from "@/components/ui/Card";
 
@@ -13,6 +14,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [needVerify, setNeedVerify] = useState(false);
   const router = useRouter();
 
   async function handleLogin(e: React.FormEvent) {
@@ -25,6 +27,14 @@ export default function LoginPage() {
       password,
     });
     if (error) {
+      // Sudah daftar tapi belum verifikasi: kirim kode baru, lalu minta
+      // user isi kodenya di sini juga.
+      if (error.code === "email_not_confirmed") {
+        await supabase.auth.resend({ type: "signup", email });
+        setLoading(false);
+        setNeedVerify(true);
+        return;
+      }
       setLoading(false);
       setError("Email atau kata sandi salah. Coba lagi.");
       return;
@@ -63,6 +73,10 @@ export default function LoginPage() {
       </a>
 
       <Card className="relative z-10 w-full max-w-sm bg-white">
+        {needVerify ? (
+          <OtpVerify email={email} nextPath={safeNextPath(new URLSearchParams(window.location.search).get("next"))} />
+        ) : (
+        <>
         <span className="inline-block font-manrope font-bold text-[11px] uppercase tracking-widest text-indigo bg-indigo/10 px-3 py-1 rounded-full mb-4">
           Masuk
         </span>
@@ -131,6 +145,8 @@ export default function LoginPage() {
             Daftar
           </Link>
         </p>
+        </>
+        )}
       </Card>
 
       {/* Elemen kepercayaan: badan hukum yang jelas + tautan kebijakan

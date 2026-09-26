@@ -5,7 +5,6 @@ import { PhotoMarquee } from "@/components/landing/PhotoMarquee";
 import { PreviewModal } from "@/components/landing/PreviewModal";
 import { StickyCta } from "@/components/landing/StickyCta";
 import { Accordion } from "@/components/landing/Accordion";
-import { PRICING, formatRupiah, periodSuffix } from "@/lib/pricing";
 
 function HeroCardMockup({
   name,
@@ -22,7 +21,7 @@ function HeroCardMockup({
 }) {
   return (
     <Link
-      href="/masuk"
+      href="/pajangin/dashboard"
       className={`block w-[190px] sm:w-[230px] bg-white rounded-[24px] overflow-hidden shadow-[0_30px_60px_-20px_rgba(0,0,0,0.5)] hover:-translate-y-2 transition-transform duration-300 ${className}`}
       style={{ transform: `rotate(${rotate})` }}
     >
@@ -95,7 +94,7 @@ const faqs = [
   },
   {
     q: "Bisa pakai domain sendiri?",
-    a: "Untuk sekarang halaman kamu ada di subdomain founderku.com. Custom domain sendiri lagi direncanain buat ke depannya.",
+    a: "Untuk sekarang halaman kamu ada di alamat founderku.com (misalnya founderku.com/l/nama-produk). Custom domain sendiri lagi direncanain buat ke depannya.",
   },
 ];
 
@@ -114,29 +113,14 @@ export function LandingPage({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
           </span>
         </div>
         <div className="flex items-center gap-5">
-          {isLoggedIn ? (
-            <Link
-              href="/pajangin/dashboard"
-              className="font-manrope font-bold text-sm px-5 py-2.5 rounded-2xl glass-amber text-ink hover:-translate-y-0.5 active:scale-95 transition-all"
-            >
-              Lihat Toko
-            </Link>
-          ) : (
-            <>
-              <Link
-                href="/masuk"
-                className="text-sm font-manrope font-semibold text-white/85 hover:text-white transition-colors"
-              >
-                Masuk
-              </Link>
-              <Link
-                href="/daftar"
-                className="font-manrope font-bold text-sm px-5 py-2.5 rounded-2xl glass-amber text-ink hover:-translate-y-0.5 active:scale-95 transition-all"
-              >
-                Daftar Gratis
-              </Link>
-            </>
-          )}
+          {/* Login & harga dikelola terpusat di akun Founderku. Kalau
+              belum login, /pajangin/dashboard otomatis ngarahin ke /masuk. */}
+          <Link
+            href="/pajangin/dashboard"
+            className="font-manrope font-bold text-sm px-5 py-2.5 rounded-2xl glass-amber text-ink hover:-translate-y-0.5 active:scale-95 transition-all"
+          >
+            {isLoggedIn ? "Lihat Toko" : "Mulai Pakai"}
+          </Link>
         </div>
       </header>
 
@@ -164,10 +148,10 @@ export function LandingPage({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
             </p>
             <div className="mt-9 flex items-center justify-center gap-3 flex-wrap">
               <Link
-                href="/daftar"
+                href="/pajangin/dashboard"
                 className="font-manrope font-extrabold text-base px-7 py-4 rounded-2xl glass-amber text-ink hover:-translate-y-0.5 active:scale-95 transition-all"
               >
-                Daftar Gratis
+                Mulai Pakai Pajangin
               </Link>
               <PreviewModal />
             </div>
@@ -437,102 +421,6 @@ export function LandingPage({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
         </Reveal>
       </section>
 
-      {/* Pricing */}
-      <section className="bg-bg-soft px-6 py-20 sm:py-28">
-        <Reveal className="max-w-xl mx-auto text-center mb-14">
-          <span className="font-manrope font-bold text-xs uppercase tracking-widest text-coral">
-            Harga
-          </span>
-          <h2 className="mt-3 font-manrope font-extrabold text-3xl sm:text-4xl tracking-tight text-balance">
-            Mulai gratis, upgrade kalau perlu
-          </h2>
-        </Reveal>
-
-        <div className="max-w-3xl mx-auto grid sm:grid-cols-2 gap-6">
-          <Reveal>
-            <div className="bg-white shadow-[0_2px_20px_rgba(20,19,31,0.06)] rounded-[28px] p-8 h-full flex flex-col hover:-translate-y-1 transition-transform duration-300">
-              <h3 className="font-manrope font-extrabold text-xl mb-1">
-                Free
-              </h3>
-              <p className="text-sm text-text-soft mb-6">
-                Buat coba-coba atau baru mulai jualan.
-              </p>
-              <div className="font-manrope font-extrabold text-3xl mb-6">
-                Rp 0
-              </div>
-              <ul className="text-sm space-y-2.5 mb-8 flex-1">
-                <li className="flex gap-2 text-text-soft">
-                  <span className="text-indigo font-bold">✓</span>
-                  2 halaman jualan aktif
-                </li>
-                <li className="flex gap-2 text-text-soft">
-                  <span className="text-indigo font-bold">✓</span>
-                  Terhubung WhatsApp
-                </li>
-                <li className="flex gap-2 text-text-soft">
-                  <span className="text-indigo font-bold">✓</span>
-                  Watermark &quot;Powered by Pajangin&quot;
-                </li>
-              </ul>
-              <Link href="/daftar">
-                <Pill variant="outline" className="w-full justify-center">
-                  Daftar Gratis
-                </Pill>
-              </Link>
-            </div>
-          </Reveal>
-
-          <Reveal delayMs={100}>
-            <div className="bg-ink text-white rounded-[28px] p-8 h-full flex flex-col relative overflow-hidden hover:-translate-y-1 transition-transform duration-300">
-              <span className="absolute top-6 right-6 font-manrope font-bold text-[11px] uppercase tracking-wide glass-amber text-ink px-3 py-1 rounded-lg">
-                Populer
-              </span>
-              <h3 className="font-manrope font-extrabold text-xl mb-1">
-                {PRICING.planName}
-              </h3>
-              <p className="text-sm text-ink-soft mb-6">
-                Buat yang udah serius jualan tiap hari. Sekalian buka semua
-                tools Founderku lainnya.
-              </p>
-              {PRICING.prices[0] && (
-                <div className="font-manrope font-extrabold text-3xl mb-1">
-                  {formatRupiah(PRICING.prices[0].amount)}
-                  <span className="text-base font-semibold text-ink-soft">
-                    {" "}
-                    {periodSuffix(PRICING.prices[0].days)}
-                  </span>
-                </div>
-              )}
-              <p className="text-xs text-ink-faint mb-6">
-                {PRICING.prices
-                  .slice(1)
-                  .map((p) => `atau ${formatRupiah(p.amount)}${periodSuffix(p.days)}`)
-                  .join(" · ")}
-              </p>
-              <ul className="text-sm space-y-2.5 mb-8 flex-1">
-                <li className="flex gap-2 text-ink-soft">
-                  <span className="text-amber font-bold">✓</span>
-                  Halaman jualan tanpa batas
-                </li>
-                <li className="flex gap-2 text-ink-soft">
-                  <span className="text-amber font-bold">✓</span>
-                  Tanpa watermark
-                </li>
-                <li className="flex gap-2 text-ink-soft">
-                  <span className="text-amber font-bold">✓</span>
-                  Halaman toko gabungan
-                </li>
-              </ul>
-              <Link href="/daftar?next=/pajangin/dashboard">
-                <Pill variant="solid-amber" className="w-full justify-center">
-                  Coba Gratis {PRICING.trialDays} Hari
-                </Pill>
-              </Link>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
       {/* FAQ */}
       <section className="bg-white px-6 py-20 sm:py-28">
         <Reveal className="max-w-2xl mx-auto">
@@ -566,14 +454,13 @@ export function LandingPage({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
               Mulai pajang produkmu hari ini
             </h2>
             <p className="text-ink-soft mb-8">
-              Gratis, nggak perlu kartu kredit, langsung jadi dalam hitungan
-              menit.
+              Pakai akun Founderku kamu, langsung jadi dalam hitungan menit.
             </p>
             <Link
-              href="/daftar"
+              href="/pajangin/dashboard"
               className="inline-block font-manrope font-extrabold text-base px-8 py-4 rounded-2xl glass-amber text-ink hover:-translate-y-0.5 active:scale-95 transition-all"
             >
-              Daftar Gratis Sekarang
+              Mulai Pakai Pajangin
             </Link>
           </div>
         </Reveal>
