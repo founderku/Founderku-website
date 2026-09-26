@@ -49,9 +49,13 @@ dialihkan ke alamat baru.
 > pindah ke folder `public/`.
 
 1. **Supabase** (project yang sama dengan Pajangin lama)
-   - SQL Editor: copy-paste seluruh isi `supabase/schema.sql`, klik Run.
-     File ini menghapus tabel lama Pajangin (aman, belum ada pengguna)
-     lalu bikin struktur baru.
+   - SUDAH DIKERJAKAN (26 Sep 2026, lewat connector Supabase):
+     struktur database baru sudah terpasang dan dicek.
+     Catatan: waktu `schema.sql` dijalankan lewat SQL Editor, file ini
+     sempat berhenti di tengah tanpa pesan error (tabel jadi, fungsi dan
+     aturan akses tidak). Kalau suatu saat perlu dijalankan ulang di
+     project baru, jalankan lewat connector/migration, lalu cek hasilnya
+     dengan query di `supabase/tests/README.md`.
    - Authentication > URL Configuration:
      - Site URL: `https://founderku.com`
      - Redirect URLs: tambah `https://founderku.com/auth/callback`

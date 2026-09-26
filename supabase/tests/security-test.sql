@@ -94,6 +94,13 @@ set request.jwt.claim.sub = '';
 select 'T16 anonim lihat halaman aktif saja: ' || case when count(*)=2 then 'LULUS' else 'GAGAL ('||count(*)||')' end from public.pages;
 select 'T17 anonim gak bisa baca email: ' || case when count(*)=0 then 'LULUS' else 'GAGAL' end from public.profiles;
 select 'T18 data toko publik tanpa email, has_pro=false: ' || case when has_pro = false then 'LULUS' else 'GAGAL' end from public.get_store_profile_by_slug('tokoumkm');
+do $$ begin
+  perform public.increment_page_click('produk-2', 'palsu-1');
+  raise notice 'T19a pengunjung panggil penghitung klik langsung: GAGAL';
+exception when insufficient_privilege then raise notice 'T19a pengunjung panggil penghitung klik langsung: LULUS (ditolak)'; end $$;
+select 'T19c anonim cek admin = false: ' || case when public.is_admin() = false then 'LULUS' else 'GAGAL' end;
+reset role;
+set role service_role;
 select public.increment_page_click('produk-2', 'abc');
 select public.increment_page_click('produk-2', 'abc');
 reset role;

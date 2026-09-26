@@ -28,6 +28,7 @@ drop table if exists public.slug_blocklist cascade;
 drop table if exists public.profiles cascade;
 drop function if exists public.handle_new_user() cascade;
 drop function if exists public.is_admin(uuid) cascade;
+drop function if exists public.is_admin() cascade;
 drop function if exists public.has_pro_access(uuid) cascade;
 drop function if exists public.get_store_profile_by_slug(text) cascade;
 drop function if exists public.get_store_profile_by_id(uuid) cascade;
@@ -171,16 +172,17 @@ insert into public.profiles (id, email)
 select id, coalesce(email, '') from auth.users
 on conflict (id) do nothing;
 
--- Apakah user ini admin (security definer biar gak infinite recursion
--- di policy tabel profiles)
-create function public.is_admin(uid uuid)
+-- Apakah user yang SEDANG LOGIN ini admin (security definer biar gak
+-- infinite recursion di policy tabel profiles). Sengaja tanpa parameter,
+-- jadi gak bisa dipakai buat ngecek akun orang lain.
+create function public.is_admin()
 returns boolean
 language sql
 security definer
 set search_path = public
 stable
 as $$
-  select coalesce((select is_admin from public.profiles where id = uid), false);
+  select coalesce((select is_admin from public.profiles where id = auth.uid()), false);
 $$;
 
 -- Apakah user ini punya akses Pro sekarang (trial ATAU langganan aktif).
@@ -281,7 +283,7 @@ security definer
 set search_path = public
 as $$
 begin
-  if not public.is_admin(auth.uid()) then
+  if not public.is_admin() then
     raise exception 'Hanya admin.' using errcode = '42501';
   end if;
   if new_status not in ('active', 'taken_down') then
@@ -399,11 +401,14 @@ revoke execute on all functions in schema public from public, anon, authenticate
 
 -- anon juga butuh: policy "Admin bisa lihat semua ..." ikut dievaluasi
 -- waktu pengunjung (belum login) buka halaman publik.
-grant execute on function public.is_admin(uuid) to anon, authenticated;
-grant execute on function public.has_pro_access(uuid) to authenticated;
+grant execute on function public.is_admin() to anon, authenticated;
+-- has_pro_access sengaja gak dikasih ke user: cuma dipakai di dalam
+-- fungsi database lain (batas halaman, data toko publik).
 grant execute on function public.get_store_profile_by_slug(text) to anon, authenticated;
 grant execute on function public.get_store_profile_by_id(uuid) to anon, authenticated;
-grant execute on function public.increment_page_click(text, text) to anon, authenticated;
+-- Penghitung klik cuma dipanggil server (halaman /l/[slug]), biar
+-- jumlah klik gak bisa dipalsukan dengan manggil fungsi langsung.
+grant execute on function public.increment_page_click(text, text) to service_role;
 grant execute on function public.admin_set_page_status(uuid, text, text) to authenticated;
 grant execute on function public.start_trial(uuid, integer) to service_role;
 grant execute on function public.activate_subscription(text, numeric) to service_role;
@@ -449,7 +454,7 @@ create policy "User lihat profil sendiri"
 create policy "User update profil sendiri"
   on public.profiles for update using (auth.uid() = id) with check (auth.uid() = id);
 create policy "Admin bisa lihat semua profil"
-  on public.profiles for select using (public.is_admin(auth.uid()));
+  on public.profiles for select using (public.is_admin());
 
 -- pages
 create policy "Publik bisa lihat halaman aktif"
@@ -463,7 +468,7 @@ create policy "Pemilik bisa update halaman sendiri"
 create policy "Pemilik bisa hapus halaman sendiri"
   on public.pages for delete using (auth.uid() = user_id);
 create policy "Admin bisa lihat semua halaman"
-  on public.pages for select using (public.is_admin(auth.uid()));
+  on public.pages for select using (public.is_admin());
 
 -- subscriptions: user cuma bisa BACA punya sendiri. Tulis cuma lewat
 -- server (service_role).
@@ -477,9 +482,9 @@ create policy "Pemilik bisa lihat takedown halaman miliknya"
             where pages.id = takedowns.page_id and pages.user_id = auth.uid())
   );
 create policy "Admin bisa lihat semua takedown"
-  on public.takedowns for select using (public.is_admin(auth.uid()));
+  on public.takedowns for select using (public.is_admin());
 create policy "Admin bisa update takedown"
-  on public.takedowns for update using (public.is_admin(auth.uid()));
+  on public.takedowns for update using (public.is_admin());
 
 -- slug_blocklist
 create policy "Semua orang bisa baca blocklist"

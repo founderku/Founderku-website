@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { headers } from "next/headers";
 import { createHash } from "crypto";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { EtalasePage } from "@/components/etalase/EtalasePage";
 import type { PageRow, StoreProfile } from "@/lib/types";
 import { lockedPageIds } from "@/lib/access";
@@ -65,7 +66,10 @@ export default async function PublicPage({
     headerList.get("x-real-ip") ??
     "unknown";
   const visitorHash = createHash("sha256").update(ip).digest("hex");
-  supabase
+  // Dipanggil pakai kunci server (service_role): fungsi ini sengaja gak
+  // bisa dipanggil langsung dari browser, biar jumlah klik gak bisa
+  // dipalsukan.
+  createAdminClient()
     .rpc("increment_page_click", { page_slug: slug, visitor_hash: visitorHash })
     .then();
 

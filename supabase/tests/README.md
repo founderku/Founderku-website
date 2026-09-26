@@ -18,3 +18,13 @@ psql -d founderku_test -f supabase/tests/security-test.sql
 `supabase-mock.sql` cuma tiruan minimal (peran anon/authenticated/
 service_role dan fungsi auth.uid()) supaya skema bisa dites tanpa
 Supabase beneran.
+
+## Cek cepat di project Supabase asli (aman, cuma baca)
+
+```sql
+select
+  (select count(*) from pg_tables where schemaname = 'public' and rowsecurity) as tabel_rls_aktif, -- harus 6
+  (select count(*) from pg_policies where schemaname = 'public') as jumlah_aturan,                  -- harus 14
+  (select count(*) from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+     where n.nspname = 'public') as jumlah_fungsi;                                                   -- harus 10
+```
