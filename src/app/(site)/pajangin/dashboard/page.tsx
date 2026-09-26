@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FkShell } from "@/components/shell/FkShell";
 import { requireAccount } from "@/lib/account";
 import { lockedPageIds } from "@/lib/access";
 import { Card } from "@/components/ui/Card";
@@ -6,9 +7,7 @@ import { Pill } from "@/components/ui/Pill";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { StoreSlugEditor } from "@/components/StoreSlugEditor";
 import { PlanBadge } from "@/components/PlanBadge";
-import { PageBackdrop } from "@/components/PageBackdrop";
 import { LogoutButton } from "@/components/LogoutButton";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { ProductCard } from "@/components/ProductCard";
 import { WelcomeModal } from "@/components/WelcomeModal";
 import { PublishToast } from "@/components/PublishToast";
@@ -55,14 +54,13 @@ export default async function DashboardPage({
   const totalClicks = (pages ?? []).reduce((sum, p) => sum + p.click_count, 0);
 
   return (
-    <div className="fk-app">
-      <PageBackdrop variant="dashboard" />
+    <FkShell>
       <WelcomeModal hasPages={(pages?.length ?? 0) > 0} />
       {firstPublish === "1" && publishedSlug && (
         <PublishToast slug={publishedSlug} />
       )}
       {upgraded === "1" && <UpgradeToast />}
-      <div className="max-w-4xl mx-auto px-6 py-10">
+      <div className="max-w-4xl mx-auto">
       <div className="flex items-center justify-between mb-8">
         <Link href="/pajangin" className="inline-flex items-center gap-2 group">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -89,7 +87,6 @@ export default async function DashboardPage({
             Akun
           </Link>
           <LogoutButton />
-          <ThemeToggle />
         </div>
       </div>
 
@@ -279,6 +276,6 @@ export default async function DashboardPage({
         </div>
       )}
       </div>
-    </div>
+    </FkShell>
   );
 }

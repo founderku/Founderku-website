@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import { FkShell } from "@/components/shell/FkShell";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
@@ -15,7 +16,6 @@ import {
 } from "@/lib/validators";
 import { MAX_PHOTO_SIZE_MB, ALLOWED_PHOTO_TYPES } from "@/lib/constants";
 import { compressImage } from "@/lib/compressImage";
-import { PageBackdrop } from "@/components/PageBackdrop";
 import type { StoreStyleId } from "@/lib/types";
 
 export default function NewPagePage() {
@@ -238,9 +238,8 @@ export default function NewPagePage() {
   }
 
   return (
-    <div className="fk-app">
-      <PageBackdrop variant="form" />
-      <div className="max-w-5xl mx-auto px-6 py-10">
+    <FkShell>
+      <div className="max-w-5xl mx-auto">
       <div className="mb-6">
         <Link href="/pajangin" className="inline-flex items-center gap-2 group">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -420,7 +419,7 @@ export default function NewPagePage() {
         </div>
       </div>
       </div>
-    </div>
+    </FkShell>
   );
 }
 

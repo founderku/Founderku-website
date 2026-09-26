@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Script from "next/script";
+import { FkShell } from "@/components/shell/FkShell";
 import { createClient } from "@/lib/supabase/server";
 import { getAccessStatus } from "@/lib/access";
 import { PRICING } from "@/lib/pricing";
@@ -11,8 +11,7 @@ export const metadata: Metadata = {
   description: PRICING.description.id,
 };
 
-// Tampilan sama dengan beranda: gaya dan navigasi diambil dari
-// /assets/fk-site.css dan /assets/fk-site.js (dipakai juga halaman statis).
+// Tampilan sama dengan beranda lewat FkShell (navigasi & footer bersama).
 export default async function HargaPage({
   searchParams,
 }: {
@@ -35,34 +34,14 @@ export default async function HargaPage({
   const access = getAccessStatus(profile);
 
   return (
-    <>
-      {/* Gaya bersama dengan halaman statis (file di public/), jadi tidak bisa di-import */}
-      {/* eslint-disable-next-line @next/next/no-css-tags */}
-      <link rel="stylesheet" href="/assets/fk-site.css" precedence="default" />
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-      {/* Font Poppins cuma dipakai halaman ini di dalam aplikasi (sama dengan beranda) */}
-      {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        precedence="default"
+    <FkShell bare>
+      <HargaView
+        loggedIn={!!user}
+        hasPro={access.hasPro}
+        onTrial={access.onTrial}
+        activeUntil={access.activeUntil ? access.activeUntil.toISOString() : null}
+        failed={failed === "1"}
       />
-      <div className="fk-page">
-        {/* Diisi oleh fk-site.js setelah halaman aktif */}
-        <header className="nav" id="nav" data-fk-nav suppressHydrationWarning />
-        <main className="frame">
-          <HargaView
-            loggedIn={!!user}
-            hasPro={access.hasPro}
-            onTrial={access.onTrial}
-            activeUntil={access.activeUntil ? access.activeUntil.toISOString() : null}
-            failed={failed === "1"}
-          />
-          <footer className="band" data-fk-foot suppressHydrationWarning />
-        </main>
-      </div>
-      <Script src="/assets/fk-site.js" strategy="afterInteractive" />
-    </>
+    </FkShell>
   );
 }

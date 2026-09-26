@@ -7,7 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 import { safeNextPath } from "@/lib/validators";
 import { OtpVerify } from "@/components/OtpVerify";
 import { Pill } from "@/components/ui/Pill";
-import { Card } from "@/components/ui/Card";
+import { AuthLayout } from "@/components/shell/AuthLayout";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -53,39 +53,19 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-ink flex flex-col items-center justify-center px-6 py-16 relative overflow-hidden">
-      <div className="absolute -top-32 -left-32 w-80 h-80 rounded-full bg-indigo/25 blur-[110px]" />
-      <div className="absolute -bottom-32 -right-32 w-80 h-80 rounded-full bg-coral/20 blur-[110px]" />
-
-      <a
-        href="/"
-        className="relative z-10 flex items-center gap-2.5 mb-8 group"
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/images/favicon.svg"
-          alt="Founderku"
-          className="w-9 h-9 rounded-xl transition-transform group-hover:-translate-y-0.5"
-        />
-        <span className="font-manrope font-extrabold text-lg text-white">
-          Founderku
-        </span>
-      </a>
-
-      <Card className="relative z-10 w-full max-w-sm bg-white">
+    <AuthLayout
+      eyebrow="Masuk"
+      title="Masuk ke Founderku."
+      sub="Satu akun buat semua tools Founderku. Lanjutkan dari tempat terakhir kamu berhenti."
+      points={["Pajangin, Notain, Pajakin, dan tools lain dalam satu akun", "Data tools tersimpan dan bisa dibuka dari HP mana pun"]}
+    >
         {needVerify ? (
           <OtpVerify email={email} nextPath={safeNextPath(new URLSearchParams(window.location.search).get("next"))} />
         ) : (
         <>
-        <span className="inline-block font-manrope font-bold text-[11px] uppercase tracking-widest text-indigo bg-indigo/10 px-3 py-1 rounded-full mb-4">
+        <h2 className="font-manrope font-extrabold text-2xl tracking-tight mb-6">
           Masuk
-        </span>
-        <h1 className="font-manrope font-extrabold text-3xl tracking-tight mb-1">
-          Masuk ke Founderku
-        </h1>
-        <p className="text-sm text-text-soft mb-6">
-          Satu akun buat semua tools Founderku.
-        </p>
+        </h2>
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
@@ -147,38 +127,6 @@ export default function LoginPage() {
         </p>
         </>
         )}
-      </Card>
-
-      {/* Elemen kepercayaan: badan hukum yang jelas + tautan kebijakan
-          resmi, biar user (terutama yang masih ragu soal keamanan data)
-          lihat ini bukan aplikasi abal-abal. */}
-      <div className="relative z-10 w-full max-w-sm mt-6 text-center">
-        <p className="text-xs text-ink-faint leading-relaxed">
-          Data kamu aman & terenkripsi. Dikelola oleh{" "}
-          <span className="text-ink-soft font-medium">
-            PT Talenthra Karya Nusantara
-          </span>
-          .
-        </p>
-        <div className="flex items-center justify-center gap-3 mt-2 text-xs">
-          <Link href="/privasi" className="text-ink-faint hover:text-white underline">
-            Kebijakan Privasi
-          </Link>
-          <span className="text-ink-faint">·</span>
-          <Link href="/syarat" className="text-ink-faint hover:text-white underline">
-            Syarat & Ketentuan
-          </Link>
-          <span className="text-ink-faint">·</span>
-          <a
-            href="https://www.instagram.com/founderku?igsh=MW11ZW00dXI4YXltZQ%3D%3D&utm_source=qr"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-ink-faint hover:text-white underline"
-          >
-            @founderku
-          </a>
-        </div>
-      </div>
-    </div>
+    </AuthLayout>
   );
 }

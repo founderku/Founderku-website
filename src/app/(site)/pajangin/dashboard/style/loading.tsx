@@ -1,11 +1,10 @@
-import { PageBackdrop } from "@/components/PageBackdrop";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { FkShell } from "@/components/shell/FkShell";
 
 export default function StyleLoading() {
   return (
-    <div className="fk-app">
-      <PageBackdrop variant="style" />
-      <div className="max-w-5xl mx-auto px-6 py-10">
+    <FkShell>
+      <div className="max-w-5xl mx-auto">
         <Skeleton className="w-28 h-8 mb-6" />
         <Skeleton className="w-32 h-3 mb-2" />
         <Skeleton className="w-56 h-9 mb-2" />
@@ -17,6 +16,6 @@ export default function StyleLoading() {
         </div>
         <Skeleton className="w-40 h-11" />
       </div>
-    </div>
+    </FkShell>
   );
 }

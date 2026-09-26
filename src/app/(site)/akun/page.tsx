@@ -1,11 +1,10 @@
 import Link from "next/link";
+import { FkShell } from "@/components/shell/FkShell";
 import type { Metadata } from "next";
 import { requireAccount } from "@/lib/account";
 import { formatTanggal } from "@/lib/access";
 import { displayName } from "@/lib/names";
 import { PRICING, formatRupiah } from "@/lib/pricing";
-import { AnimatedBackdrop } from "@/components/AnimatedBackdrop";
-import { SiteHeader } from "@/components/SiteHeader";
 import { Pill } from "@/components/ui/Pill";
 import { LogoutButton } from "@/components/LogoutButton";
 import { DeleteAccountSection } from "@/components/DeleteAccountSection";
@@ -89,11 +88,8 @@ export default async function AkunPage({
       : 0;
 
   return (
-    <div className="fk-app">
-      <AnimatedBackdrop />
-      <div className="max-w-3xl mx-auto px-5 sm:px-6 py-8 sm:py-10">
-        <SiteHeader isLoggedIn />
-
+    <FkShell>
+      <div className="max-w-3xl mx-auto">
         <div className="fk-rise flex items-start justify-between gap-4 mb-8" style={rise(0)}>
           <div className="min-w-0">
             <p className="font-manrope text-xs font-bold uppercase tracking-widest text-text-faint mb-2">
@@ -315,6 +311,6 @@ export default async function AkunPage({
           <DeleteAccountSection />
         </div>
       </div>
-    </div>
+    </FkShell>
   );
 }

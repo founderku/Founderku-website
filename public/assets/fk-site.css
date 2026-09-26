@@ -1,5 +1,16 @@
 /* fk-site: gaya bersama halaman selain beranda. Token, nav, footer, dan
    komponen disalin dari beranda (public/index.html) supaya tampilannya sama. */
+@layer base{
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Poppins,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background-color .4s,color .4s}
+h1,h2,h3{margin:0;font-weight:400;letter-spacing:-.03em;text-wrap:balance}
+p{margin:0}
+a{color:inherit}
+button,input,select{font-family:inherit}
+img{max-width:100%}
+:focus-visible{outline:2px solid var(--orange);outline-offset:3px;border-radius:8px}
+}
 /* Palet: 5 warna solid design system Founderku + putih; abu-abu dari navy transparan */
 :root{
   --navy:#1A1730; --navy-deep:#0E0C1A; --orange:#F2A93E; --coral:#E85F3D; --purple:#8A85B8;
@@ -28,16 +39,7 @@
   --shadow:0 24px 50px -30px rgba(0,0,0,.8); --pill-text:#F2A93E; --menu-bg:rgba(26,23,48,.97);
   color-scheme:dark;
 }
-*{box-sizing:border-box}
 [hidden]{display:none!important}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Poppins,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;transition:background-color .4s,color .4s}
-h1,h2,h3{margin:0;font-weight:400;letter-spacing:-.03em;text-wrap:balance}
-p{margin:0}
-a{color:inherit}
-button,input,select{font-family:inherit}
-img{max-width:100%}
-:focus-visible{outline:2px solid var(--orange);outline-offset:3px;border-radius:8px}
 .o{color:var(--orange)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
@@ -355,7 +357,7 @@ a.cd:hover .go::after,.cd .go:hover::after{transform:translateX(3px)}
   .hero-top,.sec-head{grid-template-columns:1fr}
   .sec-head p,.hero-top p{padding-top:0;justify-self:start}
   .cards,.sp-grid,.news,.news.all{grid-template-columns:1fr 1fr}
-  .plans{grid-template-columns:1fr}
+  .plans,.bento{grid-template-columns:1fr}
   .detail{grid-template-columns:1fr}
   .steps.three{grid-template-columns:1fr}
   .buy{position:static}
@@ -377,6 +379,7 @@ a.cd:hover .go::after,.cd .go:hover::after{transform:translateX(3px)}
   .filters button{white-space:nowrap}
   .ticks.two-col{grid-template-columns:1fr}
   .plan{padding:26px}
+  .bx{min-height:320px;padding:24px}
   .price{font-size:42px}
   .plan.pro{grid-template-columns:1fr}
   .pro-card-zone{height:270px;order:-1}
