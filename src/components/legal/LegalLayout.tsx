@@ -1,12 +1,10 @@
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
-import { AnimatedBackdrop } from "@/components/AnimatedBackdrop";
-import { SiteHeader } from "@/components/SiteHeader";
+import { FkShell } from "@/components/shell/FkShell";
 
 // Layout dipakai bareng oleh halaman /privasi dan /syarat - biar dua-duanya
 // konsisten (header, lebar konten, gaya heading/paragraf) tanpa duplikasi.
-// Ikut tema terang/gelap situs (class fk-app).
-export async function LegalLayout({
+// Tampilan & navigasi sama dengan beranda lewat FkShell.
+export function LegalLayout({
   title,
   updatedAt,
   active,
@@ -17,11 +15,6 @@ export async function LegalLayout({
   active: "syarat" | "privasi";
   children: React.ReactNode;
 }) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
   const tab = (href: string, label: string, isActive: boolean) => (
     <Link
       href={href}
@@ -36,10 +29,8 @@ export async function LegalLayout({
   );
 
   return (
-    <div className="fk-app">
-      <AnimatedBackdrop />
-      <div className="max-w-3xl mx-auto px-5 sm:px-6 py-8 sm:py-10">
-        <SiteHeader isLoggedIn={!!user} />
+    <FkShell>
+      <div className="max-w-3xl mx-auto">
 
         <nav className="fk-rise flex flex-wrap gap-2 mb-6" aria-label="Dokumen legal">
           {tab("/syarat", "Syarat & Ketentuan", active === "syarat")}
@@ -54,7 +45,7 @@ export async function LegalLayout({
         </h1>
         <div className="fk-rise fk-app-card legal-content space-y-8 p-6 sm:p-9">{children}</div>
       </div>
-    </div>
+    </FkShell>
   );
 }
 

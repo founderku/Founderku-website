@@ -1,5 +1,5 @@
-import { PageBackdrop } from "@/components/PageBackdrop";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { FkShell } from "@/components/shell/FkShell";
 
 // Next.js otomatis nampilin ini SEKETIKA pas user pindah ke /dashboard,
 // sambil data asli (profile, daftar halaman) masih diambil dari
@@ -8,9 +8,8 @@ import { Skeleton } from "@/components/ui/Skeleton";
 // bukan layar kosong nunggu.
 export default function DashboardLoading() {
   return (
-    <div className="fk-app">
-      <PageBackdrop variant="dashboard" />
-      <div className="max-w-4xl mx-auto px-6 py-10">
+    <FkShell>
+      <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <Skeleton className="w-28 h-8" />
           <Skeleton className="w-12 h-4" />
@@ -28,6 +27,6 @@ export default function DashboardLoading() {
         <Skeleton className="w-full h-20 mb-3" />
         <Skeleton className="w-full h-20 mb-3" />
       </div>
-    </div>
+    </FkShell>
   );
 }

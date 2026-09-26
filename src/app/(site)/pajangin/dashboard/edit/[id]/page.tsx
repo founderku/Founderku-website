@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { FkShell } from "@/components/shell/FkShell";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
@@ -9,7 +10,6 @@ import { ProductCard } from "@/components/ProductCard";
 import { isValidWhatsAppNumber } from "@/lib/validators";
 import { MAX_PHOTO_SIZE_MB, ALLOWED_PHOTO_TYPES } from "@/lib/constants";
 import { compressImage } from "@/lib/compressImage";
-import { PageBackdrop } from "@/components/PageBackdrop";
 import type { StoreStyleId, PageRow } from "@/lib/types";
 
 export default function EditPagePage() {
@@ -226,20 +226,18 @@ export default function EditPagePage() {
 
   if (loadState === "loading") {
     return (
-      <div className="fk-app">
-        <PageBackdrop variant="form" />
-        <div className="max-w-5xl mx-auto px-6 py-10">
+      <FkShell>
+        <div className="max-w-5xl mx-auto">
           <p className="text-sm text-text-soft">Memuat data halaman...</p>
         </div>
-      </div>
+      </FkShell>
     );
   }
 
   if (loadState === "not-found") {
     return (
-      <div className="fk-app">
-        <PageBackdrop variant="form" />
-        <div className="max-w-5xl mx-auto px-6 py-10">
+      <FkShell>
+        <div className="max-w-5xl mx-auto">
           <p className="text-sm text-text-soft mb-4">
             Halaman yang kamu cari tidak ditemukan, atau bukan milikmu.
           </p>
@@ -250,14 +248,13 @@ export default function EditPagePage() {
             ← Kembali ke Halaman Saya
           </Link>
         </div>
-      </div>
+      </FkShell>
     );
   }
 
   return (
-    <div className="fk-app">
-      <PageBackdrop variant="form" />
-      <div className="max-w-5xl mx-auto px-6 py-10">
+    <FkShell>
+      <div className="max-w-5xl mx-auto">
       <div className="mb-6">
         <Link href="/pajangin" className="inline-flex items-center gap-2 group">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -412,7 +409,7 @@ export default function EditPagePage() {
         </div>
       </div>
       </div>
-    </div>
+    </FkShell>
   );
 }
 

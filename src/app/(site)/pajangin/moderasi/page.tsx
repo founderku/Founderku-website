@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AnimatedBackdrop } from "@/components/AnimatedBackdrop";
+import { FkShell } from "@/components/shell/FkShell";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { StatusBadge } from "@/components/ui/StatusBadge";
@@ -45,9 +45,8 @@ export default async function AdminPage() {
     .returns<AdminPageRow[]>();
 
   return (
-    <div className="fk-app">
-      <AnimatedBackdrop />
-    <div className="max-w-5xl mx-auto px-6 py-10">
+    <FkShell>
+    <div className="max-w-5xl mx-auto">
       <div className="flex items-center justify-between mb-8">
         <Link href="/pajangin" className="inline-flex items-center gap-2 group">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -106,6 +105,6 @@ export default async function AdminPage() {
         </div>
       )}
     </div>
-    </div>
+    </FkShell>
   );
 }

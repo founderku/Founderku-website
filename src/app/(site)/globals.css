@@ -384,3 +384,152 @@ body::before {
   .fk-blob, .fk-rise, .fk-wave, .fk-bar-fill { animation: none !important; }
   .fk-app-card { transition: none; }
 }
+
+/* ============================================================
+   TAMPILAN BARU (sama dengan beranda) untuk halaman aplikasi:
+   masuk, daftar, akun, harga, dan Pajangin (landing + dashboard).
+   Dipasang lewat komponen FkShell (class .fk-page). Warna, font, dan
+   bentuk tombol komponen Tailwind lama diganti dari sini, jadi
+   halaman jualan publik penjual (/l dan /toko) tidak ikut berubah.
+   ============================================================ */
+.fk-page {
+  --color-ink: #1a1730;
+  --color-amber: #f2a93e;
+  --color-coral: #e85f3d;
+  --color-indigo: #8a85b8;
+  --color-bg-soft: #f3f2f6;
+  --color-text-soft: rgba(26, 23, 48, 0.68);
+  --color-text-faint: rgba(26, 23, 48, 0.48);
+  --color-border: rgba(26, 23, 48, 0.1);
+  font-family: Poppins, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+/* Font Poppins untuk teks aplikasi, KECUALI pratinjau halaman jualan penjual
+   (.fk-keep-light) yang harus tetap sama persis dengan halaman aslinya */
+.fk-page :is(.font-manrope, .font-inter):not(.fk-keep-light, .fk-keep-light *) {
+  font-family: Poppins, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+.fk-page .fk-keep-light {
+  --color-ink: #14131f;
+  --color-amber: #f2a623;
+  --color-coral: #e15c3e;
+  --color-indigo: #7a78c4;
+  --color-bg-soft: #f5f4f1;
+  --color-text-soft: rgba(20, 19, 31, 0.65);
+  --color-text-faint: rgba(20, 19, 31, 0.45);
+  --color-border: rgba(20, 19, 31, 0.1);
+  font-family: var(--font-inter), sans-serif;
+}
+.fk-page.fk-app {
+  --app-bg: #faf9fb;
+  --app-card: #ffffff;
+  --app-card-strong: #ffffff;
+  --app-border: rgba(26, 23, 48, 0.08);
+  --app-text: #1a1730;
+  --app-soft: rgba(26, 23, 48, 0.68);
+  --app-faint: rgba(26, 23, 48, 0.48);
+}
+[data-theme="dark"] .fk-page.fk-app {
+  --app-bg: #0e0c1a;
+  --app-card: #1a1730;
+  --app-card-strong: #1a1730;
+  --app-border: rgba(255, 255, 255, 0.08);
+  --app-text: #ffffff;
+  --app-soft: rgba(255, 255, 255, 0.72);
+  --app-faint: rgba(255, 255, 255, 0.5);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .fk-page.fk-app {
+    --app-bg: #0e0c1a;
+    --app-card: #1a1730;
+    --app-card-strong: #1a1730;
+    --app-border: rgba(255, 255, 255, 0.08);
+    --app-text: #ffffff;
+    --app-soft: rgba(255, 255, 255, 0.72);
+    --app-faint: rgba(255, 255, 255, 0.5);
+  }
+}
+/* Tanpa gumpalan warna & tekstur: latar polos seperti beranda */
+.fk-page .fk-backdrop { display: none; }
+body:has(.fk-page)::before { display: none; }
+/* Area isi: jarak atas lebih kecil dari bagian beranda */
+.fk-page .app-band { padding-top: clamp(28px, 4vw, 56px); }
+.fk-page .app-band > * { position: relative; }
+/* Huruf: tebal secukupnya, tanpa huruf kapital semua */
+.fk-page :is(.font-extrabold, .font-bold, .font-semibold):not(.fk-keep-light, .fk-keep-light *) { font-weight: 500; }
+.fk-page h1,
+.fk-page h2 { letter-spacing: -0.035em; }
+.fk-page .uppercase:not(.fk-keep-light *) { text-transform: none; letter-spacing: 0; }
+/* Tombol utama: pil navy (putih di mode gelap), sama dengan beranda */
+.fk-page :is(button, a):is(.glass-amber, .bg-ink):not(.fk-keep-light *) {
+  background: var(--btn);
+  color: var(--btn-text) !important;
+  border: 1px solid transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.fk-page :is(button, a):is(.glass-amber, .bg-ink):not(.fk-keep-light *):hover { background: var(--btn); opacity: 0.92; }
+.fk-page :is(button, a):is(.glass-amber, .bg-ink):not(.fk-keep-light *) * { color: inherit; }
+/* Hanya tombol (komponen Pill), bukan kartu tautan yang juga membulat */
+.fk-page button.rounded-2xl:not(.fk-keep-light *) { border-radius: 999px; }
+/* Label oranye kecil (bukan tombol) tetap oranye lembut */
+.fk-page span.glass-amber:not(.fk-keep-light *) {
+  background: rgba(242, 169, 62, 0.2);
+  color: var(--pill-text) !important;
+  border: 0;
+  box-shadow: none;
+}
+/* Kartu & kolom isian */
+.fk-page .fk-app-card { border-radius: 26px; }
+.fk-page input,
+.fk-page textarea,
+.fk-page select { border-color: var(--line-2); }
+.fk-page input:focus,
+.fk-page textarea:focus,
+.fk-page select:focus { outline: 2px solid var(--orange); outline-offset: 1px; }
+
+/* Halaman masuk & daftar */
+.fk-page .auth-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 440px); gap: clamp(32px, 6vw, 96px); align-items: start; padding-bottom: clamp(24px, 4vw, 56px); }
+.fk-page .auth-intro .h1 { font-size: clamp(38px, 4.2vw, 62px); }
+.fk-page .auth-sub { color: var(--soft); font-size: 17px; line-height: 1.6; margin-top: 18px; max-width: 42ch; }
+.fk-page .auth-points { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 10px; }
+.fk-page .auth-points li { display: flex; gap: 10px; font-size: 15.5px; color: var(--soft); }
+.fk-page .auth-points li::before { content: ""; flex-shrink: 0; width: 14px; height: 14px; margin-top: 5px; border-radius: 50%; background: linear-gradient(135deg, var(--orange), var(--coral)); }
+.fk-page .auth-trust { margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 13px; color: var(--faint); display: grid; gap: 6px; max-width: 46ch; }
+.fk-page .auth-trust b { font-weight: 500; color: var(--soft); }
+.fk-page .auth-trust a { color: var(--soft); text-decoration: underline; }
+.fk-page .auth-card { background: var(--app-card); border: 1px solid var(--line); border-radius: 26px; padding: clamp(24px, 3vw, 34px); box-shadow: var(--shadow); }
+@media (max-width: 860px) {
+  .fk-page .auth-grid { grid-template-columns: 1fr; gap: 28px; }
+}
+
+/* Landing Pajangin (tampilan baru) */
+.fk-page .pj-eyebrow { display: flex; align-items: center; gap: 8px; }
+.fk-page .pj-eyebrow img { width: 22px; height: 22px; border-radius: 7px; }
+.fk-page .pj-stage { position: relative; margin-top: clamp(36px, 4vw, 56px); border-radius: 30px; background: var(--panel); border: 1px solid var(--line); padding: clamp(40px, 6vw, 72px) 16px; display: flex; justify-content: center; align-items: flex-start; gap: clamp(14px, 3vw, 36px); overflow: hidden; }
+.fk-page .pj-orb { position: absolute; width: 260px; height: 260px; right: -60px; top: -80px; opacity: 0.55; }
+.fk-page .pj-mock { position: relative; display: block; width: clamp(170px, 20vw, 240px); border-radius: 22px; overflow: hidden; background: #ffffff; color: #1a1730; text-decoration: none; box-shadow: 0 30px 60px -28px rgba(14, 12, 26, 0.55); transition: translate 0.3s ease; }
+.fk-page .pj-mock:hover { translate: 0 -6px; }
+.fk-page .pj-mock.pj-side { margin-top: 36px; }
+.fk-page .pj-mock img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+.fk-page .pj-mock-body { display: grid; gap: 4px; padding: 14px; }
+.fk-page .pj-mock-body b { font-size: 14px; font-weight: 600; }
+.fk-page .pj-price { color: #e85f3d; font-weight: 600; font-size: 15px; }
+.fk-page .pj-wa { margin-top: 8px; text-align: center; font-size: 12px; font-weight: 500; padding: 9px; border-radius: 999px; background: #1a1730; color: #ffffff; }
+.fk-page .pj-stack { position: relative; height: 230px; max-width: 260px; margin: 0 auto; width: 100%; }
+.fk-page .pj-stack img { display: block; }
+.fk-page .pj-s1, .fk-page .pj-s2 { position: absolute; width: 70%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 16px; top: 18px; box-shadow: 0 16px 30px -18px rgba(14, 12, 26, 0.5); opacity: 0.75; }
+.fk-page .pj-s1 { left: 0; rotate: -10deg; }
+.fk-page .pj-s2 { right: 0; rotate: 8deg; }
+.fk-page .pj-s3 { position: absolute; left: 50%; top: 0; translate: -50% 0; width: 76%; border-radius: 18px; overflow: hidden; background: #ffffff; color: #1a1730; box-shadow: 0 26px 50px -22px rgba(14, 12, 26, 0.6); }
+.fk-page .pj-s3 img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.fk-page .pj-s3 span { display: grid; gap: 2px; padding: 12px; }
+.fk-page .pj-s3 b { font-size: 13px; font-weight: 600; }
+.fk-page .pj-s3 small { font-size: 11px; color: rgba(26, 23, 48, 0.55); }
+.fk-page .pj-s3 i { display: block; height: 22px; margin-top: 6px; border-radius: 999px; background: #1a1730; }
+.fk-page .pj-quote { max-width: 900px; }
+.fk-page .pj-quote p { font-size: clamp(26px, 3.2vw, 44px); line-height: 1.2; letter-spacing: -0.035em; }
+@media (max-width: 600px) {
+  .fk-page .pj-mock.pj-side { display: none; }
+  .fk-page .pj-mock { width: 220px; }
+}

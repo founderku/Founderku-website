@@ -1,8 +1,8 @@
 import Link from "next/link";
+import { FkShell } from "@/components/shell/FkShell";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { StyleSelector } from "@/components/StyleSelector";
-import { PageBackdrop } from "@/components/PageBackdrop";
 import type { Profile } from "@/lib/types";
 
 export default async function StylePage() {
@@ -20,9 +20,8 @@ export default async function StylePage() {
     .single<Profile>();
 
   return (
-    <div className="fk-app">
-      <PageBackdrop variant="style" />
-      <div className="max-w-5xl mx-auto px-6 py-10">
+    <FkShell>
+      <div className="max-w-5xl mx-auto">
 
       <div className="mb-6">
         <Link href="/pajangin" className="inline-flex items-center gap-2 group">
@@ -55,6 +54,6 @@ export default async function StylePage() {
         currentStyle={profile?.store_style ?? "klasik"}
       />
       </div>
-    </div>
+    </FkShell>
   );
 }

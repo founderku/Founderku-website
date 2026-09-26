@@ -42,7 +42,7 @@ export function PreviewModal() {
           e.stopPropagation();
           setOpen((v) => !v);
         }}
-        className="font-manrope font-bold text-base px-7 py-4 rounded-2xl border border-white/25 text-white hover:bg-white/5 active:scale-95 transition-all"
+        className="btn btn-line"
       >
         Lihat contoh
       </button>
@@ -89,7 +89,7 @@ export function PreviewModal() {
                   </Link>
                 </div>
               </div>
-              <p className="text-center text-white/70 text-[11px] mt-3">
+              <p className="text-center text-[11px] mt-3" style={{ color: "var(--soft)" }}>
                 Klik di mana aja buat nutup
               </p>
             </div>

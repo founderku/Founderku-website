@@ -1,11 +1,10 @@
-import { PageBackdrop } from "@/components/PageBackdrop";
 import { Skeleton } from "@/components/ui/Skeleton";
+import { FkShell } from "@/components/shell/FkShell";
 
 export default function NewPageLoading() {
   return (
-    <div className="fk-app">
-      <PageBackdrop variant="form" />
-      <div className="max-w-5xl mx-auto px-6 py-10">
+    <FkShell>
+      <div className="max-w-5xl mx-auto">
         <Skeleton className="w-28 h-8 mb-6" />
         <Skeleton className="w-32 h-3 mb-2" />
         <Skeleton className="w-64 h-9 mb-2" />
@@ -27,6 +26,6 @@ export default function NewPageLoading() {
           <Skeleton className="w-full h-80" />
         </div>
       </div>
-    </div>
+    </FkShell>
   );
 }
