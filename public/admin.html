@@ -188,6 +188,8 @@
       <div class="tab-btn lowercase" id="tabBtnTestimoni" onclick="switchTab('testimoni')">testimoni</div>
       <div class="tab-btn lowercase" id="tabBtnPartners" onclick="switchTab('partners')">partner</div>
       <div class="tab-btn lowercase" id="tabBtnTools" onclick="switchTab('tools')">tools</div>
+      <div class="tab-btn lowercase" id="tabBtnCatalog" onclick="switchTab('catalog')">katalog</div>
+      <div class="tab-btn lowercase" id="tabBtnPricing" onclick="switchTab('pricing')">harga</div>
     </div>
 
     <div id="panelProducts">
@@ -239,6 +241,59 @@
       </div>
       <div id="toolStatusBanner" class="status-msg"></div>
       <div id="toolList"></div>
+    </div>
+    <div id="panelCatalog" style="display:none;">
+      <div class="dash-header">
+        <h1 class="lowercase">katalog</h1>
+        <button class="btn btn-primary lowercase" onclick="openCatalogForm()">+ tambah item</button>
+      </div>
+      <p class="lowercase" style="margin:-6px 0 14px; color:#6b6880; font-size:13px;">program &amp; penawaran lain (misal founterns) yang tampil di halaman katalog.html. isinya info + tombol daftar, tanpa pembayaran.</p>
+      <div id="catalogStatusBanner" class="status-msg"></div>
+      <div id="catalogList"></div>
+    </div>
+    <div id="panelPricing" style="display:none;">
+      <div class="dash-header">
+        <h1 class="lowercase">harga &amp; paket</h1>
+        <button class="btn btn-primary lowercase" id="pricingSaveBtn" onclick="savePricing()">simpan harga</button>
+      </div>
+      <p class="lowercase" style="margin:-6px 0 14px; color:#6b6880; font-size:13px;">harga paket langganan yang buka semua tools. setelah disimpan, harga baru aktif di founderku.com sekitar 1-2 menit kemudian (nunggu deploy ulang). pembayaran yang sudah dibuat sebelumnya tetap pakai harga lama.</p>
+      <div id="pricingStatusBanner" class="status-msg"></div>
+      <div id="pricingForm" style="display:none;">
+        <div class="form-row">
+          <div class="field">
+            <label class="lowercase">nama paket</label>
+            <input type="text" id="pricingPlanName" placeholder="Founderku Pro">
+          </div>
+          <div class="field">
+            <label class="lowercase">lama trial akun baru (hari, 0 = tanpa trial)</label>
+            <input type="number" id="pricingTrialDays" min="0" max="90" value="7">
+          </div>
+        </div>
+        <div class="field">
+          <label class="lowercase">deskripsi singkat · indonesia / english / türkçe</label>
+          <input type="text" id="pricingDescId" placeholder="indonesia">
+          <input type="text" id="pricingDescEn" placeholder="english" style="margin-top:6px;">
+          <input type="text" id="pricingDescTr" placeholder="türkçe" style="margin-top:6px;">
+        </div>
+        <div class="field">
+          <label class="lowercase">yang didapat (1 baris = 1 poin) · indonesia</label>
+          <textarea id="pricingFeaturesId" rows="4"></textarea>
+        </div>
+        <details style="margin-bottom:18px;">
+          <summary class="lowercase" style="cursor:pointer; font-weight:700; font-size:13px; color:#6b6880; margin-bottom:12px;">versi english / türkçe (urutan baris harus sama)</summary>
+          <div class="field">
+            <label class="lowercase">yang didapat · english</label>
+            <textarea id="pricingFeaturesEn" rows="4"></textarea>
+          </div>
+          <div class="field">
+            <label class="lowercase">yang didapat · türkçe</label>
+            <textarea id="pricingFeaturesTr" rows="4"></textarea>
+          </div>
+        </details>
+        <h2 class="lowercase" style="font-size:16px; margin:22px 0 10px;">pilihan harga</h2>
+        <div id="pricingPriceRows"></div>
+        <button class="btn btn-ghost lowercase" onclick="addPriceRow()">+ tambah pilihan harga</button>
+      </div>
     </div>
   </div>
 </div>
@@ -804,6 +859,117 @@
   </div>
 </div>
 
+
+<div class="modal-overlay" id="catalogFormModal">
+  <div class="modal">
+    <span class="modal-close" onclick="closeCatalogForm()">&times;</span>
+    <h2 class="lowercase" id="catalogFormTitle">tambah item katalog</h2>
+
+    <div class="thumb-preview" id="catalogLogoPreview" style="height:90px;">belum ada logo</div>
+    <div class="field">
+      <label class="lowercase">logo</label>
+      <input type="file" id="catalogLogo" accept="image/*" onchange="onCatalogLogoChange(event)">
+      <small class="lowercase">logo otomatis dikompres sebelum diupload.</small>
+    </div>
+    <div class="checkbox-row">
+      <input type="checkbox" id="catalogRoundLogo">
+      <label for="catalogRoundLogo" class="lowercase">tampilkan logo bulat (buat logo icon/foto)</label>
+    </div>
+
+    <div class="form-row">
+      <div class="field">
+        <label class="lowercase">nama program / item</label>
+        <input type="text" id="catalogName">
+      </div>
+      <div class="field">
+        <label class="lowercase">urutan tampil (angka, kecil = duluan)</label>
+        <input type="number" id="catalogOrder" value="1">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="lowercase">deskripsi · bahasa indonesia</label>
+      <textarea id="catalogDescription"></textarea>
+    </div>
+    <div class="field">
+      <label class="lowercase">tags (pisahin pakai koma) · bahasa indonesia</label>
+      <input type="text" id="catalogTags" placeholder="Magang, Remote, 3 Bulan">
+    </div>
+    <div class="field">
+      <label class="lowercase">catatan kecil (di bawah tags) · bahasa indonesia</label>
+      <input type="text" id="catalogNote" placeholder="Pendaftaran batch 2 dibuka sampai 30 Oktober.">
+    </div>
+    <div class="field">
+      <label class="lowercase">label tombol · bahasa indonesia</label>
+      <input type="text" id="catalogLinkLabel" placeholder="Daftar sekarang">
+    </div>
+
+    <div style="margin:18px 0 22px; padding:16px; border:1px dashed rgba(28,27,51,0.25); border-radius:12px;">
+      <button type="button" class="btn btn-ghost lowercase" id="catalogTranslateBtn" onclick="translateCatalogFields()" style="width:100%;">translate otomatis (en + tr)</button>
+      <div id="catalogTranslateStatus" class="status-msg" style="margin-top:10px;"></div>
+    </div>
+
+    <details style="margin-bottom:22px;">
+      <summary class="lowercase" style="cursor:pointer; font-weight:700; font-size:13px; color:var(--ink-soft, #6b6880); margin-bottom:12px;">lihat / edit versi english</summary>
+      <div class="field">
+        <label class="lowercase">deskripsi · english</label>
+        <textarea id="catalogDescriptionEn"></textarea>
+      </div>
+      <div class="field">
+        <label class="lowercase">tags (pisahin pakai koma) · english</label>
+        <input type="text" id="catalogTagsEn">
+      </div>
+      <div class="field">
+        <label class="lowercase">catatan kecil · english</label>
+        <input type="text" id="catalogNoteEn">
+      </div>
+      <div class="field">
+        <label class="lowercase">label tombol · english</label>
+        <input type="text" id="catalogLinkLabelEn">
+      </div>
+    </details>
+
+    <details style="margin-bottom:22px;">
+      <summary class="lowercase" style="cursor:pointer; font-weight:700; font-size:13px; color:var(--ink-soft, #6b6880); margin-bottom:12px;">lihat / edit versi türkçe</summary>
+      <div class="field">
+        <label class="lowercase">deskripsi · türkçe</label>
+        <textarea id="catalogDescriptionTr"></textarea>
+      </div>
+      <div class="field">
+        <label class="lowercase">tags (pisahin pakai koma) · türkçe</label>
+        <input type="text" id="catalogTagsTr">
+      </div>
+      <div class="field">
+        <label class="lowercase">catatan kecil · türkçe</label>
+        <input type="text" id="catalogNoteTr">
+      </div>
+      <div class="field">
+        <label class="lowercase">label tombol · türkçe</label>
+        <input type="text" id="catalogLinkLabelTr">
+      </div>
+    </details>
+
+    <div class="form-row">
+      <div class="field">
+        <label class="lowercase">link daftar (Google Form, WhatsApp, dll)</label>
+        <input type="text" id="catalogLinkUrl" placeholder="https://forms.gle/...">
+      </div>
+    </div>
+
+    <div class="checkbox-row">
+      <input type="checkbox" id="catalogExternal" checked>
+      <label for="catalogExternal" class="lowercase">link keluar (buka tab baru)</label>
+    </div>
+
+    <div id="catalogFormStatus" class="status-msg"></div>
+
+    <div class="modal-actions">
+      <button class="btn btn-ghost lowercase" onclick="closeCatalogForm()">batal</button>
+      <button class="btn btn-primary lowercase" id="catalogSaveBtn" onclick="saveCatalog()">simpan item</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const LS_KEY = 'fk_admin_config';
 let config = null;
@@ -841,6 +1007,15 @@ let toolEditingId = null;
 let toolsLoaded = false;
 let toolPendingLogoBase64 = null;
 let toolPendingLogoExt = null;
+let catalogData = { items: [] };
+let catalogSha = null;
+let catalogEditingId = null;
+let catalogLoaded = false;
+let catalogPendingLogoBase64 = null;
+let catalogPendingLogoExt = null;
+let pricingData = null;
+let pricingSha = null;
+let pricingLoaded = false;
 
 function loadConfig(){
   try {
@@ -858,8 +1033,12 @@ function apiHeaders(){
     'Accept': 'application/vnd.github+json'
   };
 }
+// Semua file situs (data/*.json, images/*) sekarang ada di folder public/
+// di repo, karena founderku.com sudah jadi aplikasi Next.js. Path yang
+// disimpan di JSON tetap "images/..." (alamat publiknya nggak berubah),
+// cuma alamat di GitHub-nya yang ditambah "public/".
 function apiBase(){
-  return `https://api.github.com/repos/${config.owner}/${config.repo}/contents/`;
+  return `https://api.github.com/repos/${config.owner}/${config.repo}/contents/public/`;
 }
 
 async function doLogin(){
@@ -930,12 +1109,24 @@ function switchTab(tab){
   document.getElementById('tabBtnTestimoni').classList.toggle('active', tab === 'testimoni');
   document.getElementById('tabBtnPartners').classList.toggle('active', tab === 'partners');
   document.getElementById('tabBtnTools').classList.toggle('active', tab === 'tools');
+  document.getElementById('tabBtnCatalog').classList.toggle('active', tab === 'catalog');
+  document.getElementById('tabBtnPricing').classList.toggle('active', tab === 'pricing');
   document.getElementById('panelProducts').style.display = tab === 'products' ? 'block' : 'none';
   document.getElementById('panelCaseStudies').style.display = tab === 'caseStudies' ? 'block' : 'none';
   document.getElementById('panelBlog').style.display = tab === 'blog' ? 'block' : 'none';
   document.getElementById('panelTestimoni').style.display = tab === 'testimoni' ? 'block' : 'none';
   document.getElementById('panelPartners').style.display = tab === 'partners' ? 'block' : 'none';
   document.getElementById('panelTools').style.display = tab === 'tools' ? 'block' : 'none';
+  document.getElementById('panelCatalog').style.display = tab === 'catalog' ? 'block' : 'none';
+  document.getElementById('panelPricing').style.display = tab === 'pricing' ? 'block' : 'none';
+  if (tab === 'catalog' && !catalogLoaded){
+    catalogLoaded = true;
+    loadCatalog();
+  }
+  if (tab === 'pricing' && !pricingLoaded){
+    pricingLoaded = true;
+    loadPricing();
+  }
   if (tab === 'caseStudies' && !csLoaded){
     csLoaded = true;
     loadCaseStudies();
@@ -2375,6 +2566,473 @@ async function deleteTool(id){
   } catch(err){
     banner.className = 'status-msg error';
     banner.textContent = 'gagal hapus: ' + err.message;
+  }
+}
+
+async function loadCatalog(){
+  const banner = document.getElementById('catalogStatusBanner');
+  banner.className = 'status-msg info';
+  banner.textContent = 'memuat katalog...';
+  try {
+    const res = await ghGetFile('data/catalog.json');
+    if (!res){
+      catalogData = { items: [] };
+      catalogSha = null;
+    } else {
+      catalogSha = res.sha;
+      const decoded = decodeURIComponent(escape(atob(res.content.replace(/\n/g, ''))));
+      catalogData = JSON.parse(decoded);
+      if (!catalogData.items) catalogData.items = [];
+    }
+    banner.style.display = 'none';
+    renderCatalogList();
+  } catch(err){
+    banner.className = 'status-msg error';
+    banner.textContent = 'error: ' + err.message;
+  }
+}
+
+function renderCatalogList(){
+  const list = document.getElementById('catalogList');
+  const items = (catalogData.items || []).slice().sort((a, b) => (a.order || 0) - (b.order || 0));
+  if (!items.length){
+    list.innerHTML = `<div class="empty-state lowercase">belum ada item katalog. klik "tambah item" buat mulai.</div>`;
+    return;
+  }
+  list.innerHTML = items.map(t => `
+    <div class="product-row">
+      ${t.logo ? `<img src="${t.logo}?t=${Date.now()}">` : `<div class="no-img lowercase">no logo</div>`}
+      <div class="info">
+        <div class="name">${t.name}</div>
+        <div class="meta lowercase">urutan ${t.order || 0} &middot; ${t.external ? 'link keluar' : 'link internal'}</div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-ghost btn-sm lowercase" onclick="editCatalog('${t.id}')">edit</button>
+        <button class="btn btn-danger btn-sm lowercase" onclick="deleteCatalog('${t.id}')">hapus</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openCatalogForm(t){
+  catalogEditingId = t ? t.id : null;
+  catalogPendingLogoBase64 = null;
+  catalogPendingLogoExt = null;
+  document.getElementById('catalogFormTitle').textContent = t ? 'edit item katalog' : 'tambah item katalog';
+  document.getElementById('catalogName').value = t ? t.name : '';
+  document.getElementById('catalogOrder').value = t ? (t.order || 1) : (catalogData.items.length + 1);
+  document.getElementById('catalogDescription').value = t ? langText(t.description, 'id') : '';
+  document.getElementById('catalogTags').value = t ? langFeatures(t.tags, 'id').join(', ') : '';
+  document.getElementById('catalogNote').value = t ? langText(t.note, 'id') : '';
+  document.getElementById('catalogLinkLabel').value = t ? langText(t.linkLabel, 'id') : '';
+  document.getElementById('catalogDescriptionEn').value = t ? langText(t.description, 'en') : '';
+  document.getElementById('catalogTagsEn').value = t ? langFeatures(t.tags, 'en').join(', ') : '';
+  document.getElementById('catalogNoteEn').value = t ? langText(t.note, 'en') : '';
+  document.getElementById('catalogLinkLabelEn').value = t ? langText(t.linkLabel, 'en') : '';
+  document.getElementById('catalogDescriptionTr').value = t ? langText(t.description, 'tr') : '';
+  document.getElementById('catalogTagsTr').value = t ? langFeatures(t.tags, 'tr').join(', ') : '';
+  document.getElementById('catalogNoteTr').value = t ? langText(t.note, 'tr') : '';
+  document.getElementById('catalogLinkLabelTr').value = t ? langText(t.linkLabel, 'tr') : '';
+  document.getElementById('catalogLinkUrl').value = t ? (t.linkUrl || '') : '';
+  document.getElementById('catalogExternal').checked = t ? !!t.external : true;
+  document.getElementById('catalogRoundLogo').checked = t ? !!t.roundLogo : false;
+  document.getElementById('catalogFormStatus').style.display = 'none';
+  document.getElementById('catalogTranslateStatus').style.display = 'none';
+
+  const preview = document.getElementById('catalogLogoPreview');
+  if (t && t.logo){
+    preview.innerHTML = `<img src="${t.logo}?t=${Date.now()}">`;
+  } else {
+    preview.innerHTML = 'belum ada logo';
+  }
+
+  document.getElementById('catalogFormModal').classList.add('open');
+}
+function closeCatalogForm(){
+  document.getElementById('catalogFormModal').classList.remove('open');
+}
+function editCatalog(id){
+  const t = catalogData.items.find(x => x.id === id);
+  if (t) openCatalogForm(t);
+}
+
+async function translateCatalogFields(){
+  const btn = document.getElementById('catalogTranslateBtn');
+  const statusEl = document.getElementById('catalogTranslateStatus');
+
+  const name = document.getElementById('catalogName').value.trim();
+  const description = document.getElementById('catalogDescription').value.trim();
+  const tags = document.getElementById('catalogTags').value.split(',').map(s => s.trim()).filter(Boolean);
+  const note = document.getElementById('catalogNote').value.trim();
+  const linkLabel = document.getElementById('catalogLinkLabel').value.trim() || 'Daftar sekarang';
+
+  if (!description){
+    statusEl.style.display = 'block';
+    statusEl.className = 'status-msg error';
+    statusEl.textContent = 'isi deskripsi bahasa indonesia dulu sebelum translate.';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> lagi translate...';
+  statusEl.style.display = 'block';
+  statusEl.className = 'status-msg info';
+  statusEl.textContent = 'lagi manggil ai buat translate, tunggu sebentar...';
+
+  try {
+    const data = await callTranslateWorker(
+      name,
+      { description, note, linkLabel },
+      { tags }
+    );
+
+    document.getElementById('catalogDescriptionEn').value = data.en.textFields.description || '';
+    document.getElementById('catalogNoteEn').value = data.en.textFields.note || '';
+    document.getElementById('catalogLinkLabelEn').value = data.en.textFields.linkLabel || '';
+    document.getElementById('catalogTagsEn').value = (data.en.arrayFields.tags || []).join(', ');
+    document.getElementById('catalogDescriptionTr').value = data.tr.textFields.description || '';
+    document.getElementById('catalogNoteTr').value = data.tr.textFields.note || '';
+    document.getElementById('catalogLinkLabelTr').value = data.tr.textFields.linkLabel || '';
+    document.getElementById('catalogTagsTr').value = (data.tr.arrayFields.tags || []).join(', ');
+
+    statusEl.className = 'status-msg success';
+    statusEl.textContent = 'berhasil, versi english dan türkçe udah keisi. cek dulu di bagian "lihat / edit" di bawah sebelum simpan.';
+  } catch(err){
+    statusEl.className = 'status-msg error';
+    statusEl.textContent = 'gagal translate: ' + err.message;
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = 'translate otomatis (en + tr)';
+  }
+}
+
+function onCatalogLogoChange(e){
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    const img = new Image();
+    img.onload = function(){
+      const maxW = 500;
+      const scale = Math.min(1, maxW / img.width);
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width * scale;
+      canvas.height = img.height * scale;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const dataUrl = canvas.toDataURL('image/png');
+      catalogPendingLogoBase64 = dataUrl.split(',')[1];
+      catalogPendingLogoExt = 'png';
+      document.getElementById('catalogLogoPreview').innerHTML = `<img src="${dataUrl}">`;
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+async function saveCatalog(){
+  const name = document.getElementById('catalogName').value.trim();
+  const order = parseInt(document.getElementById('catalogOrder').value || '0', 10);
+
+  const descId = document.getElementById('catalogDescription').value.trim();
+  const descEn = document.getElementById('catalogDescriptionEn').value.trim();
+  const descTr = document.getElementById('catalogDescriptionTr').value.trim();
+  const description = (descEn || descTr) ? { id: descId, en: descEn, tr: descTr } : descId;
+
+  const tagsId = document.getElementById('catalogTags').value.split(',').map(s => s.trim()).filter(Boolean);
+  const tagsEn = document.getElementById('catalogTagsEn').value.split(',').map(s => s.trim()).filter(Boolean);
+  const tagsTr = document.getElementById('catalogTagsTr').value.split(',').map(s => s.trim()).filter(Boolean);
+  const tags = (tagsEn.length || tagsTr.length) ? { id: tagsId, en: tagsEn, tr: tagsTr } : tagsId;
+
+  const noteId = document.getElementById('catalogNote').value.trim();
+  const noteEn = document.getElementById('catalogNoteEn').value.trim();
+  const noteTr = document.getElementById('catalogNoteTr').value.trim();
+  const note = (noteEn || noteTr) ? { id: noteId, en: noteEn, tr: noteTr } : noteId;
+
+  const linkLabelId = document.getElementById('catalogLinkLabel').value.trim() || 'Daftar sekarang';
+  const linkLabelEn = document.getElementById('catalogLinkLabelEn').value.trim();
+  const linkLabelTr = document.getElementById('catalogLinkLabelTr').value.trim();
+  const linkLabel = (linkLabelEn || linkLabelTr) ? { id: linkLabelId, en: linkLabelEn, tr: linkLabelTr } : linkLabelId;
+
+  const linkUrl = document.getElementById('catalogLinkUrl').value.trim();
+  const external = document.getElementById('catalogExternal').checked;
+  const roundLogo = document.getElementById('catalogRoundLogo').checked;
+
+  if (!name){
+    setCatalogFormStatus('error', 'nama item wajib diisi.');
+    return;
+  }
+  if (!linkUrl){
+    setCatalogFormStatus('error', 'link daftar wajib diisi.');
+    return;
+  }
+
+  const slug = name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const id = catalogEditingId || slug;
+
+  const saveBtn = document.getElementById('catalogSaveBtn');
+  saveBtn.disabled = true;
+  saveBtn.innerHTML = '<span class="spinner"></span> menyimpan...';
+  setCatalogFormStatus('info', 'menyimpan item...');
+
+  try {
+    let logoPath = null;
+    if (catalogEditingId){
+      const existing = catalogData.items.find(x => x.id === catalogEditingId);
+      logoPath = existing ? existing.logo : null;
+    }
+
+    if (catalogPendingLogoBase64){
+      setCatalogFormStatus('info', 'mengupload logo...');
+      const imgPath = `images/catalog/${slug}-logo.${catalogPendingLogoExt}`;
+      const existingImg = await ghGetFile(imgPath);
+      await ghPutFile(imgPath, catalogPendingLogoBase64, `Update logo for ${name}`, existingImg ? existingImg.sha : null);
+      logoPath = imgPath;
+    }
+
+    const catalogObj = {
+      id,
+      name,
+      logo: logoPath,
+      roundLogo,
+      description,
+      tags,
+      note,
+      linkUrl,
+      linkLabel,
+      external,
+      order
+    };
+
+    if (catalogEditingId){
+      const idx = catalogData.items.findIndex(x => x.id === catalogEditingId);
+      catalogData.items[idx] = catalogObj;
+    } else {
+      catalogData.items.push(catalogObj);
+    }
+
+    setCatalogFormStatus('info', 'menyimpan data katalog...');
+    const jsonStr = JSON.stringify(catalogData, null, 2);
+    const base64Content = btoa(unescape(encodeURIComponent(jsonStr)));
+    const result = await ghPutFile('data/catalog.json', base64Content, `${catalogEditingId ? 'Update' : 'Add'} catalog item: ${name}`, catalogSha);
+    catalogSha = result.content.sha;
+
+    setCatalogFormStatus('success', 'item katalog berhasil disimpan.');
+    renderCatalogList();
+    setTimeout(() => { closeCatalogForm(); }, 700);
+  } catch(err){
+    setCatalogFormStatus('error', 'gagal: ' + err.message);
+  } finally {
+    saveBtn.disabled = false;
+    saveBtn.innerHTML = 'simpan item';
+  }
+}
+
+function setCatalogFormStatus(type, msg){
+  const el = document.getElementById('catalogFormStatus');
+  el.className = 'status-msg ' + type;
+  el.textContent = msg;
+}
+
+async function deleteCatalog(id){
+  const t = catalogData.items.find(x => x.id === id);
+  if (!t) return;
+  if (!confirm(`Yakin mau hapus item katalog "${t.name}"? Tindakan ini tidak bisa dibatalkan.`)) return;
+
+  const banner = document.getElementById('catalogStatusBanner');
+  banner.className = 'status-msg info';
+  banner.textContent = 'menghapus item...';
+
+  try {
+    catalogData.items = catalogData.items.filter(x => x.id !== id);
+    const jsonStr = JSON.stringify(catalogData, null, 2);
+    const base64Content = btoa(unescape(encodeURIComponent(jsonStr)));
+    const result = await ghPutFile('data/catalog.json', base64Content, `Delete catalog item: ${t.name}`, catalogSha);
+    catalogSha = result.content.sha;
+    banner.className = 'status-msg success';
+    banner.textContent = 'item katalog dihapus.';
+    renderCatalogList();
+    setTimeout(() => { banner.style.display = 'none'; }, 2000);
+  } catch(err){
+    banner.className = 'status-msg error';
+    banner.textContent = 'gagal hapus: ' + err.message;
+  }
+}
+
+// ===================== HARGA & PAKET (data/pricing.json) =====================
+// File ini dibaca server founderku.com waktu bikin tagihan Xendit, jadi
+// harga yang disimpan di sini = harga yang beneran ditagih.
+
+function escAttr(v){
+  return String(v == null ? '' : v).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+}
+
+async function loadPricing(){
+  const banner = document.getElementById('pricingStatusBanner');
+  banner.style.display = 'block';
+  banner.className = 'status-msg info';
+  banner.textContent = 'memuat harga...';
+  try {
+    const res = await ghGetFile('data/pricing.json');
+    if (!res){
+      pricingData = { planName: 'Founderku Pro', trialDays: 7, description: { id: '', en: '', tr: '' }, features: [], prices: [] };
+      pricingSha = null;
+    } else {
+      pricingSha = res.sha;
+      pricingData = JSON.parse(decodeURIComponent(escape(atob(res.content.replace(/\n/g, '')))));
+    }
+    renderPricingForm();
+    banner.style.display = 'none';
+    document.getElementById('pricingForm').style.display = 'block';
+  } catch(err){
+    banner.className = 'status-msg error';
+    banner.textContent = 'error: ' + err.message;
+  }
+}
+
+function renderPricingForm(){
+  const d = pricingData;
+  document.getElementById('pricingPlanName').value = d.planName || '';
+  document.getElementById('pricingTrialDays').value = d.trialDays == null ? 7 : d.trialDays;
+  document.getElementById('pricingDescId').value = langText(d.description, 'id');
+  document.getElementById('pricingDescEn').value = langText(d.description, 'en');
+  document.getElementById('pricingDescTr').value = langText(d.description, 'tr');
+  const feats = d.features || [];
+  document.getElementById('pricingFeaturesId').value = feats.map(f => langText(f, 'id')).join('\n');
+  document.getElementById('pricingFeaturesEn').value = feats.map(f => langText(f, 'en')).join('\n');
+  document.getElementById('pricingFeaturesTr').value = feats.map(f => langText(f, 'tr')).join('\n');
+  document.getElementById('pricingPriceRows').innerHTML = '';
+  (d.prices || []).forEach(p => addPriceRow(p));
+}
+
+function addPriceRow(p){
+  p = p || { id: '', label: { id: '', en: '', tr: '' }, amount: '', days: 30, note: { id: '', en: '', tr: '' } };
+  const row = document.createElement('div');
+  row.className = 'price-row';
+  row.style.cssText = 'border:1px solid rgba(28,27,51,0.15); border-radius:12px; padding:14px; margin-bottom:12px;';
+  row.innerHTML = `
+    <div class="form-row">
+      <div class="field">
+        <label class="lowercase">kode (huruf kecil, tanpa spasi, jangan diganti setelah dipakai)</label>
+        <input type="text" class="pr-id" value="${escAttr(p.id)}" placeholder="monthly">
+      </div>
+      <div class="field">
+        <label class="lowercase">nama pilihan · indonesia</label>
+        <input type="text" class="pr-label-id" value="${escAttr(langText(p.label, 'id'))}" placeholder="Bulanan">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="field">
+        <label class="lowercase">harga (rupiah, angka saja)</label>
+        <input type="number" class="pr-amount" min="1" step="1" value="${escAttr(p.amount)}" placeholder="39000">
+      </div>
+      <div class="field">
+        <label class="lowercase">lama aktif (hari)</label>
+        <input type="number" class="pr-days" min="1" step="1" value="${escAttr(p.days)}" placeholder="30">
+      </div>
+    </div>
+    <div class="field">
+      <label class="lowercase">label kecil (opsional, misal "hemat 36%") · indonesia</label>
+      <input type="text" class="pr-note-id" value="${escAttr(langText(p.note, 'id'))}">
+    </div>
+    <details style="margin-bottom:10px;">
+      <summary class="lowercase" style="cursor:pointer; font-size:13px; color:#6b6880;">english / türkçe</summary>
+      <div class="form-row" style="margin-top:10px;">
+        <div class="field"><label class="lowercase">nama · english</label><input type="text" class="pr-label-en" value="${escAttr(langText(p.label, 'en'))}"></div>
+        <div class="field"><label class="lowercase">nama · türkçe</label><input type="text" class="pr-label-tr" value="${escAttr(langText(p.label, 'tr'))}"></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label class="lowercase">label kecil · english</label><input type="text" class="pr-note-en" value="${escAttr(langText(p.note, 'en'))}"></div>
+        <div class="field"><label class="lowercase">label kecil · türkçe</label><input type="text" class="pr-note-tr" value="${escAttr(langText(p.note, 'tr'))}"></div>
+      </div>
+    </details>
+    <button type="button" class="btn btn-danger btn-sm lowercase" onclick="this.closest('.price-row').remove()">hapus pilihan ini</button>
+  `;
+  document.getElementById('pricingPriceRows').appendChild(row);
+}
+
+// Kumpulin isi form jadi objek pricing.json + validasi. Lempar Error
+// (pesan bahasa awam) kalau ada yang nggak valid.
+function collectPricing(){
+  const v = id => document.getElementById(id).value.trim();
+  const lines = id => document.getElementById(id).value.split('\n').map(s => s.trim()).filter(Boolean);
+
+  const planName = v('pricingPlanName');
+  if (!planName) throw new Error('nama paket wajib diisi.');
+
+  const trialDays = parseInt(v('pricingTrialDays') || '0', 10);
+  if (!Number.isInteger(trialDays) || trialDays < 0 || trialDays > 90) throw new Error('lama trial harus angka 0 sampai 90.');
+
+  const featId = lines('pricingFeaturesId'), featEn = lines('pricingFeaturesEn'), featTr = lines('pricingFeaturesTr');
+  if (!featId.length) throw new Error('isi minimal 1 poin "yang didapat".');
+  const features = featId.map((f, i) => ({ id: f, en: featEn[i] || f, tr: featTr[i] || f }));
+
+  const rows = Array.from(document.querySelectorAll('#pricingPriceRows .price-row'));
+  if (!rows.length) throw new Error('minimal harus ada 1 pilihan harga.');
+  const seen = {};
+  const prices = rows.map((row, i) => {
+    const q = c => row.querySelector(c).value.trim();
+    const id = q('.pr-id');
+    const labelId = q('.pr-label-id');
+    const amount = Number(q('.pr-amount'));
+    const days = Number(q('.pr-days'));
+    const n = 'pilihan harga ke-' + (i + 1);
+    if (!/^[a-z0-9-]+$/.test(id)) throw new Error(n + ': kode cuma boleh huruf kecil, angka, dan tanda "-".');
+    if (seen[id]) throw new Error(n + ': kode "' + id + '" dipakai dua kali.');
+    seen[id] = true;
+    if (!labelId) throw new Error(n + ': nama pilihan wajib diisi.');
+    if (!Number.isInteger(amount) || amount < 1000) throw new Error(n + ': harga harus angka bulat minimal 1000.');
+    if (!Number.isInteger(days) || days < 1 || days > 3660) throw new Error(n + ': lama aktif harus angka 1 sampai 3660 hari.');
+    return {
+      id,
+      label: { id: labelId, en: q('.pr-label-en') || labelId, tr: q('.pr-label-tr') || labelId },
+      amount,
+      days,
+      note: { id: q('.pr-note-id'), en: q('.pr-note-en') || q('.pr-note-id'), tr: q('.pr-note-tr') || q('.pr-note-id') }
+    };
+  });
+
+  const descId = v('pricingDescId');
+  return {
+    planName,
+    trialDays,
+    description: { id: descId, en: v('pricingDescEn') || descId, tr: v('pricingDescTr') || descId },
+    features,
+    prices
+  };
+}
+
+async function savePricing(){
+  const banner = document.getElementById('pricingStatusBanner');
+  banner.style.display = 'block';
+  let data;
+  try {
+    data = collectPricing();
+  } catch(err){
+    banner.className = 'status-msg error';
+    banner.textContent = err.message;
+    return;
+  }
+  const summary = data.prices.map(p => p.label.id + ' Rp ' + p.amount.toLocaleString('id-ID') + ' / ' + p.days + ' hari').join('\n');
+  if (!confirm('Simpan harga baru ini?\n\n' + summary + '\n\nTrial akun baru: ' + data.trialDays + ' hari')) return;
+
+  const btn = document.getElementById('pricingSaveBtn');
+  btn.disabled = true;
+  banner.className = 'status-msg info';
+  banner.textContent = 'menyimpan harga...';
+  try {
+    const jsonStr = JSON.stringify(data, null, 2) + '\n';
+    const base64Content = btoa(unescape(encodeURIComponent(jsonStr)));
+    const result = await ghPutFile('data/pricing.json', base64Content, 'Update pricing', pricingSha);
+    pricingSha = result.content.sha;
+    pricingData = data;
+    banner.className = 'status-msg success';
+    banner.textContent = 'harga tersimpan. founderku.com bakal pakai harga baru sekitar 1-2 menit lagi.';
+  } catch(err){
+    banner.className = 'status-msg error';
+    banner.textContent = 'gagal simpan: ' + err.message;
+  } finally {
+    btn.disabled = false;
   }
 }
 

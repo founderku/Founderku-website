@@ -124,6 +124,9 @@
   .fk-nav-links a:hover { color: var(--text); }
   .fk-nav-right { display:flex; align-items:center; gap:10px; }
   @media (max-width:900px) { .fk-nav-links { display:none; } }
+  /* Di HP, tombol "Ngobrol" di menu disembunyikan biar tombol "Masuk" muat.
+     Ajakan ngobrol yang sama masih ada di hero ("Ceritain Ide Kamu"). */
+  @media (max-width:480px) { .fk-nav-ngobrol { display:none; } }
 
   .fk-ctrl-btn { width:38px; height:38px; border-radius:999px; border:1px solid var(--border); background: var(--bg-soft); color: var(--text); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:14px; font-weight:700; font-family:'Manrope',sans-serif; }
   .fk-lang-wrap { position:relative; }
@@ -265,6 +268,8 @@
       <a href="#proses" data-i18n="nav.proses">Proses</a>
       <a href="#proyek" data-i18n="nav.proyek">Project</a>
       <a href="tools.html" data-i18n="nav.tools">Tools</a>
+      <a href="katalog.html" data-i18n="nav.katalog">Katalog</a>
+      <a href="/harga" data-i18n="nav.harga">Harga</a>
       <a href="blog.html" data-i18n="nav.blog">Blog</a>
       <a href="#faq" data-i18n="nav.faq">FAQ</a>
       <a href="store.html" style="color:var(--brand-coral); font-weight:700;" data-i18n="nav.instantFounder">Founder Starterpack</a>
@@ -281,7 +286,8 @@
           <button type="button" class="fk-lang-btn" data-lang="tr">TR</button>
         </div>
       </div>
-      <a href="#cta" class="fk-pill fk-pill-solid fk-pill-sm" data-i18n="nav.ngobrol">Ngobrol</a>
+      <a href="/akun" class="fk-pill fk-pill-outline fk-pill-sm" data-i18n="nav.masuk">Masuk</a>
+      <a href="#cta" class="fk-pill fk-pill-solid fk-pill-sm fk-nav-ngobrol" data-i18n="nav.ngobrol">Ngobrol</a>
     </div>
   </div>
 </nav>
@@ -587,6 +593,7 @@
       "pageTitle": "Founderku · Startup Studio, Bantu Kamu Jadi Founder",
       "nav.kenapa": "Kenapa", "nav.layanan": "Layanan", "nav.proses": "Proses", "nav.proyek": "Project", "nav.tools": "Tools",
       "nav.blog": "Blog", "nav.faq": "FAQ", "nav.generator": "Generator", "nav.instantFounder": "Founder Starterpack", "nav.ngobrol": "Ngobrol",
+      "nav.katalog": "Katalog", "nav.harga": "Harga", "nav.masuk": "Masuk",
       "hero.h1": "Semua bisa jadi founder.",
       "hero.sub": "Ide kamu, kami ubah jadi branding, website, dan produk yang beneran bisa dipakai, bukan cuma mockup.",
       "hero.ctaMain": "Atau, Ceritain Ide Kamu", "hero.ctaSecondary": "Coba Tools Kami, Gratis →",
@@ -669,6 +676,7 @@
       "pageTitle": "Founderku · Startup Studio That Helps You Become a Founder",
       "nav.kenapa": "Why", "nav.layanan": "Services", "nav.proses": "Process", "nav.proyek": "Projects", "nav.tools": "Tools",
       "nav.blog": "Blog", "nav.faq": "FAQ", "nav.generator": "Generator", "nav.instantFounder": "Founder Starterpack", "nav.ngobrol": "Chat",
+      "nav.katalog": "Catalog", "nav.harga": "Pricing", "nav.masuk": "Sign in",
       "hero.h1": "Anyone can become a founder.",
       "hero.sub": "Your idea, turned into branding, a website, and a product people can actually use, not just a mockup.",
       "hero.ctaMain": "Or, Tell Us Your Idea", "hero.ctaSecondary": "Try Our Tools, Free →",
@@ -751,6 +759,7 @@
       "pageTitle": "Founderku · Founder Olmana Yardımcı Startup Stüdyosu",
       "nav.kenapa": "Neden", "nav.layanan": "Hizmetler", "nav.proses": "Süreç", "nav.proyek": "Projeler", "nav.tools": "Araçlar",
       "nav.blog": "Blog", "nav.faq": "SSS", "nav.generator": "Üretici", "nav.instantFounder": "Founder Starterpack", "nav.ngobrol": "Sohbet",
+      "nav.katalog": "Katalog", "nav.harga": "Fiyatlar", "nav.masuk": "Giriş",
       "hero.h1": "Herkes founder olabilir.",
       "hero.sub": "Fikrini, markaya, web sitesine ve gerçekten kullanılabilir bir ürüne dönüştürüyoruz, sadece maket değil.",
       "hero.ctaMain": "Ya da, Fikrini Anlat", "hero.ctaSecondary": "Araçlarımızı Dene, Ücretsiz →",

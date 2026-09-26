@@ -32,13 +32,13 @@
         "en": "Free to start, upgrade anytime you need more.",
         "tr": "Ücretsiz başla, ihtiyaç oldukça yükselt."
       },
-      "linkUrl": "https://pajangin.founderku.com",
+      "linkUrl": "/pajangin",
       "linkLabel": {
         "id": "Coba Pajangin",
         "en": "Try Pajangin",
         "tr": "Pajangin'i Dene"
       },
-      "external": true,
+      "external": false,
       "order": 1
     },
     {
