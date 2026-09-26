@@ -3,10 +3,11 @@
 // bukan <Link> Next.js, karena itu file HTML statis, bukan halaman
 // Next.js, jadi harus dibuka dengan reload penuh.
 import Link from "next/link";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export function SiteHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
   return (
-    <header className="flex items-center justify-between gap-4 mb-10">
+    <header className="fk-rise flex items-center justify-between gap-3 mb-10">
       <a href="/" className="inline-flex items-center gap-2 group">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -35,6 +36,7 @@ export function SiteHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
             Masuk
           </Link>
         )}
+        <ThemeToggle />
       </nav>
     </header>
   );

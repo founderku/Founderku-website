@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { getAccessStatus, formatTanggal } from "@/lib/access";
 import { PRICING, formatRupiah, periodSuffix } from "@/lib/pricing";
-import { PageBackdrop } from "@/components/PageBackdrop";
+import { AnimatedBackdrop } from "@/components/AnimatedBackdrop";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Card } from "@/components/ui/Card";
 import { Pill } from "@/components/ui/Pill";
@@ -37,12 +37,12 @@ export default async function HargaPage({
   const access = getAccessStatus(profile);
 
   return (
-    <div className="relative min-h-screen">
-      <PageBackdrop variant="form" />
-      <div className="max-w-3xl mx-auto px-6 py-10">
+    <div className="fk-app">
+      <AnimatedBackdrop />
+      <div className="max-w-3xl mx-auto px-5 sm:px-6 py-8 sm:py-10">
         <SiteHeader isLoggedIn={!!user} />
 
-        <p className="font-manrope text-xs font-bold uppercase tracking-wide text-text-faint mb-1">
+        <p className="fk-rise font-manrope text-xs font-bold uppercase tracking-wide text-text-faint mb-1">
           Harga
         </p>
         <h1 className="font-manrope font-extrabold text-3xl sm:text-4xl tracking-tight mb-2">
@@ -57,7 +57,7 @@ export default async function HargaPage({
           </p>
         )}
 
-        <Card className="mb-6 bg-white">
+        <Card className="fk-rise mb-6 bg-white">
           <h2 className="font-manrope font-extrabold text-base mb-3">
             Yang kamu dapat
           </h2>
@@ -72,7 +72,7 @@ export default async function HargaPage({
         </Card>
 
         {user ? (
-          <Card className="bg-white">
+          <Card className="fk-rise bg-white">
             {access.hasPro && access.activeUntil && (
               <p className="text-sm bg-amber/10 rounded-xl px-4 py-3 mb-5">
                 {access.onTrial
@@ -83,7 +83,7 @@ export default async function HargaPage({
             <UpgradePlanPicker />
           </Card>
         ) : (
-          <Card className="bg-white">
+          <Card className="fk-rise bg-white">
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
               {PRICING.prices.map((price) => (
                 <div key={price.id} className="rounded-2xl p-5 border-2 border-border">

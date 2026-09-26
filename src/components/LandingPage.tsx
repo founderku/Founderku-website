@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Pill } from "@/components/ui/Pill";
 import { Reveal } from "@/components/ui/Reveal";
 import { PhotoMarquee } from "@/components/landing/PhotoMarquee";
 import { PreviewModal } from "@/components/landing/PreviewModal";

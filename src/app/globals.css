@@ -247,3 +247,121 @@ body::before {
 .accordion-body > div {
   overflow: hidden;
 }
+
+/* ============================================================
+   TEMA HALAMAN AKUN & HARGA (terang / gelap)
+   Tema disimpan di localStorage "fk-theme" (SAMA dengan beranda
+   statis), dipasang ke <html data-theme="..."> oleh script kecil di
+   layout.tsx sebelum halaman tampil (biar gak "kedip" putih).
+   Cuma berlaku di dalam wrapper .fk-app, jadi dashboard Pajangin yang
+   belum didesain buat gelap tetap terang.
+   ============================================================ */
+.fk-app {
+  --app-bg: #f7f2ea;
+  --app-card: rgba(255, 255, 255, 0.86);
+  --app-card-strong: #ffffff;
+  --app-border: rgba(20, 19, 31, 0.09);
+  --app-text: #14131f;
+  --app-soft: rgba(20, 19, 31, 0.64);
+  --app-faint: rgba(20, 19, 31, 0.44);
+  --app-dot: rgba(20, 19, 31, 0.07);
+  --blob-a: rgba(242, 166, 35, 0.28);
+  --blob-b: rgba(225, 92, 62, 0.2);
+  --blob-c: rgba(122, 120, 196, 0.24);
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  color: var(--app-text);
+  background: var(--app-bg);
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+[data-theme="dark"] .fk-app {
+  --app-bg: #0b0a12;
+  --app-card: rgba(255, 255, 255, 0.055);
+  --app-card-strong: #17161f;
+  --app-border: rgba(255, 255, 255, 0.1);
+  --app-text: #fbf6ee;
+  --app-soft: rgba(251, 246, 238, 0.7);
+  --app-faint: rgba(251, 246, 238, 0.46);
+  --app-dot: rgba(255, 255, 255, 0.06);
+  --blob-a: rgba(242, 166, 35, 0.2);
+  --blob-b: rgba(225, 92, 62, 0.18);
+  --blob-c: rgba(122, 120, 196, 0.26);
+}
+/* Komponen lama (Card, tombol outline, dll) ikut tema tanpa diubah satu-satu */
+.fk-app .bg-white { background-color: var(--app-card); }
+.fk-app .bg-bg-soft { background-color: var(--app-card); }
+.fk-app .border-border { border-color: var(--app-border); }
+.fk-app .divide-border > * + * { border-color: var(--app-border); }
+.fk-app .text-text-soft { color: var(--app-soft); }
+.fk-app .text-text-faint { color: var(--app-faint); }
+.fk-app .text-ink { color: var(--app-text); }
+/* ...kecuali teks gelap di atas tombol oranye, harus tetap gelap */
+.fk-app .glass-amber.text-ink,
+.fk-app .glass-amber .text-ink,
+.fk-app .bg-amber.text-ink { color: #14131f; }
+.fk-app input { background: var(--app-card-strong); color: var(--app-text); }
+
+.fk-app-card {
+  background: var(--app-card);
+  border: 1px solid var(--app-border);
+  border-radius: 24px;
+  transition: transform 0.3s cubic-bezier(0.22, 0.9, 0.35, 1.2),
+    box-shadow 0.3s ease, background-color 0.35s ease, border-color 0.35s ease;
+}
+.fk-app-card:hover {
+  box-shadow: 0 18px 40px -24px rgba(20, 19, 31, 0.35);
+}
+
+/* Latar bergerak: 3 "gumpalan" warna yang melayang pelan + titik-titik.
+   Sengaja TANPA filter blur (berat buat HP), cuma radial-gradient yang
+   digeser pakai transform (murah, dikerjakan GPU). */
+.fk-backdrop { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.fk-blob {
+  position: absolute;
+  width: 70vmax;
+  height: 70vmax;
+  border-radius: 50%;
+  will-change: transform;
+}
+.fk-blob-a { background: radial-gradient(circle, var(--blob-a), transparent 62%); top: -30vmax; left: -22vmax; animation: fk-drift-a 26s ease-in-out infinite alternate; }
+.fk-blob-b { background: radial-gradient(circle, var(--blob-b), transparent 62%); top: 10vmax; right: -30vmax; animation: fk-drift-b 32s ease-in-out infinite alternate; }
+.fk-blob-c { background: radial-gradient(circle, var(--blob-c), transparent 62%); bottom: -34vmax; left: 10vmax; animation: fk-drift-c 38s ease-in-out infinite alternate; }
+.fk-dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--app-dot) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 75%);
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 75%);
+}
+@keyframes fk-drift-a { to { transform: translate(14vmax, 10vmax) scale(1.1); } }
+@keyframes fk-drift-b { to { transform: translate(-12vmax, 14vmax) scale(0.92); } }
+@keyframes fk-drift-c { to { transform: translate(10vmax, -12vmax) scale(1.08); } }
+
+/* Animasi masuk bertahap (dipakai kartu di halaman akun) */
+@keyframes fk-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+/* "backwards" (bukan "both"): setelah selesai, animasi lepas, jadi efek
+   hover (kartu terangkat) tetap jalan. */
+.fk-rise { animation: fk-rise 0.65s cubic-bezier(0.22, 0.9, 0.35, 1) backwards; }
+
+/* Lambaian tangan di sapaan */
+@keyframes fk-wave {
+  0%, 60%, 100% { transform: rotate(0deg); }
+  10%, 30% { transform: rotate(16deg); }
+  20% { transform: rotate(-8deg); }
+  40% { transform: rotate(-4deg); }
+}
+.fk-wave { display: inline-block; transform-origin: 70% 70%; animation: fk-wave 2.4s ease-in-out 0.6s 2; }
+
+/* Bar sisa trial */
+@keyframes fk-grow { from { transform: scaleX(0); } }
+.fk-bar-fill { transform-origin: left; animation: fk-grow 1s cubic-bezier(0.22, 0.9, 0.35, 1) 0.3s both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fk-blob, .fk-rise, .fk-wave, .fk-bar-fill { animation: none !important; }
+  .fk-app-card { transition: none; }
+}

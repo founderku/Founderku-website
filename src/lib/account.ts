@@ -11,7 +11,7 @@ import type { Profile } from "@/lib/types";
 // /auth/callback).
 export async function requireAccount(nextPath: string): Promise<{
   supabase: Awaited<ReturnType<typeof createClient>>;
-  user: { id: string; email?: string };
+  user: { id: string; email?: string; user_metadata?: Record<string, unknown> };
   profile: Profile | null;
   access: AccessStatus;
 }> {

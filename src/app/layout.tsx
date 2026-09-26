@@ -27,8 +27,20 @@ export default function RootLayout({
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 
   return (
-    <html lang="id" className={`${manrope.variable} ${inter.variable}`}>
+    <html
+      lang="id"
+      className={`${manrope.variable} ${inter.variable}`}
+      suppressHydrationWarning
+    >
       <head>
+        {/* Pasang tema terang/gelap SEBELUM halaman tampil, pakai pilihan
+            yang sama dengan beranda (localStorage "fk-theme"). */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var t=localStorage.getItem('fk-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}",
+          }}
+        />
         {/* Buka koneksi ke Supabase lebih awal (sebelum request beneran
             dikirim), biar handshake-nya udah kelar duluan pas halaman
             butuh data - lumayan mempercepat load pertama form/dashboard. */}

@@ -10,6 +10,7 @@ import { Card } from "@/components/ui/Card";
 import { OtpVerify } from "@/components/OtpVerify";
 
 export default function RegisterPage() {
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -29,6 +30,8 @@ export default function RegisterPage() {
       email,
       password,
       options: {
+        // Nama disimpan di data akun, dipakai buat sapaan "Hai, ...".
+        data: { full_name: fullName.trim() },
         // Cadangan kalau template email masih pakai link, bukan kode.
         emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath())}`,
       },
@@ -154,6 +157,21 @@ export default function RegisterPage() {
         </p>
 
         <form onSubmit={handleRegister} className="space-y-4">
+          <div>
+            <label className="block text-xs font-manrope font-bold uppercase tracking-wide text-text-soft mb-1.5">
+              Nama
+            </label>
+            <input
+              type="text"
+              required
+              maxLength={60}
+              autoComplete="given-name"
+              placeholder="Nama panggilan kamu"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              className="w-full border border-border rounded-xl px-3.5 py-2.5 text-sm"
+            />
+          </div>
           <div>
             <label className="block text-xs font-manrope font-bold uppercase tracking-wide text-text-soft mb-1.5">
               Email
