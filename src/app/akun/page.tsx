@@ -10,6 +10,7 @@ import { Pill } from "@/components/ui/Pill";
 import { LogoutButton } from "@/components/LogoutButton";
 import { DeleteAccountSection } from "@/components/DeleteAccountSection";
 import { ToolIcon, TOOL_SHORT } from "@/components/ToolIcon";
+import { NameEditor } from "@/components/NameEditor";
 import toolsData from "../../../public/data/tools.json";
 
 export const metadata: Metadata = {
@@ -97,6 +98,7 @@ export default async function AkunPage({
               Hai{name ? `, ${name}` : ""}! <span className="fk-wave">👋</span>
             </h1>
             <p className="text-sm text-text-soft mt-1 truncate">{user.email}</p>
+            <NameEditor currentName={name} />
           </div>
           <div className="pt-1 flex-shrink-0">
             <LogoutButton />
