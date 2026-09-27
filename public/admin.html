@@ -181,6 +181,9 @@
     .modal{ padding:24px 20px; border-radius:22px; }
     .setup-card{ margin:32px auto; padding:26px 22px; }
   }
+
+/* iPhone otomatis zoom kalau kolom isian di bawah 16px. Paksa 16px di layar sentuh supaya tidak zoom. */
+@media (pointer:coarse){:is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),select,textarea):not(.text-lg,.text-xl,.text-2xl,.text-3xl){font-size:16px!important}}
 </style>
 </head>
 <body>
