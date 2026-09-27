@@ -18,6 +18,9 @@ import {
 } from "@/components/tools/kit/Kit";
 import { LineChart } from "@/components/tools/kit/Charts";
 
+// Di tabel, "Rp" cukup ditulis sekali di judul kolom supaya muat di HP
+const tanpaRp = (n: number) => rpRingkas(n).replace("Rp ", "");
+
 const AWAL: InputProyeksi = {
   pelangganAwal: 0,
   baruAwal: 0,
@@ -62,7 +65,7 @@ export default function Proyeksiin() {
         aside={
           <>
             <Card>
-              <Grid>
+              <Grid keep>
                 <Stat
                   label="Mulai untung"
                   value={adaIsi ? (h.bulanUntung ? `Bulan ke-${h.bulanUntung}` : "Belum dalam 3 tahun") : "-"}
@@ -129,7 +132,7 @@ export default function Proyeksiin() {
               <table className={k.table}>
                 <thead>
                   <tr>
-                    <th>Pos</th>
+                    <th>Pos (Rupiah)</th>
                     <th>Tahun 1</th>
                     <th>Tahun 2</th>
                     <th>Tahun 3</th>
@@ -148,7 +151,7 @@ export default function Proyeksiin() {
                     <tr key={key}>
                       <td>{key === "laba" ? <b>{l}</b> : l}</td>
                       {h.tahunan.map((t) => (
-                        <td key={t.tahun}>{key === "laba" ? <b>{rpRingkas(t[key])}</b> : rpRingkas(t[key])}</td>
+                        <td key={t.tahun}>{key === "laba" ? <b>{tanpaRp(t[key])}</b> : tanpaRp(t[key])}</td>
                       ))}
                     </tr>
                   ))}

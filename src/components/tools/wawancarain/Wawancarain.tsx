@@ -122,7 +122,7 @@ export default function Wawancarain() {
               <div style={{ height: 10 }} />
               <Meter value={(h.jumlah / TARGET_WAWANCARA) * 100} label="Progres wawancara" />
               <div style={{ height: 14 }} />
-              <Grid>
+              <Grid keep>
                 <Stat label="Rata-rata sakitnya" value={h.rataSakit !== null ? `${nf(h.rataSakit, 1)}/5` : "-"} />
                 <Stat label="Sudah cari solusi" value={h.pctSudahCari !== null ? pct(h.pctSudahCari, 0) : "-"} />
                 <Stat label="Mau bayar" value={h.pctMauBayar !== null ? pct(h.pctMauBayar, 0) : "-"} />
@@ -209,13 +209,19 @@ export default function Wawancarain() {
                         type="button"
                         onClick={() => setBuka(terbuka ? null : i)}
                         aria-expanded={terbuka}
-                        style={{ background: "none", border: 0, padding: 0, textAlign: "left", font: "inherit", color: "inherit", cursor: "pointer", flex: 1, fontSize: 15, fontWeight: 500 }}
+                        style={{ background: "none", border: 0, padding: "8px 0", minHeight: 44, textAlign: "left", font: "inherit", color: "inherit", cursor: "pointer", flex: 1, fontSize: 15, fontWeight: 500 }}
                       >
                         {i + 1}. {r.nama || "Responden baru"}
-                        <span style={{ color: "var(--faint)", fontWeight: 400, fontSize: 13 }}>
-                          {r.sakit ? ` · sakit ${r.sakit}/5` : ""}
-                          {r.bayar === "ya" ? " · mau bayar" : r.bayar === "mungkin" ? " · mungkin bayar" : ""}
-                        </span>
+                        {(r.sakit > 0 || r.bayar) && (
+                          <span style={{ display: "block", color: "var(--faint)", fontWeight: 400, fontSize: 13, marginTop: 2 }}>
+                            {[
+                              r.sakit ? `Sakit ${r.sakit}/5` : "",
+                              r.bayar === "ya" ? "Mau bayar" : r.bayar === "mungkin" ? "Mungkin bayar" : r.bayar === "tidak" ? "Tidak mau bayar" : "",
+                            ]
+                              .filter(Boolean)
+                              .join(" · ")}
+                          </span>
+                        )}
                       </button>
                       <RemoveBtn
                         label={`Hapus ${r.nama || "responden"}`}
@@ -237,7 +243,7 @@ export default function Wawancarain() {
                           onChange={(v) => ubahR(i, { bayar: v })}
                           options={[
                             { v: "", label: "Belum ditanyakan" },
-                            { v: "ya", label: "Ya (mau pre-order / komitmen)" },
+                            { v: "ya", label: "Ya, mau pre-order" },
                             { v: "mungkin", label: "Mungkin" },
                             { v: "tidak", label: "Tidak" },
                           ]}

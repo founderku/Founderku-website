@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { useToolState } from "@/lib/tools/useToolState";
 import { ringkasInvestor, TAHAP, BATAS_HARI, type Investor, type TahapId } from "@/lib/tools/investorin/calc";
-import { pct, rp, rpRingkas, tanggalLokal } from "@/lib/tools/format";
+import { pct, rpRingkas, tanggalLokal } from "@/lib/tools/format";
 import {
   Badge,
   Button,
@@ -117,7 +117,7 @@ export default function Investorin() {
                     type="button"
                     onClick={() => setFilter(filter === t.id ? "semua" : t.id)}
                     aria-pressed={filter === t.id}
-                    style={{ display: "grid", gridTemplateColumns: "110px 1fr 28px", gap: 10, alignItems: "center", background: "none", border: 0, padding: 0, font: "inherit", color: "inherit", cursor: "pointer", textAlign: "left" }}
+                    style={{ display: "grid", gridTemplateColumns: "110px 1fr 28px", gap: 10, alignItems: "center", background: "none", border: 0, padding: "6px 0", minHeight: 36, font: "inherit", color: "inherit", cursor: "pointer", textAlign: "left" }}
                   >
                     <span style={{ fontSize: 13.5, fontWeight: filter === t.id ? 600 : 400 }}>{t.label}</span>
                     <span style={{ height: 10, borderRadius: 5, background: "var(--panel-2)", overflow: "hidden" }}>
@@ -171,7 +171,7 @@ export default function Investorin() {
                       type="button"
                       onClick={() => setBuka(terbuka ? null : i)}
                       aria-expanded={terbuka}
-                      style={{ background: "none", border: 0, padding: 0, textAlign: "left", font: "inherit", color: "inherit", cursor: "pointer", flex: 1, minWidth: 0 }}
+                      style={{ background: "none", border: 0, padding: "4px 0", minHeight: 44, textAlign: "left", font: "inherit", color: "inherit", cursor: "pointer", flex: 1, minWidth: 0 }}
                     >
                       <span style={{ display: "block", fontSize: 15, fontWeight: 500 }}>
                         {v.nama || "Investor baru"}
@@ -179,9 +179,9 @@ export default function Investorin() {
                       </span>
                       <span style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginTop: 4, fontSize: 13, color: "var(--faint)" }}>
                         <Badge tone={v.tahap === "deal" ? "good" : v.tahap === "tidak" ? "neutral" : "warn"} text={labelTahap(v.tahap)} />
-                        {v.tiket > 0 && rpRingkas(v.tiket)}
-                        {v.langkah && <span>· {v.langkah}</span>}
+                        {v.tiket > 0 && <span style={{ whiteSpace: "nowrap" }}>{rpRingkas(v.tiket)}</span>}
                       </span>
+                      {v.langkah && <span style={{ display: "block", marginTop: 4, fontSize: 13, color: "var(--faint)" }}>Berikutnya: {v.langkah}</span>}
                     </button>
                     <RemoveBtn label={`Hapus ${v.nama || "investor"}`} onClick={() => setD((x) => ({ ...x, investor: x.investor.filter((_, j) => j !== i) }))} />
                   </div>
@@ -197,7 +197,6 @@ export default function Investorin() {
                       </Grid>
                       <TextInput label="Langkah berikutnya" value={v.langkah} maxLength={120} onChange={(t) => ubahI(i, { langkah: t })} />
                       <TextArea label="Catatan" rows={2} maxLength={600} value={v.catatan} onChange={(t) => ubahI(i, { catatan: t })} />
-                      {v.tiket > 0 && <Note>{rp(v.tiket)}</Note>}
                     </div>
                   )}
                 </div>

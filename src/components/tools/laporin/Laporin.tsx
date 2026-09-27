@@ -128,7 +128,7 @@ export default function Laporin() {
                     </div>
                     <RemoveBtn label={`Hapus ${m.nama || "metrik"}`} onClick={() => setD((x) => ({ ...x, metrik: x.metrik.filter((_, j) => j !== i) }))} />
                   </div>
-                  <Grid cols={3}>
+                  <Grid cols={3} keep>
                     <Select<Metrik["satuan"]>
                       label="Satuan"
                       value={m.satuan}

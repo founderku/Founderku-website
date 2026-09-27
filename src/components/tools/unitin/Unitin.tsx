@@ -97,11 +97,11 @@ export default function Unitin() {
                 sub={adaIsi ? "Idealnya 3 : 1 atau lebih" : "Isi harga, biaya pemasaran, dan pelanggan baru"}
               />
               <div style={{ height: 12 }} />
-              <Grid>
-                <Stat label="CAC (biaya dapat 1 pelanggan)" value={h.cac !== null ? rp(h.cac) : "-"} />
-                <Stat label="LTV (nilai 1 pelanggan)" value={h.ltv !== null ? rp(h.ltv) : "-"} />
+              <Grid keep>
+                <Stat label="CAC" value={h.cac !== null ? rp(h.cac) : "-"} sub="Biaya dapat 1 pelanggan" />
+                <Stat label="LTV" value={h.ltv !== null ? rp(h.ltv) : "-"} sub="Nilai 1 pelanggan" />
                 <Stat
-                  label="Balik modal (payback)"
+                  label="Balik modal"
                   value={h.payback !== null ? `${nf(h.payback, 1)} bulan` : "-"}
                   tone={adaIsi ? tp : "neutral"}
                 />
@@ -110,8 +110,8 @@ export default function Unitin() {
                   value={h.umurBulan !== null ? `${nf(h.umurBulan, 1)} bulan` : "-"}
                   sub={h.umurBulan === UMUR_MAKS ? "Dibatasi 5 tahun" : undefined}
                 />
-                <Stat label="Pendapatan / pelanggan / bulan" value={rp(h.arpu)} />
-                <Stat label="Laba kotor / pelanggan / bulan" value={rp(h.kontribusi)} />
+                <Stat label="Pendapatan" value={rp(h.arpu)} sub="Per pelanggan per bulan" />
+                <Stat label="Laba kotor" value={rp(h.kontribusi)} sub="Per pelanggan per bulan" />
               </Grid>
             </Card>
             {adaIsi && (

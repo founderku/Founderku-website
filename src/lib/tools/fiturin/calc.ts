@@ -19,9 +19,9 @@ export const IMPACT = [
 ];
 
 export const CONFIDENCE = [
-  { v: 100, label: "Yakin (ada data)" },
+  { v: 100, label: "Yakin, ada data" },
   { v: 80, label: "Cukup yakin" },
-  { v: 50, label: "Tebakan" },
+  { v: 50, label: "Masih tebakan" },
 ];
 
 export function skorRice(f: Fitur): number {

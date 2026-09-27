@@ -75,8 +75,11 @@ export function Card({
   );
 }
 
-export function Grid({ children, cols = 2 }: Anak & { cols?: 2 | 3 }) {
-  return <div className={cols === 3 ? s.grid3 : s.grid2}>{children}</div>;
+// keep: tetap 2 kolom di HP (untuk kotak angka hasil / isian pendek).
+// cols 3 + keep: di HP jadi 2 kolom, item pertama selebar penuh.
+export function Grid({ children, cols = 2, keep }: Anak & { cols?: 2 | 3; keep?: boolean }) {
+  const kelas = cols === 3 ? (keep ? `${s.grid3} ${s.grid3Keep}` : s.grid3) : keep ? `${s.grid2} ${s.grid2Keep}` : s.grid2;
+  return <div className={kelas}>{children}</div>;
 }
 
 export function Field({
@@ -356,7 +359,6 @@ export function Scale({
     <div className={s.scale}>
       <div className={s.scaleLabel}>{label}</div>
       <div className={s.scaleRow} role="radiogroup" aria-label={label}>
-        {kiri && <span className={s.scaleEnd}>{kiri}</span>}
         {[1, 2, 3, 4, 5].map((n) => (
           <button
             key={n}
@@ -369,8 +371,13 @@ export function Scale({
             {n}
           </button>
         ))}
-        {kanan && <span className={s.scaleEnd}>{kanan}</span>}
       </div>
+      {(kiri || kanan) && (
+        <div className={s.scaleEnds} aria-hidden="true">
+          <span>{kiri ? `1 = ${kiri}` : ""}</span>
+          <span>{kanan ? `5 = ${kanan}` : ""}</span>
+        </div>
+      )}
     </div>
   );
 }

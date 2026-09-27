@@ -63,7 +63,7 @@ export default function Fiturin() {
         aside={
           <>
             <Card>
-              <Grid>
+              <Grid keep>
                 <Stat label="Fitur masuk MVP" value={`${masuk.length} dari ${d.fitur.length}`} />
                 <Stat label="Waktu terpakai" value={`${nf(effortMasuk, 1)} / ${nf(d.kapasitas, 1)}`} sub="orang-minggu" />
               </Grid>

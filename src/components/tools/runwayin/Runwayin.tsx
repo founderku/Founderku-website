@@ -134,7 +134,7 @@ export default function Runwayin() {
                 }
               />
               <div style={{ height: 12 }} />
-              <Grid>
+              <Grid keep>
                 <Stat label="Burn rate bulan ini" value={rp(Math.max(0, dasar.burnAwal))} sub={dasar.burnAwal <= 0 && adaIsi ? "Sudah untung" : undefined} />
                 <Stat
                   label="Mulai untung"
