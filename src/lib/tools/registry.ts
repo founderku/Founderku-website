@@ -26,6 +26,7 @@ export const TOOL_IDS = [
   "personain",
   "targetin",
   "valuasiin",
+  "stuney",
 ] as const;
 
 export type ToolId = (typeof TOOL_IDS)[number];

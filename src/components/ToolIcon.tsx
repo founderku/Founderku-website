@@ -238,6 +238,18 @@ const ICONS: Record<string, { from: string; to: string; path: React.ReactNode }>
       </>
     ),
   },
+  stuney: {
+    from: "#3b7e5e",
+    to: "#1f4c37",
+    path: (
+      <>
+        <path d="M12 3v5" />
+        <path d="M12 6c-1.5-2.4-4-3-5.5-2.6.3 1.9 2.5 3.4 5.5 2.6zM12 6c1.5-2.4 4-3 5.5-2.6-.3 1.9-2.5 3.4-5.5 2.6z" />
+        <circle cx="12" cy="15" r="6" />
+        <path d="M14 13.2c-.4-.7-1.1-1-2-1-1.1 0-2 .6-2 1.4 0 1.9 4 1 4 2.9 0 .8-.9 1.4-2 1.4-.9 0-1.6-.3-2-1" />
+      </>
+    ),
+  },
 };
 
 export function ToolIcon({ id, name, size = 44 }: { id: string; name: string; size?: number }) {

@@ -1,0 +1,613 @@
+/* Gaya khusus Stuney di atas template tools (kit.module.css).
+   Warna dari token situs supaya ikut tema terang/gelap. */
+
+.hello {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.hi {
+  font-size: 15px;
+  color: var(--soft);
+}
+.hi b {
+  display: block;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+.chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  font-size: 13.5px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.tabsWrap {
+  overflow-x: auto;
+  margin: 0 -4px 6px;
+  padding: 0 4px;
+  scrollbar-width: none;
+}
+.tabsWrap::-webkit-scrollbar {
+  display: none;
+}
+.tabsWrap > div {
+  flex-wrap: nowrap;
+}
+.tabsWrap button {
+  white-space: nowrap;
+  min-height: 40px;
+}
+
+/* Pilihan jenis transaksi: 3 tombol sama lebar, tidak terlipat */
+.seg > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: 100%;
+  margin-bottom: 0;
+}
+.seg button {
+  padding: 9px 4px;
+  text-align: center;
+  min-height: 40px;
+}
+.statNum {
+  white-space: nowrap;
+  font-size: clamp(19px, 5.2vw, 24px) !important;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Total di Kas: kartu paling menonjol (review Adinda poin 4) */
+.kas {
+  border-radius: 24px;
+  padding: 22px 24px;
+  background: var(--btn);
+  color: var(--btn-text);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.kas::after {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  right: -70px;
+  top: -90px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 40%, #f2a623, transparent 62%), radial-gradient(circle at 70% 70%, #e15c3e, transparent 60%);
+  opacity: 0.55;
+  filter: blur(8px);
+  pointer-events: none;
+}
+.kasLabel {
+  font-size: 14px;
+  opacity: 0.8;
+  position: relative;
+  z-index: 1;
+}
+.kasValue {
+  font-size: clamp(32px, 4vw, 46px);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+  position: relative;
+  z-index: 1;
+}
+.kasSub {
+  font-size: 13px;
+  opacity: 0.75;
+  position: relative;
+  z-index: 1;
+}
+.kasMinus .kasValue {
+  color: #f59a8f;
+}
+
+.top3 {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 12px 16px;
+  border-radius: 16px;
+  background: var(--panel);
+  border: 1px dashed var(--line-2);
+  font-size: 14px;
+  color: var(--soft);
+  margin-bottom: 16px;
+}
+
+/* Pilihan kategori */
+.catGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+.catBtn {
+  border: 1px solid var(--line-2);
+  background: var(--card);
+  color: var(--text);
+  border-radius: 14px;
+  padding: 10px 6px;
+  font: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-height: 64px;
+  line-height: 1.2;
+  text-align: center;
+}
+.catBtn span {
+  font-size: 20px;
+  line-height: 1;
+}
+.catOn {
+  border: 2px solid var(--orange);
+  background: var(--panel);
+  font-weight: 600;
+}
+.err {
+  font-size: 13.5px;
+  color: var(--coral);
+  margin: 0;
+}
+.formBtns {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.formBtns > * {
+  flex: 1;
+  justify-content: center;
+  min-height: 46px;
+}
+
+/* Daftar transaksi */
+.list {
+  display: flex;
+  flex-direction: column;
+}
+.tx {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.tx:last-child {
+  border-bottom: 0;
+}
+.txIcon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  background: var(--panel);
+}
+.txMid {
+  min-width: 0;
+}
+.txCat {
+  font-size: 15px;
+  font-weight: 500;
+}
+.txNote {
+  font-size: 13px;
+  color: var(--faint);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.txRight {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+.amt {
+  font-weight: 600;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.pos {
+  color: #16876a;
+}
+.neg {
+  color: var(--coral);
+}
+.move {
+  color: var(--soft);
+}
+.date {
+  font-size: 12px;
+  color: var(--faint);
+}
+.txActs {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: 2px;
+}
+.linkBtn {
+  border: 0;
+  background: none;
+  color: var(--soft);
+  font: inherit;
+  font-size: 12.5px;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 6px 4px;
+  min-height: 32px;
+}
+.linkBtn:hover {
+  color: var(--text);
+}
+.day {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--soft);
+  margin: 18px 0 2px;
+}
+.day:first-child {
+  margin-top: 0;
+}
+.empty {
+  font-size: 14px;
+  color: var(--faint);
+  text-align: center;
+  padding: 18px 8px;
+  line-height: 1.6;
+}
+.filters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+/* Dompet */
+.wallet {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+.wallet:last-child {
+  border-bottom: 0;
+}
+.wName {
+  font-size: 14.5px;
+  font-weight: 500;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.tag {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--panel-2);
+  color: var(--soft);
+  margin-left: 6px;
+  vertical-align: 1px;
+}
+.wAmt {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.walletEdit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr) auto;
+  gap: 8px;
+  align-items: end;
+}
+.addRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: end;
+  margin-top: 12px;
+}
+
+/* Laporan */
+.donutWrap {
+  position: relative;
+  width: min(230px, 70%);
+  margin: 4px auto 18px;
+}
+.donutWrap svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform: rotate(-90deg);
+}
+.donutMid {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: none;
+}
+.donutMid small {
+  font-size: 12.5px;
+  color: var(--faint);
+}
+.donutMid b {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.legend {
+  display: grid;
+  grid-template-columns: 12px minmax(0, 1fr) auto auto;
+  gap: 10px 12px;
+  align-items: center;
+  font-size: 14px;
+}
+.dotC {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+}
+.pct {
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+.legend .wAmt {
+  text-align: right;
+}
+.delta {
+  margin-top: 14px;
+  font-size: 13.5px;
+  color: var(--soft);
+}
+
+/* Profil */
+.level {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  margin: 2px 0 6px;
+}
+.levelKet {
+  font-size: 14px;
+  color: var(--soft);
+  margin: 0 0 14px;
+  line-height: 1.6;
+}
+.small {
+  font-size: 13px;
+  color: var(--faint);
+  margin-top: 8px;
+}
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+.dayDot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--faint);
+}
+.dayDot i {
+  width: 100%;
+  max-width: 40px;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  background: var(--panel-2);
+  display: grid;
+  place-items: center;
+  font-style: normal;
+  font-size: 16px;
+}
+.dayHit i {
+  background: var(--orange);
+  color: #1a1730;
+}
+.badges {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.bdg {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 14px 10px;
+  text-align: center;
+  background: var(--card);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+.bdg > span:first-child {
+  font-size: 26px;
+  line-height: 1.1;
+}
+.bdg b {
+  font-size: 13.5px;
+  font-weight: 600;
+}
+.bdg small {
+  font-size: 12px;
+  color: var(--faint);
+  line-height: 1.4;
+}
+.bdgOff {
+  opacity: 0.45;
+  filter: grayscale(1);
+  background: var(--panel);
+}
+.bdgState {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--soft);
+}
+.credit {
+  font-size: 13px;
+  color: var(--faint);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Target tabungan */
+.goalTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+.goalName {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+.goalNums {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 13.5px;
+  color: var(--soft);
+  margin: 10px 0 12px;
+}
+.goalNums b {
+  color: var(--text);
+  font-weight: 600;
+}
+.goalAdd {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: end;
+}
+
+@media (max-width: 960px) {
+  .top3 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .top3 > :first-child {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 600px) {
+  /* Tab utama: 5 tab muat satu baris di HP */
+  .mainTabs {
+    overflow: visible;
+    margin: 0 0 6px;
+    padding: 0;
+  }
+  .mainTabs > div {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    width: 100%;
+  }
+  .filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .filters > :first-child {
+    grid-column: 1 / -1;
+  }
+  .mainTabs button {
+    font-size: 12.5px;
+    padding: 8px 2px;
+    text-align: center;
+  }
+  .catGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .badges {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .walletEdit {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .walletEdit > :nth-child(2) {
+    grid-column: 1 / 2;
+    grid-row: 2;
+  }
+  .hi b {
+    font-size: 21px;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :global(:root:not([data-theme="light"])) .pos {
+    color: #6fd9ae;
+  }
+  :global(:root:not([data-theme="light"])) .kasMinus .kasValue {
+    color: #c43d2c;
+  }
+}
+:global(:root[data-theme="dark"]) .pos {
+  color: #6fd9ae;
+}
+:global(:root[data-theme="dark"]) .kasMinus .kasValue {
+  color: #c43d2c;
+}
+@media print {
+  .kas {
+    background: #f1eff6;
+    color: #111;
+  }
+  .kas::after {
+    display: none;
+  }
+}
