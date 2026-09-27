@@ -31,7 +31,11 @@ try{var l=localStorage.getItem('fk-lang');if(l==='en'||l==='tr'||l==='id')docume
   </section>
 
   <section class="band flush">
-    <div class="cards" id="grid"><div class="state" data-t="loading"></div></div>
+    <div class="tools-bar">
+      <input type="search" id="q" class="search" data-t-ph="search" aria-label="Cari tool" autocomplete="off">
+      <div class="filters" id="filters" role="group" data-t-aria="filterAria"></div>
+    </div>
+    <div id="grid"><div class="state" data-t="loading"></div></div>
   </section>
 
   <section class="band rv">
@@ -48,14 +52,31 @@ try{var l=localStorage.getItem('fk-lang');if(l==='en'||l==='tr'||l==='id')docume
 <script>
 (function(){
   var DICT={
-    id:{title:'Tools · Founderku',eyebrow:'Founderku Tools',h1:'Tools yang bikin usahamu lebih gampang.',sub:'Kami bangun dan pakai sendiri. Semuanya bisa langsung dicoba tanpa daftar. Dengan Founderku Pro, datamu tersimpan di akun dan bisa dibuka dari HP mana pun.',cta1:'Coba gratis {days} hari',cta1In:'Buka akun kamu',cta2:'Lihat harga',loading:'Memuat tools...',empty:'Belum ada tools.',error:'Gagal memuat tools. Coba muat ulang halaman.',go:'Coba sekarang',proH:'Satu akun untuk semua tools.',proP:'Founderku Pro mulai {price}. Trial {days} hari otomatis saat daftar, tanpa kartu dan tanpa tagihan otomatis.',proPx:'Trial {days} hari otomatis saat daftar, tanpa kartu dan tanpa tagihan otomatis.',proBtn:'Lihat harga',month:'bulan'},
-    en:{title:'Tools · Founderku',eyebrow:'Founderku Tools',h1:'Tools that make running your business easier.',sub:'We build them and use them ourselves. Try any of them right away, no sign-up. With Founderku Pro, your data is saved to your account and opens on any phone.',cta1:'Try free for {days} days',cta1In:'Open your account',cta2:'See pricing',loading:'Loading tools...',empty:'No tools yet.',error:'Could not load the tools. Try reloading the page.',go:'Try it now',proH:'One account for every tool.',proP:'Founderku Pro starts at {price}. A {days}-day trial starts when you sign up, no card and no automatic billing.',proPx:'A {days}-day trial starts when you sign up, no card and no automatic billing.',proBtn:'See pricing',month:'month'},
-    tr:{title:'Araçlar · Founderku',eyebrow:'Founderku Araçları',h1:'İşini kolaylaştıran araçlar.',sub:'Kendimiz geliştirip kullanıyoruz. Hepsini kayıt olmadan hemen deneyebilirsin. Founderku Pro ile verilerin hesabına kaydedilir ve her telefondan açılır.',cta1:'{days} gün ücretsiz dene',cta1In:'Hesabını aç',cta2:'Fiyatları gör',loading:'Araçlar yükleniyor...',empty:'Henüz araç yok.',error:'Araçlar yüklenemedi. Sayfayı yenilemeyi dene.',go:'Hemen dene',proH:'Tüm araçlar için tek hesap.',proP:'Founderku Pro {price} fiyatından başlar. Kaydolunca {days} günlük deneme başlar; kart yok, otomatik ödeme yok.',proPx:'Kaydolunca {days} günlük deneme başlar; kart yok, otomatik ödeme yok.',proBtn:'Fiyatları gör',month:'ay'}
+    id:{title:'Tools · Founderku',eyebrow:'Founderku Tools',h1:'Tools yang bikin usahamu lebih gampang.',sub:'Kami bangun dan pakai sendiri. Semuanya bisa langsung dicoba tanpa daftar. Dengan Founderku Pro, datamu tersimpan di akun dan bisa dibuka dari HP mana pun.',cta1:'Coba gratis {days} hari',cta1In:'Buka akun kamu',cta2:'Lihat harga',loading:'Memuat tools...',empty:'Belum ada tools.',none:'Tidak ada tool yang cocok. Coba kata lain atau pilih kategori Semua.',error:'Gagal memuat tools. Coba muat ulang halaman.',go:'Coba sekarang',soon:'Segera hadir',beta:'Beta',soonNote:'Sedang kami siapkan',all:'Semua',other:'Lainnya',search:'Cari tool, misalnya invoice atau pajak',filterAria:'Filter kategori',count:'{n} tools',proH:'Satu akun untuk semua tools.',proP:'Founderku Pro mulai {price}. Trial {days} hari otomatis saat daftar, tanpa kartu dan tanpa tagihan otomatis.',proPx:'Trial {days} hari otomatis saat daftar, tanpa kartu dan tanpa tagihan otomatis.',proBtn:'Lihat harga',month:'bulan'},
+    en:{title:'Tools · Founderku',eyebrow:'Founderku Tools',h1:'Tools that make running your business easier.',sub:'We build them and use them ourselves. Try any of them right away, no sign-up. With Founderku Pro, your data is saved to your account and opens on any phone.',cta1:'Try free for {days} days',cta1In:'Open your account',cta2:'See pricing',loading:'Loading tools...',empty:'No tools yet.',none:'No tools match. Try another word or pick All.',error:'Could not load the tools. Try reloading the page.',go:'Try it now',soon:'Coming soon',beta:'Beta',soonNote:'We are building this one',all:'All',other:'Other',search:'Search tools, for example invoice or tax',filterAria:'Filter by category',count:'{n} tools',proH:'One account for every tool.',proP:'Founderku Pro starts at {price}. A {days}-day trial starts when you sign up, no card and no automatic billing.',proPx:'A {days}-day trial starts when you sign up, no card and no automatic billing.',proBtn:'See pricing',month:'month'},
+    tr:{title:'Araçlar · Founderku',eyebrow:'Founderku Araçları',h1:'İşini kolaylaştıran araçlar.',sub:'Kendimiz geliştirip kullanıyoruz. Hepsini kayıt olmadan hemen deneyebilirsin. Founderku Pro ile verilerin hesabına kaydedilir ve her telefondan açılır.',cta1:'{days} gün ücretsiz dene',cta1In:'Hesabını aç',cta2:'Fiyatları gör',loading:'Araçlar yükleniyor...',empty:'Henüz araç yok.',none:'Eşleşen araç yok. Başka bir kelime dene ya da Tümü\'nü seç.',error:'Araçlar yüklenemedi. Sayfayı yenilemeyi dene.',go:'Hemen dene',soon:'Yakında',beta:'Beta',soonNote:'Hazırlıyoruz',all:'Tümü',other:'Diğer',search:'Araç ara, örneğin fatura veya vergi',filterAria:'Kategoriye göre filtrele',count:'{n} araç',proH:'Tüm araçlar için tek hesap.',proP:'Founderku Pro {price} fiyatından başlar. Kaydolunca {days} günlük deneme başlar; kart yok, otomatik ödeme yok.',proPx:'Kaydolunca {days} günlük deneme başlar; kart yok, otomatik ödeme yok.',proBtn:'Fiyatları gör',month:'ay'}
   };
-  var tools=null, failed=false, pricing=null, get;
-  var grid=document.getElementById('grid');
+  var tools=null, cats=[], failed=false, pricing=null, active='all', get;
+  var grid=document.getElementById('grid'), filters=document.getElementById('filters'), q=document.getElementById('q');
+  // Kategori yang dikenal; tool tanpa kategori masuk "Lainnya"
+  function groupsOf(list){
+    var known={}; cats.forEach(function(c){known[c.id]=1;});
+    var out=cats.map(function(c){return {id:c.id,name:FK.pick(c.label),items:list.filter(function(t){return t.category===c.id;})};});
+    out.push({id:'',name:get('other'),items:list.filter(function(t){return !known[t.category];})});
+    return out.filter(function(g){return g.items.length;});
+  }
+  function card(tl,i){
+    var soon=tl.status==='soon', ext=tl.external?' target="_blank" rel="noopener"':'';
+    var tags=FK.pickArr(tl.tags).slice(0,3).map(function(x){return '<span>'+FK.esc(x)+'</span>';}).join('');
+    var badge=soon?'<span class="tb soon">'+FK.esc(get('soon'))+'</span>':tl.status==='beta'?'<span class="tb">'+FK.esc(get('beta'))+'</span>':'';
+    var inner='<div class="top"><span class="orb spin '+FK.orbClass(tl.id,i)+'"><i></i></span><div><h3>'+FK.esc(tl.name)+badge+'</h3><div class="note">'+FK.esc(soon?get('soonNote'):FK.pick(tl.note))+'</div></div></div>'+
+      '<div class="body"><p>'+FK.esc(FK.pick(tl.description))+'</p><div class="tags">'+tags+'</div>'+
+      (soon?'':'<div class="foot"><span class="go">'+FK.esc(FK.pick(tl.linkLabel)||get('go'))+'</span></div>')+'</div>';
+    return soon||!tl.linkUrl?'<div class="cd rv is-soon">'+inner+'</div>':'<a class="cd rv" href="'+FK.esc(FK.toolHref(tl))+'"'+ext+'>'+inner+'</a>';
+  }
   function render(){
     get=FK.apply(DICT);
+    q.setAttribute('placeholder',get('search'));
     var cta=document.getElementById('ctaMain');
     if(FK.state.loggedIn){cta.href='/akun';cta.textContent=get('cta1In');}
     var pr=pricing&&pricing.prices&&pricing.prices[0];
@@ -63,18 +84,34 @@ try{var l=localStorage.getItem('fk-lang');if(l==='en'||l==='tr'||l==='id')docume
     if(failed){grid.innerHTML='<div class="state">'+FK.esc(get('error'))+'</div>';return;}
     if(!tools) return;
     if(!tools.length){grid.innerHTML='<div class="state">'+FK.esc(get('empty'))+'</div>';return;}
-    grid.innerHTML=tools.map(function(tl,i){
-      var ext=tl.external?' target="_blank" rel="noopener"':'';
-      var tags=FK.pickArr(tl.tags).slice(0,3).map(function(x){return '<span>'+FK.esc(x)+'</span>';}).join('');
-      return '<a class="cd rv" href="'+FK.esc(FK.toolHref(tl))+'"'+ext+'>'+
-        '<div class="top"><span class="orb spin '+FK.orbClass(tl.id,i)+'"><i></i></span><div><h3>'+FK.esc(tl.name)+'</h3><div class="note">'+FK.esc(FK.pick(tl.note))+'</div></div></div>'+
-        '<div class="body"><p>'+FK.esc(FK.pick(tl.description))+'</p><div class="tags">'+tags+'</div>'+
-        '<div class="foot"><span class="go">'+FK.esc(FK.pick(tl.linkLabel)||get('go'))+'</span></div></div></a>';
+    // Filter kategori (cuma yang punya tools)
+    var used=groupsOf(tools);
+    filters.hidden=used.length<2;
+    filters.innerHTML=[{id:'all',name:get('all'),n:tools.length}].concat(used.map(function(g){return {id:g.id,name:g.name,n:g.items.length};})).map(function(c){
+      return '<button type="button" data-cat="'+FK.esc(c.id)+'" aria-pressed="'+(active===c.id)+'">'+FK.esc(c.name)+' <small>'+c.n+'</small></button>';}).join('');
+    [].forEach.call(filters.children,function(b){b.addEventListener('click',function(){active=b.dataset.cat;render();});});
+    var term=(q.value||'').trim().toLowerCase();
+    var list=tools.filter(function(t){
+      if(active!=='all'&&(active===''?cats.some(function(c){return c.id===t.category;}):t.category!==active)) return false;
+      if(!term) return true;
+      return [t.name,FK.pick(t.short),FK.pick(t.description),FK.pickArr(t.tags).join(' ')].join(' ').toLowerCase().indexOf(term)>=0;
+    });
+    if(!list.length){grid.innerHTML='<div class="state">'+FK.esc(get('none'))+'</div>';return;}
+    var i=0;
+    grid.innerHTML=groupsOf(list).map(function(g){
+      return '<div class="tool-group"><div class="row-head"><span>'+FK.esc(g.name)+'</span><small>'+FK.esc(get('count').replace('{n}',g.items.length))+'</small></div>'+
+        '<div class="cards">'+g.items.map(function(tl){return card(tl,i++);}).join('')+'</div></div>';
     }).join('');
     FK.reveal();
   }
+  q.addEventListener('input',function(){render();});
   FK.onLang(render);
-  FK.json('/data/tools.json').then(function(d){tools=(d.tools||[]).slice().sort(function(a,b){return (a.order||99)-(b.order||99);});render();}).catch(function(){failed=true;render();});
+  FK.json('/data/tools.json').then(function(d){
+    cats=(d.categories||[]).slice().sort(function(a,b){return (a.order||99)-(b.order||99);});
+    // Yang sudah bisa dipakai dulu, "Segera hadir" di belakang
+    tools=(d.tools||[]).slice().sort(function(a,b){return ((a.status==='soon')-(b.status==='soon'))||((a.order||99)-(b.order||99));});
+    render();
+  }).catch(function(){failed=true;render();});
   FK.json('/data/pricing.json').then(function(d){pricing=d;render();}).catch(function(){});
 })();
 </script>
