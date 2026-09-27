@@ -20,6 +20,12 @@ export const TOOL_IDS = [
   "proyeksiin",
   "investorin",
   "laporin",
+  "bagiin",
+  "hargain",
+  "kompetitorin",
+  "personain",
+  "targetin",
+  "valuasiin",
 ] as const;
 
 export type ToolId = (typeof TOOL_IDS)[number];
