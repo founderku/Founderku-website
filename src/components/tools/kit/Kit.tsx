@@ -75,8 +75,11 @@ export function Card({
   );
 }
 
-export function Grid({ children, cols = 2 }: Anak & { cols?: 2 | 3 }) {
-  return <div className={cols === 3 ? s.grid3 : s.grid2}>{children}</div>;
+// keep: tetap 2 kolom di HP (untuk kotak angka hasil / isian pendek).
+// cols 3 + keep: di HP jadi 2 kolom, item pertama selebar penuh.
+export function Grid({ children, cols = 2, keep }: Anak & { cols?: 2 | 3; keep?: boolean }) {
+  const kelas = cols === 3 ? (keep ? `${s.grid3} ${s.grid3Keep}` : s.grid3) : keep ? `${s.grid2} ${s.grid2Keep}` : s.grid2;
+  return <div className={kelas}>{children}</div>;
 }
 
 export function Field({
@@ -123,7 +126,9 @@ export function NumInput({
   hideLabel?: boolean;
 }) {
   const id = useId();
-  const tampil = (n: number) => (n === 0 ? "" : nf(n, money ? 0 : digits));
+  // Bilangan bulat (Rupiah / jumlah): titik = pemisah ribuan
+  const bulat = money || digits === 0;
+  const tampil = (n: number) => (n === 0 ? "" : nf(n, bulat ? 0 : digits));
   const [teks, setTeks] = useState(() => tampil(value));
   const [nilaiLalu, setNilaiLalu] = useState(value);
   if (value !== nilaiLalu) {
@@ -138,17 +143,17 @@ export function NumInput({
         <input
           id={id}
           className={s.input}
-          inputMode={money || digits === 0 ? "numeric" : "decimal"}
+          inputMode={bulat ? "numeric" : "decimal"}
           value={teks}
           placeholder="0"
           onChange={(e) => {
             let raw = e.target.value;
-            if (money) raw = raw.replace(/[^\d]/g, "");
+            if (bulat) raw = raw.replace(/[^\d]/g, "");
             else raw = raw.replace(/[^\d,.-]/g, "").replace(".", ",");
             let n = parseAngka(raw);
             if (min !== undefined && n < min) n = min;
             if (max !== undefined && n > max) n = max;
-            setTeks(money ? (raw ? nf(n) : "") : raw);
+            setTeks(bulat ? (raw ? nf(n) : "") : raw);
             onChange(n);
           }}
           onBlur={() => setTeks(tampil(value))}
@@ -354,7 +359,6 @@ export function Scale({
     <div className={s.scale}>
       <div className={s.scaleLabel}>{label}</div>
       <div className={s.scaleRow} role="radiogroup" aria-label={label}>
-        {kiri && <span className={s.scaleEnd}>{kiri}</span>}
         {[1, 2, 3, 4, 5].map((n) => (
           <button
             key={n}
@@ -367,8 +371,13 @@ export function Scale({
             {n}
           </button>
         ))}
-        {kanan && <span className={s.scaleEnd}>{kanan}</span>}
       </div>
+      {(kiri || kanan) && (
+        <div className={s.scaleEnds} aria-hidden="true">
+          <span>{kiri ? `1 = ${kiri}` : ""}</span>
+          <span>{kanan ? `5 = ${kanan}` : ""}</span>
+        </div>
+      )}
     </div>
   );
 }
@@ -412,6 +421,64 @@ export function RemoveBtn({ onClick, label }: { onClick: () => void; label: stri
         <path d="M6 6l12 12M18 6L6 18" />
       </svg>
     </button>
+  );
+}
+
+export function Select<T extends string | number>({
+  label,
+  hint,
+  value,
+  onChange,
+  options,
+  hideLabel,
+}: {
+  label: string;
+  hint?: string;
+  value: T;
+  onChange: (v: T) => void;
+  options: { v: T; label: string }[];
+  hideLabel?: boolean;
+}) {
+  const id = useId();
+  return (
+    <Field label={label} hint={hint} htmlFor={id} hideLabel={hideLabel}>
+      <select
+        id={id}
+        className={`${s.input} ${s.inputSolo} ${s.select}`}
+        value={String(value)}
+        onChange={(e) => {
+          const pilih = options.find((o) => String(o.v) === e.target.value);
+          if (pilih) onChange(pilih.v);
+        }}
+      >
+        {options.map((o) => (
+          <option key={String(o.v)} value={String(o.v)}>
+            {o.label}
+          </option>
+        ))}
+      </select>
+    </Field>
+  );
+}
+
+export function DateInput({
+  label,
+  value,
+  onChange,
+  hideLabel,
+  type = "date",
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  hideLabel?: boolean;
+  type?: "date" | "month";
+}) {
+  const id = useId();
+  return (
+    <Field label={label} htmlFor={id} hideLabel={hideLabel}>
+      <input id={id} type={type} className={`${s.input} ${s.inputSolo}`} value={value} onChange={(e) => onChange(e.target.value)} />
+    </Field>
   );
 }
 

@@ -14,6 +14,12 @@ export const TOOL_IDS = [
   "unitin",
   "sahamin",
   "pitchin",
+  "wawancarain",
+  "pasarin",
+  "fiturin",
+  "proyeksiin",
+  "investorin",
+  "laporin",
 ] as const;
 
 export type ToolId = (typeof TOOL_IDS)[number];

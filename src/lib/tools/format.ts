@@ -36,3 +36,10 @@ export function parseAngka(teks: string): number {
   const n = parseFloat(bersih);
   return Number.isFinite(n) ? n : 0;
 }
+
+// Tanggal lokal (bukan UTC) format YYYY-MM-DD, supaya pagi hari di WIB
+// tidak tercatat sebagai tanggal kemarin.
+export function tanggalLokal(t: Date = new Date()): string {
+  const p = (n: number) => String(n).padStart(2, "0");
+  return `${t.getFullYear()}-${p(t.getMonth() + 1)}-${p(t.getDate())}`;
+}

@@ -116,6 +116,68 @@ const ICONS: Record<string, { from: string; to: string; path: React.ReactNode }>
       </>
     ),
   },
+  wawancarain: {
+    from: "#1baf7a",
+    to: "#12815a",
+    path: (
+      <>
+        <path d="M4 5h11v8H9l-4 3v-3H4z" />
+        <path d="M15 9h5v8h-1v3l-4-3h-4v-2" />
+      </>
+    ),
+  },
+  pasarin: {
+    from: "#9a78c4",
+    to: "#6d4bb0",
+    path: (
+      <>
+        <circle cx="12" cy="12" r="9" />
+        <circle cx="12" cy="14.5" r="5.5" />
+        <circle cx="12" cy="17" r="2.5" />
+      </>
+    ),
+  },
+  fiturin: {
+    from: "#f2a93e",
+    to: "#c77a14",
+    path: (
+      <>
+        <path d="M4 6h10M4 12h7M4 18h4" />
+        <path d="M17 5v14M14 16l3 3 3-3" />
+      </>
+    ),
+  },
+  proyeksiin: {
+    from: "#2a78d6",
+    to: "#184f95",
+    path: (
+      <>
+        <path d="M4 20V4M4 20h16" />
+        <path d="M7 16l4-5 3 3 5-7" />
+      </>
+    ),
+  },
+  investorin: {
+    from: "#e85f3d",
+    to: "#a93a22",
+    path: (
+      <>
+        <circle cx="9" cy="8" r="3" />
+        <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" />
+        <path d="M17 7v6M14 10h6" />
+      </>
+    ),
+  },
+  laporin: {
+    from: "#4a3aa7",
+    to: "#2d2175",
+    path: (
+      <>
+        <rect x="3" y="5" width="18" height="14" rx="2" />
+        <path d="M3 7l9 6 9-6" />
+      </>
+    ),
+  },
 };
 
 export function ToolIcon({ id, name, size = 44 }: { id: string; name: string; size?: number }) {

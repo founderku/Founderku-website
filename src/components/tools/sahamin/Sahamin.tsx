@@ -84,7 +84,7 @@ export default function Sahamin() {
         aside={
           <>
             <Card>
-              <Grid>
+              <Grid keep>
                 <Stat label="Saham pendiri di awal" value={pct(pendiriAwal)} />
                 <Stat label={`Setelah ${akhir.nama}`} value={pct(pendiriAkhir)} />
                 <Stat label="Valuasi terakhir (post-money)" value={akhir.postMoney ? rpRingkas(akhir.postMoney) : "-"} />
