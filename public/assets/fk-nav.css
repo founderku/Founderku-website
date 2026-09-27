@@ -72,6 +72,9 @@
 .lang-menu button:hover,.lang-menu button[aria-current="true"]{background:var(--panel-2);color:var(--text)}
 .burger{display:none}
 
+.tb{font-style:normal;font-size:10.5px;font-weight:500;padding:1px 7px;border-radius:999px;background:rgba(138,133,184,.2);color:#4F4A86;margin-left:6px;vertical-align:1px;white-space:nowrap}
+.sheet a.all{font-weight:500;color:var(--text)}
+
 /* ---------- Bola orb ---------- */
 .orb{display:block;position:relative;border-radius:50%;overflow:hidden;isolation:isolate;flex-shrink:0}
 .orb i{position:absolute;inset:-25%;border-radius:50%;filter:blur(12px)}

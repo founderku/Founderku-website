@@ -1,4 +1,42 @@
 {
+  "categories": [
+    {
+      "id": "jualan",
+      "label": {
+        "id": "Jualan & Pemasaran",
+        "en": "Sales & Marketing",
+        "tr": "Satış ve Pazarlama"
+      },
+      "order": 1
+    },
+    {
+      "id": "keuangan",
+      "label": {
+        "id": "Keuangan & Pajak",
+        "en": "Finance & Tax",
+        "tr": "Finans ve Vergi"
+      },
+      "order": 2
+    },
+    {
+      "id": "legal",
+      "label": {
+        "id": "Legal & Dokumen",
+        "en": "Legal & Documents",
+        "tr": "Hukuk ve Belgeler"
+      },
+      "order": 3
+    },
+    {
+      "id": "bisnis",
+      "label": {
+        "id": "Bisnis & Perencanaan",
+        "en": "Business & Planning",
+        "tr": "İş ve Planlama"
+      },
+      "order": 4
+    }
+  ],
   "tools": [
     {
       "id": "pajangin",
@@ -39,7 +77,15 @@
         "tr": "Pajangin'i Dene"
       },
       "external": false,
-      "order": 1
+      "order": 1,
+      "category": "jualan",
+      "status": "live",
+      "featured": true,
+      "short": {
+        "id": "Halaman jualan + tombol WhatsApp, jadi dalam hitungan menit.",
+        "en": "A sales page with a WhatsApp button, ready in minutes.",
+        "tr": "WhatsApp butonlu satış sayfası, dakikalar içinde hazır."
+      }
     },
     {
       "id": "notain",
@@ -56,7 +102,15 @@
       "linkUrl": "/tools/notain",
       "linkLabel": "Coba sekarang",
       "external": false,
-      "order": 2
+      "order": 2,
+      "category": "keuangan",
+      "status": "live",
+      "featured": true,
+      "short": {
+        "id": "Bikin invoice rapi buat pelanggan kamu.",
+        "en": "Make tidy invoices for your customers.",
+        "tr": "Müşterilerin için düzenli faturalar hazırla."
+      }
     },
     {
       "id": "pajakin",
@@ -73,7 +127,15 @@
       "linkUrl": "/tools/pajakin",
       "linkLabel": "Coba sekarang",
       "external": false,
-      "order": 3
+      "order": 3,
+      "category": "keuangan",
+      "status": "live",
+      "featured": true,
+      "short": {
+        "id": "Hitung simulasi pajak UMKM (PPh Final 0,5%).",
+        "en": "Estimate small business tax (0.5% final tax).",
+        "tr": "KOBİ vergisini hesapla (%0,5 nihai vergi)."
+      }
     },
     {
       "id": "kontrakin",
@@ -91,7 +153,15 @@
       "linkUrl": "/tools/kontrakin",
       "linkLabel": "Coba sekarang",
       "external": false,
-      "order": 4
+      "order": 4,
+      "category": "legal",
+      "status": "live",
+      "featured": true,
+      "short": {
+        "id": "Bikin surat perjanjian kerja sama sederhana.",
+        "en": "Draft a simple cooperation agreement.",
+        "tr": "Basit bir iş birliği sözleşmesi hazırla."
+      }
     },
     {
       "id": "jalanin",
@@ -109,7 +179,15 @@
       "linkUrl": "/tools/jalanin",
       "linkLabel": "Coba sekarang",
       "external": false,
-      "order": 1
+      "order": 1,
+      "category": "bisnis",
+      "status": "live",
+      "featured": true,
+      "short": {
+        "id": "Checklist langkah demi langkah membangun usaha.",
+        "en": "A step-by-step checklist for building a business.",
+        "tr": "İş kurmak için adım adım kontrol listesi."
+      }
     },
     {
       "id": "sehatin",
@@ -127,7 +205,15 @@
       "linkUrl": "/tools/sehatin",
       "linkLabel": "Coba sekarang",
       "external": false,
-      "order": 6
+      "order": 6,
+      "category": "bisnis",
+      "status": "live",
+      "featured": true,
+      "short": {
+        "id": "Cek kesehatan usahamu di 5 aspek penting.",
+        "en": "Check your business health across 5 key areas.",
+        "tr": "İşinin sağlığını 5 önemli alanda kontrol et."
+      }
     }
   ]
 }

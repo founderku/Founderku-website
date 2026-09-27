@@ -22,6 +22,7 @@ interface ToolItem {
   description: { id: string } | string;
   linkUrl: string;
   order?: number;
+  status?: string;
 }
 
 // Tools yang sudah pindah ke dalam aplikasi founderku.com. Tools lain
@@ -78,7 +79,8 @@ export default async function AkunPage({
     .limit(10)
     .returns<SubscriptionRow[]>();
 
-  const tools = [...(toolsData.tools as ToolItem[])].sort(
+  // Tool "Segera hadir" belum bisa dipakai, jadi tidak ditampilkan di akun
+  const tools = (toolsData.tools as ToolItem[]).filter((t) => t.status !== "soon").sort(
     (a, b) => (a.order ?? 99) - (b.order ?? 99)
   );
 
