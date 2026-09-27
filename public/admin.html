@@ -635,6 +635,7 @@
           <option value="update">Update</option>
           <option value="product">Product</option>
           <option value="case-study">Studi kasus</option>
+          <option value="panduan">Panduan</option>
         </select>
       </div>
       <div class="field">
@@ -658,6 +659,7 @@
     </div>
     <div class="field">
       <label class="lowercase">Isi post (pisahin paragraf pakai baris kosong) · bahasa indonesia</label>
+      <div class="hint" style="font-size:12.5px;opacity:.7;margin:-2px 0 6px;">Format opsional di awal baris: "## " subjudul, "### " subjudul kecil, "- " poin, "1. " langkah, "> " kotak catatan, [[tool:runwayin]] kartu ajakan ke tool. **teks** = tebal.</div>
       <textarea id="blogContent" style="min-height:160px;"></textarea>
     </div>
 
@@ -1972,7 +1974,10 @@ async function saveBlogPost(){
     return;
   }
 
-  const slug = titleId.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  // Alamat artikel (slug) tidak berubah saat judul diedit, supaya link yang
+  // sudah dibagikan dan terindeks Google tetap jalan.
+  const oldPost = blogEditingId ? blogData.posts.find(x => x.id === blogEditingId) : null;
+  const slug = (oldPost && oldPost.slug) || titleId.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
   const id = blogEditingId || slug;
 
   const saveBtn = document.getElementById('blogSaveBtn');
@@ -1985,7 +1990,8 @@ async function saveBlogPost(){
 
     if (blogEditingId){
       const idx = blogData.posts.findIndex(x => x.id === blogEditingId);
-      blogData.posts[idx] = postObj;
+      // Field lain (misal tool terkait, tanggal terbit) ikut disimpan
+      blogData.posts[idx] = Object.assign({}, blogData.posts[idx], postObj);
     } else {
       blogData.posts.push(postObj);
     }
