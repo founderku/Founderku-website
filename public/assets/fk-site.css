@@ -355,6 +355,32 @@ a.cd:hover .go::after,.cd .go:hover::after{transform:translateX(3px)}
 .article .meta{font-size:14px;color:var(--faint);margin-bottom:12px;text-transform:capitalize}
 .article h1{font-size:clamp(32px,4vw,54px);line-height:1.06;letter-spacing:-.045em;margin-bottom:28px}
 .article .content p{font-size:17px;line-height:1.8;color:var(--soft);margin-bottom:18px;white-space:pre-line}
+/* Isi artikel panduan: subjudul, daftar, kotak catatan, kartu ajakan ke tool */
+.article .content h2{font-size:clamp(24px,2.8vw,31px);line-height:1.2;letter-spacing:-.035em;font-weight:600;margin:44px 0 16px;scroll-margin-top:96px}
+.article .content h3{font-size:clamp(19px,2vw,21px);line-height:1.3;letter-spacing:-.02em;font-weight:600;margin:30px 0 10px}
+.article .content :is(ul,ol){margin:0 0 22px;padding-left:24px;font-size:17px;line-height:1.75;color:var(--soft)}
+.article .content ul{list-style:disc}
+.article .content ol{list-style:decimal}
+.article .content li{margin-bottom:8px;padding-left:4px}
+.article .meta{text-transform:none}
+.article .content li::marker{color:var(--orange);font-weight:600}
+.article .content b{color:var(--text);font-weight:600}
+.article .content .note{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--orange);border-radius:16px;padding:16px 20px;margin:4px 0 24px}
+.article .content .note p{margin:0;font-size:16.5px;line-height:1.7;color:var(--text);font-weight:500}
+.article .content .note p+p{margin-top:6px}
+.tool-cta{display:flex;align-items:center;gap:16px;margin:32px 0;padding:18px 20px;border-radius:22px;border:1px solid var(--line-2);background:var(--card);box-shadow:var(--shadow);text-decoration:none;color:var(--text);transition:transform .2s ease,border-color .2s}
+.tool-cta:hover{transform:translateY(-2px);border-color:var(--orange)}
+.tool-cta .tc-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.tool-cta .tc-body small{font-size:12.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em}
+.tool-cta .tc-body b{font-size:18px;font-weight:600;letter-spacing:-.02em}
+.tool-cta .tc-body span{font-size:15px;line-height:1.5;color:var(--soft)}
+.tool-cta .btn{flex-shrink:0}
+@media (max-width:560px){
+  .tool-cta{flex-wrap:wrap;padding:16px}
+  .tool-cta .tc-body{flex-basis:calc(100% - 70px)}
+  .tool-cta .btn{width:100%;justify-content:center;min-height:44px}
+  .article .content :is(p,ul,ol){font-size:16.5px}
+}
 .article .back{margin-top:36px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 
 .steps.three{grid-template-columns:repeat(3,1fr)}

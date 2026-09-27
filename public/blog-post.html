@@ -43,15 +43,17 @@ try{var l=localStorage.getItem('fk-lang');if(l==='en'||l==='tr'||l==='id')docume
 <script>
 (function(){
   var COVERS={amber:'art-a',coral:'art-b',indigo:'art-c'};
-  var PCAT={id:{update:'Update',product:'Produk','case-study':'Studi kasus'},en:{update:'Update',product:'Product','case-study':'Case study'},tr:{update:'Güncelleme',product:'Ürün','case-study':'Vaka çalışması'}};
+  var PCAT={id:{update:'Update',product:'Produk','case-study':'Studi kasus',panduan:'Panduan'},en:{update:'Update',product:'Product','case-study':'Case study',panduan:'Guide'},tr:{update:'Güncelleme',product:'Ürün','case-study':'Vaka çalışması',panduan:'Rehber'}};
   function pcat(p){return (PCAT[FK.lang]||PCAT.id)[p.category]||p.category||'';}
-  function postCard(p){var title=FK.pick(p.title);return '<a class="post rv" href="/blog-post.html?slug='+encodeURIComponent(p.slug)+'"><div class="cover '+(COVERS[p.coverGradient]||'art-a')+'"><span class="grain"></span><span style="position:relative">'+FK.esc(title.length>40?title.slice(0,38)+'...':title)+'</span></div><b>'+FK.esc(title)+'</b><small>'+FK.esc(pcat(p))+' · '+FK.esc(p.date||'')+'</small></a>';}
+  function postCard(p){var title=FK.pick(p.title);return '<a class="post rv" href="/blog/'+encodeURIComponent(p.slug)+'"><div class="cover '+(COVERS[p.coverGradient]||'art-a')+'"><span class="grain"></span><span style="position:relative">'+FK.esc(title.length>40?title.slice(0,38)+'...':title)+'</span></div><b>'+FK.esc(title)+'</b><small>'+FK.esc(pcat(p))+' · '+FK.esc(p.date||'')+'</small></a>';}
   var DICT={
     id:{back:'Semua artikel',talk:'Ngobrol dengan kami',nf:'Artikel ini belum ada atau sudah dipindah.',nfLink:'Balik ke blog',more:'Artikel lain',all:'Semua artikel'},
     en:{back:'All articles',talk:'Talk to us',nf:'This article does not exist or has moved.',nfLink:'Back to the blog',more:'More articles',all:'All articles'},
     tr:{back:'Tüm yazılar',talk:'Bizimle konuş',nf:'Bu yazı yok ya da taşındı.',nfLink:'Bloga dön',more:'Diğer yazılar',all:'Tüm yazılar'}
   };
   var slug=new URLSearchParams(location.search).get('slug'),p=null,all=[],nf=false;
+  // Artikel sekarang punya alamat sendiri: /blog/<slug>. Link lama diarahkan ke sana.
+  if(slug&&/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)){location.replace('/blog/'+slug);return;}
   function render(){
     FK.apply(DICT);
     if(nf){document.getElementById('nf').hidden=false;return;}

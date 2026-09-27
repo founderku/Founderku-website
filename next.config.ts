@@ -93,6 +93,15 @@ const nextConfig: NextConfig = {
       { source: "/beranda", destination: "/pajangin", permanent: true },
       // Daftar tools ada di halaman statis tools.html
       { source: "/tools", destination: "/tools.html", permanent: false },
+      // Daftar artikel ada di blog.html. Artikel punya alamat sendiri
+      // /blog/<slug>; link lama blog-post.html?slug=... dipindah permanen.
+      { source: "/blog", destination: "/blog.html", permanent: false },
+      {
+        source: "/blog-post.html",
+        has: [{ type: "query", key: "slug", value: "(?<slug>[a-z0-9]+(?:-[a-z0-9]+)*)" }],
+        destination: "/blog/:slug",
+        permanent: true,
+      },
     ];
   },
   async headers() {
