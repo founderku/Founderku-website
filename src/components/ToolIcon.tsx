@@ -178,6 +178,66 @@ const ICONS: Record<string, { from: string; to: string; path: React.ReactNode }>
       </>
     ),
   },
+  bagiin: {
+    from: "#8a85b8",
+    to: "#4a3aa7",
+    path: (
+      <>
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 3v9l6.4 6.4M12 12l-6.4 6.4" />
+      </>
+    ),
+  },
+  hargain: {
+    from: "#1baf7a",
+    to: "#0f7a54",
+    path: (
+      <>
+        <path d="M3 12V4h8l10 10-8 8z" />
+        <circle cx="7.5" cy="8" r="1.5" />
+      </>
+    ),
+  },
+  kompetitorin: {
+    from: "#e87ba4",
+    to: "#b8436e",
+    path: (
+      <>
+        <path d="M4 20V10M10 20V4M16 20v-7M22 20H2" />
+      </>
+    ),
+  },
+  personain: {
+    from: "#f2a93e",
+    to: "#d97a1f",
+    path: (
+      <>
+        <circle cx="12" cy="8" r="4" />
+        <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8" />
+      </>
+    ),
+  },
+  targetin: {
+    from: "#e85f3d",
+    to: "#b8432a",
+    path: (
+      <>
+        <circle cx="12" cy="12" r="9" />
+        <circle cx="12" cy="12" r="5" />
+        <circle cx="12" cy="12" r="1" />
+      </>
+    ),
+  },
+  valuasiin: {
+    from: "#2a78d6",
+    to: "#1c5cab",
+    path: (
+      <>
+        <path d="M6 3h12l3 5-9 13L3 8z" />
+        <path d="M3 8h18M9 3l3 5 3-5M12 8v13" />
+      </>
+    ),
+  },
 };
 
 export function ToolIcon({ id, name, size = 44 }: { id: string; name: string; size?: number }) {

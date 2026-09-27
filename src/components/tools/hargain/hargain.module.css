@@ -1,0 +1,64 @@
+.tabel {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  align-items: stretch;
+}
+.paket {
+  position: relative;
+  border: 1px solid var(--line-2);
+  border-radius: 18px;
+  padding: 18px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--bg);
+  min-width: 0;
+}
+.unggul {
+  border: 2px solid var(--orange);
+  background: var(--card);
+}
+.label {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--orange);
+  color: #1a1730;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.nama {
+  font-size: 15px;
+  font-weight: 600;
+}
+.harga {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.harga small {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--faint);
+  margin-left: 2px;
+}
+.paket ul {
+  margin: 6px 0 0;
+  padding-left: 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--soft);
+}
+@media (max-width: 600px) {
+  .tabel {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}

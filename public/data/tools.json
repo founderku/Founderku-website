@@ -71,6 +71,15 @@
         "tr": "Yatırım Toplama"
       },
       "order": 8
+    },
+    {
+      "id": "tim",
+      "label": {
+        "id": "Tim & Eksekusi",
+        "en": "Team & Execution",
+        "tr": "Ekip ve Uygulama"
+      },
+      "order": 9
     }
   ],
   "tools": [
@@ -568,6 +577,180 @@
         "id": "Laporan bulanan untuk investor, siap kirim.",
         "en": "Monthly investor updates, ready to send.",
         "tr": "Gönderime hazır aylık yatırımcı raporu."
+      }
+    },
+    {
+      "id": "bagiin",
+      "name": "Bagiin",
+      "logo": "",
+      "roundLogo": false,
+      "description": {
+        "id": "Bagi saham antar pendiri secara adil berdasarkan kontribusi masing-masing, lalu atur jadwal vesting dan cliff supaya saham cair bertahap.",
+        "en": "Split equity fairly between co-founders based on each person's contribution, then set a vesting schedule with a cliff.",
+        "tr": "Kurucular arasında hisseyi katkıya göre adil paylaştır, ardından cliff içeren bir hak ediş (vesting) takvimi belirle."
+      },
+      "tags": [
+        "Saham pendiri",
+        "Vesting",
+        "Tim"
+      ],
+      "note": "Gratis, bisa langsung dipakai.",
+      "linkUrl": "/tools/bagiin",
+      "linkLabel": "Coba sekarang",
+      "external": false,
+      "order": 18,
+      "category": "tim",
+      "status": "live",
+      "featured": false,
+      "short": {
+        "id": "Pembagian saham pendiri + jadwal vesting.",
+        "en": "Co-founder equity split + vesting schedule.",
+        "tr": "Kurucu hisse paylaşımı + hak ediş takvimi."
+      }
+    },
+    {
+      "id": "hargain",
+      "name": "Hargain",
+      "logo": "",
+      "roundLogo": false,
+      "description": {
+        "id": "Tentukan harga langganan dari biaya, nilai buat pelanggan, dan harga kompetitor, lalu susun tiga paket harga dan lihat titik impasnya.",
+        "en": "Set your subscription price from costs, customer value, and competitor prices, then build three pricing tiers and see your break-even point.",
+        "tr": "Abonelik fiyatını maliyet, müşteri değeri ve rakip fiyatlarına göre belirle, ardından üç paket oluştur ve başa baş noktasını gör."
+      },
+      "tags": [
+        "Harga",
+        "Paket",
+        "Startup"
+      ],
+      "note": "Gratis, bisa langsung dipakai.",
+      "linkUrl": "/tools/hargain",
+      "linkLabel": "Coba sekarang",
+      "external": false,
+      "order": 19,
+      "category": "keuangan-startup",
+      "status": "live",
+      "featured": false,
+      "short": {
+        "id": "Tentukan harga dan paket langganan.",
+        "en": "Set your price and subscription tiers.",
+        "tr": "Fiyatını ve abonelik paketlerini belirle."
+      }
+    },
+    {
+      "id": "kompetitorin",
+      "name": "Kompetitorin",
+      "logo": "",
+      "roundLogo": false,
+      "description": {
+        "id": "Bandingkan produkmu dengan pesaing lewat tabel fitur dan peta posisi, lalu lihat otomatis mana pembedamu dan celah yang perlu ditutup.",
+        "en": "Compare your product with competitors using a feature table and positioning map, and automatically see your differentiators and gaps.",
+        "tr": "Ürününü rakiplerle özellik tablosu ve konumlandırma haritasıyla karşılaştır; farklarını ve kapatman gereken boşlukları otomatik gör."
+      },
+      "tags": [
+        "Kompetitor",
+        "Positioning",
+        "Riset"
+      ],
+      "note": "Gratis, bisa langsung dipakai.",
+      "linkUrl": "/tools/kompetitorin",
+      "linkLabel": "Coba sekarang",
+      "external": false,
+      "order": 20,
+      "category": "validasi",
+      "status": "live",
+      "featured": false,
+      "short": {
+        "id": "Analisis kompetitor dan peta posisi.",
+        "en": "Competitor analysis and positioning map.",
+        "tr": "Rakip analizi ve konumlandırma haritası."
+      }
+    },
+    {
+      "id": "personain",
+      "name": "Personain",
+      "logo": "",
+      "roundLogo": false,
+      "description": {
+        "id": "Gambarkan pelanggan idealmu dalam kartu persona: siapa dia, tujuan, masalah, tempat mencari info, dan alasan dia mau membeli. Siap dicetak untuk tim.",
+        "en": "Describe your ideal customer in a persona card: who they are, goals, problems, where they look for info, and why they buy. Ready to print for your team.",
+        "tr": "İdeal müşterini bir persona kartında anlat: kim olduğu, hedefleri, sorunları, bilgi aradığı yerler ve neden satın aldığı. Ekibin için yazdırmaya hazır."
+      },
+      "tags": [
+        "Persona",
+        "Pelanggan",
+        "Riset"
+      ],
+      "note": "Gratis, bisa langsung dipakai.",
+      "linkUrl": "/tools/personain",
+      "linkLabel": "Coba sekarang",
+      "external": false,
+      "order": 21,
+      "category": "validasi",
+      "status": "live",
+      "featured": false,
+      "short": {
+        "id": "Kartu persona pelanggan ideal.",
+        "en": "Ideal customer persona cards.",
+        "tr": "İdeal müşteri persona kartları."
+      }
+    },
+    {
+      "id": "targetin",
+      "name": "Targetin",
+      "logo": "",
+      "roundLogo": false,
+      "description": {
+        "id": "Susun OKR tim per kuartal: tujuan besar dan angka yang membuktikannya. Progres dihitung otomatis setiap kamu update angka terbaru.",
+        "en": "Plan your team's quarterly OKRs: big goals and the numbers that prove them. Progress updates automatically as you enter the latest numbers.",
+        "tr": "Ekibinin çeyreklik OKR'lerini planla: büyük hedefler ve onları kanıtlayan sayılar. Güncel sayıları girdikçe ilerleme otomatik hesaplanır."
+      },
+      "tags": [
+        "OKR",
+        "Target",
+        "Tim"
+      ],
+      "note": "Gratis, bisa langsung dipakai.",
+      "linkUrl": "/tools/targetin",
+      "linkLabel": "Coba sekarang",
+      "external": false,
+      "order": 22,
+      "category": "tim",
+      "status": "live",
+      "featured": false,
+      "short": {
+        "id": "OKR tim dengan progres otomatis.",
+        "en": "Team OKRs with automatic progress.",
+        "tr": "Otomatik ilerlemeli ekip OKR'leri."
+      }
+    },
+    {
+      "id": "valuasiin",
+      "name": "Valuasiin",
+      "logo": "",
+      "roundLogo": false,
+      "description": {
+        "id": "Perkirakan valuasi pre-money startup tahap awal dengan metode Berkus, Scorecard, dan kelipatan pendapatan. Hasilnya kisaran untuk bahan negosiasi.",
+        "en": "Estimate your early-stage pre-money valuation with the Berkus, Scorecard, and revenue multiple methods. Get a range to support negotiations.",
+        "tr": "Erken aşama girişiminin yatırım öncesi değerlemesini Berkus, Scorecard ve gelir çarpanı yöntemleriyle tahmin et. Pazarlık için bir aralık elde et."
+      },
+      "tags": [
+        "Valuasi",
+        "Investor",
+        "Pendanaan"
+      ],
+      "note": "Gratis, bisa langsung dipakai.",
+      "linkUrl": "/tools/valuasiin",
+      "linkLabel": "Coba sekarang",
+      "external": false,
+      "order": 23,
+      "category": "pendanaan",
+      "status": "live",
+      "featured": false,
+      "short": {
+        "id": "Perkiraan valuasi startup tahap awal.",
+        "en": "Early-stage startup valuation estimate.",
+        "tr": "Erken aşama girişim değerleme tahmini."
       }
     }
   ]

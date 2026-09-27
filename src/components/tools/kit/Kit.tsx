@@ -291,12 +291,14 @@ export function Stat({
   sub,
   tone = "neutral",
   big,
+  toneText,
 }: {
   label: string;
   value: string;
   sub?: string;
   tone?: Tone;
   big?: boolean;
+  toneText?: string; // ganti tulisan lencana (bawaan: Sehat / Perlu dicek / Bahaya)
 }) {
   return (
     <div className={`${s.stat} ${big ? s.statBig : ""}`}>
@@ -304,7 +306,7 @@ export function Stat({
       <div className={s.statValue}>{value}</div>
       {(sub || tone !== "neutral") && (
         <div className={s.statSub}>
-          {tone !== "neutral" && <Badge tone={tone} />}
+          {tone !== "neutral" && <Badge tone={tone} text={toneText} />}
           {sub}
         </div>
       )}
