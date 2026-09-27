@@ -80,6 +80,15 @@
         "tr": "Ekip ve Uygulama"
       },
       "order": 9
+    },
+    {
+      "id": "keuangan-pribadi",
+      "label": {
+        "id": "Keuangan Pribadi",
+        "en": "Personal Finance",
+        "tr": "Kişisel Finans"
+      },
+      "order": 10
     }
   ],
   "tools": [
@@ -751,6 +760,35 @@
         "id": "Perkiraan valuasi startup tahap awal.",
         "en": "Early-stage startup valuation estimate.",
         "tr": "Erken aşama girişim değerleme tahmini."
+      }
+    },
+    {
+      "id": "stuney",
+      "name": "Stuney",
+      "logo": "",
+      "roundLogo": false,
+      "description": {
+        "id": "Catat uang saku dan pengeluaran, pisahkan uang per dompet (tunai, GoPay, OVO, bank), atur anggaran bulanan, dan kejar target tabungan. Lengkap dengan streak dan lencana supaya rajin mencatat.",
+        "en": "Track allowance and spending, split money across wallets (cash, e-wallets, bank), set a monthly budget, and reach savings goals. Includes streaks and badges to keep you consistent.",
+        "tr": "Harçlığını ve harcamalarını kaydet, paranı cüzdanlara ayır (nakit, e-cüzdan, banka), aylık bütçe belirle ve birikim hedeflerine ulaş. Düzenli kalman için seri ve rozetler de var."
+      },
+      "tags": [
+        "Uang saku",
+        "Tabungan",
+        "Pelajar"
+      ],
+      "note": "Gratis, bisa langsung dipakai.",
+      "linkUrl": "/tools/stuney",
+      "linkLabel": "Coba sekarang",
+      "external": false,
+      "order": 24,
+      "category": "keuangan-pribadi",
+      "status": "live",
+      "featured": false,
+      "short": {
+        "id": "Catat uang saku, dompet, dan tabungan.",
+        "en": "Track allowance, wallets, and savings.",
+        "tr": "Harçlık, cüzdan ve birikimleri takip et."
       }
     }
   ]
