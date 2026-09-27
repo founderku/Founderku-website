@@ -66,6 +66,56 @@ const ICONS: Record<string, { from: string; to: string; path: React.ReactNode }>
       </>
     ),
   },
+  validasiin: {
+    from: "#8a85b8",
+    to: "#5b5494",
+    path: (
+      <>
+        <path d="M9 18h6M10 21h4" />
+        <path d="M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z" />
+      </>
+    ),
+  },
+  runwayin: {
+    from: "#f2a93e",
+    to: "#d9771f",
+    path: (
+      <>
+        <path d="M3 17l5-5 4 3 7-8" />
+        <path d="M14 7h5v5" />
+      </>
+    ),
+  },
+  unitin: {
+    from: "#2a78d6",
+    to: "#1c5cab",
+    path: (
+      <>
+        <circle cx="12" cy="12" r="8" />
+        <path d="M12 7v10M9.5 9.5c0-1 1.1-1.5 2.5-1.5s2.5.6 2.5 1.7c0 2.6-5 1.4-5 4.1 0 1.1 1.1 1.7 2.5 1.7s2.5-.5 2.5-1.5" />
+      </>
+    ),
+  },
+  sahamin: {
+    from: "#e85f3d",
+    to: "#b8432a",
+    path: (
+      <>
+        <path d="M12 3v9h9" />
+        <path d="M20.5 15A9 9 0 1 1 9 3.5" />
+      </>
+    ),
+  },
+  pitchin: {
+    from: "#1a1730",
+    to: "#4a3aa7",
+    path: (
+      <>
+        <rect x="3" y="4" width="18" height="12" rx="2" />
+        <path d="M12 16v4M8 20h8M7 12l3-3 2 2 4-4" />
+      </>
+    ),
+  },
 };
 
 export function ToolIcon({ id, name, size = 44 }: { id: string; name: string; size?: number }) {

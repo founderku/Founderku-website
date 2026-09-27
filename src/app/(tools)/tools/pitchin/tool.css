@@ -1,0 +1,11 @@
+/* Pitchin: PDF satu slide per halaman, lanskap, tanpa margin putih. */
+@media print {
+  @page {
+    size: 297mm 167mm;
+    margin: 0;
+  }
+  html,
+  body {
+    background: #fff !important;
+  }
+}

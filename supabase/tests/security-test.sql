@@ -173,10 +173,43 @@ do $$ begin
   update public.tool_data set updated_at = now() - interval '1 year' where key = 'notain-draft-v1';
   raise notice 'T41d user ubah waktu simpan sendiri: GAGAL';
 exception when insufficient_privilege then raise notice 'T41d user ubah waktu simpan sendiri: LULUS (ditolak)'; end $$;
+do $$ declare k text; lolos int := 0; begin
+  foreach k in array array['Rahasia-lain', 'ab-x', '../etc-passwd', 'notain', 'notain-', 'notain-Draft', 'fk theme-x', 'x' || repeat('a', 30) || '-v1'] loop
+    begin
+      insert into public.tool_data (user_id, key, value) values (auth.uid(), k, '{}');
+      lolos := lolos + 1;
+    exception when check_violation then null; end;
+  end loop;
+  raise notice 'T42 kunci berformat aneh ditolak: %', case when lolos = 0 then 'LULUS' else 'GAGAL (' || lolos || ' lolos)' end;
+end $$;
+insert into public.tool_data (user_id, key, value) values (auth.uid(), 'runwayin-draft-v1', '{"kas":1}');
+select 'T42b tool baru bisa simpan tanpa ubah database: ' || case when count(*)=1 then 'LULUS' else 'GAGAL' end from public.tool_data where key='runwayin-draft-v1';
+delete from public.tool_data where key = 'runwayin-draft-v1';
+-- batas 100 simpanan per akun (sekarang sudah ada 1: notain-draft-v1)
+insert into public.tool_data (user_id, key, value) select auth.uid(), 'runwayin-t' || g, '{}' from generate_series(1, 99) g;
 do $$ begin
-  insert into public.tool_data (user_id, key, value) values (auth.uid(), 'rahasia-lain', '{}');
-  raise notice 'T42 kunci di luar 5 tools ditolak: GAGAL';
-exception when check_violation then raise notice 'T42 kunci di luar 5 tools ditolak: LULUS'; end $$;
+  insert into public.tool_data (user_id, key, value) values (auth.uid(), 'runwayin-t100', '{}');
+  raise notice 'T42c simpanan ke-101 ditolak: GAGAL';
+exception when check_violation then raise notice 'T42c simpanan ke-101 ditolak: LULUS'; end $$;
+update public.tool_data set value = '{"b":1}' where key = 'runwayin-t5';
+select 'T42d saat penuh, simpanan lama tetap bisa diubah: ' || case when value->>'b'='1' then 'LULUS' else 'GAGAL' end from public.tool_data where key='runwayin-t5';
+insert into public.tool_data (user_id, key, value) values (auth.uid(), 'runwayin-t5', '{"b":2}')
+  on conflict (user_id, key) do update set user_id = excluded.user_id, key = excluded.key, value = excluded.value;
+select 'T42e saat penuh, upsert simpanan lama tetap jalan: ' || case when value->>'b'='2' then 'LULUS' else 'GAGAL' end from public.tool_data where key='runwayin-t5';
+delete from public.tool_data where key like 'runwayin-t%';
+-- batas total 5 MB per akun
+do $$ declare i int := 0; begin
+  loop
+    i := i + 1;
+    insert into public.tool_data (user_id, key, value) values (auth.uid(), 'runwayin-b' || i, to_jsonb(repeat('x', 190000)));
+    exit when i > 40;
+  end loop;
+  raise notice 'T42f total lebih dari 5 MB ditolak: GAGAL';
+exception when check_violation then
+  raise notice 'T42f total lebih dari 5 MB ditolak: %', case when i between 25 and 28 then 'LULUS' else 'GAGAL (berhenti di ' || i || ')' end;
+end $$;
+select 'T42g total data akun tetap di bawah 5 MB: ' || case when sum(octet_length(value::text)) <= 5000000 then 'LULUS' else 'GAGAL' end from public.tool_data;
+delete from public.tool_data where key like 'runwayin-b%';
 do $$ begin
   insert into public.tool_data (user_id, key, value) values (auth.uid(), 'notain-besar', to_jsonb(repeat('x', 210000)));
   raise notice 'T43 data terlalu besar ditolak: GAGAL';

@@ -1,0 +1,136 @@
+/* Slide pitch deck: rasio 16:9, ukuran tulisan ikut lebar slide (cqw)
+   supaya sama persis di layar, HP, dan PDF. */
+.deck {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.cetakSaja {
+  display: none;
+}
+.slide {
+  container-type: inline-size;
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #fff;
+  color: #1a1730;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  font-family: Poppins, system-ui, sans-serif;
+}
+.bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1.4cqw;
+  background: linear-gradient(180deg, #f2a93e, #e85f3d);
+}
+.inner {
+  position: absolute;
+  inset: 7cqw 8cqw 9cqw 9cqw;
+  display: flex;
+  flex-direction: column;
+}
+.kecil {
+  font-size: 2.2cqw;
+  color: rgba(26, 23, 48, 0.5);
+  letter-spacing: 0.08em;
+  margin-bottom: 1.6cqw;
+}
+.judul {
+  font-size: 5.4cqw;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  margin: 0 0 3cqw;
+}
+.dot {
+  color: #f2a93e;
+}
+.poin {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8cqw;
+}
+.poin li {
+  font-size: 2.9cqw;
+  line-height: 1.35;
+  padding-left: 3.4cqw;
+  position: relative;
+}
+.poin li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.9cqw;
+  width: 1.4cqw;
+  height: 1.4cqw;
+  border-radius: 50%;
+  background: #f2a93e;
+}
+.kosong {
+  font-size: 2.6cqw;
+  color: rgba(26, 23, 48, 0.35);
+  margin: 0;
+}
+.kaki {
+  position: absolute;
+  left: 9cqw;
+  right: 8cqw;
+  bottom: 4cqw;
+  font-size: 1.8cqw;
+  color: rgba(26, 23, 48, 0.45);
+}
+.sampul {
+  background: #1a1730;
+  color: #fff;
+}
+.sampul .inner {
+  justify-content: center;
+}
+.sampul .kecil,
+.sampul .kaki {
+  color: rgba(255, 255, 255, 0.6);
+}
+.namaBesar {
+  font-size: 9cqw;
+  font-weight: 600;
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+.tagline {
+  font-size: 3.2cqw;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 2.4cqw 0 0;
+  max-width: 80%;
+  line-height: 1.35;
+}
+@media (max-width: 760px) {
+  .deck {
+    grid-template-columns: 1fr;
+  }
+}
+@media print {
+  .deck,
+  .cetakSaja {
+    display: block;
+  }
+  .slide {
+    width: 100%;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    break-after: page;
+    page-break-after: always;
+  }
+  .slide:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+}

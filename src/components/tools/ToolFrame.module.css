@@ -157,3 +157,35 @@
     display: none !important;
   }
 }
+
+/* Tools baru (template kit) ikut tema terang/gelap situs. Tools lama tetap
+   memakai warna terang di atas karena tampilannya memang terang. */
+.themed {
+  color: var(--text);
+  border-bottom-color: var(--line);
+}
+.themed .balik,
+.themed .teks {
+  color: var(--soft);
+}
+.themed .balik:hover {
+  color: var(--text);
+}
+.themed .garis,
+.themed .redup {
+  color: var(--faint);
+}
+.themed .aksi {
+  background: var(--btn);
+  color: var(--btn-text);
+}
+.themed .ok {
+  color: #1baf7a;
+}
+.themed .gagal {
+  color: var(--coral);
+}
+.tungguThemed {
+  color: var(--faint);
+  background: var(--bg);
+}

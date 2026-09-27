@@ -40,6 +40,7 @@ drop function if exists public.admin_set_page_status(uuid, text, text) cascade;
 drop function if exists public.activate_subscription(text, numeric) cascade;
 drop function if exists public.start_trial(uuid, integer) cascade;
 drop function if exists public.tool_data_touch() cascade;
+drop function if exists public.tool_data_limit() cascade;
 drop function if exists public.current_user_has_pro() cascade;
 
 -- ============================================================
@@ -502,15 +503,18 @@ create policy "Semua orang bisa baca blocklist"
 -- page_click_log: sengaja tanpa policy (cuma lewat increment_page_click)
 
 -- ============================================================
--- TABEL: tool_data (data 5 tools yang "disimpan ke akun")
+-- TABEL: tool_data (data tools yang "disimpan ke akun")
 -- Satu baris = satu kunci penyimpanan tool (misal notain-draft-v1)
 -- milik satu user. Isinya JSON yang sama persis dengan yang disimpan
 -- tool di browser (localStorage).
+-- Kunci cukup berformat "<idtool>-<nama>", jadi tool baru bisa langsung
+-- menyimpan tanpa ubah database. Supaya tabel ini tidak jadi gudang
+-- bebas, tiap akun dibatasi (lihat tool_data_limit di bawah).
 -- ============================================================
 create table public.tool_data (
   user_id uuid not null references public.profiles(id) on delete cascade,
   key text not null
-    check (key ~ '^(notain|pajakin|kontrakin|jalanin|sehatin)-[a-z0-9-]{1,40}$'),
+    check (key ~ '^[a-z][a-z0-9]{2,23}-[a-z0-9-]{1,40}$'),
   value jsonb not null
     check (octet_length(value::text) <= 200000),
   updated_at timestamptz not null default now(),
@@ -533,6 +537,42 @@ create trigger tool_data_touch
   before insert or update on public.tool_data
   for each row execute function public.tool_data_touch();
 
+-- Batas per akun: maksimal 100 kunci dan total 5 MB data tools.
+-- Dikunci per akun (advisory lock) supaya dua simpanan bersamaan tidak
+-- bisa sama-sama lolos melewati batas.
+create function public.tool_data_limit()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  jumlah integer;
+  ukuran bigint;
+begin
+  perform pg_advisory_xact_lock(hashtextextended('tool_data:' || new.user_id::text, 0));
+  select count(*), coalesce(sum(octet_length(value::text)), 0)
+    into jumlah, ukuran
+    from public.tool_data
+    where user_id = new.user_id
+      and not (tg_op = 'UPDATE' and user_id = old.user_id and key = old.key)
+      and key <> new.key;
+  if jumlah >= 100 then
+    raise exception 'Batas data tools tercapai (maksimal 100 simpanan per akun)'
+      using errcode = 'check_violation';
+  end if;
+  if ukuran + octet_length(new.value::text) > 5000000 then
+    raise exception 'Batas ukuran data tools tercapai (maksimal 5 MB per akun)'
+      using errcode = 'check_violation';
+  end if;
+  return new;
+end;
+$$;
+
+create trigger tool_data_limit
+  before insert or update on public.tool_data
+  for each row execute function public.tool_data_limit();
+
 -- Apakah user yang sedang login punya trial/Pro aktif (dipakai policy).
 -- Tanpa parameter, jadi gak bisa dipakai ngecek akun orang lain.
 create function public.current_user_has_pro()
@@ -546,6 +586,7 @@ as $$
 $$;
 
 revoke execute on function public.tool_data_touch() from public, anon, authenticated;
+revoke execute on function public.tool_data_limit() from public, anon, authenticated;
 revoke execute on function public.current_user_has_pro() from public, anon;
 grant execute on function public.current_user_has_pro() to authenticated;
 
