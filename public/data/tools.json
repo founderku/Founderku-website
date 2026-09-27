@@ -46,13 +46,22 @@
       "order": 5
     },
     {
+      "id": "produk",
+      "label": {
+        "id": "Produk & MVP",
+        "en": "Product & MVP",
+        "tr": "Ürün ve MVP"
+      },
+      "order": 6
+    },
+    {
       "id": "keuangan-startup",
       "label": {
         "id": "Keuangan Startup",
         "en": "Startup Finance",
         "tr": "Girişim Finansı"
       },
-      "order": 6
+      "order": 7
     },
     {
       "id": "pendanaan",
@@ -61,7 +70,7 @@
         "en": "Fundraising",
         "tr": "Yatırım Toplama"
       },
-      "order": 7
+      "order": 8
     }
   ],
   "tools": [
@@ -385,6 +394,180 @@
         "id": "Bikin pitch deck 10 slide, siap PDF.",
         "en": "Build a 10-slide pitch deck, PDF ready.",
         "tr": "PDF'e hazır 10 slaytlık sunum hazırla."
+      }
+    },
+    {
+      "id": "wawancarain",
+      "name": "Wawancarain",
+      "logo": "",
+      "roundLogo": false,
+      "description": {
+        "id": "Panduan wawancara calon pelanggan: daftar pertanyaan yang tidak menggiring, catatan tiap responden, dan rangkuman otomatis apakah masalahnya benar-benar ada.",
+        "en": "A customer interview guide: non-leading questions, notes for each respondent, and an automatic summary of whether the problem is real.",
+        "tr": "Müşteri görüşme rehberi: yönlendirmeyen sorular, her katılımcı için notlar ve sorunun gerçekten var olup olmadığına dair otomatik özet."
+      },
+      "tags": [
+        "Wawancara",
+        "Validasi",
+        "Startup"
+      ],
+      "note": "Gratis, bisa langsung dipakai.",
+      "linkUrl": "/tools/wawancarain",
+      "linkLabel": "Coba sekarang",
+      "external": false,
+      "order": 12,
+      "category": "validasi",
+      "status": "live",
+      "featured": false,
+      "short": {
+        "id": "Panduan dan catatan wawancara calon pelanggan.",
+        "en": "Customer interview guide and notes.",
+        "tr": "Müşteri görüşmesi rehberi ve notları."
+      }
+    },
+    {
+      "id": "pasarin",
+      "name": "Pasarin",
+      "logo": "",
+      "roundLogo": false,
+      "description": {
+        "id": "Hitung ukuran pasar startup dari bawah: total pasar (TAM), pasar yang bisa dijangkau (SAM), dan target realistis (SOM), lengkap dengan cek apakah targetnya masuk akal.",
+        "en": "Size your startup market bottom-up: total market (TAM), serviceable market (SAM), and realistic target (SOM), with a check on whether the target is reasonable.",
+        "tr": "Girişiminin pazarını aşağıdan yukarıya hesapla: toplam pazar (TAM), erişilebilir pazar (SAM) ve gerçekçi hedef (SOM), hedefin makul olup olmadığı kontrolüyle."
+      },
+      "tags": [
+        "TAM SAM SOM",
+        "Pasar",
+        "Startup"
+      ],
+      "note": "Gratis, bisa langsung dipakai.",
+      "linkUrl": "/tools/pasarin",
+      "linkLabel": "Coba sekarang",
+      "external": false,
+      "order": 13,
+      "category": "validasi",
+      "status": "live",
+      "featured": false,
+      "short": {
+        "id": "Hitung TAM, SAM, dan SOM pasar kamu.",
+        "en": "Calculate your TAM, SAM, and SOM.",
+        "tr": "TAM, SAM ve SOM'unu hesapla."
+      }
+    },
+    {
+      "id": "fiturin",
+      "name": "Fiturin",
+      "logo": "",
+      "roundLogo": false,
+      "description": {
+        "id": "Tentukan fitur mana yang masuk MVP pakai skor RICE (jangkauan, dampak, keyakinan, usaha) dan kapasitas tim kamu.",
+        "en": "Decide which features go into your MVP using RICE scores (reach, impact, confidence, effort) and your team capacity.",
+        "tr": "RICE puanı (erişim, etki, güven, efor) ve ekip kapasitenle MVP'ye hangi özelliklerin gireceğine karar ver."
+      },
+      "tags": [
+        "MVP",
+        "RICE",
+        "Produk"
+      ],
+      "note": "Gratis, bisa langsung dipakai.",
+      "linkUrl": "/tools/fiturin",
+      "linkLabel": "Coba sekarang",
+      "external": false,
+      "order": 14,
+      "category": "produk",
+      "status": "live",
+      "featured": false,
+      "short": {
+        "id": "Prioritas fitur MVP dengan skor RICE.",
+        "en": "Prioritize MVP features with RICE.",
+        "tr": "RICE ile MVP özelliklerini önceliklendir."
+      }
+    },
+    {
+      "id": "proyeksiin",
+      "name": "Proyeksiin",
+      "logo": "",
+      "roundLogo": false,
+      "description": {
+        "id": "Proyeksi keuangan 3 tahun untuk bisnis langganan: pelanggan, pendapatan, biaya, kapan mulai untung, dan berapa dana yang dibutuhkan.",
+        "en": "A 3-year financial projection for subscription businesses: customers, revenue, costs, break-even month, and how much funding you need.",
+        "tr": "Abonelik işletmeleri için 3 yıllık finansal projeksiyon: müşteriler, gelir, giderler, başa baş ayı ve gereken yatırım."
+      },
+      "tags": [
+        "Proyeksi",
+        "Keuangan",
+        "Startup"
+      ],
+      "note": "Gratis, bisa langsung dipakai.",
+      "linkUrl": "/tools/proyeksiin",
+      "linkLabel": "Coba sekarang",
+      "external": false,
+      "order": 15,
+      "category": "keuangan-startup",
+      "status": "live",
+      "featured": false,
+      "short": {
+        "id": "Proyeksi keuangan startup 3 tahun.",
+        "en": "A 3-year startup financial projection.",
+        "tr": "3 yıllık girişim finansal projeksiyonu."
+      }
+    },
+    {
+      "id": "investorin",
+      "name": "Investorin",
+      "logo": "",
+      "roundLogo": false,
+      "description": {
+        "id": "Pantau galang dana: daftar investor, tahapnya dari target sampai deal, perkiraan nilai investasi, dan siapa yang perlu segera di-follow up.",
+        "en": "Track your fundraise: investor list, stages from target to deal, expected check sizes, and who needs a follow-up.",
+        "tr": "Yatırım turunu takip et: yatırımcı listesi, hedeften anlaşmaya aşamalar, beklenen yatırım tutarları ve kimle tekrar iletişime geçmen gerektiği."
+      },
+      "tags": [
+        "Investor",
+        "Fundraising",
+        "Pendanaan"
+      ],
+      "note": "Gratis, bisa langsung dipakai.",
+      "linkUrl": "/tools/investorin",
+      "linkLabel": "Coba sekarang",
+      "external": false,
+      "order": 16,
+      "category": "pendanaan",
+      "status": "live",
+      "featured": false,
+      "short": {
+        "id": "Pelacak galang dana dan daftar investor.",
+        "en": "Fundraising tracker and investor list.",
+        "tr": "Yatırım takibi ve yatırımcı listesi."
+      }
+    },
+    {
+      "id": "laporin",
+      "name": "Laporin",
+      "logo": "",
+      "roundLogo": false,
+      "description": {
+        "id": "Susun laporan bulanan untuk investor dan mentor: metrik, capaian, tantangan, dan bantuan yang dibutuhkan. Hasilnya teks rapi siap disalin ke email.",
+        "en": "Write monthly updates for investors and mentors: metrics, wins, challenges, and asks. Get clean text ready to paste into an email.",
+        "tr": "Yatırımcılar ve mentorlar için aylık rapor hazırla: metrikler, başarılar, zorluklar ve ihtiyaçlar. E-postaya yapıştırmaya hazır düzenli metin al."
+      },
+      "tags": [
+        "Investor update",
+        "Laporan",
+        "Pendanaan"
+      ],
+      "note": "Gratis, bisa langsung dipakai.",
+      "linkUrl": "/tools/laporin",
+      "linkLabel": "Coba sekarang",
+      "external": false,
+      "order": 17,
+      "category": "pendanaan",
+      "status": "live",
+      "featured": false,
+      "short": {
+        "id": "Laporan bulanan untuk investor, siap kirim.",
+        "en": "Monthly investor updates, ready to send.",
+        "tr": "Gönderime hazır aylık yatırımcı raporu."
       }
     }
   ]

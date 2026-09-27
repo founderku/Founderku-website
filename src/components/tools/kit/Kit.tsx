@@ -123,7 +123,9 @@ export function NumInput({
   hideLabel?: boolean;
 }) {
   const id = useId();
-  const tampil = (n: number) => (n === 0 ? "" : nf(n, money ? 0 : digits));
+  // Bilangan bulat (Rupiah / jumlah): titik = pemisah ribuan
+  const bulat = money || digits === 0;
+  const tampil = (n: number) => (n === 0 ? "" : nf(n, bulat ? 0 : digits));
   const [teks, setTeks] = useState(() => tampil(value));
   const [nilaiLalu, setNilaiLalu] = useState(value);
   if (value !== nilaiLalu) {
@@ -138,17 +140,17 @@ export function NumInput({
         <input
           id={id}
           className={s.input}
-          inputMode={money || digits === 0 ? "numeric" : "decimal"}
+          inputMode={bulat ? "numeric" : "decimal"}
           value={teks}
           placeholder="0"
           onChange={(e) => {
             let raw = e.target.value;
-            if (money) raw = raw.replace(/[^\d]/g, "");
+            if (bulat) raw = raw.replace(/[^\d]/g, "");
             else raw = raw.replace(/[^\d,.-]/g, "").replace(".", ",");
             let n = parseAngka(raw);
             if (min !== undefined && n < min) n = min;
             if (max !== undefined && n > max) n = max;
-            setTeks(money ? (raw ? nf(n) : "") : raw);
+            setTeks(bulat ? (raw ? nf(n) : "") : raw);
             onChange(n);
           }}
           onBlur={() => setTeks(tampil(value))}
@@ -412,6 +414,64 @@ export function RemoveBtn({ onClick, label }: { onClick: () => void; label: stri
         <path d="M6 6l12 12M18 6L6 18" />
       </svg>
     </button>
+  );
+}
+
+export function Select<T extends string | number>({
+  label,
+  hint,
+  value,
+  onChange,
+  options,
+  hideLabel,
+}: {
+  label: string;
+  hint?: string;
+  value: T;
+  onChange: (v: T) => void;
+  options: { v: T; label: string }[];
+  hideLabel?: boolean;
+}) {
+  const id = useId();
+  return (
+    <Field label={label} hint={hint} htmlFor={id} hideLabel={hideLabel}>
+      <select
+        id={id}
+        className={`${s.input} ${s.inputSolo} ${s.select}`}
+        value={String(value)}
+        onChange={(e) => {
+          const pilih = options.find((o) => String(o.v) === e.target.value);
+          if (pilih) onChange(pilih.v);
+        }}
+      >
+        {options.map((o) => (
+          <option key={String(o.v)} value={String(o.v)}>
+            {o.label}
+          </option>
+        ))}
+      </select>
+    </Field>
+  );
+}
+
+export function DateInput({
+  label,
+  value,
+  onChange,
+  hideLabel,
+  type = "date",
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  hideLabel?: boolean;
+  type?: "date" | "month";
+}) {
+  const id = useId();
+  return (
+    <Field label={label} htmlFor={id} hideLabel={hideLabel}>
+      <input id={id} type={type} className={`${s.input} ${s.inputSolo}`} value={value} onChange={(e) => onChange(e.target.value)} />
+    </Field>
   );
 }
 
