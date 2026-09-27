@@ -22,10 +22,13 @@ export function ToolFrame({
   toolId,
   toolName,
   children,
+  themed = false,
 }: {
   toolId: ToolId;
   toolName: string;
   children: React.ReactNode;
+  // true untuk tools dari template kit (ikut tema terang/gelap)
+  themed?: boolean;
 }) {
   const [siap, setSiap] = useState(false);
   const [status, setStatus] = useState<StatusSinkron>("memuat");
@@ -74,7 +77,7 @@ export function ToolFrame({
       <link rel="stylesheet" href="/assets/fk-nav.css" precedence="default" />
       <header className="nav no-print" id="nav" data-fk-nav suppressHydrationWarning />
       <FkNavMount />
-      <div className={`${styles.bar} no-print`} data-tool-bar>
+      <div className={`${styles.bar} ${themed ? styles.themed : ""} no-print`} data-tool-bar>
         <nav className={styles.kiri} aria-label="Lokasi">
           <a href="/tools.html" className={styles.balik}>
             Tools
@@ -120,7 +123,7 @@ export function ToolFrame({
       {siap ? (
         children
       ) : (
-        <div className={styles.tunggu} aria-busy="true">
+        <div className={`${styles.tunggu} ${themed ? styles.tungguThemed : ""}`} aria-busy="true">
           <span className={styles.putar} aria-hidden="true" />
           Memuat {toolName}...
         </div>

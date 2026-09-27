@@ -23,6 +23,7 @@ interface ToolItem {
   linkUrl: string;
   order?: number;
   status?: string;
+  short?: { id?: string } | string;
 }
 
 // Tools yang sudah pindah ke dalam aplikasi founderku.com. Tools lain
@@ -57,6 +58,9 @@ const STATUS_LABEL: Record<SubscriptionRow["status"], string> = {
 const rise = (i: number) => ({ animationDelay: `${80 + i * 90}ms` });
 
 function toolDesc(tool: ToolItem): string {
+  // Deskripsi singkat dari admin (tools.json) diutamakan
+  const pendek = typeof tool.short === "string" ? tool.short : tool.short?.id;
+  if (pendek) return pendek;
   if (TOOL_SHORT[tool.id]) return TOOL_SHORT[tool.id];
   const d = typeof tool.description === "string" ? tool.description : tool.description.id;
   return d.length > 70 ? d.slice(0, 68).trimEnd() + "..." : d;
@@ -198,7 +202,9 @@ export default async function AkunPage({
           </p>
           <div className="grid sm:grid-cols-2 gap-3">
             {tools.map((tool, i) => {
-              const internal = INTERNAL_TOOL_URLS[tool.id];
+              // Tool baru di /tools/<id> otomatis dianggap bagian aplikasi
+              const internal =
+                INTERNAL_TOOL_URLS[tool.id] ?? (tool.linkUrl?.startsWith("/tools/") ? tool.linkUrl : undefined);
               const className =
                 "fk-rise group flex items-center gap-3.5 rounded-2xl border border-border bg-white p-3.5 transition-all duration-300 hover:-translate-y-1 hover:border-amber/60 hover:shadow-[0_14px_30px_-18px_rgba(225,92,62,0.55)]";
               const inner = (

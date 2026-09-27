@@ -1,0 +1,770 @@
+/* Template tampilan tools baru. Token warna dari fk-nav.css (--bg, --card,
+   --text, --soft, --faint, --line, --orange, dst) supaya ikut tema situs. */
+
+.page {
+  min-height: calc(100vh - 120px);
+  background: var(--bg);
+  color: var(--text);
+  font-family: Poppins, system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.page *,
+.page *::before,
+.page *::after {
+  box-sizing: border-box;
+}
+.wrap {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 36px 24px 90px;
+}
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+.eyebrow {
+  font-size: 13.5px;
+  color: var(--faint);
+  margin-bottom: 10px;
+}
+.title {
+  font-size: clamp(34px, 4.4vw, 54px);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+  margin: 0;
+}
+.dot {
+  color: var(--orange);
+}
+.desc {
+  font-size: 16px;
+  color: var(--soft);
+  line-height: 1.6;
+  max-width: 62ch;
+  margin: 12px 0 0;
+}
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+.main,
+.aside {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+.aside {
+  position: sticky;
+  top: 16px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 22px;
+  box-shadow: var(--shadow);
+}
+.cardSoft {
+  background: var(--panel);
+  box-shadow: none;
+}
+.cardHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.cardTitle {
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.cardHint {
+  font-size: 14px;
+  color: var(--faint);
+  margin: 4px 0 0;
+  line-height: 1.5;
+}
+
+.grid2,
+.grid3 {
+  display: grid;
+  gap: 14px;
+}
+.grid2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.grid3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.label {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--soft);
+}
+.hint {
+  font-size: 12.5px;
+  color: var(--faint);
+  line-height: 1.45;
+}
+.inputBox {
+  display: flex;
+  align-items: center;
+  background: var(--bg);
+  border: 1px solid var(--line-2);
+  border-radius: 14px;
+  padding: 0 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.inputBox:focus-within,
+.inputSolo:focus {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(242, 169, 62, 0.2);
+  outline: none;
+}
+.input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 15.5px;
+  padding: 11px 0;
+  font-variant-numeric: tabular-nums;
+}
+.input:focus {
+  outline: none;
+}
+.input::placeholder {
+  color: var(--faint);
+}
+.inputSolo {
+  background: var(--bg);
+  border: 1px solid var(--line-2);
+  border-radius: 14px;
+  padding: 11px 13px;
+  width: 100%;
+}
+.area {
+  resize: vertical;
+  line-height: 1.55;
+  min-height: 84px;
+}
+.affix {
+  font-size: 14px;
+  color: var(--faint);
+  padding: 0 4px;
+  white-space: nowrap;
+}
+
+.btn {
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 999px;
+  padding: 11px 20px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  transition: transform 0.2s, background-color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+.btn:active {
+  transform: scale(0.97);
+}
+.btn:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+}
+.small {
+  font-size: 14px;
+  padding: 8px 16px;
+}
+.solid {
+  background: var(--btn);
+  color: var(--btn-text);
+}
+.line {
+  background: var(--card);
+  color: var(--text);
+  border-color: var(--line-2);
+}
+.line:hover {
+  border-color: var(--text);
+}
+.ghost {
+  background: transparent;
+  color: var(--soft);
+}
+.ghost:hover {
+  color: var(--text);
+  background: var(--panel-2);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+  border-radius: 18px;
+  background: var(--panel);
+  min-width: 0;
+}
+.statBig {
+  padding: 20px;
+}
+.statLabel {
+  font-size: 13.5px;
+  color: var(--soft);
+}
+.statValue {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.statBig .statValue {
+  font-size: clamp(30px, 3.4vw, 42px);
+}
+.statSub {
+  font-size: 13px;
+  color: var(--faint);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 3px 10px 3px 4px;
+  border-radius: 999px;
+}
+.badge i {
+  font-style: normal;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  color: #fff;
+}
+.b_good {
+  background: rgba(27, 175, 122, 0.14);
+  color: #0f7a54;
+}
+.b_good i {
+  background: #1baf7a;
+}
+.b_warn {
+  background: rgba(242, 169, 62, 0.18);
+  color: #8a5608;
+}
+.b_warn i {
+  background: #d98a14;
+}
+.b_bad {
+  background: rgba(227, 73, 72, 0.14);
+  color: #b3302f;
+}
+.b_bad i {
+  background: #e34948;
+}
+.b_neutral {
+  background: var(--panel-2);
+  color: var(--soft);
+}
+.b_neutral i {
+  background: var(--purple);
+}
+
+.verdict {
+  border-radius: 18px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid var(--line);
+}
+.v_good {
+  background: rgba(27, 175, 122, 0.07);
+}
+.v_warn {
+  background: rgba(242, 169, 62, 0.09);
+}
+.v_bad {
+  background: rgba(227, 73, 72, 0.07);
+}
+.v_neutral {
+  background: var(--panel);
+}
+.verdictBody {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--soft);
+}
+.verdictBody p {
+  margin: 0 0 6px;
+}
+.verdictBody ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.meter {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--panel-2);
+  overflow: hidden;
+}
+.meterFill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--orange), var(--coral));
+  transition: width 0.4s;
+}
+
+.scale {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.scale:last-child {
+  border-bottom: 0;
+}
+.scaleLabel {
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+.scaleRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.scaleEnd {
+  font-size: 12px;
+  color: var(--faint);
+}
+.scaleBtn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--line-2);
+  background: var(--card);
+  color: var(--soft);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.scaleBtn:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+}
+.scaleOn {
+  background: var(--btn);
+  color: var(--btn-text);
+  border-color: var(--btn);
+}
+
+.tabs {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--panel-2);
+  margin-bottom: 16px;
+}
+.tab {
+  border: 0;
+  background: transparent;
+  color: var(--soft);
+  font: inherit;
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.tabOn {
+  background: var(--card);
+  color: var(--text);
+  box-shadow: 0 3px 8px -5px rgba(14, 12, 26, 0.4);
+}
+
+.note {
+  font-size: 13px;
+  color: var(--faint);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.remove {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid var(--line-2);
+  background: var(--card);
+  color: var(--faint);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.remove:hover {
+  color: var(--coral);
+  border-color: var(--coral);
+}
+
+/* Baris daftar (misal pengeluaran, pemegang saham) */
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.row {
+  display: grid;
+  gap: 10px;
+  align-items: end;
+}
+
+/* Tabel hasil */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+.table th,
+.table td {
+  text-align: right;
+  padding: 9px 8px;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+.table th:first-child,
+.table td:first-child {
+  text-align: left;
+  white-space: normal;
+}
+.table th {
+  font-weight: 500;
+  color: var(--faint);
+  font-size: 12.5px;
+}
+.tableWrap {
+  overflow-x: auto;
+  margin: 0 -4px;
+  padding: 0 4px;
+}
+
+@media (max-width: 960px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+  .aside {
+    position: static;
+  }
+}
+@media (max-width: 600px) {
+  .wrap {
+    padding: 24px 16px 70px;
+  }
+  .grid2,
+  .grid3 {
+    grid-template-columns: 1fr;
+  }
+  .card {
+    padding: 18px;
+    border-radius: 20px;
+  }
+  .head {
+    margin-bottom: 20px;
+  }
+}
+
+@media print {
+  .page {
+    background: #fff;
+    color: #111;
+    min-height: 0;
+  }
+  .wrap {
+    max-width: none;
+    padding: 0;
+  }
+  .split {
+    grid-template-columns: 1fr;
+  }
+  .aside {
+    position: static;
+  }
+  .card {
+    box-shadow: none;
+    border-color: #ddd;
+    background: #fff;
+    break-inside: avoid;
+  }
+  .inputBox,
+  .inputSolo {
+    border-color: #ccc;
+    background: #fff;
+  }
+  .stat {
+    background: #f5f4f7;
+  }
+}
+
+/* Mode gelap: warna teks lencana dibuat lebih terang */
+@media (prefers-color-scheme: dark) {
+  :global(:root:not([data-theme="light"])) .b_good { color: #6fd9ae; }
+  :global(:root:not([data-theme="light"])) .b_warn { color: #f5c16e; }
+  :global(:root:not([data-theme="light"])) .b_bad { color: #f08c8b; }
+}
+:global(:root[data-theme="dark"]) .b_good { color: #6fd9ae; }
+:global(:root[data-theme="dark"]) .b_warn { color: #f5c16e; }
+:global(:root[data-theme="dark"]) .b_bad { color: #f08c8b; }
+
+.page {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ---------- Grafik ---------- */
+/* Palet kategori (sudah divalidasi aman buta warna); urutan slot tetap. */
+.viz {
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100; --s5: #e87ba4; --s6: #4a3aa7;
+  --grid: rgba(26, 23, 48, 0.08); --axis: rgba(26, 23, 48, 0.5);
+  position: relative;
+}
+@media (prefers-color-scheme: dark) {
+  :global(:root:not([data-theme="light"])) .viz {
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; --s6: #9085e9;
+    --grid: rgba(255, 255, 255, 0.08); --axis: rgba(255, 255, 255, 0.55);
+  }
+}
+:global(:root[data-theme="dark"]) .viz {
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; --s5: #d55181; --s6: #9085e9;
+  --grid: rgba(255, 255, 255, 0.08); --axis: rgba(255, 255, 255, 0.55);
+}
+.viz svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.vizText {
+  font-size: 12px;
+  fill: var(--axis);
+  font-family: inherit;
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  font-size: 13px;
+  color: var(--soft);
+  margin-bottom: 10px;
+}
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.legend i {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+  display: block;
+}
+.tip {
+  position: absolute;
+  pointer-events: none;
+  background: var(--card);
+  border: 1px solid var(--line-2);
+  border-radius: 12px;
+  padding: 8px 11px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text);
+  box-shadow: var(--shadow);
+  white-space: nowrap;
+  z-index: 3;
+  transform: translate(-50%, calc(-100% - 10px));
+}
+.tip b {
+  font-weight: 600;
+}
+.tip span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.tip i {
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+  display: block;
+}
+.barRow {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: var(--soft);
+}
+.barTrack {
+  display: flex;
+  gap: 2px;
+  height: 26px;
+}
+.barSeg {
+  height: 100%;
+  min-width: 2px;
+  cursor: default;
+}
+.barSeg:first-child {
+  border-radius: 4px 0 0 4px;
+}
+.barSeg:last-child {
+  border-radius: 0 4px 4px 0;
+}
+.barSeg:only-child {
+  border-radius: 4px;
+}
+@media (max-width: 600px) {
+  .barRow {
+    grid-template-columns: 78px 1fr;
+  }
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14.5px;
+  cursor: pointer;
+  user-select: none;
+}
+.toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.switch {
+  width: 42px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--line-2);
+  position: relative;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+}
+.switch::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s;
+}
+.toggle input:checked + .switch {
+  background: var(--orange);
+}
+.toggle input:checked + .switch::after {
+  transform: translateX(18px);
+}
+.toggle input:focus-visible + .switch {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+}
+.addBtn {
+  align-self: flex-start;
+}
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Baris daftar: nama + angka + tombol hapus. Di HP nama di baris sendiri. */
+.rowLine {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: end;
+}
+@media (max-width: 600px) {
+  .rowLine {
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .rowLine > :first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media print {
+  :global(.no-print) {
+    display: none !important;
+  }
+}
+
+/* Latar seluruh halaman ikut tema (area di luar bar dan konten) */
+:global(body):has(.page) {
+  background: var(--bg);
+}
+@media print {
+  :global(body):has(.page) {
+    background: #fff;
+  }
+}

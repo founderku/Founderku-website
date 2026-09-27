@@ -1,5 +1,4 @@
-// "Simpan ke akun" buat 5 tools (Notain, Pajakin, Kontrakin, Jalanin,
-// Sehatin).
+// "Simpan ke akun" buat tools Founderku (daftarnya di registry.ts).
 //
 // Cara kerjanya:
 // - Tools tetap menyimpan ke localStorage browser seperti biasa (jadi
@@ -20,9 +19,9 @@
 // - synced: kunci yang terakhir kali sama persis dengan data di akun.
 
 import { createClient } from "@/lib/supabase/client";
+import { TOOL_IDS, type ToolId } from "./registry";
 
-export const TOOL_IDS = ["notain", "pajakin", "kontrakin", "jalanin", "sehatin"] as const;
-export type ToolId = (typeof TOOL_IDS)[number];
+export { TOOL_IDS, type ToolId };
 
 const META_KEY = "fk-sync-meta";
 const TUNDA_MS = 1200;
@@ -77,7 +76,7 @@ function buang(list: string[], key: string) {
   return list.filter((k) => k !== key);
 }
 
-// Semua kunci localStorage milik 5 tools
+// Semua kunci localStorage milik tools
 function semuaKunciToolLokal(): string[] {
   const hasil: string[] = [];
   for (let i = 0; i < window.localStorage.length; i++) {

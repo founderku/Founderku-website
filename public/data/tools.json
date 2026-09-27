@@ -35,6 +35,33 @@
         "tr": "İş ve Planlama"
       },
       "order": 4
+    },
+    {
+      "id": "validasi",
+      "label": {
+        "id": "Validasi & Riset",
+        "en": "Validation & Research",
+        "tr": "Doğrulama ve Araştırma"
+      },
+      "order": 5
+    },
+    {
+      "id": "keuangan-startup",
+      "label": {
+        "id": "Keuangan Startup",
+        "en": "Startup Finance",
+        "tr": "Girişim Finansı"
+      },
+      "order": 6
+    },
+    {
+      "id": "pendanaan",
+      "label": {
+        "id": "Pendanaan",
+        "en": "Fundraising",
+        "tr": "Yatırım Toplama"
+      },
+      "order": 7
     }
   ],
   "tools": [
@@ -213,6 +240,151 @@
         "id": "Cek kesehatan usahamu di 5 aspek penting.",
         "en": "Check your business health across 5 key areas.",
         "tr": "İşinin sağlığını 5 önemli alanda kontrol et."
+      }
+    },
+    {
+      "id": "validasiin",
+      "name": "Validasiin",
+      "logo": "",
+      "roundLogo": false,
+      "description": {
+        "id": "Rangkum ide startup kamu dalam Lean Canvas satu halaman, lalu cek seberapa siap ide itu diuji ke pasar lewat 10 pertanyaan. Gratis, bisa dicetak jadi PDF.",
+        "en": "Summarize your startup idea on a one-page Lean Canvas, then check how ready it is to test with 10 questions. Free, printable to PDF.",
+        "tr": "Girişim fikrini tek sayfalık Lean Canvas'ta özetle, ardından 10 soruyla pazarda test etmeye ne kadar hazır olduğunu kontrol et. Ücretsiz, PDF olarak yazdırılabilir."
+      },
+      "tags": [
+        "Lean Canvas",
+        "Validasi",
+        "Startup"
+      ],
+      "note": "Gratis, bisa langsung dipakai.",
+      "linkUrl": "/tools/validasiin",
+      "linkLabel": "Coba sekarang",
+      "external": false,
+      "order": 7,
+      "category": "validasi",
+      "status": "live",
+      "featured": false,
+      "short": {
+        "id": "Lean Canvas + skor kesiapan ide startup.",
+        "en": "Lean Canvas + startup idea readiness score.",
+        "tr": "Lean Canvas + girişim fikri hazırlık puanı."
+      }
+    },
+    {
+      "id": "runwayin",
+      "name": "Runwayin",
+      "logo": "",
+      "roundLogo": false,
+      "description": {
+        "id": "Hitung berapa bulan lagi uang startup kamu cukup, kapan kas habis, dan simulasikan skenario seperti rekrut orang baru atau pendanaan masuk.",
+        "en": "Calculate how many months your startup cash will last, when it runs out, and simulate scenarios like new hires or incoming funding.",
+        "tr": "Girişiminin nakdinin kaç ay yeteceğini, ne zaman biteceğini hesapla; yeni işe alım veya gelen yatırım gibi senaryoları simüle et."
+      },
+      "tags": [
+        "Runway",
+        "Burn rate",
+        "Startup"
+      ],
+      "note": "Gratis, bisa langsung dipakai.",
+      "linkUrl": "/tools/runwayin",
+      "linkLabel": "Coba sekarang",
+      "external": false,
+      "order": 8,
+      "category": "keuangan-startup",
+      "status": "live",
+      "featured": true,
+      "short": {
+        "id": "Hitung runway dan burn rate startup.",
+        "en": "Calculate your startup runway and burn rate.",
+        "tr": "Girişiminin runway ve harcama hızını hesapla."
+      }
+    },
+    {
+      "id": "unitin",
+      "name": "Unitin",
+      "logo": "",
+      "roundLogo": false,
+      "description": {
+        "id": "Cek unit ekonomi startup: biaya dapat 1 pelanggan (CAC), nilai 1 pelanggan (LTV), rasio LTV:CAC, dan berapa bulan biaya itu balik.",
+        "en": "Check your startup unit economics: customer acquisition cost (CAC), customer lifetime value (LTV), LTV:CAC ratio, and payback months.",
+        "tr": "Girişiminin birim ekonomisini kontrol et: müşteri edinme maliyeti (CAC), müşteri yaşam boyu değeri (LTV), LTV:CAC oranı ve geri ödeme süresi."
+      },
+      "tags": [
+        "CAC",
+        "LTV",
+        "Startup"
+      ],
+      "note": "Gratis, bisa langsung dipakai.",
+      "linkUrl": "/tools/unitin",
+      "linkLabel": "Coba sekarang",
+      "external": false,
+      "order": 9,
+      "category": "keuangan-startup",
+      "status": "live",
+      "featured": false,
+      "short": {
+        "id": "Cek CAC, LTV, dan balik modal per pelanggan.",
+        "en": "Check CAC, LTV, and payback per customer.",
+        "tr": "Müşteri başına CAC, LTV ve geri ödemeyi kontrol et."
+      }
+    },
+    {
+      "id": "sahamin",
+      "name": "Sahamin",
+      "logo": "",
+      "roundLogo": false,
+      "description": {
+        "id": "Simulasikan kepemilikan saham (cap table) pendiri, ESOP karyawan, dan investor setelah tiap putaran pendanaan, lengkap dengan valuasi.",
+        "en": "Simulate the cap table for founders, employee ESOP, and investors after each funding round, including valuations.",
+        "tr": "Kurucular, çalışan ESOP'u ve yatırımcılar için her yatırım turundan sonraki hisse tablosunu (cap table) değerlemelerle birlikte simüle et."
+      },
+      "tags": [
+        "Cap table",
+        "Saham",
+        "Pendanaan"
+      ],
+      "note": "Gratis, bisa langsung dipakai.",
+      "linkUrl": "/tools/sahamin",
+      "linkLabel": "Coba sekarang",
+      "external": false,
+      "order": 10,
+      "category": "pendanaan",
+      "status": "live",
+      "featured": false,
+      "short": {
+        "id": "Simulasi cap table dan dilusi saham.",
+        "en": "Simulate your cap table and dilution.",
+        "tr": "Hisse tablosu ve sulanmayı simüle et."
+      }
+    },
+    {
+      "id": "pitchin",
+      "name": "Pitchin",
+      "logo": "",
+      "roundLogo": false,
+      "description": {
+        "id": "Susun pitch deck 10 slide dengan panduan dan contoh di tiap slide, lalu cetak jadi PDF satu slide per halaman.",
+        "en": "Build a 10-slide pitch deck with guidance and examples for every slide, then print it to PDF one slide per page.",
+        "tr": "Her slayt için rehber ve örneklerle 10 slaytlık bir sunum hazırla, ardından sayfa başına bir slayt olacak şekilde PDF olarak yazdır."
+      },
+      "tags": [
+        "Pitch deck",
+        "Investor",
+        "Pendanaan"
+      ],
+      "note": "Gratis, bisa langsung dipakai.",
+      "linkUrl": "/tools/pitchin",
+      "linkLabel": "Coba sekarang",
+      "external": false,
+      "order": 11,
+      "category": "pendanaan",
+      "status": "live",
+      "featured": true,
+      "short": {
+        "id": "Bikin pitch deck 10 slide, siap PDF.",
+        "en": "Build a 10-slide pitch deck, PDF ready.",
+        "tr": "PDF'e hazır 10 slaytlık sunum hazırla."
       }
     }
   ]
