@@ -163,7 +163,7 @@ img{max-width:100%}
 .sheet a.all{font-weight:500;color:var(--text)}
 
 /* ---------- Bola orb ---------- */
-.orb{display:block;position:relative;border-radius:50%;overflow:hidden;isolation:isolate;flex-shrink:0}
+.orb{display:block;position:relative;border-radius:50%;overflow:hidden;isolation:isolate;flex-shrink:0;clip-path:circle(50%);-webkit-mask-image:-webkit-radial-gradient(white,black)}
 .orb i{position:absolute;inset:-25%;border-radius:50%;filter:blur(12px)}
 .orb.spin i{animation:swirl 14s linear infinite}
 .orb::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.85),rgba(255,255,255,0) 34%),radial-gradient(circle at 70% 80%,rgba(14,12,26,.28),transparent 55%);z-index:1}
@@ -687,6 +687,9 @@ footer .legal{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap
   .rv.pre{opacity:1;transform:none}
   html{scroll-behavior:auto}
 }
+
+/* iPhone otomatis zoom kalau kolom isian di bawah 16px. Paksa 16px di layar sentuh supaya tidak zoom. */
+@media (pointer:coarse){:is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),select,textarea):not(.text-lg,.text-xl,.text-2xl,.text-3xl){font-size:16px!important}}
 </style>
 </head>
 <body>

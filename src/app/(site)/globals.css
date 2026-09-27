@@ -533,3 +533,6 @@ body:has(.fk-page)::before { display: none; }
   .fk-page .pj-mock.pj-side { display: none; }
   .fk-page .pj-mock { width: 220px; }
 }
+
+/* iPhone otomatis zoom kalau kolom isian di bawah 16px. Paksa 16px di layar sentuh supaya tidak zoom. */
+@media (pointer:coarse){:is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),select,textarea):not(.text-lg,.text-xl,.text-2xl,.text-3xl){font-size:16px!important}}
