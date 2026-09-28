@@ -82,11 +82,11 @@
       "order": 9
     },
     {
-      "id": "keuangan-pribadi",
+      "id": "mahasiswa",
       "label": {
-        "id": "Keuangan Pribadi",
-        "en": "Personal Finance",
-        "tr": "Kişisel Finans"
+        "id": "Mahasiswa & Karier",
+        "en": "Students & Careers",
+        "tr": "Öğrenci ve Kariyer"
       },
       "order": 10
     }
@@ -775,20 +775,107 @@
       "tags": [
         "Uang saku",
         "Tabungan",
-        "Pelajar"
+        "Mahasiswa"
       ],
       "note": "Gratis, bisa langsung dipakai.",
       "linkUrl": "/tools/stuney",
       "linkLabel": "Coba sekarang",
       "external": false,
       "order": 24,
-      "category": "keuangan-pribadi",
+      "category": "mahasiswa",
       "status": "live",
       "featured": false,
       "short": {
         "id": "Catat uang saku, dompet, dan tabungan.",
         "en": "Track allowance, wallets, and savings.",
         "tr": "Harçlık, cüzdan ve birikimleri takip et."
+      }
+    },
+    {
+      "id": "ipkin",
+      "name": "IPK-in",
+      "logo": "",
+      "roundLogo": false,
+      "description": {
+        "id": "Hitung IPS tiap semester dan IPK kumulatif, lihat grafik perkembangannya, dan simulasikan nilai rata-rata yang dibutuhkan untuk mengejar target IPK dan predikat kelulusan.",
+        "en": "Calculate your semester GPA and cumulative GPA, see the trend chart, and simulate the average grade you need to reach your target GPA and graduation honors.",
+        "tr": "Dönem ve genel not ortalamanı hesapla, gelişim grafiğini gör ve hedef ortalamana ulaşmak için gereken ortalama notu simüle et."
+      },
+      "tags": [
+        "IPK",
+        "Kuliah",
+        "Mahasiswa"
+      ],
+      "note": "Gratis, bisa langsung dipakai.",
+      "linkUrl": "/tools/ipkin",
+      "linkLabel": "Coba sekarang",
+      "external": false,
+      "order": 25,
+      "category": "mahasiswa",
+      "status": "live",
+      "featured": false,
+      "short": {
+        "id": "Hitung IPK dan simulasi target IPK.",
+        "en": "Calculate GPA and simulate your target.",
+        "tr": "Not ortalamanı hesapla, hedefini simüle et."
+      }
+    },
+    {
+      "id": "proposalin",
+      "name": "Proposalin",
+      "logo": "",
+      "roundLogo": false,
+      "description": {
+        "id": "Susun proposal usaha untuk PKM-K, P2MW, atau lomba business plan dengan panduan tiap bagian, RAB yang menghitung sendiri, dan jadwal kegiatan. Hasilnya bisa dicetak jadi PDF.",
+        "en": "Write a student business proposal for grant programs or business plan competitions, with guidance for every section, an auto-calculated budget, and an activity timeline. Print it as a PDF.",
+        "tr": "Hibe programları veya iş planı yarışmaları için öğrenci iş önerini yaz: her bölüm için rehber, otomatik hesaplanan bütçe ve faaliyet takvimi. PDF olarak yazdır."
+      },
+      "tags": [
+        "PKM",
+        "P2MW",
+        "Proposal"
+      ],
+      "note": "Gratis, bisa langsung dipakai.",
+      "linkUrl": "/tools/proposalin",
+      "linkLabel": "Coba sekarang",
+      "external": false,
+      "order": 26,
+      "category": "mahasiswa",
+      "status": "live",
+      "featured": false,
+      "short": {
+        "id": "Susun proposal PKM-K, P2MW, dan business plan.",
+        "en": "Write grant and business plan proposals.",
+        "tr": "Hibe ve iş planı önerileri hazırla."
+      }
+    },
+    {
+      "id": "kanvasin",
+      "name": "Kanvasin",
+      "logo": "",
+      "roundLogo": false,
+      "description": {
+        "id": "Susun Business Model Canvas atau Lean Canvas dengan pertanyaan panduan di tiap blok dan saran supaya kanvasmu nyambung. Cetak satu halaman untuk tugas kuliah, PKM, atau lomba.",
+        "en": "Build a Business Model Canvas or Lean Canvas with guiding questions for each block and tips to keep it consistent. Print it on one page for class, grants, or competitions.",
+        "tr": "Her blok için yol gösterici sorular ve tutarlılık önerileriyle Business Model Canvas veya Lean Canvas hazırla. Ders, hibe veya yarışmalar için tek sayfa yazdır."
+      },
+      "tags": [
+        "Business Model Canvas",
+        "Lean Canvas",
+        "Tugas kuliah"
+      ],
+      "note": "Gratis, bisa langsung dipakai.",
+      "linkUrl": "/tools/kanvasin",
+      "linkLabel": "Coba sekarang",
+      "external": false,
+      "order": 27,
+      "category": "mahasiswa",
+      "status": "live",
+      "featured": false,
+      "short": {
+        "id": "Bikin Business Model Canvas dan Lean Canvas.",
+        "en": "Build a Business Model Canvas or Lean Canvas.",
+        "tr": "Business Model Canvas veya Lean Canvas hazırla."
       }
     }
   ]

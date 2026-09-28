@@ -1,0 +1,20 @@
+/* Baris mata kuliah: nama + SKS + nilai + hapus. Di HP nama di baris sendiri. */
+.rowMk {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 78px 150px auto;
+  gap: 10px;
+  align-items: end;
+}
+.pred {
+  margin-top: 12px;
+}
+@media (max-width: 600px) {
+  .rowMk {
+    grid-template-columns: 78px minmax(0, 1fr) auto;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .rowMk > :first-child {
+    grid-column: 1 / -1;
+  }
+}

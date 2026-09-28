@@ -1,0 +1,160 @@
+/* Kanvas: 5 kolom klasik (dipecah 10 supaya baris bawah bisa dibagi dua).
+   Warna kertas tetap putih di tema gelap supaya sama dengan hasil cetak. */
+.saran {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--soft);
+}
+.saran li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+.kertas {
+  margin-top: 24px;
+  background: #fff;
+  color: #1a1730;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 22px;
+  font-family: Poppins, system-ui, sans-serif;
+}
+.kop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+.jenis {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(26, 23, 48, 0.55);
+}
+.nama {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+.dot {
+  color: #f2a93e;
+}
+.meta {
+  font-size: 12.5px;
+  color: rgba(26, 23, 48, 0.6);
+  text-align: right;
+  line-height: 1.5;
+}
+.kanvas {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  grid-template-areas:
+    "a a b b d d e e g g"
+    "a a c c d d f f g g"
+    "h h h h h i i i i i";
+  grid-auto-rows: minmax(150px, auto);
+  border: 1.5px solid #1a1730;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.blok {
+  padding: 10px 12px 12px;
+  border-right: 1px solid rgba(26, 23, 48, 0.25);
+  border-bottom: 1px solid rgba(26, 23, 48, 0.25);
+  min-width: 0;
+}
+.blokJudul {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  line-height: 1.25;
+}
+.no {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #f2a93e;
+  color: #1a1730;
+  font-size: 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.poin {
+  margin: 0;
+  padding: 0 0 0 16px;
+  list-style: disc;
+  font-size: 12.5px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.poin li + li {
+  margin-top: 4px;
+}
+.kosong {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(26, 23, 48, 0.35);
+}
+.kaki {
+  margin-top: 10px;
+  font-size: 11px;
+  color: rgba(26, 23, 48, 0.45);
+  text-align: right;
+}
+@media (max-width: 760px) {
+  .kertas {
+    padding: 16px;
+  }
+  .kop {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .meta {
+    text-align: left;
+  }
+  .kanvas {
+    grid-template-columns: 1fr;
+    grid-template-areas: "a" "b" "c" "d" "e" "f" "g" "h" "i";
+    grid-auto-rows: auto;
+  }
+  .blok {
+    border-right: 0;
+  }
+}
+@media print {
+  .kertas {
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+  .kanvas {
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    grid-template-areas:
+      "a a b b d d e e g g"
+      "a a c c d d f f g g"
+      "h h h h h i i i i i";
+    grid-template-rows: 1fr 1fr 0.8fr;
+    height: 160mm;
+  }
+  .blok {
+    border-right: 1px solid rgba(26, 23, 48, 0.25);
+    overflow: hidden;
+  }
+}

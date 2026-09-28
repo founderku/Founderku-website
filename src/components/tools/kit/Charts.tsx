@@ -24,12 +24,14 @@ export function LineChart({
   yFormat,
   height = 260,
   ariaLabel,
+  yMin,
 }: {
   series: Seri[];
   xLabel: (i: number) => string;
   yFormat: (n: number) => string;
   height?: number;
   ariaLabel: string;
+  yMin?: number; // batas bawah sumbu y (bawaan 0), misal 2 untuk grafik IPK
 }) {
   // Lebar grafik mengikuti lebar kotaknya, supaya tulisan tetap terbaca di HP
   const box = useRef<HTMLDivElement>(null);
@@ -46,7 +48,7 @@ export function LineChart({
   const n = Math.max(...series.map((x) => x.values.length), 2);
   const semua = series.flatMap((x) => x.values);
   const maxV = Math.max(0, ...semua);
-  const minV = Math.min(0, ...semua);
+  const minV = Math.min(yMin ?? 0, ...semua);
   const step = langkahRapi(Math.max(maxV - minV, 1));
   const top = Math.ceil(maxV / step) * step || step;
   const bot = Math.floor(minV / step) * step;
