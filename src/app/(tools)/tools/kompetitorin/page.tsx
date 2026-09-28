@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Kompetitorin from "@/components/tools/kompetitorin/Kompetitorin";
 import { ToolFrame } from "@/components/tools/ToolFrame";
+import { ToolGuide } from "@/components/tools/ToolGuide";
 
 export const metadata: Metadata = {
   title: "Kompetitorin - Analisis Kompetitor & Peta Posisi · Founderku",
@@ -9,8 +10,11 @@ export const metadata: Metadata = {
 
 export default function KompetitorinPage() {
   return (
-    <ToolFrame toolId="kompetitorin" toolName="Kompetitorin" themed>
-      <Kompetitorin />
-    </ToolFrame>
+    <>
+      <ToolFrame toolId="kompetitorin" toolName="Kompetitorin" themed>
+        <Kompetitorin />
+      </ToolFrame>
+      <ToolGuide toolId="kompetitorin" toolName="Kompetitorin" />
+    </>
   );
 }

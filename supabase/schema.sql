@@ -20,6 +20,7 @@ create extension if not exists pgcrypto;
 -- ============================================================
 drop trigger if exists on_auth_user_created on auth.users;
 drop view if exists public.store_profiles;
+drop table if exists public.tool_views cascade;
 drop table if exists public.ai_usage cascade;
 drop table if exists public.tool_data cascade;
 drop table if exists public.page_click_log cascade;
@@ -41,6 +42,7 @@ drop function if exists public.admin_set_page_status(uuid, text, text) cascade;
 drop function if exists public.admin_stats() cascade;
 drop function if exists public.ai_take_quota(uuid, integer) cascade;
 drop function if exists public.ai_refund_quota(uuid) cascade;
+drop function if exists public.track_tool_view(text) cascade;
 drop function if exists public.activate_subscription(text, numeric) cascade;
 drop function if exists public.start_trial(uuid, integer) cascade;
 drop function if exists public.tool_data_touch() cascade;
@@ -498,6 +500,30 @@ begin
         group by 1
       ) t
     ),
+    'tool_views', (
+      select jsonb_build_object(
+        'total_30d', coalesce((select sum(count) from public.tool_views where day > hari_ini - 30), 0),
+        'daily', (
+          select coalesce(jsonb_agg(jsonb_build_object('day', h.hari, 'n', coalesce(v.n, 0)) order by h.hari), '[]'::jsonb)
+          from (select (hari_ini - i) as hari from generate_series(0, 29) as i) h
+          left join (
+            select day, sum(count) as n from public.tool_views where day > hari_ini - 30 group by day
+          ) v on v.day = h.hari
+        ),
+        'tools', (
+          select coalesce(jsonb_agg(jsonb_build_object('tool', x.tool, 'today', x.today, 'd7', x.d7, 'd30', x.d30) order by x.d30 desc, x.tool), '[]'::jsonb)
+          from (
+            select tool,
+                   coalesce(sum(count) filter (where day = hari_ini), 0) as today,
+                   coalesce(sum(count) filter (where day > hari_ini - 7), 0) as d7,
+                   sum(count) as d30
+            from public.tool_views
+            where day > hari_ini - 30
+            group by tool
+          ) x
+        )
+      )
+    ),
     'pajangin', (
       select jsonb_build_object(
         'pages', count(*),
@@ -808,3 +834,45 @@ grant execute on function public.ai_refund_quota(uuid) to service_role;
 --
 -- (akun harus sudah pernah daftar/login dulu biar barisnya ada)
 -- ============================================================
+
+-- ============================================================
+-- PENGHITUNG KUNJUNGAN TOOLS (lewat /api/track, untuk Dashboard admin)
+-- ============================================================
+-- Berapa kali tiap tool dibuka per hari (tanggal WIB), dari SEMUA
+-- pengunjung (termasuk yang tidak login). Yang disimpan cuma angka per
+-- tool per hari: tanpa akun, IP, cookie, atau data pribadi apa pun.
+create table public.tool_views (
+  tool text not null check (tool ~ '^[a-z][a-z0-9]{2,23}$'),
+  day date not null,
+  count integer not null default 0 check (count >= 0),
+  primary key (tool, day)
+);
+
+-- RLS aktif tanpa aturan: tidak bisa dibaca atau diubah dari browser sama
+-- sekali. Angkanya dibaca admin lewat admin_stats().
+alter table public.tool_views enable row level security;
+
+-- Tambah 1 kunjungan hari ini. Dibatasi 1 juta per tool per hari supaya
+-- tidak bisa dibanjiri tanpa batas.
+create function public.track_tool_view(p_tool text)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if p_tool is null or p_tool !~ '^[a-z][a-z0-9]{2,23}$' then
+    return;
+  end if;
+  insert into public.tool_views (tool, day, count)
+    values (p_tool, (now() at time zone 'Asia/Jakarta')::date, 1)
+    on conflict (tool, day)
+    do update set count = public.tool_views.count + 1
+    where public.tool_views.count < 1000000;
+end;
+$$;
+
+-- Hanya server (service_role) yang boleh menambah hitungan.
+revoke all on public.tool_views from anon, authenticated;
+revoke execute on function public.track_tool_view(text) from public, anon, authenticated;
+grant execute on function public.track_tool_view(text) to service_role;

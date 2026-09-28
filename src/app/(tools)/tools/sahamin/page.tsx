@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Sahamin from "@/components/tools/sahamin/Sahamin";
 import { ToolFrame } from "@/components/tools/ToolFrame";
+import { ToolGuide } from "@/components/tools/ToolGuide";
 
 export const metadata: Metadata = {
   title: "Sahamin - Simulasi Cap Table & Dilusi Saham · Founderku",
@@ -9,8 +10,11 @@ export const metadata: Metadata = {
 
 export default function SahaminPage() {
   return (
-    <ToolFrame toolId="sahamin" toolName="Sahamin" themed>
-      <Sahamin />
-    </ToolFrame>
+    <>
+      <ToolFrame toolId="sahamin" toolName="Sahamin" themed>
+        <Sahamin />
+      </ToolFrame>
+      <ToolGuide toolId="sahamin" toolName="Sahamin" />
+    </>
   );
 }

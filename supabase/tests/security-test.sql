@@ -316,3 +316,46 @@ do $$ declare n int; begin
   else raise notice 'T75 pengunjung tidak bisa lihat jatah siapa pun: GAGAL (% baris)', n; end if;
 exception when insufficient_privilege then raise notice 'T75 pengunjung tidak bisa lihat jatah siapa pun: LULUS (ditolak)'; end $$;
 reset role;
+
+-- ===== Penghitung kunjungan tools (tool_views) =====
+reset role;
+select public.track_tool_view('ipkin'); select public.track_tool_view('ipkin'); select public.track_tool_view('ipkin');
+select public.track_tool_view('kanvasin');
+select public.track_tool_view('IPK-in!'); select public.track_tool_view(''); select public.track_tool_view(null);
+select 'T76 kunjungan dihitung per tool per hari (ipkin 3): ' || case when (select count from public.tool_views where tool = 'ipkin' and day = (now() at time zone 'Asia/Jakarta')::date) = 3 then 'LULUS' else 'GAGAL' end;
+select 'T77 nama tool tidak sah diabaikan: ' || case when (select count(*) from public.tool_views) = 2 then 'LULUS' else 'GAGAL' end;
+set role anon;
+do $$ begin
+  perform public.track_tool_view('ipkin');
+  raise notice 'T78 pengunjung panggil track_tool_view langsung: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T78 pengunjung panggil track_tool_view langsung: LULUS (ditolak)'; end $$;
+do $$ declare n int; begin
+  select count(*) into n from public.tool_views;
+  if n = 0 then raise notice 'T79 pengunjung baca angka kunjungan: LULUS (kosong)';
+  else raise notice 'T79 pengunjung baca angka kunjungan: GAGAL (% baris)', n; end if;
+exception when insufficient_privilege then raise notice 'T79 pengunjung baca angka kunjungan: LULUS (ditolak)'; end $$;
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '22222222-2222-2222-2222-222222222222';
+do $$ begin
+  perform public.track_tool_view('ipkin');
+  raise notice 'T80 user panggil track_tool_view langsung: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T80 user panggil track_tool_view langsung: LULUS (ditolak)'; end $$;
+do $$ begin
+  update public.tool_views set count = 999999;
+  raise notice 'T81 user ubah angka kunjungan: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T81 user ubah angka kunjungan: LULUS (ditolak)'; end $$;
+do $$ begin
+  insert into public.tool_views (tool, day, count) values ('palsu', current_date, 500);
+  raise notice 'T82 user tambah baris kunjungan: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T82 user tambah baris kunjungan: LULUS (ditolak)'; end $$;
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '11111111-1111-1111-1111-111111111111';
+create temp table hasil_admin2 as select public.admin_stats() as j;
+reset role;
+select 'T83 dashboard: total kunjungan 30 hari = 4: ' || case when (j->'tool_views'->>'total_30d')::int = 4 then 'LULUS' else 'GAGAL' end from hasil_admin2;
+select 'T84 dashboard: grafik 30 hari, jumlah harian = total: ' || case when jsonb_array_length(j->'tool_views'->'daily') = 30 and (select sum((x->>'n')::int) from jsonb_array_elements(j->'tool_views'->'daily') x) = 4 then 'LULUS' else 'GAGAL' end from hasil_admin2;
+select 'T85 dashboard: ipkin teratas, hari ini 3, 7 hari 3: ' || case when j->'tool_views'->'tools'->0->>'tool' = 'ipkin' and (j->'tool_views'->'tools'->0->>'today')::int = 3 and (j->'tool_views'->'tools'->0->>'d7')::int = 3 then 'LULUS' else 'GAGAL' end from hasil_admin2;
+select 'T86 dashboard lama tetap lengkap: ' || case when j ? 'users' and j ? 'revenue' and j ? 'tools' and j ? 'pajangin' and j ? 'signups_daily' then 'LULUS' else 'GAGAL' end from hasil_admin2;
+reset role;

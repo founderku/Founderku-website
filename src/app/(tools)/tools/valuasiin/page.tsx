@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Valuasiin from "@/components/tools/valuasiin/Valuasiin";
 import { ToolFrame } from "@/components/tools/ToolFrame";
+import { ToolGuide } from "@/components/tools/ToolGuide";
 
 export const metadata: Metadata = {
   title: "Valuasiin - Perkiraan Valuasi Startup Tahap Awal · Founderku",
@@ -9,8 +10,11 @@ export const metadata: Metadata = {
 
 export default function ValuasiinPage() {
   return (
-    <ToolFrame toolId="valuasiin" toolName="Valuasiin" themed>
-      <Valuasiin />
-    </ToolFrame>
+    <>
+      <ToolFrame toolId="valuasiin" toolName="Valuasiin" themed>
+        <Valuasiin />
+      </ToolFrame>
+      <ToolGuide toolId="valuasiin" toolName="Valuasiin" />
+    </>
   );
 }

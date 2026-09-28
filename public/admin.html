@@ -2615,10 +2615,24 @@ function renderDashboard(d){
       (d.revenue_monthly || []).slice().reverse().map(x => '<tr><td>' + escAdmin(blnLabel(x.month)) + '</td><td class="num">' + dashRp(x.amount) + '</td><td class="num">' + dashNum(x.count) + '</td></tr>').join('') + '</tbody></table></details></div>' +
     '</div>';
 
+  // Kunjungan tools dari semua pengunjung (migration 012)
+  const tv = d.tool_views, tvHari = (tv && tv.daily) || [], tvTools = (tv && tv.tools) || [];
+  const viewsD = tvHari.map((x, i) => ({ value: Number(x.n) || 0, label: (i % 5 === 4 || i === tvHari.length - 1) ? tglLabel(x.day) : '', tip: tglLabel(x.day) + ': ' + dashNum(x.n) + ' kunjungan' }));
+  const maxV = Math.max(1, ...tvTools.map(t => Number(t.d30) || 0));
+  h += '<div class="dgrid">' +
+    '<div class="dcard"><h2>Kunjungan tools per hari</h2><div class="d-hint">30 hari terakhir · total ' + dashNum(tv ? tv.total_30d : 0) + ' kunjungan · semua pengunjung, termasuk yang tidak login</div>' +
+      (tv ? '<div class="dslot" data-i="2"></div>' : '<div class="dnote">Angka kunjungan belum aktif. Jalankan <b>migration-012-kunjungan-tools.sql</b> di Supabase.</div>') +
+      '<p class="dnote">Satu kunjungan = satu tool dibuka di satu tab per hari. Bot dan mesin pencari tidak dihitung. Tanpa data pribadi.</p></div>' +
+    '<div class="dcard"><h2>Tools paling sering dibuka</h2><div class="d-hint">Urut dari kunjungan 30 hari</div>' +
+      (tvTools.length ? '<table class="dtable"><thead><tr><th>Tool</th><th class="num">Hari ini</th><th class="num">7 hari</th><th class="num">30 hari</th><th style="width:22%"></th></tr></thead><tbody>' +
+        tvTools.map(t => '<tr><td>' + escAdmin(dashToolNames[t.tool] || t.tool) + '</td><td class="num">' + dashNum(t.today) + '</td><td class="num">' + dashNum(t.d7) + '</td><td class="num">' + dashNum(t.d30) + '</td><td><div class="tmeter"><i style="width:' + Math.round((Number(t.d30) || 0) / maxV * 100) + '%"></i></div></td></tr>').join('') +
+        '</tbody></table>' : '<div class="dnote">Belum ada kunjungan tercatat.</div>') +
+    '</div></div>';
+
   const tools = d.tools || [];
   const maxU = Math.max(1, ...tools.map(t => Number(t.users) || 0));
   h += '<div class="dgrid">' +
-    '<div class="dcard"><h2>Pemakaian tools</h2><div class="d-hint">Akun yang menyimpan data tool ke akunnya</div>' +
+    '<div class="dcard"><h2>Tools tersimpan di akun</h2><div class="d-hint">Akun yang menyimpan data tool ke akunnya</div>' +
       (tools.length ? '<table class="dtable"><thead><tr><th>Tool</th><th class="num">Akun</th><th class="num">Aktif 30 hari</th><th style="width:28%"></th></tr></thead><tbody>' +
         tools.map(t => '<tr><td>' + escAdmin(dashToolNames[t.tool] || t.tool) + '</td><td class="num">' + dashNum(t.users) + '</td><td class="num">' + dashNum(t.active_30d) + '</td><td><div class="tmeter"><i style="width:' + Math.round((Number(t.users) || 0) / maxU * 100) + '%"></i></div></td></tr>').join('') +
         '</tbody></table>' : '<div class="dnote">Belum ada data tools yang tersimpan ke akun.</div>') +
@@ -2638,6 +2652,7 @@ function renderDashboard(d){
   dashCharts = [
     [sign, { aria: 'Grafik pendaftar per hari, 30 hari terakhir', fmtAxis: v => dashNum(v) }],
     [rev, { aria: 'Grafik pemasukan per bulan, 6 bulan terakhir', fmtAxis: fmtRpAxis }],
+    [viewsD, { aria: 'Grafik kunjungan tools per hari, 30 hari terakhir', fmtAxis: v => dashNum(v) }],
   ];
   dashDrawCharts();
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./tool.css";
 import Sehatin from "@/components/tools/sehatin/Sehatin";
 import { ToolFrame } from "@/components/tools/ToolFrame";
+import { ToolGuide } from "@/components/tools/ToolGuide";
 
 export const metadata: Metadata = {
   title: "Sehatin - Cek Kesehatan Bisnis · Founderku",
@@ -10,10 +11,13 @@ export const metadata: Metadata = {
 
 export default function SehatinPage() {
   return (
-    <ToolFrame toolId="sehatin" toolName="Sehatin">
-      <div className="tool-sehatin">
-        <Sehatin />
-      </div>
-    </ToolFrame>
+    <>
+      <ToolFrame toolId="sehatin" toolName="Sehatin">
+        <div className="tool-sehatin">
+          <Sehatin />
+        </div>
+      </ToolFrame>
+      <ToolGuide toolId="sehatin" toolName="Sehatin" />
+    </>
   );
 }

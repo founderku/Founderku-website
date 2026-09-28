@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Investorin from "@/components/tools/investorin/Investorin";
 import { ToolFrame } from "@/components/tools/ToolFrame";
+import { ToolGuide } from "@/components/tools/ToolGuide";
 
 export const metadata: Metadata = {
   title: "Investorin - Pelacak Galang Dana Startup · Founderku",
@@ -9,8 +10,11 @@ export const metadata: Metadata = {
 
 export default function InvestorinPage() {
   return (
-    <ToolFrame toolId="investorin" toolName="Investorin" themed>
-      <Investorin />
-    </ToolFrame>
+    <>
+      <ToolFrame toolId="investorin" toolName="Investorin" themed>
+        <Investorin />
+      </ToolFrame>
+      <ToolGuide toolId="investorin" toolName="Investorin" />
+    </>
   );
 }
