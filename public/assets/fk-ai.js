@@ -15,7 +15,7 @@
       halo: "Halo! Aku bisa bantu soal usahamu: ide jualan, menentukan harga, keuangan, sampai membangun startup. Mau mulai dari mana?",
       saran: ["Tool apa yang cocok untuk usahaku?", "Cara menentukan harga jual", "Ide promosi dengan modal kecil"],
       ketik: "Tulis pertanyaanmu...", kirim: "Kirim",
-      catatan: "Jawaban AI bisa keliru. Jangan kirim data pribadi. Diproses oleh Google Gemini.", privasi: "Privasi",
+      catatan: "Jawaban AI bisa keliru. Jangan kirim data pribadi. Diproses oleh layanan AI Google Gemini atau Groq.", privasi: "Privasi",
       sisa: "Sisa {n} dari {m} pertanyaan hari ini",
       login: "Masuk dulu untuk mulai tanya. Gratis, dapat {n} pertanyaan per hari.", masuk: "Masuk", daftar: "Daftar gratis",
       mati: "Asisten AI belum aktif. Coba lagi nanti ya.",
@@ -28,7 +28,7 @@
       halo: "Hi! I can help with your business: sales ideas, pricing, finance, all the way to building a startup. Where do you want to start?",
       saran: ["Which tool fits my business?", "How to set a selling price", "Low-budget promotion ideas"],
       ketik: "Type your question...", kirim: "Send",
-      catatan: "AI answers can be wrong. Do not send personal data. Processed by Google Gemini.", privasi: "Privacy",
+      catatan: "AI answers can be wrong. Do not send personal data. Processed by Google Gemini or Groq AI services.", privasi: "Privacy",
       sisa: "{n} of {m} questions left today",
       login: "Sign in to start asking. Free, {n} questions per day.", masuk: "Sign in", daftar: "Sign up free",
       mati: "The AI assistant is not active yet. Please try again later.",
@@ -41,7 +41,7 @@
       halo: "Merhaba! İşin için yardım edebilirim: satış fikirleri, fiyatlandırma, finans ve girişim kurma. Nereden başlamak istersin?",
       saran: ["İşime hangi araç uygun?", "Satış fiyatı nasıl belirlenir", "Düşük bütçeli tanıtım fikirleri"],
       ketik: "Sorunu yaz...", kirim: "Gönder",
-      catatan: "Yapay zeka yanılabilir. Kişisel veri gönderme. Google Gemini ile işlenir.", privasi: "Gizlilik",
+      catatan: "Yapay zeka yanılabilir. Kişisel veri gönderme. Google Gemini veya Groq ile işlenir.", privasi: "Gizlilik",
       sisa: "Bugün {m} sorudan {n} kaldı",
       login: "Sormak için giriş yap. Ücretsiz, günde {n} soru.", masuk: "Giriş yap", daftar: "Ücretsiz kaydol",
       mati: "Yapay zeka asistanı henüz aktif değil. Lütfen sonra tekrar dene.",
@@ -202,7 +202,7 @@
       method: "POST",
       credentials: "same-origin",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ messages: pesan.slice(-12), lang: bahasa(), page: location.pathname })
+      body: JSON.stringify({ messages: pesan.slice(-8), lang: bahasa(), page: location.pathname })
     })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { s: r.status, j: j }; }); })
       .then(function (x) {

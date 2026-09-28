@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getAccessStatus } from "@/lib/access";
-import { AI_LIMIT, aiAktif, bersihkanPesan, instruksiSistem, tanyaGemini, type Lang } from "@/lib/ai";
+import { AI_LIMIT, aiAktif, bersihkanPesan, instruksiSistem, tanyaAI, type Lang } from "@/lib/ai";
 
 // Asisten AI Founderku. Hanya untuk user yang login, dengan jatah harian
 // (tabel ai_usage, cuma jumlah pemakaian). Isi percakapan tidak disimpan.
@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
   if (error) return json({ error: "gagal" }, 500);
   if (typeof sisa !== "number" || sisa < 0) return json({ error: "jatah_habis", limit, remaining: 0 }, 429);
 
-  const hasil = await tanyaGemini(pesan, instruksiSistem(lang, halaman));
+  const hasil = await tanyaAI(pesan, instruksiSistem(lang, halaman));
   if (!hasil.ok) {
     // AI gagal menjawab: jatah dikembalikan
     await admin.rpc("ai_refund_quota", { uid: user.id });

@@ -143,7 +143,7 @@ export default function PrivasiPage() {
           <li><strong className={b}>Xendit</strong>: pemrosesan pembayaran langganan.</li>
           <li><strong className={b}>Resend</strong>: pengiriman email seperti kode verifikasi.</li>
           <li><strong className={b}>Google</strong>: login dengan Google (jika Anda memilihnya) dan penyediaan huruf (font) di halaman.</li>
-          <li><strong className={b}>Google (Gemini API)</strong>: menjawab pertanyaan di Asisten AI Founderku (lihat bagian 5a).</li>
+          <li><strong className={b}>Google (Gemini API)</strong> dan <strong className={b}>Groq</strong>: menjawab pertanyaan di Asisten AI Founderku (lihat bagian 5a).</li>
         </ul>
         <p>
           Karena sebagian server berada di luar Indonesia, data Anda dapat
@@ -161,7 +161,9 @@ export default function PrivasiPage() {
             setelah masuk ke akun. Pesan yang Anda ketik, beserta beberapa
             pesan sebelumnya dalam percakapan yang sama, dikirim ke{" "}
             <strong className={b}>Google Gemini API</strong> untuk dibuatkan
-            jawaban.
+            jawaban. Jika layanan Google sedang penuh atau gagal, pesan yang
+            sama dikirim ke <strong className={b}>Groq</strong> sebagai
+            cadangan.
           </li>
           <li>
             Kami <strong className={b}>tidak menyimpan isi percakapan</strong>{" "}
@@ -170,9 +172,10 @@ export default function PrivasiPage() {
             pertanyaan per hari untuk menghitung jatah pemakaian.
           </li>
           <li>
-            Pesan yang dikirim ke Google tunduk pada ketentuan layanan Google
-            Gemini API. Pada layanan tanpa biaya, Google dapat memakai isi pesan
-            untuk meningkatkan produknya, dan pesan dapat ditinjau oleh manusia.
+            Pesan yang dikirim tunduk pada ketentuan layanan masing-masing
+            penyedia (Google Gemini API dan Groq). Pada layanan tanpa biaya,
+            Google dapat memakai isi pesan untuk meningkatkan produknya, dan
+            pesan dapat ditinjau oleh manusia.
             Karena itu, <strong className={b}>jangan mengirim data pribadi atau
             rahasia</strong> (misalnya nomor identitas, nomor rekening, kata
             sandi, atau data pelanggan) ke Asisten AI.

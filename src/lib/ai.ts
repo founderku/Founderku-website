@@ -3,9 +3,11 @@ import toolsData from "@public/data/tools.json";
 import { PRICING, formatRupiah, periodSuffix } from "@/lib/pricing";
 import { allPosts, pick as pickText } from "@/lib/blog";
 
-// Asisten AI Founderku (tombol chat di semua halaman). Memakai Google
-// Gemini API. Kunci API cuma ada di server (env GEMINI_API_KEY), tidak
-// pernah dikirim ke browser.
+// Asisten AI Founderku (tombol chat di semua halaman).
+// Utama: Google Gemini (Flash-Lite, jatah gratis harian paling besar).
+// Cadangan otomatis: Groq (gpt-oss-120b) kalau Gemini penuh/gagal.
+// Kunci API cuma ada di server (env GEMINI_API_KEY, GROQ_API_KEY), tidak
+// pernah dikirim ke browser. Cukup salah satu kunci supaya AI aktif.
 
 export type Lang = "id" | "en" | "tr";
 
@@ -13,9 +15,9 @@ export type Lang = "id" | "en" | "tr";
 export const AI_LIMIT = { free: 5, pro: 30 } as const;
 
 // Batas isi supaya kuota Gemini tidak habis oleh pesan raksasa
-export const MAX_PESAN = 12; // riwayat yang dikirim ke AI
+export const MAX_PESAN = 8; // riwayat yang dikirim ke AI (hemat token)
 export const MAX_KARAKTER_PESAN = 1500;
-export const MAX_KARAKTER_TOTAL = 9000;
+export const MAX_KARAKTER_TOTAL = 6000;
 
 export interface PesanChat {
   role: "user" | "model";
@@ -23,7 +25,7 @@ export interface PesanChat {
 }
 
 export function aiAktif(): boolean {
-  return !!process.env.GEMINI_API_KEY;
+  return !!(process.env.GEMINI_API_KEY || process.env.GROQ_API_KEY);
 }
 
 // Validasi isi dari browser. Kembalikan null kalau tidak sah.
@@ -112,9 +114,11 @@ export function rapikanJawaban(t: string): string {
 
 export type HasilAI = { ok: true; text: string } | { ok: false; alasan: "sibuk" | "diblokir" | "gagal" };
 
-export async function tanyaGemini(pesan: PesanChat[], sistem: string): Promise<HasilAI> {
+async function tanyaGemini(pesan: PesanChat[], sistem: string): Promise<HasilAI> {
   const base = process.env.GEMINI_API_BASE || "https://generativelanguage.googleapis.com";
-  const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+  // "gemini-flash-lite-latest" selalu menunjuk Flash-Lite terbaru. Bisa
+  // diganti lewat env GEMINI_MODEL dengan nama model yang tampil di AI Studio.
+  const model = process.env.GEMINI_MODEL || "gemini-flash-lite-latest";
   const ctrl = new AbortController();
   const waktu = setTimeout(() => ctrl.abort(), 25_000);
   try {
@@ -124,7 +128,7 @@ export async function tanyaGemini(pesan: PesanChat[], sistem: string): Promise<H
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: sistem }] },
         contents: pesan.map((m) => ({ role: m.role, parts: [{ text: m.text }] })),
-        generationConfig: { temperature: 0.6, maxOutputTokens: 1024 },
+        generationConfig: { temperature: 0.6, maxOutputTokens: 800 },
       }),
       signal: ctrl.signal,
       cache: "no-store",
@@ -145,4 +149,57 @@ export async function tanyaGemini(pesan: PesanChat[], sistem: string): Promise<H
   } finally {
     clearTimeout(waktu);
   }
+}
+
+// Groq: format API seperti OpenAI (chat/completions)
+async function tanyaGroq(pesan: PesanChat[], sistem: string): Promise<HasilAI> {
+  const base = process.env.GROQ_API_BASE || "https://api.groq.com";
+  const model = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
+  const ctrl = new AbortController();
+  const waktu = setTimeout(() => ctrl.abort(), 25_000);
+  try {
+    const res = await fetch(`${base}/openai/v1/chat/completions`, {
+      method: "POST",
+      headers: { "content-type": "application/json", authorization: `Bearer ${process.env.GROQ_API_KEY ?? ""}` },
+      body: JSON.stringify({
+        model,
+        messages: [
+          { role: "system", content: sistem },
+          ...pesan.map((m) => ({ role: m.role === "model" ? "assistant" : "user", content: m.text })),
+        ],
+        temperature: 0.6,
+        max_completion_tokens: 800,
+        reasoning_effort: "low",
+      }),
+      signal: ctrl.signal,
+      cache: "no-store",
+    });
+    if (res.status === 429 || res.status === 503) return { ok: false, alasan: "sibuk" };
+    if (!res.ok) return { ok: false, alasan: "gagal" };
+    const j = (await res.json()) as { choices?: { message?: { content?: string }; finish_reason?: string }[] };
+    const teks = j.choices?.[0]?.message?.content ?? "";
+    if (!teks.trim()) return { ok: false, alasan: j.choices?.[0]?.finish_reason === "content_filter" ? "diblokir" : "gagal" };
+    return { ok: true, text: rapikanJawaban(teks) };
+  } catch {
+    return { ok: false, alasan: "gagal" };
+  } finally {
+    clearTimeout(waktu);
+  }
+}
+
+// Coba Gemini dulu; kalau penuh atau gagal (bukan karena diblokir filter
+// keamanan), otomatis pindah ke Groq. User tidak perlu tahu bedanya.
+export async function tanyaAI(pesan: PesanChat[], sistem: string): Promise<HasilAI> {
+  let hasil: HasilAI | null = null;
+  if (process.env.GEMINI_API_KEY) {
+    hasil = await tanyaGemini(pesan, sistem);
+    if (hasil.ok || hasil.alasan === "diblokir") return hasil;
+  }
+  if (process.env.GROQ_API_KEY) {
+    const cadangan = await tanyaGroq(pesan, sistem);
+    if (cadangan.ok || !hasil) return cadangan;
+    // Dua-duanya gagal: laporkan "sibuk" kalau salah satunya penuh
+    return { ok: false, alasan: hasil.alasan === "sibuk" || cadangan.alasan === "sibuk" ? "sibuk" : cadangan.alasan };
+  }
+  return hasil ?? { ok: false, alasan: "gagal" };
 }
