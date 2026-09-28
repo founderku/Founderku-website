@@ -1,0 +1,11 @@
+/* Proposalin: dokumen A4 tegak dengan margin standar. */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 20mm 20mm 20mm 25mm;
+  }
+  html,
+  body {
+    background: #fff !important;
+  }
+}

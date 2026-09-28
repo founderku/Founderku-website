@@ -250,6 +250,38 @@ const ICONS: Record<string, { from: string; to: string; path: React.ReactNode }>
       </>
     ),
   },
+  ipkin: {
+    from: "#3f6fd1",
+    to: "#26458f",
+    path: (
+      <>
+        <path d="M2 9l10-5 10 5-10 5z" />
+        <path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5" />
+        <path d="M22 9v6" />
+      </>
+    ),
+  },
+  proposalin: {
+    from: "#c9793a",
+    to: "#8f4a1c",
+    path: (
+      <>
+        <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
+        <path d="M14 3v5h5" />
+        <path d="M9 13h6M9 17h4" />
+      </>
+    ),
+  },
+  kanvasin: {
+    from: "#8a5cc7",
+    to: "#55308f",
+    path: (
+      <>
+        <rect x="3" y="4" width="18" height="16" rx="2" />
+        <path d="M3 15h18M9 4v11M15 4v11M12 15v5" />
+      </>
+    ),
+  },
 };
 
 export function ToolIcon({ id, name, size = 44 }: { id: string; name: string; size?: number }) {
