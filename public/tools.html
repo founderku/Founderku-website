@@ -105,9 +105,13 @@ try{var l=localStorage.getItem('fk-lang');if(l==='en'||l==='tr'||l==='id')docume
     FK.reveal();
   }
   q.addEventListener('input',function(){render();});
+  // tools.html#mahasiswa langsung membuka filter kategori itu (dipakai menu Belajar)
+  function fromHash(){var h='';try{h=decodeURIComponent(location.hash.slice(1));}catch(e){}if(cats.some(function(c){return c.id===h;}))active=h;}
+  window.addEventListener('hashchange',function(){fromHash();render();});
   FK.onLang(render);
   FK.json('/data/tools.json').then(function(d){
     cats=(d.categories||[]).slice().sort(function(a,b){return (a.order||99)-(b.order||99);});
+    fromHash();
     // Yang sudah bisa dipakai dulu, "Segera hadir" di belakang
     tools=(d.tools||[]).slice().sort(function(a,b){return ((a.status==='soon')-(b.status==='soon'))||((a.order||99)-(b.order||99));});
     render();
