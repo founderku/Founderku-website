@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./tool.css";
 import Kanvasin from "@/components/tools/kanvasin/Kanvasin";
 import { ToolFrame } from "@/components/tools/ToolFrame";
+import { ToolGuide } from "@/components/tools/ToolGuide";
 
 export const metadata: Metadata = {
   title: "Kanvasin - Bikin Business Model Canvas & Lean Canvas · Founderku",
@@ -10,8 +11,11 @@ export const metadata: Metadata = {
 
 export default function KanvasinPage() {
   return (
-    <ToolFrame toolId="kanvasin" toolName="Kanvasin" themed>
-      <Kanvasin />
-    </ToolFrame>
+    <>
+      <ToolFrame toolId="kanvasin" toolName="Kanvasin" themed>
+        <Kanvasin />
+      </ToolFrame>
+      <ToolGuide toolId="kanvasin" toolName="Kanvasin" />
+    </>
   );
 }

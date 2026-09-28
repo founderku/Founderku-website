@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./tool.css";
 import PajakCalculator from "@/components/tools/pajakin/PajakCalculator";
 import { ToolFrame } from "@/components/tools/ToolFrame";
+import { ToolGuide } from "@/components/tools/ToolGuide";
 
 export const metadata: Metadata = {
   title: "Pajakin - Simulasi PPh Final UMKM · Founderku",
@@ -10,10 +11,13 @@ export const metadata: Metadata = {
 
 export default function PajakinPage() {
   return (
-    <ToolFrame toolId="pajakin" toolName="Pajakin">
-      <div className="tool-pajakin">
-        <PajakCalculator />
-      </div>
-    </ToolFrame>
+    <>
+      <ToolFrame toolId="pajakin" toolName="Pajakin">
+        <div className="tool-pajakin">
+          <PajakCalculator />
+        </div>
+      </ToolFrame>
+      <ToolGuide toolId="pajakin" toolName="Pajakin" />
+    </>
   );
 }

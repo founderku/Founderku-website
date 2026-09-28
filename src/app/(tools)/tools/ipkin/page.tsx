@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Ipkin from "@/components/tools/ipkin/Ipkin";
 import { ToolFrame } from "@/components/tools/ToolFrame";
+import { ToolGuide } from "@/components/tools/ToolGuide";
 
 export const metadata: Metadata = {
   title: "IPK-in - Hitung IPK, IPS & Simulasi Target IPK · Founderku",
@@ -9,8 +10,11 @@ export const metadata: Metadata = {
 
 export default function IpkinPage() {
   return (
-    <ToolFrame toolId="ipkin" toolName="IPK-in" themed>
-      <Ipkin />
-    </ToolFrame>
+    <>
+      <ToolFrame toolId="ipkin" toolName="IPK-in" themed>
+        <Ipkin />
+      </ToolFrame>
+      <ToolGuide toolId="ipkin" toolName="IPK-in" />
+    </>
   );
 }

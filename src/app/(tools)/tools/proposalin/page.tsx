@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./tool.css";
 import Proposalin from "@/components/tools/proposalin/Proposalin";
 import { ToolFrame } from "@/components/tools/ToolFrame";
+import { ToolGuide } from "@/components/tools/ToolGuide";
 
 export const metadata: Metadata = {
   title: "Proposalin - Susun Proposal PKM-K, P2MW & Business Plan · Founderku",
@@ -10,8 +11,11 @@ export const metadata: Metadata = {
 
 export default function ProposalinPage() {
   return (
-    <ToolFrame toolId="proposalin" toolName="Proposalin" themed>
-      <Proposalin />
-    </ToolFrame>
+    <>
+      <ToolFrame toolId="proposalin" toolName="Proposalin" themed>
+        <Proposalin />
+      </ToolFrame>
+      <ToolGuide toolId="proposalin" toolName="Proposalin" />
+    </>
   );
 }

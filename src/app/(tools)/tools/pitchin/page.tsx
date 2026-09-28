@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./tool.css";
 import Pitchin from "@/components/tools/pitchin/Pitchin";
 import { ToolFrame } from "@/components/tools/ToolFrame";
+import { ToolGuide } from "@/components/tools/ToolGuide";
 
 export const metadata: Metadata = {
   title: "Pitchin - Bikin Pitch Deck Startup 10 Slide · Founderku",
@@ -10,8 +11,11 @@ export const metadata: Metadata = {
 
 export default function PitchinPage() {
   return (
-    <ToolFrame toolId="pitchin" toolName="Pitchin" themed>
-      <Pitchin />
-    </ToolFrame>
+    <>
+      <ToolFrame toolId="pitchin" toolName="Pitchin" themed>
+        <Pitchin />
+      </ToolFrame>
+      <ToolGuide toolId="pitchin" toolName="Pitchin" />
+    </>
   );
 }
