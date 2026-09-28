@@ -234,9 +234,9 @@ export default function Ipkin() {
 
             <Card tone="soft">
               <Note>
-                Predikat mengikuti batas yang umum dipakai (Permendikbud No. 3 Tahun 2020): memuaskan 2,76 sampai 3,00; sangat
-                memuaskan 3,01 sampai 3,50; dengan pujian di atas 3,50. Tiap kampus bisa punya syarat tambahan, misalnya masa
-                studi atau tidak ada nilai D, jadi cek pedoman akademik kampusmu.
+                Predikat mengikuti batas yang banyak dipakai kampus (pernah diatur dalam Permendikbud No. 3 Tahun 2020):
+                memuaskan 2,76 sampai 3,00; sangat memuaskan 3,01 sampai 3,50; dengan pujian di atas 3,50. Tiap kampus bisa
+                punya syarat tambahan, misalnya masa studi atau tidak ada nilai D, jadi cek pedoman akademik kampusmu.
               </Note>
             </Card>
           </>

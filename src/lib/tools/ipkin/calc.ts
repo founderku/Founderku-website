@@ -88,7 +88,7 @@ export function simulasiTarget(sksNow: number, mutuNow: number, target: number, 
 }
 
 // Predikat kelulusan program sarjana/diploma yang umum dipakai
-// (Permendikbud No. 3/2020): memuaskan 2,76 sampai 3,00; sangat
+// (pernah diatur dalam Permendikbud No. 3/2020): memuaskan 2,76 sampai 3,00; sangat
 // memuaskan 3,01 sampai 3,50; dengan pujian di atas 3,50. Kampus bisa
 // punya syarat tambahan (misalnya masa studi).
 export function predikat(ipk: number | null) {
