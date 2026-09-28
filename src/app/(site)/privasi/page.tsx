@@ -187,6 +187,18 @@ export default function PrivasiPage() {
         </ul>
       </LegalSection>
 
+      <LegalSection title="5b. Hitungan kunjungan tools">
+        <p>
+          Saat halaman tool dibuka, kami mencatat{" "}
+          <strong className={b}>jumlah kunjungan per tool per hari</strong>{" "}
+          (misalnya &quot;IPK-in dibuka 20 kali hari ini&quot;) supaya kami tahu
+          tool mana yang paling bermanfaat. Yang tersimpan hanya nama tool,
+          tanggal, dan angkanya. Kami tidak mencatat siapa yang membuka, alamat
+          IP, perangkat, atau isi yang Anda ketik, dan tidak memakai cookie
+          tambahan untuk ini.
+        </p>
+      </LegalSection>
+
       <LegalSection title="6. Keamanan Data">
         <ul className="list-disc pl-5 space-y-1.5">
           <li>Setiap akun hanya bisa membaca dan mengubah datanya sendiri. Aturan ini dijalankan langsung di database, bukan hanya di tampilan.</li>

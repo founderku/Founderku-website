@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Validasiin from "@/components/tools/validasiin/Validasiin";
 import { ToolFrame } from "@/components/tools/ToolFrame";
+import { ToolGuide } from "@/components/tools/ToolGuide";
 
 export const metadata: Metadata = {
   title: "Validasiin - Lean Canvas & Cek Kesiapan Ide Startup · Founderku",
@@ -9,8 +10,11 @@ export const metadata: Metadata = {
 
 export default function ValidasiinPage() {
   return (
-    <ToolFrame toolId="validasiin" toolName="Validasiin" themed>
-      <Validasiin />
-    </ToolFrame>
+    <>
+      <ToolFrame toolId="validasiin" toolName="Validasiin" themed>
+        <Validasiin />
+      </ToolFrame>
+      <ToolGuide toolId="validasiin" toolName="Validasiin" />
+    </>
   );
 }

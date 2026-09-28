@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./tool.css";
 import Kontrakin from "@/components/tools/kontrakin/Kontrakin";
 import { ToolFrame } from "@/components/tools/ToolFrame";
+import { ToolGuide } from "@/components/tools/ToolGuide";
 
 export const metadata: Metadata = {
   title: "Kontrakin - Generator Surat Perjanjian Kerjasama · Founderku",
@@ -10,10 +11,13 @@ export const metadata: Metadata = {
 
 export default function KontrakinPage() {
   return (
-    <ToolFrame toolId="kontrakin" toolName="Kontrakin">
-      <div className="tool-kontrakin">
-        <Kontrakin />
-      </div>
-    </ToolFrame>
+    <>
+      <ToolFrame toolId="kontrakin" toolName="Kontrakin">
+        <div className="tool-kontrakin">
+          <Kontrakin />
+        </div>
+      </ToolFrame>
+      <ToolGuide toolId="kontrakin" toolName="Kontrakin" />
+    </>
   );
 }

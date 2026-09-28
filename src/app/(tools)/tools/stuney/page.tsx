@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Stuney from "@/components/tools/stuney/Stuney";
 import { ToolFrame } from "@/components/tools/ToolFrame";
+import { ToolGuide } from "@/components/tools/ToolGuide";
 
 export const metadata: Metadata = {
   title: "Stuney - Catat Uang Saku, Dompet & Tabungan Pelajar · Founderku",
@@ -9,8 +10,11 @@ export const metadata: Metadata = {
 
 export default function StuneyPage() {
   return (
-    <ToolFrame toolId="stuney" toolName="Stuney" themed>
-      <Stuney />
-    </ToolFrame>
+    <>
+      <ToolFrame toolId="stuney" toolName="Stuney" themed>
+        <Stuney />
+      </ToolFrame>
+      <ToolGuide toolId="stuney" toolName="Stuney" />
+    </>
   );
 }

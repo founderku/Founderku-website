@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Laporin from "@/components/tools/laporin/Laporin";
 import { ToolFrame } from "@/components/tools/ToolFrame";
+import { ToolGuide } from "@/components/tools/ToolGuide";
 
 export const metadata: Metadata = {
   title: "Laporin - Laporan Bulanan untuk Investor · Founderku",
@@ -9,8 +10,11 @@ export const metadata: Metadata = {
 
 export default function LaporinPage() {
   return (
-    <ToolFrame toolId="laporin" toolName="Laporin" themed>
-      <Laporin />
-    </ToolFrame>
+    <>
+      <ToolFrame toolId="laporin" toolName="Laporin" themed>
+        <Laporin />
+      </ToolFrame>
+      <ToolGuide toolId="laporin" toolName="Laporin" />
+    </>
   );
 }

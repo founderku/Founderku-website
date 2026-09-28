@@ -55,6 +55,24 @@ export function ToolFrame({
     return () => clearTimeout(batas);
   }, [toolId]);
 
+  // Hitung kunjungan untuk Dashboard admin: sekali per tab per hari, cuma
+  // nama tool (tanpa data pribadi). Gagal kirim diabaikan.
+  useEffect(() => {
+    try {
+      const kunci = `fk-view-${toolId}-${new Date().toDateString()}`;
+      if (sessionStorage.getItem(kunci)) return;
+      sessionStorage.setItem(kunci, "1");
+    } catch {
+      // sessionStorage diblokir: tetap kirim sekali untuk muatan ini
+    }
+    fetch("/api/track", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ tool: toolId }),
+      keepalive: true,
+    }).catch(() => {});
+  }, [toolId]);
+
   useEffect(() => {
     const saatSembunyi = () => {
       if (document.visibilityState === "hidden") kirimSebelumPergi();

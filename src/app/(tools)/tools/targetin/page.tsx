@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Targetin from "@/components/tools/targetin/Targetin";
 import { ToolFrame } from "@/components/tools/ToolFrame";
+import { ToolGuide } from "@/components/tools/ToolGuide";
 
 export const metadata: Metadata = {
   title: "Targetin - OKR untuk Tim Startup · Founderku",
@@ -9,8 +10,11 @@ export const metadata: Metadata = {
 
 export default function TargetinPage() {
   return (
-    <ToolFrame toolId="targetin" toolName="Targetin" themed>
-      <Targetin />
-    </ToolFrame>
+    <>
+      <ToolFrame toolId="targetin" toolName="Targetin" themed>
+        <Targetin />
+      </ToolFrame>
+      <ToolGuide toolId="targetin" toolName="Targetin" />
+    </>
   );
 }

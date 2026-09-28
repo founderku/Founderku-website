@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Proyeksiin from "@/components/tools/proyeksiin/Proyeksiin";
 import { ToolFrame } from "@/components/tools/ToolFrame";
+import { ToolGuide } from "@/components/tools/ToolGuide";
 
 export const metadata: Metadata = {
   title: "Proyeksiin - Proyeksi Keuangan Startup 3 Tahun · Founderku",
@@ -9,8 +10,11 @@ export const metadata: Metadata = {
 
 export default function ProyeksiinPage() {
   return (
-    <ToolFrame toolId="proyeksiin" toolName="Proyeksiin" themed>
-      <Proyeksiin />
-    </ToolFrame>
+    <>
+      <ToolFrame toolId="proyeksiin" toolName="Proyeksiin" themed>
+        <Proyeksiin />
+      </ToolFrame>
+      <ToolGuide toolId="proyeksiin" toolName="Proyeksiin" />
+    </>
   );
 }

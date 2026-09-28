@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./tool.css";
 import Jalanin from "@/components/tools/jalanin/Jalanin";
 import { ToolFrame } from "@/components/tools/ToolFrame";
+import { ToolGuide } from "@/components/tools/ToolGuide";
 
 export const metadata: Metadata = {
   title: "Jalanin - Peta Perjalanan Bisnis · Founderku",
@@ -10,10 +11,13 @@ export const metadata: Metadata = {
 
 export default function JalaninPage() {
   return (
-    <ToolFrame toolId="jalanin" toolName="Jalanin">
-      <div className="tool-jalanin">
-        <Jalanin />
-      </div>
-    </ToolFrame>
+    <>
+      <ToolFrame toolId="jalanin" toolName="Jalanin">
+        <div className="tool-jalanin">
+          <Jalanin />
+        </div>
+      </ToolFrame>
+      <ToolGuide toolId="jalanin" toolName="Jalanin" />
+    </>
   );
 }

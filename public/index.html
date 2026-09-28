@@ -629,8 +629,8 @@ img{max-width:100%}
 .faq details{border-bottom:1px solid var(--line)}
 .faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:16px;padding:24px 4px;font-size:18px}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary span{transition:transform .3s;color:var(--faint);font-size:18px;line-height:1}
-.faq details[open] summary span{transform:rotate(45deg)}
+.faq summary span[aria-hidden="true"]{flex-shrink:0;transition:transform .3s;color:var(--faint);font-size:18px;line-height:1}
+.faq details[open] summary span[aria-hidden="true"]{transform:rotate(45deg)}
 .faq p{padding:0 4px 24px;color:var(--soft);font-size:16px;max-width:70ch}
 
 /* ---------- Update ---------- */
