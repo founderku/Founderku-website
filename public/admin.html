@@ -2579,6 +2579,15 @@ function dashBindTips(root){
   });
 }
 
+// Nama baris di tabel kunjungan: tool, klik ke TukarSkill, atau pilihan skill di simulasi beranda
+const DASH_SKILL = { desain: 'desain grafis', video: 'edit video', excel: 'Excel & laporan', inggris: 'bahasa Inggris', jualan: 'jualan & marketing', coding: 'website & coding' };
+function dashViewName(id){
+  if (id === 'tukarskill') return 'TukarSkill (klik ke komunitas)';
+  let m = /^tsbisa(\w+)$/.exec(id); if (m && DASH_SKILL[m[1]]) return 'Simulasi: bisa ' + DASH_SKILL[m[1]];
+  m = /^tsbutuh(\w+)$/.exec(id); if (m && DASH_SKILL[m[1]]) return 'Simulasi: butuh ' + DASH_SKILL[m[1]];
+  return (dashToolNames && dashToolNames[id]) || id;
+}
+
 function renderDashboard(d){
   const u = d.users || {}, rv = d.revenue || {}, pj = d.pajangin || {};
   const hari = (d.signups_daily || []);
@@ -2625,7 +2634,7 @@ function renderDashboard(d){
       '<p class="dnote">Satu kunjungan = satu tool dibuka di satu tab per hari. Bot dan mesin pencari tidak dihitung. Tanpa data pribadi.</p></div>' +
     '<div class="dcard"><h2>Tools paling sering dibuka</h2><div class="d-hint">Urut dari kunjungan 30 hari</div>' +
       (tvTools.length ? '<table class="dtable"><thead><tr><th>Tool</th><th class="num">Hari ini</th><th class="num">7 hari</th><th class="num">30 hari</th><th style="width:22%"></th></tr></thead><tbody>' +
-        tvTools.map(t => '<tr><td>' + escAdmin(t.tool === 'tukarskill' ? 'TukarSkill (klik ke komunitas)' : (dashToolNames[t.tool] || t.tool)) + '</td><td class="num">' + dashNum(t.today) + '</td><td class="num">' + dashNum(t.d7) + '</td><td class="num">' + dashNum(t.d30) + '</td><td><div class="tmeter"><i style="width:' + Math.round((Number(t.d30) || 0) / maxV * 100) + '%"></i></div></td></tr>').join('') +
+        tvTools.map(t => '<tr><td>' + escAdmin(dashViewName(t.tool)) + '</td><td class="num">' + dashNum(t.today) + '</td><td class="num">' + dashNum(t.d7) + '</td><td class="num">' + dashNum(t.d30) + '</td><td><div class="tmeter"><i style="width:' + Math.round((Number(t.d30) || 0) / maxV * 100) + '%"></i></div></td></tr>').join('') +
         '</tbody></table>' : '<div class="dnote">Belum ada kunjungan tercatat.</div>') +
     '</div></div>';
 

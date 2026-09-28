@@ -8,8 +8,10 @@ import { TOOL_IDS } from "@/lib/tools/registry";
 // akun, IP, cookie, atau data pribadi.
 const kosong = () => new NextResponse(null, { status: 204, headers: { "Cache-Control": "no-store" } });
 
-// Klik keluar yang ikut dihitung (bukan halaman tool)
-const TUJUAN_LUAR = ["tukarskill"] as const;
+// Selain halaman tool, yang ikut dihitung: klik keluar ke TukarSkill dan
+// pilihan skill di simulasi tukar skill beranda (misal "tsbisadesain").
+const SKILL_SIMULASI = ["desain", "video", "excel", "inggris", "jualan", "coding"];
+const TUJUAN_LUAR = ["tukarskill", ...SKILL_SIMULASI.flatMap((x) => [`tsbisa${x}`, `tsbutuh${x}`])];
 
 // Mesin pencari dan bot lain tidak ikut dihitung
 const BOT = /bot|crawl|spider|slurp|facebookexternalhit|preview|headless|lighthouse|pingdom|monitor/i;
