@@ -20,6 +20,7 @@ create extension if not exists pgcrypto;
 -- ============================================================
 drop trigger if exists on_auth_user_created on auth.users;
 drop view if exists public.store_profiles;
+drop table if exists public.ai_usage cascade;
 drop table if exists public.tool_data cascade;
 drop table if exists public.page_click_log cascade;
 drop table if exists public.takedowns cascade;
@@ -37,6 +38,9 @@ drop function if exists public.increment_page_click(text) cascade;
 drop function if exists public.increment_page_click(text, text) cascade;
 drop function if exists public.enforce_page_limit() cascade;
 drop function if exists public.admin_set_page_status(uuid, text, text) cascade;
+drop function if exists public.admin_stats() cascade;
+drop function if exists public.ai_take_quota(uuid, integer) cascade;
+drop function if exists public.ai_refund_quota(uuid) cascade;
 drop function if exists public.activate_subscription(text, numeric) cascade;
 drop function if exists public.start_trial(uuid, integer) cascade;
 drop function if exists public.tool_data_touch() cascade;
@@ -403,6 +407,115 @@ end;
 $$;
 
 -- ============================================================
+-- DASHBOARD ADMIN (tab Dashboard di admin.html, lewat /api/admin/stats)
+-- ============================================================
+-- Ringkasan angka bisnis untuk tab Dashboard di admin panel.
+-- Hanya admin (profiles.is_admin) yang bisa memanggil; selain itu ditolak.
+-- Isinya cuma angka hitungan, tanpa email atau data pribadi user.
+-- Status akses mengikuti aturan has_pro_access:
+--   pro   = pro_expires_at masih di masa depan (sudah bayar)
+--   trial = trial_ends_at masih di masa depan, tapi belum Pro
+--   free  = keduanya sudah lewat / kosong
+-- Tanggal harian & bulanan dihitung dalam waktu WIB (Asia/Jakarta).
+create function public.admin_stats()
+returns jsonb
+language plpgsql
+stable
+security definer
+set search_path = public
+as $$
+declare
+  sekarang timestamptz := now();
+  zona constant text := 'Asia/Jakarta';
+  hari_ini date := (now() at time zone 'Asia/Jakarta')::date;
+  hasil jsonb;
+begin
+  if not public.is_admin() then
+    raise exception 'Hanya admin.' using errcode = '42501';
+  end if;
+
+  select jsonb_build_object(
+    'generated_at', sekarang,
+    'users', (
+      select jsonb_build_object(
+        'total', count(*),
+        'new_today', count(*) filter (where (created_at at time zone zona)::date = hari_ini),
+        'new_7d', count(*) filter (where created_at > sekarang - interval '7 days'),
+        'new_30d', count(*) filter (where created_at > sekarang - interval '30 days'),
+        'pro', count(*) filter (where pro_expires_at > sekarang),
+        'trial', count(*) filter (where trial_ends_at > sekarang and not coalesce(pro_expires_at > sekarang, false)),
+        'free', count(*) filter (where not coalesce(pro_expires_at > sekarang, false) and not coalesce(trial_ends_at > sekarang, false)),
+        'trial_ending_7d', count(*) filter (where trial_ends_at > sekarang and trial_ends_at <= sekarang + interval '7 days' and not coalesce(pro_expires_at > sekarang, false)),
+        'pro_ending_7d', count(*) filter (where pro_expires_at > sekarang and pro_expires_at <= sekarang + interval '7 days'),
+        'ever_paid', (select count(distinct s.user_id) from public.subscriptions s where s.status = 'paid')
+      )
+      from public.profiles
+    ),
+    'signups_daily', (
+      select coalesce(jsonb_agg(jsonb_build_object('day', h.hari, 'n', coalesce(c.n, 0)) order by h.hari), '[]'::jsonb)
+      from (select (hari_ini - i) as hari from generate_series(0, 29) as i) h
+      left join (
+        select (created_at at time zone zona)::date as hari, count(*) as n
+        from public.profiles
+        where created_at > sekarang - interval '31 days'
+        group by 1
+      ) c on c.hari = h.hari
+    ),
+    'revenue', (
+      select jsonb_build_object(
+        'total', coalesce(sum(amount), 0),
+        'this_month', coalesce(sum(amount) filter (where date_trunc('month', paid_at at time zone zona) = date_trunc('month', sekarang at time zone zona)), 0),
+        'last_30d', coalesce(sum(amount) filter (where paid_at > sekarang - interval '30 days'), 0),
+        'paid_count', count(*),
+        'paid_30d', count(*) filter (where paid_at > sekarang - interval '30 days')
+      )
+      from public.subscriptions
+      where status = 'paid'
+    ),
+    'revenue_monthly', (
+      select coalesce(jsonb_agg(jsonb_build_object('month', to_char(b.bulan, 'YYYY-MM'), 'amount', coalesce(r.jumlah, 0), 'count', coalesce(r.n, 0)) order by b.bulan), '[]'::jsonb)
+      from (
+        select (date_trunc('month', sekarang at time zone zona) - make_interval(months => i))::date as bulan
+        from generate_series(0, 5) as i
+      ) b
+      left join (
+        select date_trunc('month', paid_at at time zone zona)::date as bulan, sum(amount) as jumlah, count(*) as n
+        from public.subscriptions
+        where status = 'paid'
+        group by 1
+      ) r on r.bulan = b.bulan
+    ),
+    'pending_invoices', (
+      select count(*) from public.subscriptions where status = 'pending' and created_at > sekarang - interval '2 days'
+    ),
+    'tools', (
+      select coalesce(jsonb_agg(jsonb_build_object('tool', t.tool, 'users', t.users, 'active_30d', t.aktif) order by t.users desc, t.tool), '[]'::jsonb)
+      from (
+        select split_part(key, '-', 1) as tool,
+               count(distinct user_id) as users,
+               count(distinct user_id) filter (where updated_at > sekarang - interval '30 days') as aktif
+        from public.tool_data
+        group by 1
+      ) t
+    ),
+    'pajangin', (
+      select jsonb_build_object(
+        'pages', count(*),
+        'active', count(*) filter (where status = 'active'),
+        'taken_down', count(*) filter (where status = 'taken_down'),
+        'sellers', count(distinct user_id),
+        'clicks', coalesce(sum(click_count), 0),
+        'new_30d', count(*) filter (where created_at > sekarang - interval '30 days')
+      )
+      from public.pages
+    )
+  ) into hasil;
+
+  return hasil;
+end;
+$$;
+
+-- ============================================================
 -- HAK AKSES FUNGSI
 -- Postgres defaultnya ngizinin SEMUA orang manggil fungsi baru, jadi
 -- dicabut dulu, baru dikasih ke yang memang butuh.
@@ -420,6 +533,8 @@ grant execute on function public.get_store_profile_by_id(uuid) to anon, authenti
 -- jumlah klik gak bisa dipalsukan dengan manggil fungsi langsung.
 grant execute on function public.increment_page_click(text, text) to service_role;
 grant execute on function public.admin_set_page_status(uuid, text, text) to authenticated;
+-- Dashboard admin: fungsinya sendiri menolak yang bukan admin
+grant execute on function public.admin_stats() to authenticated;
 grant execute on function public.start_trial(uuid, integer) to service_role;
 grant execute on function public.activate_subscription(text, numeric) to service_role;
 
@@ -613,6 +728,77 @@ create policy "User ubah data tools (Pro/trial)"
   on public.tool_data for update
   using (auth.uid() = user_id and public.current_user_has_pro())
   with check (auth.uid() = user_id and public.current_user_has_pro());
+
+-- ============================================================
+-- ASISTEN AI (tombol chat di founderku.com, lewat /api/ai/chat)
+-- ============================================================
+-- Jatah Asisten AI Founderku (Gemini) per akun per hari (tanggal WIB).
+-- Yang disimpan cuma JUMLAH pemakaian, bukan isi percakapan.
+create table public.ai_usage (
+  user_id uuid not null references public.profiles(id) on delete cascade,
+  day date not null,
+  count integer not null default 0 check (count >= 0),
+  primary key (user_id, day)
+);
+
+alter table public.ai_usage enable row level security;
+
+-- User cuma bisa melihat pemakaian miliknya sendiri (untuk tampilan
+-- "sisa jatah"). Menambah/mengurangi hanya lewat fungsi server di bawah.
+create policy "User lihat jatah AI sendiri"
+  on public.ai_usage for select using (auth.uid() = user_id);
+
+-- Ambil 1 jatah hari ini. Kembalikan sisa jatah setelah diambil, atau -1
+-- kalau jatah hari ini sudah habis. Satu perintah (atomik), jadi banyak
+-- permintaan bersamaan tidak bisa melewati batas.
+create function public.ai_take_quota(uid uuid, batas integer)
+returns integer
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  hari date := (now() at time zone 'Asia/Jakarta')::date;
+  jumlah integer;
+begin
+  if batas is null or batas < 1 then
+    return -1;
+  end if;
+  insert into public.ai_usage (user_id, day, count)
+    values (uid, hari, 1)
+    on conflict (user_id, day)
+    do update set count = public.ai_usage.count + 1
+    where public.ai_usage.count < batas
+    returning count into jumlah;
+  if jumlah is null then
+    return -1;
+  end if;
+  return batas - jumlah;
+end;
+$$;
+
+-- Kembalikan 1 jatah kalau AI gagal menjawab (misal layanan Gemini penuh),
+-- supaya user tidak rugi jatah.
+create function public.ai_refund_quota(uid uuid)
+returns void
+language sql
+security definer
+set search_path = public
+as $$
+  update public.ai_usage
+    set count = count - 1
+    where user_id = uid
+      and day = (now() at time zone 'Asia/Jakarta')::date
+      and count > 0;
+$$;
+
+-- Hanya server (service_role) yang boleh mengambil/mengembalikan jatah.
+revoke all on public.ai_usage from anon, authenticated;
+grant select on public.ai_usage to authenticated;
+revoke execute on function public.ai_take_quota(uuid, integer) from public, anon, authenticated;
+revoke execute on function public.ai_refund_quota(uuid) from public, anon, authenticated;
+grant execute on function public.ai_take_quota(uuid, integer) to service_role;
+grant execute on function public.ai_refund_quota(uuid) to service_role;
 
 -- ============================================================
 -- SETELAH RUN: jadikan akun kamu admin (ganti emailnya)

@@ -238,3 +238,81 @@ select 'T48 Pro habis: tidak bisa ubah data: ' || case when value->>'a'='2' then
 delete from public.tool_data where key = 'notain-draft-v1';
 select 'T49 Pro habis: tetap bisa hapus data sendiri: ' || case when count(*)=0 then 'LULUS' else 'GAGAL' end from public.tool_data;
 reset role;
+
+-- ===== Dashboard admin (admin_stats) =====
+reset role;
+set role anon;
+do $$ begin
+  perform public.admin_stats();
+  raise notice 'T50 pengunjung (anon) buka dashboard admin: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T50 pengunjung (anon) buka dashboard admin: LULUS (ditolak)'; end $$;
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '22222222-2222-2222-2222-222222222222';
+do $$ begin
+  perform public.admin_stats();
+  raise notice 'T51 user biasa buka dashboard admin: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T51 user biasa buka dashboard admin: LULUS (ditolak)'; end $$;
+reset role;
+-- data pembanding yang pasti: satu Pro, satu trial, satu pembayaran lunas
+update public.profiles set pro_expires_at = now() + interval '3 days', trial_ends_at = null where email = 'lain@x.com';
+update public.profiles set trial_ends_at = now() + interval '5 days', pro_expires_at = null where email = 'umkm@x.com';
+insert into public.subscriptions (user_id, xendit_invoice_id, price_id, amount, days, status, paid_at)
+  values ('33333333-3333-3333-3333-333333333333', 'tes-dashboard-1', 'monthly', 49000, 30, 'paid', now());
+set role authenticated;
+set request.jwt.claim.sub = '11111111-1111-1111-1111-111111111111';
+select 'T52 admin bisa buka dashboard: ' || case when public.admin_stats() ? 'users' then 'LULUS' else 'GAGAL' end;
+reset role;
+-- hitung ulang sebagai superuser lalu bandingkan dengan hasil fungsi (dipanggil sebagai admin)
+set role authenticated;
+set request.jwt.claim.sub = '11111111-1111-1111-1111-111111111111';
+create temp table hasil_admin as select public.admin_stats() as j;
+reset role;
+select 'T53 total akun cocok: ' || case when (j->'users'->>'total')::int = (select count(*) from public.profiles) then 'LULUS' else 'GAGAL' end from hasil_admin;
+select 'T54 pro + trial + free = total: ' || case when (j->'users'->>'pro')::int + (j->'users'->>'trial')::int + (j->'users'->>'free')::int = (j->'users'->>'total')::int then 'LULUS' else 'GAGAL' end from hasil_admin;
+select 'T55 status sama dengan has_pro_access: ' || case when (j->'users'->>'pro')::int + (j->'users'->>'trial')::int = (select count(*) from public.profiles p where public.has_pro_access(p.id)) then 'LULUS' else 'GAGAL' end from hasil_admin;
+select 'T56 Pro habis <= 7 hari terhitung (lain@x.com): ' || case when (j->'users'->>'pro_ending_7d')::int >= 1 and (j->'users'->>'trial_ending_7d')::int >= 1 then 'LULUS' else 'GAGAL' end from hasil_admin;
+select 'T57 pemasukan total = jumlah pembayaran lunas: ' || case when (j->'revenue'->>'total')::numeric = (select sum(amount) from public.subscriptions where status='paid') then 'LULUS' else 'GAGAL' end from hasil_admin;
+select 'T58 pemasukan bulan ini memuat pembayaran hari ini: ' || case when (j->'revenue'->>'this_month')::numeric >= 49000 then 'LULUS' else 'GAGAL' end from hasil_admin;
+select 'T59 grafik 30 hari & 6 bulan: ' || case when jsonb_array_length(j->'signups_daily') = 30 and jsonb_array_length(j->'revenue_monthly') = 6 then 'LULUS' else 'GAGAL' end from hasil_admin;
+select 'T60 pendaftar harian = total pendaftar 30 hari: ' || case when (select sum((x->>'n')::int) from jsonb_array_elements(j->'signups_daily') x) = (select count(*) from public.profiles where (created_at at time zone 'Asia/Jakarta')::date > (now() at time zone 'Asia/Jakarta')::date - 30) then 'LULUS' else 'GAGAL' end from hasil_admin;
+select 'T61 pemakaian tools per tool cocok: ' || case when jsonb_array_length(j->'tools') = (select count(distinct split_part(key,'-',1)) from public.tool_data) then 'LULUS' else 'GAGAL' end from hasil_admin;
+select 'T62 Pajangin: jumlah halaman cocok: ' || case when (j->'pajangin'->>'pages')::int = (select count(*) from public.pages) then 'LULUS' else 'GAGAL' end from hasil_admin;
+select 'T63 tidak ada email/data pribadi di hasil: ' || case when j::text not like '%@%' then 'LULUS' else 'GAGAL' end from hasil_admin;
+
+-- ===== Asisten AI: jatah harian (ai_usage) =====
+reset role;
+select 'T64 ambil jatah pertama (batas 3): sisa 2: ' || case when public.ai_take_quota('22222222-2222-2222-2222-222222222222', 3) = 2 then 'LULUS' else 'GAGAL' end;
+select 'T65 ambil jatah kedua & ketiga: sisa 0: ' || case when public.ai_take_quota('22222222-2222-2222-2222-222222222222', 3) = 1 and public.ai_take_quota('22222222-2222-2222-2222-222222222222', 3) = 0 then 'LULUS' else 'GAGAL' end;
+select 'T66 jatah habis ditolak (-1), hitungan tidak naik: ' || case when public.ai_take_quota('22222222-2222-2222-2222-222222222222', 3) = -1 and (select count from public.ai_usage where user_id='22222222-2222-2222-2222-222222222222') = 3 then 'LULUS' else 'GAGAL' end;
+select public.ai_refund_quota('22222222-2222-2222-2222-222222222222');
+select 'T67 jatah dikembalikan saat AI gagal: ' || case when (select count from public.ai_usage where user_id='22222222-2222-2222-2222-222222222222') = 2 then 'LULUS' else 'GAGAL' end;
+select 'T68 akun Pro dengan batas lebih besar tetap jalan: ' || case when public.ai_take_quota('11111111-1111-1111-1111-111111111111', 30) = 29 then 'LULUS' else 'GAGAL' end;
+select 'T69 jatah dihitung per tanggal WIB: ' || case when (select day from public.ai_usage where user_id='22222222-2222-2222-2222-222222222222') = (now() at time zone 'Asia/Jakarta')::date then 'LULUS' else 'GAGAL' end;
+set role authenticated;
+set request.jwt.claim.sub = '22222222-2222-2222-2222-222222222222';
+do $$ begin
+  perform public.ai_take_quota(auth.uid(), 999);
+  raise notice 'T70 user panggil ai_take_quota sendiri: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T70 user panggil ai_take_quota sendiri: LULUS (ditolak)'; end $$;
+do $$ begin
+  perform public.ai_refund_quota(auth.uid());
+  raise notice 'T71 user panggil ai_refund_quota sendiri: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T71 user panggil ai_refund_quota sendiri: LULUS (ditolak)'; end $$;
+do $$ begin
+  update public.ai_usage set count = 0 where user_id = auth.uid();
+  raise notice 'T72 user reset jatah sendiri: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T72 user reset jatah sendiri: LULUS (ditolak)'; end $$;
+do $$ begin
+  insert into public.ai_usage (user_id, day, count) values (auth.uid(), current_date + 1, 0);
+  raise notice 'T73 user tambah baris jatah: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T73 user tambah baris jatah: LULUS (ditolak)'; end $$;
+select 'T74 user lihat jatah sendiri saja: ' || case when count(*) = 1 and bool_and(user_id = auth.uid()) then 'LULUS' else 'GAGAL' end from public.ai_usage;
+reset role;
+set role anon;
+do $$ declare n int; begin
+  select count(*) into n from public.ai_usage;
+  if n = 0 then raise notice 'T75 pengunjung tidak bisa lihat jatah siapa pun: LULUS (kosong)';
+  else raise notice 'T75 pengunjung tidak bisa lihat jatah siapa pun: GAGAL (% baris)', n; end if;
+exception when insufficient_privilege then raise notice 'T75 pengunjung tidak bisa lihat jatah siapa pun: LULUS (ditolak)'; end $$;
+reset role;

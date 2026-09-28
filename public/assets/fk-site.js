@@ -57,7 +57,14 @@
   // Bisa dipanggil ulang (FK.mount) untuk halaman aplikasi Next.js yang
   // pindah halaman tanpa memuat ulang browser.
   var cur=null;
+  // Asisten AI (tombol chat di pojok kanan bawah), dimuat sekali
+  function loadAI(){
+    if(window.FKAI){window.FKAI.cek();return;}
+    if(document.querySelector('script[data-fk-ai]'))return;
+    var s=document.createElement('script');s.src='/assets/fk-ai.js';s.defer=true;s.setAttribute('data-fk-ai','1');document.body.appendChild(s);
+  }
   function mount(){
+  loadAI();
   var nav=document.querySelector('[data-fk-nav]:not([data-fk-done])');
   var foot=document.querySelector('[data-fk-foot]:not([data-fk-done])');
   if(nav){

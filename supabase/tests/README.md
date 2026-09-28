@@ -1,7 +1,7 @@
 # Tes keamanan database
 
 `security-test.sql` mengetes aturan akses di `supabase/schema.sql`:
-user tidak bisa menjadikan dirinya Pro/admin, batas 2 halaman akun Free,
+user tidak bisa menjadikan dirinya Pro/admin, dashboard admin cuma untuk admin, batas 2 halaman akun Free,
 trial sekali seumur akun, pembayaran dobel tidak dihitung dua kali,
 dan lain-lain. Setiap baris hasil berisi LULUS, GAGAL, atau DILEWATI.
 
@@ -26,5 +26,5 @@ select
   (select count(*) from pg_tables where schemaname = 'public' and rowsecurity) as tabel_rls_aktif, -- harus 7
   (select count(*) from pg_policies where schemaname = 'public') as jumlah_aturan,                  -- harus 18
   (select count(*) from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-     where n.nspname = 'public') as jumlah_fungsi;                                                   -- harus 13
+     where n.nspname = 'public') as jumlah_fungsi;                                                   -- harus 16 (setelah migration 010 dan 011)
 ```
