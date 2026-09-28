@@ -116,7 +116,7 @@
 :where(.nav,.sheet) button{font-family:inherit}
 :where(.nav,.sheet) img{max-width:100%}
 .nav{background:var(--bg)}
-@media (max-width:920px){.menu{display:none}.burger{display:grid}.nav-right .hide-m{display:none}}
+@media (max-width:1080px){.menu{display:none}.burger{display:grid}.nav-right .hide-m{display:none}}
 @media (max-width:600px){.nav-in{gap:10px}.nav-right{gap:6px}.icon-btn{width:36px;height:36px}.logo{font-size:17px}.logo img{width:28px;height:28px}.btn{padding:11px 20px;font-size:15px}.btn-sm{padding:7px 14px;font-size:14px}}
 @media print{.nav,.sheet{display:none!important}}
 

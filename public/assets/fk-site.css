@@ -393,6 +393,8 @@ a.cd:hover .go::after,.cd .go:hover::after{transform:translateX(3px)}
 
 /* Layar sedikit lebih kecil dari bingkai: sisakan ruang supaya tanda + di sudut tidak keluar layar */
 @media (min-width:601px){.frame{max-width:min(1320px,calc(100% - 24px))}}
+/* Menu atas butuh sekitar 1030px (6 menu + tombol kanan). Di bawah itu pakai menu samping. */
+@media (max-width:1080px){.menu{display:none}.burger{display:grid}.nav-right .hide-m{display:none}}
 @media (max-width:920px){
   .menu{display:none}
   .burger{display:grid}
