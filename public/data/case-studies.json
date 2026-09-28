@@ -32,11 +32,11 @@
         "en": "Built through Founderku's 4-step process, from idea discussion to a live product.",
         "tr": "Founderku'nun 4 adımlı süreci aracılığıyla gerçekleştirilir, fikir tartışmasından canlı ürüne kadar."
       },
-      "linkUrl": "product.html?slug=tukarskill",
+      "linkUrl": "https://tukarskill.com/?ref=founderku",
       "linkLabel": {
-        "id": "Lihat produk jadi & detailnya",
-        "en": "View the finished product & details",
-        "tr": "Tamamlanan ürünü ve detaylarını görün"
+        "id": "Buka TukarSkill, komunitas Founderku",
+        "en": "Open TukarSkill, the Founderku community",
+        "tr": "Founderku topluluğu TukarSkill’i aç"
       },
       "external": false,
       "order": 1

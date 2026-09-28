@@ -3,9 +3,15 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { TOOL_IDS } from "@/lib/tools/registry";
 
 // Hitung kunjungan tool (untuk tab Dashboard di admin panel). Dipanggil
-// halaman tool sekali per tab per hari. Yang disimpan cuma angka per tool
-// per hari (tabel tool_views): tanpa akun, IP, cookie, atau data pribadi.
+// halaman tool sekali per tab per hari, dan saat link ke TukarSkill diklik.
+// Yang disimpan cuma angka per tool per hari (tabel tool_views): tanpa
+// akun, IP, cookie, atau data pribadi.
 const kosong = () => new NextResponse(null, { status: 204, headers: { "Cache-Control": "no-store" } });
+
+// Selain halaman tool, yang ikut dihitung: klik keluar ke TukarSkill dan
+// pilihan skill di simulasi tukar skill beranda (misal "tsbisadesain").
+const SKILL_SIMULASI = ["desain", "video", "excel", "inggris", "jualan", "coding"];
+const TUJUAN_LUAR = ["tukarskill", ...SKILL_SIMULASI.flatMap((x) => [`tsbisa${x}`, `tsbutuh${x}`])];
 
 // Mesin pencari dan bot lain tidak ikut dihitung
 const BOT = /bot|crawl|spider|slurp|facebookexternalhit|preview|headless|lighthouse|pingdom|monitor/i;
@@ -28,8 +34,8 @@ export async function POST(req: NextRequest) {
   } catch {
     return kosong();
   }
-  // Hanya id tool yang memang ada
-  if (typeof tool !== "string" || !(TOOL_IDS as readonly string[]).includes(tool)) return kosong();
+  // Hanya id tool yang memang ada, plus klik keluar ke komunitas TukarSkill
+  if (typeof tool !== "string" || !([...TOOL_IDS, ...TUJUAN_LUAR] as readonly string[]).includes(tool)) return kosong();
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) return kosong();
 
   try {

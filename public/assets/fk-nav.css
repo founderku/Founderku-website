@@ -51,6 +51,8 @@
 .menu > li > button svg{width:12px;height:12px;transition:transform .25s}
 .menu > li:hover > a,.menu > li:hover > button,.menu > li.open > button{color:var(--text);background:var(--panel)}
 .menu > li.open > button svg{transform:rotate(180deg)}
+.menu > li > a{white-space:nowrap}
+.nb{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:999px;background:var(--orange);color:#1A1730;font-size:10.5px;font-weight:600;line-height:1.5;vertical-align:1px;letter-spacing:0}
 .mega{position:absolute;top:calc(100% + 10px);left:-10px;min-width:540px;padding:10px;border-radius:20px;background:var(--menu-bg);border:1px solid var(--line);box-shadow:var(--shadow);
   -webkit-backdrop-filter:blur(28px) saturate(170%);backdrop-filter:blur(28px) saturate(170%);
   opacity:0;visibility:hidden;transform:translateY(-6px) scale(.98);transform-origin:top left;transition:opacity .2s,transform .25s cubic-bezier(.2,.9,.3,1.2),visibility .2s;display:grid;grid-template-columns:1fr 1fr;gap:4px}
@@ -116,7 +118,7 @@
 :where(.nav,.sheet) button{font-family:inherit}
 :where(.nav,.sheet) img{max-width:100%}
 .nav{background:var(--bg)}
-@media (max-width:920px){.menu{display:none}.burger{display:grid}.nav-right .hide-m{display:none}}
+@media (max-width:1200px){.menu{display:none}.burger{display:grid}.nav-right .hide-m{display:none}}
 @media (max-width:600px){.nav-in{gap:10px}.nav-right{gap:6px}.icon-btn{width:36px;height:36px}.logo{font-size:17px}.logo img{width:28px;height:28px}.btn{padding:11px 20px;font-size:15px}.btn-sm{padding:7px 14px;font-size:14px}}
 @media print{.nav,.sheet{display:none!important}}
 
