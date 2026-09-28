@@ -1,0 +1,179 @@
+/* Panduan di bawah tool. Warna dari token fk-nav.css (ikut tema). */
+.guide {
+  background: var(--bg);
+  color: var(--text);
+  border-top: 1px solid var(--line);
+  font-family: Poppins, system-ui, sans-serif;
+  line-height: 1.6;
+}
+.guide *,
+.guide *::before,
+.guide *::after {
+  box-sizing: border-box;
+}
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 56px 24px 72px;
+}
+.eyebrow {
+  font-size: 14px;
+  color: var(--faint);
+  margin-bottom: 10px;
+}
+.h2 {
+  font-size: clamp(26px, 3.4vw, 36px);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+  margin: 0 0 16px;
+  color: var(--text);
+}
+.dot {
+  color: var(--orange);
+}
+.intro {
+  max-width: 760px;
+  color: var(--soft);
+  font-size: 16px;
+}
+.intro p {
+  margin: 0 0 10px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 28px 0 36px;
+}
+.box {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 22px 24px;
+  min-width: 0;
+}
+.h3 {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0 0 12px;
+  color: var(--text);
+}
+.steps {
+  margin: 0;
+  padding-left: 22px;
+  color: var(--soft);
+  font-size: 15px;
+}
+.steps li + li {
+  margin-top: 8px;
+}
+.rumus {
+  display: grid;
+  gap: 8px;
+}
+.rumus code {
+  display: block;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 500;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--orange);
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+.note {
+  margin: 12px 0 0;
+  font-size: 13.5px;
+  color: var(--faint);
+}
+.faq {
+  display: grid;
+  gap: 10px;
+  max-width: 860px;
+}
+.item {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 0 20px;
+}
+.item summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 16px 28px 16px 0;
+  font-weight: 500;
+  font-size: 15.5px;
+  position: relative;
+}
+.item summary::-webkit-details-marker {
+  display: none;
+}
+.item summary::after {
+  content: "+";
+  position: absolute;
+  right: 0;
+  top: 13px;
+  font-size: 20px;
+  color: var(--faint);
+}
+.item[open] summary::after {
+  content: "\2212";
+}
+.item summary:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+.item p {
+  margin: 0 0 16px;
+  color: var(--soft);
+  font-size: 15px;
+}
+.read {
+  margin-top: 32px;
+  display: grid;
+  gap: 8px;
+}
+.read a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+.read a::before {
+  content: "\2192";
+  color: var(--orange);
+  flex-shrink: 0;
+}
+.read a span {
+  text-decoration: underline;
+  text-decoration-color: var(--line-2);
+  text-underline-offset: 3px;
+}
+.read a:hover span {
+  text-decoration-color: var(--orange);
+}
+@media (max-width: 760px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .wrap {
+    padding: 40px 16px 56px;
+  }
+  .box {
+    padding: 18px;
+  }
+}
+@media print {
+  .guide {
+    display: none;
+  }
+}

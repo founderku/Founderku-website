@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Runwayin from "@/components/tools/runwayin/Runwayin";
 import { ToolFrame } from "@/components/tools/ToolFrame";
+import { ToolGuide } from "@/components/tools/ToolGuide";
 
 export const metadata: Metadata = {
   title: "Runwayin - Hitung Runway & Burn Rate Startup · Founderku",
@@ -9,8 +10,11 @@ export const metadata: Metadata = {
 
 export default function RunwayinPage() {
   return (
-    <ToolFrame toolId="runwayin" toolName="Runwayin" themed>
-      <Runwayin />
-    </ToolFrame>
+    <>
+      <ToolFrame toolId="runwayin" toolName="Runwayin" themed>
+        <Runwayin />
+      </ToolFrame>
+      <ToolGuide toolId="runwayin" toolName="Runwayin" />
+    </>
   );
 }

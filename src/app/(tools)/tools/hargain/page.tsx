@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Hargain from "@/components/tools/hargain/Hargain";
 import { ToolFrame } from "@/components/tools/ToolFrame";
+import { ToolGuide } from "@/components/tools/ToolGuide";
 
 export const metadata: Metadata = {
   title: "Hargain - Menentukan Harga & Paket Langganan · Founderku",
@@ -9,8 +10,11 @@ export const metadata: Metadata = {
 
 export default function HargainPage() {
   return (
-    <ToolFrame toolId="hargain" toolName="Hargain" themed>
-      <Hargain />
-    </ToolFrame>
+    <>
+      <ToolFrame toolId="hargain" toolName="Hargain" themed>
+        <Hargain />
+      </ToolFrame>
+      <ToolGuide toolId="hargain" toolName="Hargain" />
+    </>
   );
 }
