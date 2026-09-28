@@ -26,7 +26,7 @@ const b = "text-ink";
 
 export default function PrivasiPage() {
   return (
-    <LegalLayout title="Kebijakan Privasi" updatedAt="26 September 2026" active="privasi">
+    <LegalLayout title="Kebijakan Privasi" updatedAt="28 September 2026" active="privasi">
       <p className="text-sm text-text-soft leading-relaxed">
         Kebijakan Privasi ini menjelaskan bagaimana Founderku (&quot;kami&quot;),
         yang dikelola oleh {NAMA_PT}, mengumpulkan, menggunakan, menyimpan,
@@ -143,6 +143,7 @@ export default function PrivasiPage() {
           <li><strong className={b}>Xendit</strong>: pemrosesan pembayaran langganan.</li>
           <li><strong className={b}>Resend</strong>: pengiriman email seperti kode verifikasi.</li>
           <li><strong className={b}>Google</strong>: login dengan Google (jika Anda memilihnya) dan penyediaan huruf (font) di halaman.</li>
+          <li><strong className={b}>Google (Gemini API)</strong>: menjawab pertanyaan di Asisten AI Founderku (lihat bagian 5a).</li>
         </ul>
         <p>
           Karena sebagian server berada di luar Indonesia, data Anda dapat
@@ -151,6 +152,36 @@ export default function PrivasiPage() {
           UU PDP. Kami juga dapat membuka data jika diwajibkan oleh hukum yang
           berlaku.
         </p>
+      </LegalSection>
+
+      <LegalSection title="5a. Asisten AI Founderku">
+        <ul className="list-disc pl-5 space-y-1.5">
+          <li>
+            Asisten AI (tombol chat di founderku.com) hanya bisa dipakai
+            setelah masuk ke akun. Pesan yang Anda ketik, beserta beberapa
+            pesan sebelumnya dalam percakapan yang sama, dikirim ke{" "}
+            <strong className={b}>Google Gemini API</strong> untuk dibuatkan
+            jawaban.
+          </li>
+          <li>
+            Kami <strong className={b}>tidak menyimpan isi percakapan</strong>{" "}
+            di server kami. Percakapan hanya tersimpan sementara di tab browser
+            Anda dan hilang saat tab ditutup. Yang kami simpan hanya jumlah
+            pertanyaan per hari untuk menghitung jatah pemakaian.
+          </li>
+          <li>
+            Pesan yang dikirim ke Google tunduk pada ketentuan layanan Google
+            Gemini API. Pada layanan tanpa biaya, Google dapat memakai isi pesan
+            untuk meningkatkan produknya, dan pesan dapat ditinjau oleh manusia.
+            Karena itu, <strong className={b}>jangan mengirim data pribadi atau
+            rahasia</strong> (misalnya nomor identitas, nomor rekening, kata
+            sandi, atau data pelanggan) ke Asisten AI.
+          </li>
+          <li>
+            Jawaban AI dibuat otomatis dan bisa keliru. Jawaban tersebut bukan
+            nasihat hukum, pajak, atau keuangan resmi.
+          </li>
+        </ul>
       </LegalSection>
 
       <LegalSection title="6. Keamanan Data">
