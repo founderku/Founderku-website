@@ -77,6 +77,8 @@ img{max-width:100%}
 .menu > li > button svg{width:12px;height:12px;transition:transform .25s}
 .menu > li:hover > a,.menu > li:hover > button,.menu > li.open > button{color:var(--text);background:var(--panel)}
 .menu > li.open > button svg{transform:rotate(180deg)}
+.menu > li > a{white-space:nowrap}
+.nb{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:999px;background:var(--orange);color:#1A1730;font-size:10.5px;font-weight:600;line-height:1.5;vertical-align:1px;letter-spacing:0}
 .mega{position:absolute;top:calc(100% + 10px);left:-10px;min-width:540px;padding:10px;border-radius:20px;background:var(--menu-bg);border:1px solid var(--line);box-shadow:var(--shadow);
   -webkit-backdrop-filter:blur(28px) saturate(170%);backdrop-filter:blur(28px) saturate(170%);
   opacity:0;visibility:hidden;transform:translateY(-6px) scale(.98);transform-origin:top left;transition:opacity .2s,transform .25s cubic-bezier(.2,.9,.3,1.2),visibility .2s;display:grid;grid-template-columns:1fr 1fr;gap:4px}
@@ -393,8 +395,8 @@ a.cd:hover .go::after,.cd .go:hover::after{transform:translateX(3px)}
 
 /* Layar sedikit lebih kecil dari bingkai: sisakan ruang supaya tanda + di sudut tidak keluar layar */
 @media (min-width:601px){.frame{max-width:min(1320px,calc(100% - 24px))}}
-/* Menu atas butuh sekitar 1030px (6 menu + tombol kanan). Di bawah itu pakai menu samping. */
-@media (max-width:1080px){.menu{display:none}.burger{display:grid}.nav-right .hide-m{display:none}}
+/* Menu atas butuh sekitar 1170px (6 menu + label Baru + tombol kanan). Di bawah itu pakai menu samping. */
+@media (max-width:1200px){.menu{display:none}.burger{display:grid}.nav-right .hide-m{display:none}}
 @media (max-width:920px){
   .menu{display:none}
   .burger{display:grid}
