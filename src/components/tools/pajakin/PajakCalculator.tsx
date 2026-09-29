@@ -142,11 +142,12 @@ export default function PajakCalculator() {
           )}
 
           <p className={styles.footnote}>
-            Berdasarkan PP 20/2026 (berlaku sejak 22 April 2026). Tarif 0,5% dan batas omzet
-            bebas pajak Rp{formatRupiah(BATAS_BEBAS_PAJAK).replace('Rp ', '')} berlaku buat WP
+            Berdasarkan PP 20/2026 (berlaku sejak 22 April 2026). Tarif 0,5% berlaku buat WP
             Orang Pribadi, PT Perorangan, dan koperasi dengan omzet setahun sampai{' '}
-            {formatRupiah(BATAS_MAKSIMAL_OMZET)}. Kalkulator ini cuma simulasi, bukan pengganti
-            konsultasi pajak resmi - kondisi tiap usaha bisa beda.
+            {formatRupiah(BATAS_MAKSIMAL_OMZET)}. Jatah omzet bebas pajak
+            Rp{formatRupiah(BATAS_BEBAS_PAJAK).replace('Rp ', '')} per tahun hanya untuk WP Orang
+            Pribadi, jadi hitungan di sini untuk usaha perorangan. Kalkulator ini cuma simulasi,
+            bukan pengganti konsultasi pajak resmi - kondisi tiap usaha bisa beda.
           </p>
         </div>
       </main>
