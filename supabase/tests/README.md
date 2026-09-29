@@ -24,8 +24,8 @@ Supabase beneran.
 
 ```sql
 select
-  (select count(*) from pg_tables where schemaname = 'public' and rowsecurity) as tabel_rls_aktif, -- harus 16
-  (select count(*) from pg_policies where schemaname = 'public') as jumlah_aturan,                  -- harus 34
+  (select count(*) from pg_tables where schemaname = 'public' and rowsecurity) as tabel_rls_aktif, -- harus 19
+  (select count(*) from pg_policies where schemaname = 'public') as jumlah_aturan,                  -- harus 40
   (select count(*) from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-     where n.nspname = 'public') as jumlah_fungsi;                                                   -- harus 33 (setelah migration 010 sampai 013)
+     where n.nspname = 'public') as jumlah_fungsi;                                                   -- harus 38 (setelah migration 010 sampai 014)
 ```
