@@ -29,6 +29,8 @@ drop table if exists public.ss_legacy cascade;
 drop function if exists public.ss_skills_ok(text[]) cascade;
 drop function if exists public.ss_clean_skills(text[]) cascade;
 drop function if exists public.ss_link_ok(text) cascade;
+drop function if exists public.ss_is_partner(uuid) cascade;
+drop function if exists public.ss_requested_post(uuid) cascade;
 drop function if exists public.ss_touch() cascade;
 drop function if exists public.ss_posts_limit() cascade;
 drop function if exists public.ss_messages_guard() cascade;
@@ -281,6 +283,35 @@ create table public.ss_legacy (
   claimed_at timestamptz
 );
 
+-- Dipakai aturan akses di bawah. Dijalankan sebagai pemilik tabel supaya
+-- pengunjung tanpa login (yang tidak boleh membaca ss_requests) tetap
+-- bisa melihat profil dan tawaran publik.
+-- Apakah akun ini pernah berpasangan tukar dengan akun yang login?
+create function public.ss_is_partner(p_user uuid)
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select auth.uid() is not null and exists (
+    select 1 from ss_requests r
+    where (r.requester_id = auth.uid() and r.owner_id = p_user)
+       or (r.owner_id = auth.uid() and r.requester_id = p_user));
+$$;
+
+-- Apakah akun yang login pernah mengajak tukar tawaran ini?
+create function public.ss_requested_post(p_post uuid)
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select auth.uid() is not null and exists (
+    select 1 from ss_requests r where r.post_id = p_post and r.requester_id = auth.uid());
+$$;
+
 -- ============================================================
 -- ATURAN AKSES (RLS)
 -- ============================================================
@@ -292,10 +323,14 @@ alter table public.ss_reviews enable row level security;
 alter table public.ss_reports enable row level security;
 alter table public.ss_legacy enable row level security;
 
--- Profil: publik boleh lihat yang terbuka; pemilik kelola miliknya
+-- Profil: publik boleh lihat yang terbuka; pasangan tukar tetap bisa
+-- saling lihat walau profilnya tidak publik; pemilik kelola miliknya
 create policy "SS profil publik terlihat"
   on public.ss_profiles for select
-  using ((is_public and not hidden) or user_id = auth.uid() or public.is_admin());
+  using (
+    (is_public and not hidden) or user_id = auth.uid() or public.is_admin()
+    or public.ss_is_partner(user_id)
+  );
 create policy "SS buat profil sendiri"
   on public.ss_profiles for insert with check (user_id = auth.uid());
 create policy "SS ubah profil sendiri"
@@ -303,7 +338,8 @@ create policy "SS ubah profil sendiri"
 create policy "SS hapus profil sendiri"
   on public.ss_profiles for delete using (user_id = auth.uid());
 
--- Tawaran: publik lihat yang terbuka dari profil publik; pemilik kelola
+-- Tawaran: publik lihat yang terbuka dari profil publik; peminta tetap
+-- bisa lihat tawaran yang pernah dia ajak tukar; pemilik kelola
 create policy "SS tawaran terbuka terlihat"
   on public.ss_posts for select
   using (
@@ -311,6 +347,7 @@ create policy "SS tawaran terbuka terlihat"
       select 1 from public.ss_profiles p
       where p.user_id = ss_posts.user_id and p.is_public and not p.hidden))
     or user_id = auth.uid() or public.is_admin()
+    or public.ss_requested_post(id)
   );
 create policy "SS buat tawaran sendiri"
   on public.ss_posts for insert with check (user_id = auth.uid());
@@ -643,4 +680,4 @@ grant execute on function public.ss_request_create(uuid, text), public.ss_reques
   public.ss_admin_overview(), public.ss_admin_moderate(uuid, text) to authenticated;
 -- Pembantu validasi dipakai di aturan CHECK (boleh dijalankan siapa saja, tanpa efek)
 grant execute on function public.ss_skills_ok(text[]), public.ss_clean_skills(text[]),
-  public.ss_link_ok(text) to anon, authenticated;
+  public.ss_link_ok(text), public.ss_is_partner(uuid), public.ss_requested_post(uuid) to anon, authenticated;

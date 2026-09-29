@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE}/case-studies.html`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE}/harga`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE}/pajangin`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE}/social-space`, changeFrequency: "daily", priority: 0.8 },
     { url: `${SITE}/privasi`, changeFrequency: "yearly", priority: 0.3 },
     { url: `${SITE}/syarat`, changeFrequency: "yearly", priority: 0.3 },
   ];

@@ -535,3 +535,18 @@ reset role;
 select 'T127 arsip tercatat sudah diklaim: ' || case when claimed_by = '44444444-4444-4444-4444-444444444444' and claimed_at is not null then 'LULUS' else 'GAGAL' end from public.ss_legacy where email = 'baru@x.com';
 select 'T128 arsip orang lain tetap belum diklaim: ' || case when claimed_by is null then 'LULUS' else 'GAGAL' end from public.ss_legacy where email = 'tidakada@x.com';
 reset role;
+
+-- ===== Social Space: pasangan tukar tetap saling lihat walau profil tidak publik =====
+set role authenticated;
+set request.jwt.claim.sub = '22222222-2222-2222-2222-222222222222';
+update public.ss_profiles set is_public = false where user_id = auth.uid();
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '33333333-3333-3333-3333-333333333333';
+select 'T129 pasangan tukar lihat profil tidak publik: ' || case when count(*) = 1 then 'LULUS' else 'GAGAL' end from public.ss_profiles where handle = 'umkm-jaya';
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '44444444-4444-4444-4444-444444444444';
+select 'T130 orang lain tidak lihat profil tidak publik: ' || case when count(*) = 0 then 'LULUS' else 'GAGAL' end from public.ss_profiles where handle = 'umkm-jaya';
+select 'T131 orang lain tidak lihat tawaran dari profil tidak publik: ' || case when count(*) = 0 then 'LULUS' else 'GAGAL' end from public.ss_posts where user_id = '22222222-2222-2222-2222-222222222222';
+reset role;
