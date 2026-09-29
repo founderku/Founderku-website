@@ -532,7 +532,7 @@
     <div class="form-row">
       <div class="field">
         <label class="lowercase">Link live demo (opsional)</label>
-        <input type="text" id="fLiveUrl" placeholder="https://tukarskill.com">
+        <input type="text" id="fLiveUrl" placeholder="https://contoh.com">
       </div>
       <div class="field">
         <label class="lowercase">Pesan whatsapp</label>
@@ -2582,7 +2582,7 @@ function dashBindTips(root){
 // Nama baris di tabel kunjungan: tool, klik ke TukarSkill, atau pilihan skill di simulasi beranda
 const DASH_SKILL = { desain: 'desain grafis', video: 'edit video', excel: 'Excel & laporan', inggris: 'bahasa Inggris', jualan: 'jualan & marketing', coding: 'website & coding' };
 function dashViewName(id){
-  if (id === 'tukarskill') return 'TukarSkill (klik ke komunitas)';
+  if (id === 'tukarskill') return 'Social Space (klik ke komunitas)';
   let m = /^tsbisa(\w+)$/.exec(id); if (m && DASH_SKILL[m[1]]) return 'Simulasi: bisa ' + DASH_SKILL[m[1]];
   m = /^tsbutuh(\w+)$/.exec(id); if (m && DASH_SKILL[m[1]]) return 'Simulasi: butuh ' + DASH_SKILL[m[1]];
   return (dashToolNames && dashToolNames[id]) || id;

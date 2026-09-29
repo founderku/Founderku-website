@@ -33,7 +33,9 @@ export async function proxy(request: NextRequest) {
   const isProtectedRoute =
     pathname.startsWith("/akun") ||
     pathname.startsWith("/pajangin/dashboard") ||
-    pathname.startsWith("/pajangin/moderasi");
+    pathname.startsWith("/pajangin/moderasi") ||
+    // Social Space: Jelajah dan profil publik boleh tanpa login
+    /^\/social-space\/(profil|tawaran|permintaan|chat|moderasi)(\/|$)/.test(pathname);
 
   // Kalau belum login dan mencoba buka halaman dashboard/admin, lempar
   // ke login
@@ -49,5 +51,10 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/akun/:path*", "/pajangin/dashboard/:path*", "/pajangin/moderasi/:path*"],
+  matcher: [
+    "/akun/:path*",
+    "/pajangin/dashboard/:path*",
+    "/pajangin/moderasi/:path*",
+    "/social-space/:path*",
+  ],
 };

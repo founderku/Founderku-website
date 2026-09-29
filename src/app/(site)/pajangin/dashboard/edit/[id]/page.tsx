@@ -7,6 +7,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { Pill } from "@/components/ui/Pill";
 import { ProductCard } from "@/components/ProductCard";
+import { KIND_LABEL, PageKindSelect, PriceExtras, SocialToggle, type PageKind } from "@/components/PageKindFields";
 import { isValidWhatsAppNumber } from "@/lib/validators";
 import { MAX_PHOTO_SIZE_MB, ALLOWED_PHOTO_TYPES } from "@/lib/constants";
 import { compressImage } from "@/lib/compressImage";
@@ -26,6 +27,10 @@ export default function EditPagePage() {
   const [originalPrice, setOriginalPrice] = useState("");
   const [promoPrice, setPromoPrice] = useState("");
   const [highlights, setHighlights] = useState(["", "", ""]);
+  const [kind, setKind] = useState<PageKind>("produk");
+  const [priceUnit, setPriceUnit] = useState("");
+  const [askPrice, setAskPrice] = useState(false);
+  const [showInSocial, setShowInSocial] = useState(false);
   const [whatsapp, setWhatsapp] = useState("");
   const [slug, setSlug] = useState("");
   const [existingImageUrl, setExistingImageUrl] = useState<string | null>(
@@ -80,6 +85,10 @@ export default function EditPagePage() {
         page.original_price ? String(page.original_price) : ""
       );
       setPromoPrice(page.promo_price ? String(page.promo_price) : "");
+      setKind((page.kind ?? "produk") as PageKind);
+      setPriceUnit(page.price_unit ?? "");
+      setAskPrice(page.promo_price === null);
+      setShowInSocial(!!page.show_in_social);
       const h = page.highlights ?? [];
       setHighlights([h[0] ?? "", h[1] ?? "", h[2] ?? ""]);
       setWhatsapp(page.whatsapp_number);
@@ -128,7 +137,7 @@ export default function EditPagePage() {
     setFormError(null);
 
     if (!productName.trim()) return setFormError("Nama produk wajib diisi.");
-    if (!promoPrice) return setFormError("Harga promo wajib diisi.");
+    if (!askPrice && !promoPrice) return setFormError("Harga wajib diisi, atau centang \"Tanya harga\".");
     if (!isValidWhatsAppNumber(whatsapp))
       return setFormError("Format nomor WhatsApp tidak valid.");
 
@@ -174,8 +183,11 @@ export default function EditPagePage() {
       .update({
         product_name: productName,
         tagline,
-        original_price: originalPrice ? Number(originalPrice) : null,
-        promo_price: Number(promoPrice),
+        original_price: !askPrice && originalPrice ? Number(originalPrice) : null,
+        promo_price: askPrice ? null : Number(promoPrice),
+        kind,
+        price_unit: askPrice ? "" : priceUnit.trim(),
+        show_in_social: showInSocial,
         highlights: highlights.filter((h) => h.trim().length > 0),
         whatsapp_number: whatsapp,
         ...(imageUrl ? { image_url: imageUrl } : {}),
@@ -286,7 +298,9 @@ export default function EditPagePage() {
 
       <div className="grid md:grid-cols-2 gap-9">
         <div className="space-y-4">
-          <Field label="Nama Produk">
+          <PageKindSelect value={kind} onChange={setKind} />
+
+          <Field label={`Nama ${KIND_LABEL[kind]}`}>
             <input
               className="w-full border border-border rounded-xl px-3.5 py-2.5 text-sm"
               value={productName}
@@ -302,6 +316,7 @@ export default function EditPagePage() {
             />
           </Field>
 
+          {!askPrice && (
           <div className="flex gap-3">
             <Field label="Harga Normal (Rp)" className="flex-1">
               <input
@@ -320,6 +335,8 @@ export default function EditPagePage() {
               />
             </Field>
           </div>
+          )}
+          <PriceExtras askPrice={askPrice} onAskPrice={setAskPrice} unit={priceUnit} onUnit={setPriceUnit} />
 
           {highlights.map((h, i) => (
             <Field label={`Keunggulan ${i + 1}`} key={i}>
@@ -365,6 +382,8 @@ export default function EditPagePage() {
             />
           </Field>
 
+          <SocialToggle value={showInSocial} onChange={setShowInSocial} />
+
           {formError && <p className="text-sm text-coral">{formError}</p>}
 
           <Pill
@@ -395,8 +414,10 @@ export default function EditPagePage() {
             data={{
               productName,
               tagline,
-              originalPrice: originalPrice ? Number(originalPrice) : null,
-              promoPrice: promoPrice ? Number(promoPrice) : null,
+              originalPrice: !askPrice && originalPrice ? Number(originalPrice) : null,
+              promoPrice: !askPrice && promoPrice ? Number(promoPrice) : null,
+              priceUnit: askPrice ? "" : priceUnit,
+              askPrice,
               highlights,
               imageUrl: photoPreviewUrl ?? existingImageUrl,
               whatsappNumber: whatsapp,

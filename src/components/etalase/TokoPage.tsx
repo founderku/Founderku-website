@@ -15,6 +15,7 @@ function toTileData(p: PageRow) {
     productName: p.product_name,
     tagline: p.tagline,
     promoPrice: p.promo_price,
+    priceUnit: p.price_unit ?? "",
     originalPrice: p.original_price,
     highlights: p.highlights,
     imageUrl: p.image_url,

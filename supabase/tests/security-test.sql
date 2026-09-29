@@ -359,3 +359,341 @@ select 'T84 dashboard: grafik 30 hari, jumlah harian = total: ' || case when jso
 select 'T85 dashboard: ipkin teratas, hari ini 3, 7 hari 3: ' || case when j->'tool_views'->'tools'->0->>'tool' = 'ipkin' and (j->'tool_views'->'tools'->0->>'today')::int = 3 and (j->'tool_views'->'tools'->0->>'d7')::int = 3 then 'LULUS' else 'GAGAL' end from hasil_admin2;
 select 'T86 dashboard lama tetap lengkap: ' || case when j ? 'users' and j ? 'revenue' and j ? 'tools' and j ? 'pajangin' and j ? 'signups_daily' then 'LULUS' else 'GAGAL' end from hasil_admin2;
 reset role;
+
+-- ===== Social Space (migration 013) =====
+insert into auth.users values ('44444444-4444-4444-4444-444444444444','baru@x.com');
+insert into public.ss_legacy (email, full_name, headline, city, skills_offer, skills_want, website, instagram)
+  values ('baru@x.com', 'Budi Lama', 'Desainer', 'Bandung', array['Desain', ' desain ', 'x', 'Figma'], array['Excel'], 'javascript:alert(1)', 'https://instagram.com/budi'),
+         ('tidakada@x.com', 'Orang Lain', '', '', '{}', '{}', '', '');
+
+set role authenticated;
+set request.jwt.claim.sub = '22222222-2222-2222-2222-222222222222';
+insert into public.ss_profiles (user_id, handle, name, skills_offer, skills_want)
+  values (auth.uid(), 'umkm-jaya', 'UMKM Jaya', array['Excel'], array['Desain']);
+select 'T87 buat profil Social Space sendiri: ' || case when count(*) = 1 then 'LULUS' else 'GAGAL' end from public.ss_profiles where handle = 'umkm-jaya';
+do $$ begin
+  insert into public.ss_profiles (user_id, handle, name) values ('33333333-3333-3333-3333-333333333333', 'palsu', 'Palsu');
+  raise notice 'T88 buat profil atas nama orang lain: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T88 buat profil atas nama orang lain: LULUS (ditolak)'; end $$;
+do $$ begin
+  update public.ss_profiles set hidden = false, from_tukarskill = true where user_id = auth.uid();
+  raise notice 'T89 ubah kolom sistem (hidden/from_tukarskill): GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T89 ubah kolom sistem (hidden/from_tukarskill): LULUS (ditolak)'; end $$;
+do $$ begin
+  update public.ss_profiles set website = 'javascript:alert(1)' where user_id = auth.uid();
+  raise notice 'T90 link javascript: di profil: GAGAL (lolos)';
+exception when check_violation then raise notice 'T90 link javascript: di profil: LULUS (ditolak)'; end $$;
+insert into public.ss_posts (user_id, offer, want, description)
+  select auth.uid(), array['Excel'], array['Desain'], 'Tawaran nomor ' || g from generate_series(1, 10) g;
+select 'T91 buat tawaran sendiri: ' || case when count(*) = 10 then 'LULUS' else 'GAGAL' end from public.ss_posts where user_id = auth.uid();
+do $$ begin
+  insert into public.ss_posts (user_id, offer, want, description) values (auth.uid(), array['Excel'], array['Desain'], 'Tawaran ke sebelas');
+  raise notice 'T92 tawaran terbuka ke-11: GAGAL (lolos)';
+exception when raise_exception then raise notice 'T92 tawaran terbuka ke-11: LULUS (ditolak)'; end $$;
+do $$ begin
+  perform public.ss_request_create((select id from public.ss_posts where description = 'Tawaran nomor 1'), 'halo');
+  raise notice 'T93 ajak tukar tawaran sendiri: GAGAL (lolos)';
+exception when raise_exception then raise notice 'T93 ajak tukar tawaran sendiri: LULUS (ditolak)'; end $$;
+
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '33333333-3333-3333-3333-333333333333';
+insert into public.ss_profiles (user_id, handle, name, skills_offer, skills_want)
+  values (auth.uid(), 'lain-saja', 'Lain Saja', array['Desain'], array['Excel']);
+update public.ss_profiles set name = 'Dibajak' where handle = 'umkm-jaya';
+update public.ss_posts set description = 'Dibajak orang lain' where description = 'Tawaran nomor 1';
+delete from public.ss_posts where description = 'Tawaran nomor 2';
+reset role;
+select 'T94 ubah profil orang lain: ' || case when name = 'UMKM Jaya' then 'LULUS (tidak berubah)' else 'GAGAL' end from public.ss_profiles where handle = 'umkm-jaya';
+select 'T95 ubah/hapus tawaran orang lain: ' || case when exists (select 1 from public.ss_posts where description = 'Tawaran nomor 1') and exists (select 1 from public.ss_posts where description = 'Tawaran nomor 2') then 'LULUS (tidak berubah)' else 'GAGAL' end;
+set role authenticated;
+set request.jwt.claim.sub = '33333333-3333-3333-3333-333333333333';
+create temp table ss_req as select public.ss_request_create((select id from public.ss_posts where description = 'Tawaran nomor 1'), 'Mau tukar?') as id;
+select 'T96 ajukan permintaan tukar: ' || case when status = 'pending' and owner_id = '22222222-2222-2222-2222-222222222222' then 'LULUS' else 'GAGAL' end from public.ss_requests where id = (select id from ss_req);
+do $$ begin
+  perform public.ss_request_create((select id from public.ss_posts where description = 'Tawaran nomor 1'), 'lagi');
+  raise notice 'T97 permintaan dobel ke tawaran sama: GAGAL (lolos)';
+exception when raise_exception then raise notice 'T97 permintaan dobel ke tawaran sama: LULUS (ditolak)'; end $$;
+do $$ begin
+  insert into public.ss_messages (request_id, sender_id, body) values ((select id from ss_req), auth.uid(), 'halo');
+  raise notice 'T98 chat sebelum permintaan diterima: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T98 chat sebelum permintaan diterima: LULUS (ditolak)'; end $$;
+do $$ begin
+  perform public.ss_request_act((select id from ss_req), 'accept');
+  raise notice 'T99 peminta menerima permintaannya sendiri: GAGAL (lolos)';
+exception when raise_exception then raise notice 'T99 peminta menerima permintaannya sendiri: LULUS (ditolak)'; end $$;
+do $$ begin
+  insert into public.ss_requests (post_id, requester_id, owner_id, message, status)
+    values ((select id from public.ss_posts where description = 'Tawaran nomor 3'), auth.uid(), '22222222-2222-2222-2222-222222222222', 'x', 'accepted');
+  raise notice 'T100 buat permintaan langsung (lewati fungsi): GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T100 buat permintaan langsung (lewati fungsi): LULUS (ditolak)'; end $$;
+do $$ begin
+  update public.ss_requests set status = 'accepted' where id = (select id from ss_req);
+  raise notice 'T100b ubah status permintaan langsung: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T100b ubah status permintaan langsung: LULUS (ditolak)'; end $$;
+
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '22222222-2222-2222-2222-222222222222';
+select 'T101 pemilik terima permintaan: ' || case when public.ss_request_act((select id from ss_req), 'accept') = 'accepted' then 'LULUS' else 'GAGAL' end;
+insert into public.ss_messages (request_id, sender_id, body) values ((select id from ss_req), auth.uid(), 'Boleh, kapan?');
+
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '33333333-3333-3333-3333-333333333333';
+insert into public.ss_messages (request_id, sender_id, body) values ((select id from ss_req), auth.uid(), 'Sabtu ya');
+select 'T102 dua pihak bisa chat setelah diterima: ' || case when count(*) = 2 then 'LULUS' else 'GAGAL' end from public.ss_messages where request_id = (select id from ss_req);
+do $$ begin
+  insert into public.ss_messages (request_id, sender_id, body) values ((select id from ss_req), '22222222-2222-2222-2222-222222222222', 'pesan palsu');
+  raise notice 'T103 kirim chat atas nama orang lain: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T103 kirim chat atas nama orang lain: LULUS (ditolak)'; end $$;
+do $$ begin
+  insert into public.ss_reviews (request_id, reviewer_id, reviewee_id, rating) values ((select id from ss_req), auth.uid(), '22222222-2222-2222-2222-222222222222', 5);
+  raise notice 'T104 ulasan sebelum selesai: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T104 ulasan sebelum selesai: LULUS (ditolak)'; end $$;
+select 'T105 tandai selesai: ' || case when public.ss_request_act((select id from ss_req), 'complete') = 'completed' then 'LULUS' else 'GAGAL' end;
+insert into public.ss_reviews (request_id, reviewer_id, reviewee_id, rating, comment) values ((select id from ss_req), auth.uid(), '22222222-2222-2222-2222-222222222222', 5, 'Mantap');
+select 'T106 ulasan setelah selesai: ' || case when count(*) = 1 then 'LULUS' else 'GAGAL' end from public.ss_reviews where request_id = (select id from ss_req);
+do $$ begin
+  insert into public.ss_reviews (request_id, reviewer_id, reviewee_id, rating) values ((select id from ss_req), auth.uid(), '22222222-2222-2222-2222-222222222222', 1);
+  raise notice 'T107 ulasan dobel: GAGAL (lolos)';
+exception when unique_violation then raise notice 'T107 ulasan dobel: LULUS (ditolak)'; end $$;
+do $$ begin
+  insert into public.ss_reviews (request_id, reviewer_id, reviewee_id, rating) values ((select id from ss_req), '22222222-2222-2222-2222-222222222222', auth.uid(), 5);
+  raise notice 'T108 ulasan atas nama orang lain (puji diri sendiri): GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T108 ulasan atas nama orang lain (puji diri sendiri): LULUS (ditolak)'; end $$;
+do $$ begin
+  for i in 1..20 loop
+    insert into public.ss_messages (request_id, sender_id, body) values ((select id from ss_req), auth.uid(), 'spam ' || i);
+  end loop;
+  raise notice 'T109 batas kirim chat per menit: GAGAL (lolos)';
+exception when raise_exception then raise notice 'T109 batas kirim chat per menit: LULUS (ditolak)'; end $$;
+do $$ begin
+  for i in 1..11 loop
+    insert into public.ss_reports (reporter_id, target_type, target_id, reason)
+      values (auth.uid(), 'post', (select id::text from public.ss_posts where description = 'Tawaran nomor 3'), 'spam');
+  end loop;
+  raise notice 'T110 batas 10 laporan per hari: GAGAL (lolos)';
+exception when raise_exception then raise notice 'T110 batas 10 laporan per hari: LULUS (ditolak)'; end $$;
+insert into public.ss_reports (reporter_id, target_type, target_id, reason)
+  values (auth.uid(), 'post', (select id::text from public.ss_posts where description = 'Tawaran nomor 3'), 'spam');
+select 'T111 user biasa baca laporan: ' || case when count(*) = 0 then 'LULUS (kosong)' else 'GAGAL' end from public.ss_reports;
+do $$ begin
+  perform public.ss_admin_overview();
+  raise notice 'T112 user biasa buka ringkasan moderasi: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T112 user biasa buka ringkasan moderasi: LULUS (ditolak)'; end $$;
+do $$ begin
+  perform public.ss_admin_moderate((select id from public.ss_reports limit 1), 'hide');
+  raise notice 'T113 user biasa sembunyikan tawaran: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T113 user biasa sembunyikan tawaran: LULUS (ditolak)'; end $$;
+select 'T114 profil lama milik orang lain tidak terlihat: ' || case when count(*) = 0 then 'LULUS' else 'GAGAL' end from public.ss_legacy_preview();
+
+-- ===== orang ketiga (admin, bukan pihak) =====
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '11111111-1111-1111-1111-111111111111';
+select 'T115 orang lain baca chat pasangan: ' || case when count(*) = 0 then 'LULUS (kosong)' else 'GAGAL' end from public.ss_messages;
+do $$ begin
+  perform public.ss_request_act((select id from public.ss_requests limit 1), 'cancel');
+  raise notice 'T116 orang lain ubah permintaan: GAGAL (lolos)';
+exception when raise_exception then raise notice 'T116 orang lain ubah permintaan: LULUS (ditolak)'; end $$;
+select 'T117 admin buka ringkasan moderasi: ' || case when (j->>'profiles')::int = 2 and (j->>'reports_open')::int = 1 and (j->>'completed')::int = 1 then 'LULUS' else 'GAGAL (' || j::text || ')' end from (select public.ss_admin_overview() as j) x;
+select public.ss_admin_moderate((select id from public.ss_reports limit 1), 'hide');
+reset role;
+select 'T118 admin sembunyikan tawaran yang dilaporkan: ' || case when hidden then 'LULUS' else 'GAGAL' end from public.ss_posts where description = 'Tawaran nomor 3';
+
+-- ===== pengunjung tanpa login =====
+set request.jwt.claim.sub = '';
+set role anon;
+select 'T119 pengunjung lihat profil publik: ' || case when count(*) = 2 then 'LULUS' else 'GAGAL' end from public.ss_profiles;
+select 'T120 tawaran disembunyikan tidak terlihat: ' || case when count(*) = 0 then 'LULUS' else 'GAGAL' end from public.ss_posts where description = 'Tawaran nomor 3';
+do $$ declare n int; begin
+  select count(*) into n from public.ss_requests;
+  raise notice 'T121 pengunjung baca permintaan: GAGAL (% baris)', n;
+exception when insufficient_privilege then raise notice 'T121 pengunjung baca permintaan: LULUS (ditolak)'; end $$;
+do $$ declare n int; begin
+  select count(*) into n from public.ss_legacy;
+  raise notice 'T122 pengunjung baca arsip TukarSkill: GAGAL (% baris)', n;
+exception when insufficient_privilege then raise notice 'T122 pengunjung baca arsip TukarSkill: LULUS (ditolak)'; end $$;
+
+-- ===== pengguna TukarSkill lama mengklaim profilnya =====
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '44444444-4444-4444-4444-444444444444';
+do $$ declare n int; begin
+  select count(*) into n from public.ss_legacy;
+  raise notice 'T123 user baca arsip TukarSkill langsung: GAGAL (% baris)', n;
+exception when insufficient_privilege then raise notice 'T123 user baca arsip TukarSkill langsung: LULUS (ditolak)'; end $$;
+select 'T124 pratinjau profil lama sendiri: ' || case when count(*) = 1 and min(full_name) = 'Budi Lama' then 'LULUS' else 'GAGAL' end from public.ss_legacy_preview();
+select public.ss_claim_legacy('budi-lama');
+select 'T125 klaim profil lama (skill dirapikan, link jahat dibuang): ' || case when from_tukarskill and name = 'Budi Lama' and skills_offer = array['Desain', 'Figma'] and website = '' and instagram = 'https://instagram.com/budi' then 'LULUS' else 'GAGAL' end from public.ss_profiles where handle = 'budi-lama';
+do $$ begin
+  perform public.ss_claim_legacy('budi-dua');
+  raise notice 'T126 klaim dua kali: GAGAL (lolos)';
+exception when raise_exception then raise notice 'T126 klaim dua kali: LULUS (ditolak)'; end $$;
+reset role;
+select 'T127 arsip tercatat sudah diklaim: ' || case when claimed_by = '44444444-4444-4444-4444-444444444444' and claimed_at is not null then 'LULUS' else 'GAGAL' end from public.ss_legacy where email = 'baru@x.com';
+select 'T128 arsip orang lain tetap belum diklaim: ' || case when claimed_by is null then 'LULUS' else 'GAGAL' end from public.ss_legacy where email = 'tidakada@x.com';
+reset role;
+
+-- ===== Social Space: pasangan tukar tetap saling lihat walau profil tidak publik =====
+set role authenticated;
+set request.jwt.claim.sub = '22222222-2222-2222-2222-222222222222';
+update public.ss_profiles set is_public = false where user_id = auth.uid();
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '33333333-3333-3333-3333-333333333333';
+select 'T129 pasangan tukar lihat profil tidak publik: ' || case when count(*) = 1 then 'LULUS' else 'GAGAL' end from public.ss_profiles where handle = 'umkm-jaya';
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '44444444-4444-4444-4444-444444444444';
+select 'T130 orang lain tidak lihat profil tidak publik: ' || case when count(*) = 0 then 'LULUS' else 'GAGAL' end from public.ss_profiles where handle = 'umkm-jaya';
+select 'T131 orang lain tidak lihat tawaran dari profil tidak publik: ' || case when count(*) = 0 then 'LULUS' else 'GAGAL' end from public.ss_posts where user_id = '22222222-2222-2222-2222-222222222222';
+reset role;
+
+-- ===== Social Space tahap 2 (migration 014): tawaran lama, Etalase, Info =====
+insert into auth.users values ('55555555-5555-5555-5555-555555555555','dewi@x.com'),
+                              ('66666666-6666-6666-6666-666666666666','penjual@x.com');
+insert into public.ss_legacy (email, full_name, city, skills_offer, skills_want) values ('dewi@x.com', 'Dewi Lama', 'Yogyakarta', array['Fotografi'], array['Pemasaran']);
+insert into public.ss_legacy_posts (legacy_email, owner_name, owner_city, offer, want, description) values
+  ('dewi@x.com', 'Dewi Lama', 'Yogyakarta', array['Fotografi'], array['Pemasaran'], 'Foto produk UMKM, tukar dengan ajari pemasaran'),
+  ('dewi@x.com', 'Dewi Lama', 'Yogyakarta', array['Edit foto'], array['Excel'], 'Edit foto untuk katalog, tukar dengan Excel'),
+  ('tidakada@x.com', 'Orang Lain', '', array['Menulis'], array['Desain'], 'Tawaran lama orang yang belum pindah');
+insert into public.ss_legacy_posts (legacy_email, owner_name, offer, want, description, hidden) values
+  ('dewi@x.com', 'Dewi Lama', array['Rahasia'], array['Rahasia'], 'Tawaran yang disembunyikan admin', true);
+
+set request.jwt.claim.sub = '';
+set role anon;
+select 'T132 pengunjung lihat tawaran TukarSkill lama (bukan yang disembunyikan): ' || case when count(*) = 3 then 'LULUS' else 'GAGAL (' || count(*) || ')' end from public.ss_legacy_posts;
+do $$ declare e text; begin
+  select legacy_email into e from public.ss_legacy_posts limit 1;
+  raise notice 'T133 pengunjung baca email pemilik tawaran lama: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T133 pengunjung baca email pemilik tawaran lama: LULUS (ditolak)'; end $$;
+reset role;
+
+set role authenticated;
+set request.jwt.claim.sub = '33333333-3333-3333-3333-333333333333';
+select 'T134 ajak tukar ke tawaran lama (disimpan): ' || case when public.ss_legacy_interest_create((select id from public.ss_legacy_posts where description like 'Foto produk%'), 'Halo Dewi, mau tukar?') is not null then 'LULUS' else 'GAGAL' end;
+do $$ begin
+  perform public.ss_legacy_interest_create((select id from public.ss_legacy_posts where description like 'Foto produk%'), 'lagi');
+  raise notice 'T135 ajakan dobel ke tawaran lama: GAGAL (lolos)';
+exception when raise_exception then raise notice 'T135 ajakan dobel ke tawaran lama: LULUS (ditolak)'; end $$;
+do $$ begin
+  perform public.ss_legacy_interest_create((select id from public.ss_legacy_posts where description like 'Tawaran yang disembunyikan%'), 'x');
+  raise notice 'T136 ajak tukar ke tawaran lama yang disembunyikan: GAGAL (lolos)';
+exception when raise_exception then raise notice 'T136 ajak tukar ke tawaran lama yang disembunyikan: LULUS (ditolak)'; end $$;
+do $$ begin
+  insert into public.ss_legacy_interest (legacy_post_id, requester_id, message)
+    values ((select id from public.ss_legacy_posts where description like 'Edit foto%'), auth.uid(), 'langsung');
+  raise notice 'T137 simpan ajakan langsung (lewati fungsi): GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T137 simpan ajakan langsung (lewati fungsi): LULUS (ditolak)'; end $$;
+select 'T138 pengirim lihat ajakannya sendiri: ' || case when count(*) = 1 then 'LULUS' else 'GAGAL' end from public.ss_legacy_interest;
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '22222222-2222-2222-2222-222222222222';
+select 'T139 orang lain tidak lihat ajakan orang lain: ' || case when count(*) = 0 then 'LULUS' else 'GAGAL' end from public.ss_legacy_interest;
+reset role;
+
+set role authenticated;
+set request.jwt.claim.sub = '55555555-5555-5555-5555-555555555555';
+do $$ begin
+  perform public.ss_legacy_interest_create((select id from public.ss_legacy_posts where description like 'Edit foto%'), 'x');
+  raise notice 'T140 pemilik lama ajak tukar tawarannya sendiri: GAGAL (lolos)';
+exception when raise_exception then raise notice 'T140 pemilik lama ajak tukar tawarannya sendiri: LULUS (ditolak)'; end $$;
+select public.ss_claim_legacy('dewi-baru');
+select 'T141 klaim memindahkan tawaran lama (2, bukan yang disembunyikan): ' || case when count(*) = 2 and bool_and(status = 'open') then 'LULUS' else 'GAGAL (' || count(*) || ')' end from public.ss_posts where user_id = auth.uid();
+select 'T142 ajakan yang menunggu masuk ke Permintaan pemilik: ' || case when count(*) = 1 and min(message) = 'Halo Dewi, mau tukar?' and bool_and(status = 'pending') then 'LULUS' else 'GAGAL' end from public.ss_requests where owner_id = auth.uid();
+reset role;
+set request.jwt.claim.sub = '';
+set role anon;
+select 'T143 tawaran lama yang sudah pindah tidak tampil dobel: ' || case when count(*) = 1 then 'LULUS' else 'GAGAL (' || count(*) || ')' end from public.ss_legacy_posts;
+reset role;
+select 'T144 ajakan yang sudah dipindah dibersihkan: ' || case when count(*) = 0 then 'LULUS' else 'GAGAL' end from public.ss_legacy_interest;
+
+-- Etalase
+set role authenticated;
+set request.jwt.claim.sub = '66666666-6666-6666-6666-666666666666';
+insert into public.pages (user_id, slug, product_name, whatsapp_number, kind, price_unit, promo_price, show_in_social)
+  values (auth.uid(), 'jasa-desain', 'Jasa Desain Logo', '628', 'jasa', '/proyek', 150000, true),
+         (auth.uid(), 'kelas-canva', 'Kelas Canva', '628', 'lainnya', '', null, true);
+update public.pages set show_in_social = false where slug = 'kelas-canva';
+do $$ begin
+  update public.pages set social_hidden = false where slug = 'jasa-desain';
+  raise notice 'T145 penjual ubah kolom sistem social_hidden: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T145 penjual ubah kolom sistem social_hidden: LULUS (ditolak)'; end $$;
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '33333333-3333-3333-3333-333333333333';
+update public.pages set show_in_social = true where slug = 'kelas-canva';
+reset role;
+select 'T146 orang lain ubah tombol Etalase halaman orang: ' || case when not show_in_social then 'LULUS (tidak berubah)' else 'GAGAL' end from public.pages where slug = 'kelas-canva';
+set request.jwt.claim.sub = '';
+set role anon;
+select 'T147 Etalase hanya halaman yang diaktifkan (jasa, harga, satuan): ' || case when count(*) = 1 and min(kind) = 'jasa' and min(price_unit) = '/proyek' and min(product_name) = 'Jasa Desain Logo' then 'LULUS' else 'GAGAL (' || count(*) || ')' end from public.ss_etalase();
+select 'T148 Etalase tidak membocorkan email atau WhatsApp: ' || case when not exists (select 1 from public.ss_etalase() e where e::text like '%@%' or e::text like '%628%') then 'LULUS' else 'GAGAL' end;
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '33333333-3333-3333-3333-333333333333';
+insert into public.ss_reports (reporter_id, target_type, target_id, reason)
+  values (auth.uid(), 'page', (select id::text from public.pages where slug = 'jasa-desain'), 'penipuan');
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '11111111-1111-1111-1111-111111111111';
+select public.ss_admin_moderate((select id from public.ss_reports where target_type = 'page'), 'hide');
+reset role;
+set role anon;
+select 'T149 halaman yang dilaporkan hilang dari Etalase (halaman Pajangin tetap aktif): ' || case when (select count(*) from public.ss_etalase()) = 0 and (select status from public.pages where slug = 'jasa-desain') = 'active' then 'LULUS' else 'GAGAL' end;
+reset role;
+
+-- Info Beasiswa, Magang & Lowongan
+set role authenticated;
+set request.jwt.claim.sub = '33333333-3333-3333-3333-333333333333';
+do $$ begin
+  insert into public.ss_info (author_id, category, title, description, deadline)
+    values (auth.uid(), 'beasiswa', 'Beasiswa palsu', 'Tanpa izin admin sama sekali', current_date + 10);
+  raise notice 'T150 pasang info tanpa izin: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T150 pasang info tanpa izin: LULUS (ditolak)'; end $$;
+do $$ begin
+  perform public.ss_admin_set_info_access('lain-saja', true);
+  raise notice 'T151 user biasa beri izin info ke dirinya: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T151 user biasa beri izin info ke dirinya: LULUS (ditolak)'; end $$;
+do $$ begin
+  update public.ss_profiles set can_post_info = true where user_id = auth.uid();
+  raise notice 'T152 user ubah kolom izin info sendiri: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T152 user ubah kolom izin info sendiri: LULUS (ditolak)'; end $$;
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '11111111-1111-1111-1111-111111111111';
+select 'T153 admin beri izin info: ' || case when public.ss_admin_set_info_access('lain-saja', true) then 'LULUS' else 'GAGAL' end;
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '33333333-3333-3333-3333-333333333333';
+insert into public.ss_info (author_id, category, title, organizer, description, link, deadline)
+  values (auth.uid(), 'beasiswa', 'Beasiswa Turkiye Burslari', 'Pemerintah Turki', 'Beasiswa penuh S1 sampai S3 di Turki', 'https://turkiyeburslari.gov.tr', current_date + 30),
+         (auth.uid(), 'lowongan', 'Lowongan yang sudah lewat', '', 'Contoh info yang tenggatnya sudah lewat', '', current_date - 1);
+select 'T154 akun berizin pasang info: ' || case when count(*) = 2 then 'LULUS' else 'GAGAL' end from public.ss_info where author_id = auth.uid();
+do $$ begin
+  insert into public.ss_info (author_id, category, title, description, link, deadline)
+    values (auth.uid(), 'magang', 'Magang link jahat', 'Link javascript harus ditolak', 'javascript:alert(1)', current_date + 5);
+  raise notice 'T155 info dengan link javascript: GAGAL (lolos)';
+exception when check_violation then raise notice 'T155 info dengan link javascript: LULUS (ditolak)'; end $$;
+reset role;
+set request.jwt.claim.sub = '';
+set role anon;
+select 'T156 info lewat tenggat otomatis tersembunyi: ' || case when count(*) = 1 and min(title) = 'Beasiswa Turkiye Burslari' then 'LULUS' else 'GAGAL (' || count(*) || ')' end from public.ss_info;
+do $$ begin
+  insert into public.ss_info (author_id, category, title, description, deadline)
+    values ('33333333-3333-3333-3333-333333333333', 'beasiswa', 'Info dari pengunjung', 'Pengunjung tanpa login', current_date + 3);
+  raise notice 'T157 pengunjung pasang info: GAGAL (lolos)';
+exception when insufficient_privilege then raise notice 'T157 pengunjung pasang info: LULUS (ditolak)'; end $$;
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '22222222-2222-2222-2222-222222222222';
+update public.ss_info set title = 'Dibajak orang lain' where title = 'Beasiswa Turkiye Burslari';
+delete from public.ss_info where title = 'Beasiswa Turkiye Burslari';
+reset role;
+select 'T158 orang lain ubah/hapus info: ' || case when exists (select 1 from public.ss_info where title = 'Beasiswa Turkiye Burslari') then 'LULUS (tidak berubah)' else 'GAGAL' end;
+set role authenticated;
+set request.jwt.claim.sub = '11111111-1111-1111-1111-111111111111';
+select 'T159 ringkasan moderasi berisi data tahap 2: ' || case when j ? 'etalase' and j ? 'info_active' and j ? 'legacy_posts_waiting' and (j->'info_authors') ? 'lain-saja' then 'LULUS' else 'GAGAL (' || j::text || ')' end from (select public.ss_admin_overview() as j) x;
+reset role;

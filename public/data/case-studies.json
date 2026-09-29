@@ -32,11 +32,11 @@
         "en": "Built through Founderku's 4-step process, from idea discussion to a live product.",
         "tr": "Founderku'nun 4 adımlı süreci aracılığıyla gerçekleştirilir, fikir tartışmasından canlı ürüne kadar."
       },
-      "linkUrl": "https://tukarskill.com/?ref=founderku",
+      "linkUrl": "/social-space",
       "linkLabel": {
-        "id": "Buka TukarSkill, komunitas Founderku",
-        "en": "Open TukarSkill, the Founderku community",
-        "tr": "Founderku topluluğu TukarSkill’i aç"
+        "id": "Buka Social Space, penerus TukarSkill di Founderku",
+        "en": "Open Social Space, the successor of TukarSkill on Founderku",
+        "tr": "TukarSkill’in Founderku’daki devamı Sosyal Alan’ı aç"
       },
       "external": false,
       "order": 1

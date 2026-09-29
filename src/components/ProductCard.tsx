@@ -1,4 +1,5 @@
 import { toWhatsAppLink } from "@/lib/validators";
+import { pagePriceText, pageWaMessage } from "@/lib/pagePrice";
 import { STORE_STYLES } from "@/lib/storeStyles";
 import type { StoreStyleId } from "@/lib/types";
 
@@ -11,6 +12,9 @@ export interface ProductCardData {
   imageUrl: string | null;
   whatsappNumber: string;
   showWatermark: boolean;
+  priceUnit?: string | null;
+  // Editor: pemilik memilih "Tanya harga" (tanpa harga)
+  askPrice?: boolean;
 }
 
 function formatRupiah(value: number | null): string {
@@ -31,9 +35,7 @@ export function ProductCard({
   style?: StoreStyleId;
 }) {
   const s = STORE_STYLES[style];
-  const waMessage = `Halo! Saya mau pesan ${data.productName} (${formatRupiah(
-    data.promoPrice
-  )}) dari web. Apakah stok masih ada?`;
+  const waMessage = pageWaMessage(data.productName, data.askPrice ? null : data.promoPrice, data.priceUnit);
   const waLink = data.whatsappNumber
     ? toWhatsAppLink(data.whatsappNumber, waMessage)
     : "#";
@@ -85,7 +87,7 @@ export function ProductCard({
             </span>
           ) : null}
           <span className={s.priceNew}>
-            {formatRupiah(data.promoPrice) || "Rp 0"}
+            {data.askPrice ? pagePriceText(null) : data.promoPrice === null ? "Rp 0" : pagePriceText(data.promoPrice, data.priceUnit)}
           </span>
         </div>
 

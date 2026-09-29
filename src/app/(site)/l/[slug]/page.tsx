@@ -87,6 +87,7 @@ export default async function PublicPage({
         tagline: page.tagline ?? "",
         originalPrice: page.original_price,
         promoPrice: page.promo_price,
+        priceUnit: page.price_unit ?? "",
         highlights: page.highlights ?? [],
         imageUrl: page.image_url,
         whatsappNumber: page.whatsapp_number,

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { toWhatsAppLink } from "@/lib/validators";
+import { pagePriceText, pageWaMessage } from "@/lib/pagePrice";
 import { STORE_STYLES } from "@/lib/storeStyles";
 import type { StoreStyleId } from "@/lib/types";
 
@@ -12,6 +13,7 @@ export interface StoreProductTileData {
   highlights?: string[] | null;
   imageUrl: string | null;
   whatsappNumber: string;
+  priceUnit?: string | null;
 }
 
 function formatRupiah(value: number | null): string {
@@ -32,9 +34,7 @@ export function StoreProductTile({
   style?: StoreStyleId;
 }) {
   const s = STORE_STYLES[style];
-  const waMessage = `Halo! Saya mau pesan ${data.productName} (${formatRupiah(
-    data.promoPrice
-  )}) dari web. Apakah stok masih ada?`;
+  const waMessage = pageWaMessage(data.productName, data.promoPrice, data.priceUnit);
   const waLink = data.whatsappNumber
     ? toWhatsAppLink(data.whatsappNumber, waMessage)
     : "#";
@@ -62,7 +62,7 @@ export function StoreProductTile({
               Golden Template, bukan cuma foto polos + teks di bawah. */}
           <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 to-transparent px-3 pt-8 pb-2.5">
             <p className="font-manrope font-extrabold text-sm text-white drop-shadow">
-              {formatRupiah(data.promoPrice) || "Rp 0"}
+              {pagePriceText(data.promoPrice, data.priceUnit)}
             </p>
           </div>
         </div>

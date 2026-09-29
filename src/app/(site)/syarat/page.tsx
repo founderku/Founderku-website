@@ -25,7 +25,7 @@ export default function SyaratPage() {
     .join(" atau ");
 
   return (
-    <LegalLayout title="Syarat & Ketentuan" updatedAt="26 September 2026" active="syarat">
+    <LegalLayout title="Syarat & Ketentuan" updatedAt="29 September 2026" active="syarat">
       <p className="text-sm text-text-soft leading-relaxed">
         Dengan membuat akun atau menggunakan Layanan, Anda menyetujui Syarat
         &amp; Ketentuan ini dan{" "}
@@ -44,6 +44,7 @@ export default function SyaratPage() {
           <li><strong className={b}>Akun Founderku</strong>: satu akun untuk semua layanan Founderku.</li>
           <li><strong className={b}>Pajangin</strong>: pembuatan halaman jualan sederhana yang menghubungkan penjual dengan pembeli lewat WhatsApp.</li>
           <li><strong className={b}>Tools Founderku</strong>: Notain (invoice dan kwitansi), Pajakin (simulasi PPh Final UMKM), Kontrakin (surat perjanjian), Jalanin (roadmap usaha), dan Sehatin (cek kesehatan bisnis).</li>
+          <li><strong className={b}>Social Space</strong>: ruang komunitas untuk tukar skill antar pengguna, Etalase produk dan jasa dari halaman Pajangin, serta info beasiswa, magang, dan lowongan.</li>
           <li><strong className={b}>{PRICING.planName}</strong>: paket berbayar yang membuka semua fitur di atas.</li>
           <li><strong className={b}>Katalog program</strong>: informasi program Founderku atau mitra beserta tautan pendaftarannya.</li>
         </ul>
@@ -103,12 +104,31 @@ export default function SyaratPage() {
         </ul>
       </LegalSection>
 
-      <LegalSection title="4. Pajangin: Etalase, Bukan Pihak Transaksi">
-        <p>Pajangin hanya menyediakan etalase digital. Kami:</p>
+      <LegalSection title="4. Pajangin dan Etalase Social Space: Bukan Pihak Transaksi">
+        <p>
+          Pajangin dan Etalase Social Space hanya menyediakan etalase digital.
+          Halaman Pajangin tampil di Etalase hanya jika pemiliknya
+          mengaktifkan pilihan &quot;Tampilkan di Social Space&quot;. Kami:
+        </p>
         <ul className="list-disc pl-5 space-y-1.5">
           <li><strong className={b}>Tidak menjadi pihak</strong> dalam jual-beli antara pemilik halaman (penjual) dan pembeli yang menghubungi lewat WhatsApp.</li>
           <li><strong className={b}>Tidak bertanggung jawab</strong> atas kebenaran informasi produk, kualitas barang, pengiriman, atau sengketa dari transaksi tersebut.</li>
-          <li><strong className={b}>Tidak memproses pembayaran</strong> jual-beli produk. Pembayaran itu terjadi langsung antara penjual dan pembeli, di luar sistem kami.</li>
+          <li><strong className={b}>Tidak memproses pembayaran</strong> jual-beli produk atau jasa. Pembayaran itu terjadi langsung antara penjual dan pembeli, di luar sistem kami.</li>
+          <li>Tidak menjamin identitas, keahlian, atau hasil kerja penjual jasa. Rating dan ulasan di Social Space adalah pendapat pengguna lain, bukan jaminan dari kami.</li>
+        </ul>
+        <p>
+          Kami menyarankan pembeli memeriksa penjual sebelum membayar dan tidak
+          mentransfer uang sebelum yakin.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="4a. Social Space">
+        <ul className="list-disc pl-5 space-y-1.5">
+          <li><strong className={b}>Tukar skill</strong> adalah kesepakatan sukarela antara pengguna. Kami tidak menjadi pihak dalam kesepakatan itu dan tidak menjamin hasilnya.</li>
+          <li>Profil Social Space, tawaran, ulasan, dan halaman yang Anda tampilkan di Etalase dapat dilihat publik. Chat hanya dapat dibaca oleh dua pihak yang terlibat.</li>
+          <li>Jangan pernah meminta atau memberikan kata sandi, kode OTP, data kartu, atau uang lewat chat Social Space. Laporkan perilaku mencurigakan lewat tombol &quot;Laporkan&quot;.</li>
+          <li><strong className={b}>Info beasiswa, magang, dan lowongan</strong> dikurasi oleh tim kami dan kontributor yang kami beri izin. Selalu periksa kembali di sumber resmi penyelenggara sebelum mendaftar. Kami tidak memungut biaya apa pun untuk info tersebut.</li>
+          <li>Kami dapat menyembunyikan profil, tawaran, info, atau halaman Etalase yang dilaporkan dan melanggar ketentuan ini.</li>
         </ul>
       </LegalSection>
 
@@ -152,7 +172,8 @@ export default function SyaratPage() {
       <LegalSection title="7. Larangan Penggunaan">
         <p>Anda dilarang menggunakan Layanan untuk:</p>
         <ul className="list-disc pl-5 space-y-1.5">
-          <li>Menjual barang atau jasa ilegal.</li>
+          <li>Menjual atau menawarkan barang atau jasa ilegal, termasuk narkoba, senjata, obat keras tanpa izin, barang palsu atau bajakan, konten dewasa, judi, pinjaman online ilegal, investasi bodong atau skema berantai, serta jasa joki ujian, tugas, atau skripsi.</li>
+          <li>Memasang info beasiswa, magang, atau lowongan palsu, atau yang meminta biaya pendaftaran tidak wajar.</li>
           <li>Menipu, memalsukan identitas, atau membuat invoice, kwitansi, atau perjanjian palsu.</li>
           <li>Memasukkan data pribadi orang lain tanpa hak.</li>
           <li>Mencoba menembus keamanan sistem, mengakses data pengguna lain, atau mengganggu jalannya Layanan.</li>
