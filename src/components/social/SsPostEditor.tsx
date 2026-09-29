@@ -73,7 +73,7 @@ export function SsPostEditor({ userId, postId, isAdmin }: { userId: string; post
       : await supabase.from("ss_posts").insert({ user_id: userId, ...data });
     setBusy(false);
     if (error) return setMsg({ ok: false, text: niceError(error.message, t) });
-    router.push(postId ? "/social-space/profil" : "/social-space");
+    router.push(postId ? "/social-space/profil" : "/social-space/tukar-skill");
   }
 
   async function remove() {
@@ -153,7 +153,7 @@ export function SsPostEditor({ userId, postId, isAdmin }: { userId: string; post
                 <button type="submit" className="btn btn-solid" disabled={busy}>
                   {busy ? t.saving : postId ? t.save : t.publish}
                 </button>
-                <Link className="btn btn-line" href={postId ? "/social-space/profil" : "/social-space"}>
+                <Link className="btn btn-line" href={postId ? "/social-space/profil" : "/social-space/tukar-skill"}>
                   {t.cancel}
                 </Link>
               </div>

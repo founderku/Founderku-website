@@ -46,9 +46,9 @@ export function SsTabs({ active, userId, isAdmin = false }: { active: SsTab; use
   }, [userId]);
 
   const items: [SsTab, string, string][] = [
-    ["feed", "/social-space", t.tabSwap],
-    ["etalase", "/social-space/etalase", t.tabEtalase],
+    ["etalase", "/social-space", t.tabEtalase],
     ["info", "/social-space/info", t.tabInfo],
+    ["feed", "/social-space/tukar-skill", t.tabSwap],
     ...(userId
       ? ([
           ["inbox", "/social-space/permintaan", t.tabInbox],
@@ -350,7 +350,7 @@ export function PostCard({
               {t.edit}
             </Link>
           ) : !userId ? (
-            <Link className="btn btn-solid btn-sm" href={`/masuk?next=${encodeURIComponent("/social-space")}`}>
+            <Link className="btn btn-solid btn-sm" href={`/masuk?next=${encodeURIComponent("/social-space/tukar-skill")}`}>
               {t.askSwap}
             </Link>
           ) : !me ? (
@@ -439,7 +439,7 @@ export function LegacyPostCard({ post, me, userId }: { post: SsLegacyPost; me: S
       ) : (
         <div className="ss-actions">
           {!userId ? (
-            <Link className="btn btn-solid btn-sm" href={`/masuk?next=${encodeURIComponent("/social-space")}`}>
+            <Link className="btn btn-solid btn-sm" href={`/masuk?next=${encodeURIComponent("/social-space/tukar-skill")}`}>
               {t.askSwap}
             </Link>
           ) : !me ? (

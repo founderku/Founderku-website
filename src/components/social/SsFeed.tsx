@@ -131,10 +131,10 @@ export function SsFeed({ userId, isAdmin, initialQuery }: { userId: string | nul
               <b style={{ fontWeight: 500, fontSize: 18 }}>{t.loginCta}</b>
               <p className="ss-sub">{t.loginSub}</p>
               <div className="ss-actions">
-                <Link className="btn btn-solid btn-sm" href={`/masuk?next=${encodeURIComponent("/social-space")}`}>
+                <Link className="btn btn-solid btn-sm" href={`/masuk?next=${encodeURIComponent("/social-space/tukar-skill")}`}>
                   {t.login}
                 </Link>
-                <Link className="btn btn-line btn-sm" href={`/daftar?next=${encodeURIComponent("/social-space")}`}>
+                <Link className="btn btn-line btn-sm" href={`/daftar?next=${encodeURIComponent("/social-space/tukar-skill")}`}>
                   {t.signup}
                 </Link>
               </div>
@@ -195,7 +195,7 @@ export function SsFeed({ userId, isAdmin, initialQuery }: { userId: string | nul
   );
 }
 
-function LegacyCard({ legacy, hasProfile, onDone }: { legacy: Legacy; hasProfile: boolean; onDone: () => void }) {
+export function LegacyCard({ legacy, hasProfile, onDone }: { legacy: Legacy; hasProfile: boolean; onDone: () => void }) {
   const { t } = useT();
   const [handle, setHandle] = useState(() => suggestHandle(legacy.full_name || "founder"));
   const [busy, setBusy] = useState(false);

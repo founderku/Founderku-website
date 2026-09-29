@@ -1315,7 +1315,7 @@ footer .legal{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap
       '<div class="sx-pair sx-step"><div class="sx-who"><div class="sx-av"></div><b>'+esc(t('sim.you'))+'</b>'+esc(fill('sim.youRole'))+'</div><span class="sx-x" aria-hidden="true">⇄</span><div class="sx-who sx-them"><div class="sx-av"></div><b>'+esc(t('sim.partner'))+'</b>'+esc(fill('sim.partnerRole'))+'</div></div>'+
       '<div class="sx-bub sx-them sx-step">'+esc(fill('sim.msg1'))+'</div><div class="sx-bub sx-me sx-step">'+esc(fill('sim.msg2'))+'</div>'+
       '<div class="sx-step"><div class="sx-ok">'+esc(t('sim.done'))+'</div><div class="sx-stars" aria-label="'+esc(t('sim.rate'))+'">★★★★★</div></div>'+
-      '<div class="sx-row sx-step"><a class="btn btn-solid btn-sm" href="/social-space?cari='+encodeURIComponent(sk(sim.butuh))+'" data-track="tukarskill">'+esc(t('sim.cta'))+'</a><button type="button" class="btn btn-line btn-sm" id="simAgain">'+esc(t('sim.again'))+'</button></div>'+note;
+      '<div class="sx-row sx-step"><a class="btn btn-solid btn-sm" href="/social-space/tukar-skill?cari='+encodeURIComponent(sk(sim.butuh))+'" data-track="tukarskill">'+esc(t('sim.cta'))+'</a><button type="button" class="btn btn-line btn-sm" id="simAgain">'+esc(t('sim.again'))+'</button></div>'+note;
     el.querySelector('#simAgain').addEventListener('click',function(){sim={bisa:'',butuh:'',step:0};renderSim();});
     [].forEach.call(el.querySelectorAll('.sx-step'),function(s,i){simTimers.push(setTimeout(function(){s.classList.add('sx-on');},reduce?0:150+i*650));});
   }

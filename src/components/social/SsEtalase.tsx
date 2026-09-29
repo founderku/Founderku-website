@@ -7,10 +7,37 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { niceError, priceLabel, useT, type SsEtalaseItem } from "./ss";
+import { niceError, priceLabel, useT, type SsEtalaseItem, type SsProfile } from "./ss";
+import { LegacyCard } from "./SsFeed";
 import { ReportButton, SsTabs, Stars } from "./SsUi";
 
-export function SsEtalase({ userId, isAdmin }: { userId: string | null; isAdmin: boolean }) {
+type Legacy = { full_name: string; headline: string; city: string; skills_offer: string[]; skills_want: string[] };
+
+function Dotted({ text }: { text: string }) {
+  if (!text.endsWith(".")) return <>{text}</>;
+  return (
+    <>
+      {text.slice(0, -1)}
+      <span className="o">.</span>
+    </>
+  );
+}
+
+// Kartu pindah profil TukarSkill lama, muncul di halaman utama Social Space
+function ClaimBanner({ userId }: { userId: string }) {
+  const [state, setState] = useState<{ legacy: Legacy | null; me: SsProfile | null } | null>(null);
+  useEffect(() => {
+    const supabase = createClient();
+    Promise.all([
+      supabase.rpc("ss_legacy_preview"),
+      supabase.from("ss_profiles").select("*").eq("user_id", userId).maybeSingle(),
+    ]).then(([lg, me]) => setState({ legacy: ((lg.data as Legacy[]) ?? [])[0] ?? null, me: (me.data as SsProfile) ?? null }));
+  }, [userId]);
+  if (!state?.legacy || state.me?.from_tukarskill) return null;
+  return <LegacyCard legacy={state.legacy} hasProfile={!!state.me} onDone={() => setState(null)} />;
+}
+
+export function SsEtalase({ userId, isAdmin, landing = false }: { userId: string | null; isAdmin: boolean; landing?: boolean }) {
   const { t } = useT();
   const [items, setItems] = useState<SsEtalaseItem[] | null>(null);
   const [q, setQ] = useState("");
@@ -38,13 +65,13 @@ export function SsEtalase({ userId, isAdmin }: { userId: string | null; isAdmin:
       });
   }, [items, q, kind]);
 
-  return (
-    <section className="band hero-band" style={{ borderTop: 0 }}>
+  const body = (
       <div className="ss-wrap">
         <SsTabs active="etalase" userId={userId} isAdmin={isAdmin} />
+        {userId && <ClaimBanner userId={userId} />}
         <div className="ss-head">
           <div>
-            <h1 className="ss-h">{t.etH}</h1>
+            {landing ? <h2 className="ss-h">{t.etH}</h2> : <h1 className="ss-h">{t.etH}</h1>}
             <p className="ss-sub">{t.etSub}</p>
           </div>
           <Link className="btn btn-line btn-sm" href={userId ? "/pajangin/dashboard" : "/pajangin"}>
@@ -128,6 +155,29 @@ export function SsEtalase({ userId, isAdmin }: { userId: string | null; isAdmin:
           </div>
         )}
       </div>
-    </section>
+  );
+
+  if (!landing) {
+    return (
+      <section className="band hero-band" style={{ borderTop: 0 }}>
+        {body}
+      </section>
+    );
+  }
+  return (
+    <>
+      <section className="band hero-band" style={{ borderTop: 0 }}>
+        <div className="hero-top">
+          <div>
+            <div className="eyebrow">{t.eyebrow}</div>
+            <h1 className="h1">
+              <Dotted text={t.landingH} />
+            </h1>
+          </div>
+          <p>{t.landingSub}</p>
+        </div>
+      </section>
+      <section className="band flush">{body}</section>
+    </>
   );
 }
