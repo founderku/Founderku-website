@@ -102,6 +102,12 @@ const nextConfig: NextConfig = {
         destination: "/blog/:slug",
         permanent: true,
       },
+      // Alamat artikel yang dulu tertulis dobel (salah ketik saat dibuat)
+      {
+        source: "/blog/dari-ngobrol-ide-ke-produk-jalan-gimana-founderku-kerjadari-ngobrol-ide-ke-produk-jalan-gimana-founderku-kerja",
+        destination: "/blog/dari-ngobrol-ide-ke-produk-jalan-gimana-founderku-kerja",
+        permanent: true,
+      },
     ];
   },
   async headers() {
