@@ -50,6 +50,7 @@ create function public.ss_skills_ok(s text[])
 returns boolean
 language sql
 immutable
+set search_path = public
 as $$
   select s is not null
      and cardinality(s) <= 10
@@ -65,6 +66,7 @@ create function public.ss_clean_skills(s text[])
 returns text[]
 language sql
 immutable
+set search_path = public
 as $$
   select coalesce(array_agg(v order by pos), '{}')
   from (
@@ -88,6 +90,7 @@ create function public.ss_link_ok(u text)
 returns boolean
 language sql
 immutable
+set search_path = public
 as $$
   select u is not null and (u = '' or (char_length(u) <= 200 and u ~ '^https://[^\s"<>]+$'));
 $$;
@@ -95,6 +98,7 @@ $$;
 create function public.ss_touch()
 returns trigger
 language plpgsql
+set search_path = public
 as $$
 begin
   new.updated_at := now();
