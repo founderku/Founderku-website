@@ -93,6 +93,7 @@ export default async function PublicPage({
         whatsappNumber: page.whatsapp_number,
         showWatermark: !owner?.has_pro,
         storeSlug: owner?.store_slug ?? null,
+        kind: page.kind ?? "produk",
       }}
     />
   );

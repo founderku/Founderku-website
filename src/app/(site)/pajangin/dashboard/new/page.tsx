@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { Pill } from "@/components/ui/Pill";
-import { ProductCard } from "@/components/ProductCard";
+import { PhonePreview } from "@/components/etalase/PhonePreview";
 import { KIND_LABEL, PageKindSelect, PriceExtras, SocialToggle, type PageKind } from "@/components/PageKindFields";
 import {
   isValidSlugFormat,
@@ -43,6 +43,7 @@ export default function NewPagePage() {
   const [formError, setFormError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [storeStyle, setStoreStyle] = useState<StoreStyleId>("klasik");
+  const [storeSlug, setStoreSlug] = useState<string | null>(null);
   const [showTip, setShowTip] = useState(false);
 
   useEffect(() => {
@@ -62,10 +63,11 @@ export default function NewPagePage() {
       if (!user) return;
       const { data } = await supabase
         .from("profiles")
-        .select("store_style")
+        .select("store_style, store_slug")
         .eq("id", user.id)
         .maybeSingle();
       if (data?.store_style) setStoreStyle(data.store_style);
+      setStoreSlug(data?.store_slug ?? null);
     }
     loadStyle();
   }, []);
@@ -417,9 +419,9 @@ export default function NewPagePage() {
         <div className="md:sticky md:top-6 self-start">
           <p className="font-manrope font-semibold text-xs text-text-soft mb-3 flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-green-700 animate-pulse" />
-            Preview langsung (Golden Template)
+            Preview langsung, sama persis dengan halaman yang tayang
           </p>
-          <ProductCard
+          <PhonePreview
             style={storeStyle}
             data={{
               productName,
@@ -427,11 +429,12 @@ export default function NewPagePage() {
               originalPrice: !askPrice && promoPrice && originalPrice ? Number(originalPrice) : null,
               promoPrice: askPrice ? null : promoPrice ? Number(promoPrice) : originalPrice ? Number(originalPrice) : null,
               priceUnit: askPrice ? "" : priceUnit,
-              askPrice,
               highlights,
               imageUrl: photoPreviewUrl,
               whatsappNumber: whatsapp,
               showWatermark: true,
+              storeSlug,
+              kind,
             }}
           />
           <p className="text-[11px] text-text-faint text-center mt-3">

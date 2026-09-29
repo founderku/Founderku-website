@@ -1,4 +1,12 @@
-export type StoreStyleId = "klasik" | "hangat" | "minimalis" | "elegan" | "bold";
+export type StoreStyleId =
+  | "klasik"
+  | "hangat"
+  | "minimalis"
+  | "elegan"
+  | "bold"
+  | "ceria"
+  | "neon"
+  | "segar";
 
 export interface Profile {
   id: string;

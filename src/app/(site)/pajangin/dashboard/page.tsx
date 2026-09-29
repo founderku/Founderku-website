@@ -8,7 +8,7 @@ import { StatusBadge } from "@/components/ui/StatusBadge";
 import { StoreSlugEditor } from "@/components/StoreSlugEditor";
 import { PlanBadge } from "@/components/PlanBadge";
 import { LogoutButton } from "@/components/LogoutButton";
-import { ProductCard } from "@/components/ProductCard";
+import { PhonePreview } from "@/components/etalase/PhonePreview";
 import { WelcomeModal } from "@/components/WelcomeModal";
 import { PublishToast } from "@/components/PublishToast";
 import { UpgradeToast } from "@/components/UpgradeToast";
@@ -195,21 +195,25 @@ export default async function DashboardPage({
             Contoh halaman jadi (bukan halaman kamu)
           </p>
           <div className="max-w-sm mx-auto mb-3 pointer-events-none select-none">
-            <ProductCard
-              style="klasik"
+            <PhonePreview
+              style={profile?.store_style ?? "klasik"}
+              showStyleLink={false}
+              height={560}
               data={{
-                productName: "Kopi Susu Gula Aren 250ml",
-                tagline: "Manis pas, tanpa pakai pemanis buatan",
-                originalPrice: 18000,
-                promoPrice: 15000,
+                productName: "Pastel Isi Sayur & Telur",
+                tagline: "Kulit renyah, isi padat, digoreng dadakan tiap pesanan.",
+                originalPrice: 30000,
+                promoPrice: 24000,
+                priceUnit: "/ isi 10",
                 highlights: [
-                  "Gula aren asli, bukan sirup",
-                  "Kopi diseduh fresh tiap pesanan",
-                  "Bisa request less sweet",
+                  "Tanpa pengawet",
+                  "Bisa pesan versi frozen",
+                  "Gratis sambal cabai rawit",
                 ],
-                imageUrl: "/pajangin-assets/photos/p11.jpg",
+                imageUrl: "/pajangin-assets/photos/p16.jpg",
                 whatsappNumber: "081200000000",
                 showWatermark: true,
+                storeSlug: null,
               }}
             />
           </div>

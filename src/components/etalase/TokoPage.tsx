@@ -1,7 +1,13 @@
+import Link from "next/link";
 import { OwnerPreviewBanner } from "@/components/OwnerPreviewBanner";
-import { StoreProductTile } from "@/components/StoreProductTile";
-import { Reveal } from "@/components/ui/Reveal";
+import { toWhatsAppLink } from "@/lib/validators";
+import { pagePriceText, pageWaMessage } from "@/lib/pagePrice";
+import { storeTitle, styleOf } from "@/lib/storeStyles";
 import type { PageRow, StoreStyleId } from "@/lib/types";
+import { ETALASE_FONTS } from "./fonts";
+import s from "./etalase.module.css";
+import { KIND_TEXT, Photo, WaIcon, discountOf, kindOf, rupiah, type PageKind } from "./parts";
+import { ShareButton } from "./ShareButton";
 
 export interface TokoData {
   storeSlug: string;
@@ -9,262 +15,135 @@ export interface TokoData {
   products: PageRow[];
 }
 
-function toTileData(p: PageRow) {
-  return {
-    slug: p.slug,
-    productName: p.product_name,
-    tagline: p.tagline,
-    promoPrice: p.promo_price,
-    priceUnit: p.price_unit ?? "",
-    originalPrice: p.original_price,
-    highlights: p.highlights,
-    imageUrl: p.image_url,
-    whatsappNumber: p.whatsapp_number,
-  };
-}
-
-function Empty() {
+function Tile({ p }: { p: PageRow }) {
+  const hasPrice = p.promo_price !== null && p.promo_price !== undefined;
+  const disc = hasPrice ? discountOf(p.original_price, p.promo_price) : null;
+  const wa = p.whatsapp_number
+    ? toWhatsAppLink(p.whatsapp_number, pageWaMessage(p.product_name, p.promo_price, p.price_unit))
+    : "#";
   return (
-    <p className="text-center text-text-soft py-16">
-      Toko ini belum punya produk aktif saat ini. Coba lagi lain waktu.
-    </p>
-  );
-}
-
-function Logo() {
-  return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src="/pajangin-assets/logo.jpeg"
-      alt="Pajangin"
-      className="absolute top-6 left-6 z-20 w-8 h-8 rounded-xl"
-    />
-  );
-}
-
-// ============================================================
-// KLASIK
-// ============================================================
-function Klasik({ data }: { data: TokoData }) {
-  return (
-    <div className="min-h-screen bg-bg-soft">
-      <div className="relative bg-ink px-6 pt-14 pb-16 sm:pt-20 sm:pb-20 text-center">
-        <Logo />
-        <Reveal className="max-w-2xl mx-auto">
-          <span className="inline-block font-manrope font-bold text-xs uppercase tracking-widest text-amber mb-5">
-            Etalase Digital
-          </span>
-          <h1 className="font-manrope font-extrabold text-4xl sm:text-5xl tracking-tight text-white text-balance leading-[1.05]">
-            {data.storeSlug}
-          </h1>
-          <p className="mt-5 text-lg text-ink-soft">
-            {data.products.length > 0 ? `${data.products.length} produk tersedia` : "Belum ada produk aktif"}
-          </p>
-        </Reveal>
-      </div>
-      <div className="px-6 py-14">
-        {data.products.length === 0 ? (
-          <Empty />
-        ) : (
-          <Reveal className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-5">
-            {data.products.map((p) => (
-              <StoreProductTile key={p.id} style="klasik" data={toTileData(p)} />
-            ))}
-          </Reveal>
-        )}
-      </div>
-      {!data.isPro && (
-        <div className="bg-ink px-6 py-8 text-center">
-          <p className="text-sm text-ink-faint">Powered by <span className="font-manrope font-bold text-white">Pajangin</span></p>
+    <article className={s.tile}>
+      <Link href={`/l/${p.slug}`} aria-label={p.product_name}>
+        <Photo src={p.image_url} alt={p.product_name} discountPct={disc?.pct} />
+      </Link>
+      <div className={s.tileBody}>
+        <Link href={`/l/${p.slug}`} className={s.tileName}>
+          {p.product_name}
+        </Link>
+        {p.tagline && <p className={s.tileTag}>{p.tagline}</p>}
+        <div className={s.tilePrice}>
+          <b>{pagePriceText(p.promo_price, p.price_unit)}</b>
+          {disc && p.original_price ? <s>{rupiah(p.original_price)}</s> : null}
         </div>
-      )}
-    </div>
-  );
-}
-
-// ============================================================
-// HANGAT - editorial cafe (ref: Lambert)
-// ============================================================
-function Hangat({ data }: { data: TokoData }) {
-  const heroPhoto = data.products.find((p) => p.image_url)?.image_url;
-  return (
-    <div className="min-h-screen bg-[#F5EEE3]">
-      <div className="relative w-full h-[45vh] min-h-[280px] overflow-hidden">
-        {heroPhoto ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={heroPhoto} alt={data.storeSlug} className="absolute inset-0 w-full h-full object-cover" />
-        ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-[#3E2A1E] to-[#8B5A2B]" />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#1a120c]/85 via-[#1a120c]/25 to-[#1a120c]/40" />
-        <Logo />
-        <Reveal className="absolute inset-0 flex flex-col items-center justify-end text-center pb-10 px-6">
-          <span className="font-manrope font-bold text-[11px] uppercase tracking-[0.25em] text-[#E8C89A] mb-3">
-            Selamat Datang di
-          </span>
-          <h1 className="font-manrope font-bold text-4xl sm:text-5xl text-white text-balance">
-            {data.storeSlug}
-          </h1>
-        </Reveal>
-      </div>
-
-      <div className="max-w-5xl mx-auto px-6 py-14">
-        <h2 className="text-center font-manrope font-bold text-xs uppercase tracking-[0.2em] text-[#8B5A2B] mb-10">
-          Menu Kami
-        </h2>
-        {data.products.length === 0 ? (
-          <Empty />
-        ) : (
-          <Reveal className="grid grid-cols-2 md:grid-cols-3 gap-5">
-            {data.products.map((p) => (
-              <StoreProductTile key={p.id} style="hangat" data={toTileData(p)} />
-            ))}
-          </Reveal>
-        )}
-      </div>
-
-      {!data.isPro && (
-        <div className="bg-[#3E2A1E] px-6 py-6 text-center">
-          <p className="text-xs text-[#E8C89A]/70">Powered by <span className="font-manrope font-bold text-white">Pajangin</span></p>
+        <div className={s.tileActions}>
+          <Link href={`/l/${p.slug}`} className={s.tileBtn}>
+            Lihat
+          </Link>
+          <a href={wa} target="_blank" rel="noopener noreferrer" className={s.tileWa} aria-label={`Chat penjual soal ${p.product_name}`}>
+            <WaIcon />
+          </a>
         </div>
-      )}
-    </div>
+      </div>
+    </article>
   );
 }
 
-// ============================================================
-// MINIMALIS - clean shop (ref: Saudagar)
-// ============================================================
-function Minimalis({ data }: { data: TokoData }) {
-  return (
-    <div className="min-h-screen bg-white">
-      <div className="relative border-b border-[#E4E8E1] px-6 py-5 flex items-center justify-center">
-        <Logo />
-        <span className="font-manrope font-extrabold text-lg tracking-wide text-[#3D4A3D] uppercase">
-          {data.storeSlug}
-        </span>
-      </div>
-      <div className="bg-[#EFEDE3] px-6 py-10 text-center">
-        <p className="text-sm text-[#5C7A5C] font-manrope font-semibold">
-          {data.products.length > 0 ? `${data.products.length} produk tersedia` : "Belum ada produk aktif"}
-        </p>
-      </div>
-      <div className="max-w-5xl mx-auto px-6 py-14">
-        {data.products.length === 0 ? (
-          <Empty />
-        ) : (
-          <Reveal className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {data.products.map((p) => (
-              <StoreProductTile key={p.id} style="minimalis" data={toTileData(p)} />
-            ))}
-          </Reveal>
-        )}
-      </div>
-      {!data.isPro && (
-        <div className="border-t border-[#E4E8E1] px-6 py-5 text-center">
-          <p className="text-[11px] text-[#8B978B]">Powered by <span className="font-manrope font-bold text-[#1F291F]">Pajangin</span></p>
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ============================================================
-// ELEGAN - boutique pastel (ref: Elzatta)
-// ============================================================
-function Elegan({ data }: { data: TokoData }) {
-  return (
-    <div className="min-h-screen bg-[#FBF3F1]">
-      <div className="relative px-6 pt-10 pb-8 text-center">
-        <Logo />
-        <span className="font-manrope font-semibold text-[10px] uppercase tracking-[0.3em] text-[#9C6B7A]">
-          Koleksi Kami
-        </span>
-        <h1 className="font-manrope font-semibold text-3xl sm:text-4xl tracking-tight text-[#5C3A45] mt-2">
-          {data.storeSlug}
-        </h1>
-      </div>
-      <div className="max-w-5xl mx-auto px-6 pb-14">
-        {data.products.length === 0 ? (
-          <Empty />
-        ) : (
-          <Reveal className="grid grid-cols-2 md:grid-cols-3 gap-5">
-            {data.products.map((p) => (
-              <StoreProductTile key={p.id} style="elegan" data={toTileData(p)} />
-            ))}
-          </Reveal>
-        )}
-      </div>
-      {!data.isPro && (
-        <div className="px-6 py-6 text-center">
-          <p className="text-[11px] text-[#B594A0]">Powered by <span className="font-manrope font-bold text-[#5C3A45]">Pajangin</span></p>
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ============================================================
-// BOLD - editorial streetwear (ref: Aurum)
-// ============================================================
-function Bold({ data }: { data: TokoData }) {
-  return (
-    <div className="min-h-screen bg-black text-white">
-      <div className="relative border-b border-white/15 px-6 py-12 text-center">
-        <Logo />
-        <h1 className="font-manrope font-extrabold text-4xl sm:text-6xl uppercase tracking-tight">
-          {data.storeSlug}
-        </h1>
-        <p className="text-white/50 text-sm mt-3">
-          {data.products.length > 0 ? `${data.products.length} produk tersedia` : "Belum ada produk aktif"}
-        </p>
-      </div>
-      <div className="max-w-5xl mx-auto px-6 py-14">
-        {data.products.length === 0 ? (
-          <p className="text-center text-white/50 py-16">Toko ini belum punya produk aktif saat ini.</p>
-        ) : (
-          <Reveal className="grid grid-cols-2 md:grid-cols-3 gap-px">
-            {data.products.map((p) => (
-              <div key={p.id} className="bg-black p-3 border border-white/15">
-                <StoreProductTile style="bold" data={toTileData(p)} />
-              </div>
-            ))}
-          </Reveal>
-        )}
-      </div>
-      {!data.isPro && (
-        <div className="border-t border-white/15 px-6 py-6 text-center">
-          <p className="text-[11px] text-white/50 uppercase tracking-wide">Powered by <span className="font-manrope font-bold text-white">Pajangin</span></p>
-        </div>
-      )}
-    </div>
-  );
-}
-
-const LAYOUTS: Record<StoreStyleId, (props: { data: TokoData }) => React.JSX.Element> = {
-  klasik: Klasik,
-  hangat: Hangat,
-  minimalis: Minimalis,
-  elegan: Elegan,
-  bold: Bold,
-};
-
+// Halaman toko Pajangin (/toko/[storeSlug]). Memakai tema yang sama
+// persis dengan halaman produk, jadi satu toko terasa satu merek.
 export function TokoPage({
   data,
   style,
   isOwner = false,
+  preview = false,
 }: {
   data: TokoData;
   style: StoreStyleId;
   isOwner?: boolean;
+  preview?: boolean;
 }) {
-  const Layout = LAYOUTS[style] ?? Klasik;
+  const theme = styleOf(style);
+  const title = storeTitle(data.storeSlug);
+  const groups = (["produk", "jasa", "lainnya"] as PageKind[])
+    .map((k) => ({ kind: k, items: data.products.filter((p) => kindOf(p.kind) === k) }))
+    .filter((g) => g.items.length > 0);
+  const heroPhoto = theme.hero === "cover" ? data.products.find((p) => p.image_url)?.image_url ?? null : null;
+  const contact = data.products.find((p) => p.whatsapp_number)?.whatsapp_number;
+  const promoCount = data.products.filter((p) => discountOf(p.original_price, p.promo_price)).length;
+  const contactLink = contact
+    ? toWhatsAppLink(contact, `Halo! Saya lihat toko ${title} dari web. Boleh tanya-tanya?`)
+    : null;
+
+  const page = (
+    <div className={`${s.root} ${preview ? s.preview : ""} ${ETALASE_FONTS}`} data-pj={theme.id} data-hero={theme.hero}>
+      <section className={s.shopHero} data-photo={heroPhoto ? "1" : undefined}>
+        <header className={s.top} style={{ position: "absolute", top: 0, left: 0, right: 0 }}>
+          <Link href="/pajangin" className={s.logo} aria-label="Pajangin">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/pajangin-assets/logo.jpeg" alt="" />
+          </Link>
+          <span className={s.spacer} />
+          <ShareButton title={title} />
+        </header>
+        {heroPhoto && <Photo src={heroPhoto} alt="" eager />}
+        <div className={s.shopHeroInner}>
+          <span className={s.eyebrow}>Toko di Pajangin</span>
+          <h1 className={s.title}>{title}</h1>
+          <div className={s.shopStats}>
+            {groups.length === 0 && <span>Belum ada yang dipajang</span>}
+            {groups.map((g) => (
+              <span key={g.kind}>
+                {g.items.length} {KIND_TEXT[g.kind].items.toLowerCase()}
+              </span>
+            ))}
+            {promoCount > 0 && <span>{promoCount} lagi promo</span>}
+          </div>
+          {contactLink && (
+            <a href={contactLink} target="_blank" rel="noopener noreferrer" className={s.cta}>
+              <WaIcon />
+              Chat penjual
+            </a>
+          )}
+        </div>
+      </section>
+
+      <div className={s.wrap}>
+        {groups.length === 0 ? (
+          <p className={s.empty}>Toko ini belum punya produk aktif saat ini. Coba lagi lain waktu.</p>
+        ) : (
+          groups.map((g) => (
+            <section key={g.kind} className={s.shopSection}>
+              {groups.length > 1 && (
+                <h2 className={s.shopSectionTitle}>
+                  {KIND_TEXT[g.kind].items} <small>{g.items.length}</small>
+                </h2>
+              )}
+              <div className={s.grid}>
+                {g.items.map((p) => (
+                  <Tile key={p.id} p={p} />
+                ))}
+              </div>
+            </section>
+          ))
+        )}
+      </div>
+
+      <footer className={s.foot}>
+        {!data.isPro ? (
+          <>
+            Toko ini dibuat gratis dengan <Link href="/pajangin">Pajangin</Link>
+          </>
+        ) : (
+          title
+        )}
+      </footer>
+    </div>
+  );
+
+  if (preview) return page;
   return (
     <>
       {isOwner && <OwnerPreviewBanner />}
-      <div className={isOwner ? "pt-9" : undefined}>
-        <Layout data={data} />
-      </div>
+      <div className={isOwner ? "pt-9" : undefined}>{page}</div>
     </>
   );
 }
