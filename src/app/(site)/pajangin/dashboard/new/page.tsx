@@ -164,7 +164,9 @@ export default function NewPagePage() {
     setFormError(null);
 
     if (!productName.trim()) return setFormError("Nama produk wajib diisi.");
-    if (!askPrice && !promoPrice) return setFormError("Harga wajib diisi, atau centang \"Tanya harga\".");
+    if (!askPrice && !originalPrice) return setFormError("Harga normal wajib diisi, atau centang \"Tanya harga\".");
+    if (!askPrice && promoPrice && Number(promoPrice) >= Number(originalPrice))
+      return setFormError("Harga promo harus lebih kecil dari harga normal (atau kosongkan kalau tidak ada promo).");
     if (!isValidWhatsAppNumber(whatsapp))
       return setFormError("Format nomor WhatsApp tidak valid.");
     if (slugStatus !== "ready")
@@ -211,8 +213,10 @@ export default function NewPagePage() {
       slug,
       product_name: productName,
       tagline,
-      original_price: !askPrice && originalPrice ? Number(originalPrice) : null,
-      promo_price: askPrice ? null : Number(promoPrice),
+      // Tanpa promo: harga normal jadi harga utama. Dengan promo: harga normal
+      // tampil dicoret dan harga promo jadi harga utama.
+      original_price: !askPrice && promoPrice ? Number(originalPrice) : null,
+      promo_price: askPrice ? null : Number(promoPrice || originalPrice),
       kind,
       price_unit: askPrice ? "" : priceUnit.trim(),
       show_in_social: showInSocial,
@@ -327,7 +331,7 @@ export default function NewPagePage() {
                 onChange={(e) => setOriginalPrice(e.target.value)}
               />
             </Field>
-            <Field label="Harga Promo (Rp)" className="flex-1">
+            <Field label="Harga Promo (Rp, opsional)" className="flex-1">
               <input
                 type="number"
                 className="w-full border border-border rounded-xl px-3.5 py-2.5 text-sm"
@@ -420,8 +424,8 @@ export default function NewPagePage() {
             data={{
               productName,
               tagline,
-              originalPrice: !askPrice && originalPrice ? Number(originalPrice) : null,
-              promoPrice: !askPrice && promoPrice ? Number(promoPrice) : null,
+              originalPrice: !askPrice && promoPrice && originalPrice ? Number(originalPrice) : null,
+              promoPrice: askPrice ? null : promoPrice ? Number(promoPrice) : originalPrice ? Number(originalPrice) : null,
               priceUnit: askPrice ? "" : priceUnit,
               askPrice,
               highlights,
