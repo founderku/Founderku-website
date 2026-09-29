@@ -5,7 +5,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { fill, fmtDate, useT, type SsPost, type SsProfile, type SsReview } from "./ss";
+import { fill, fmtDate, priceLabel, useT, type SsEtalaseItem, type SsPost, type SsProfile, type SsReview } from "./ss";
 import { Avatar, PostCard, ReportButton, SkillChips, SsTabs, Stars } from "./SsUi";
 
 type ReviewRow = SsReview & { reviewer: { handle: string; name: string } | null };
@@ -16,6 +16,7 @@ export function SsPublicProfile({ handle, userId, isAdmin }: { handle: string; u
   const [me, setMe] = useState<SsProfile | null>(null);
   const [posts, setPosts] = useState<SsPost[]>([]);
   const [reviews, setReviews] = useState<ReviewRow[]>([]);
+  const [shop, setShop] = useState<SsEtalaseItem[]>([]);
 
   useEffect(() => {
     const supabase = createClient();
@@ -41,6 +42,8 @@ export function SsPublicProfile({ handle, userId, isAdmin }: { handle: string; u
       ]);
       setPosts((po.data ?? []) as SsPost[]);
       setReviews((rv.data ?? []) as ReviewRow[]);
+      const { data: et } = await supabase.rpc("ss_etalase");
+      setShop(((et ?? []) as SsEtalaseItem[]).filter((it) => it.seller_handle === prof.handle));
     })();
     if (userId) {
       supabase
@@ -133,6 +136,27 @@ export function SsPublicProfile({ handle, userId, isAdmin }: { handle: string; u
                 </div>
               </div>
 
+              {shop.length > 0 && (
+                <>
+                  <h2 style={{ fontSize: 22, margin: "28px 0 12px" }}>{t.mySpace}</h2>
+                  <div className="ss-grid">
+                    {shop.map((it) => (
+                      <a key={it.id} className="ss-card ss-et" href={`/l/${it.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
+                        <span className="ss-et-img">
+                          {it.image_url ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img src={it.image_url} alt="" loading="lazy" />
+                          ) : (
+                            <span>{it.product_name.slice(0, 1).toUpperCase()}</span>
+                          )}
+                        </span>
+                        <span className="ss-et-name">{it.product_name}</span>
+                        <span className="ss-et-price">{priceLabel(it.promo_price, it.price_unit, t.askPrice)}</span>
+                      </a>
+                    ))}
+                  </div>
+                </>
+              )}
               <h2 style={{ fontSize: 22, margin: "28px 0 12px" }}>{t.openPosts}</h2>
               {posts.length === 0 ? (
                 <p className="ss-sub">{t.noOpenPosts}</p>

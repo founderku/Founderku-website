@@ -26,7 +26,7 @@ const b = "text-ink";
 
 export default function PrivasiPage() {
   return (
-    <LegalLayout title="Kebijakan Privasi" updatedAt="28 September 2026" active="privasi">
+    <LegalLayout title="Kebijakan Privasi" updatedAt="29 September 2026" active="privasi">
       <p className="text-sm text-text-soft leading-relaxed">
         Kebijakan Privasi ini menjelaskan bagaimana Founderku (&quot;kami&quot;),
         yang dikelola oleh {NAMA_PT}, mengumpulkan, menggunakan, menyimpan,
@@ -197,6 +197,23 @@ export default function PrivasiPage() {
           IP, perangkat, atau isi yang Anda ketik, dan tidak memakai cookie
           tambahan untuk ini.
         </p>
+      </LegalSection>
+
+      <LegalSection title="5c. Social Space dan data TukarSkill">
+        <ul className="list-disc pl-5 space-y-1.5">
+          <li>Profil Social Space (nama tampilan, nama profil, kota, bio, skill, tautan), tawaran, dan ulasan dapat dilihat publik. Anda bisa mematikan pilihan tampil di halaman Jelajah atau menghapus profil Social Space kapan saja. Email Anda tidak pernah ditampilkan.</li>
+          <li>Chat Social Space hanya bisa dibaca oleh dua pihak yang terlibat.</li>
+          <li>
+            <strong className={b}>Pengguna TukarSkill:</strong> TukarSkill kini
+            menjadi bagian dari Founderku. Profil dan tawaran tukar skill yang
+            sebelumnya tampil publik di tukarskill.com (nama, kota, skill,
+            deskripsi tawaran) kami tampilkan di Social Space. Email disimpan
+            terkunci hanya untuk mencocokkan akun saat Anda memindahkan profil,
+            dan tidak ditampilkan. Kata sandi, nomor HP, saldo, dan chat lama
+            tidak dipindahkan.
+          </li>
+          <li>Jika Anda pengguna TukarSkill dan ingin data lama Anda dihapus dari Social Space, hubungi kami lewat kontak di bawah atau gunakan tombol &quot;Laporkan&quot; pada tawaran Anda.</li>
+        </ul>
       </LegalSection>
 
       <LegalSection title="6. Keamanan Data">

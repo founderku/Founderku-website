@@ -7,8 +7,8 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { HANDLE_RE, fill, matchScore, niceError, suggestHandle, useT, type SsPost, type SsProfile } from "./ss";
-import { PostCard, SsTabs } from "./SsUi";
+import { HANDLE_RE, fill, matchScore, niceError, suggestHandle, useT, type SsLegacyPost, type SsPost, type SsProfile } from "./ss";
+import { LegacyPostCard, PostCard, SsTabs } from "./SsUi";
 
 type Legacy = { full_name: string; headline: string; city: string; skills_offer: string[]; skills_want: string[] };
 
@@ -25,6 +25,7 @@ function Dotted({ text }: { text: string }) {
 export function SsFeed({ userId, isAdmin, initialQuery }: { userId: string | null; isAdmin: boolean; initialQuery: string }) {
   const { t } = useT();
   const [posts, setPosts] = useState<SsPost[] | null>(null);
+  const [oldPosts, setOldPosts] = useState<SsLegacyPost[]>([]);
   const [me, setMe] = useState<SsProfile | null>(null);
   const [meLoaded, setMeLoaded] = useState(!userId);
   const [legacy, setLegacy] = useState<Legacy | null>(null);
@@ -47,6 +48,13 @@ export function SsFeed({ userId, isAdmin, initialQuery }: { userId: string | nul
         if (error) setErr(niceError(error.message, t));
         setPosts(((data ?? []) as SsPost[]).filter((p) => p.ss_profiles));
       });
+    // Tawaran TukarSkill lama yang pemiliknya belum pindah (tanpa email)
+    supabase
+      .from("ss_legacy_posts")
+      .select("id, owner_name, owner_city, offer, want, format, duration, description, posted_at")
+      .order("posted_at", { ascending: false })
+      .limit(300)
+      .then(({ data }) => setOldPosts((data ?? []) as SsLegacyPost[]));
     if (userId) {
       supabase
         .from("ss_profiles")
@@ -81,6 +89,24 @@ export function SsFeed({ userId, isAdmin, initialQuery }: { userId: string | nul
       .sort((a, b) => b.score - a.score || +new Date(b.p.created_at) - +new Date(a.p.created_at))
       .map((x) => x.p);
   }, [posts, q, format, onlyMatch, me, userId]);
+
+  const shownOld = useMemo(() => {
+    const words = q.toLowerCase().split(/\s+/).filter(Boolean);
+    return oldPosts
+      .filter((p) => !format || p.format === format)
+      .filter((p) => {
+        if (!words.length) return true;
+        const hay = [...p.offer, ...p.want, p.description, p.owner_name, p.owner_city].join(" ").toLowerCase();
+        return words.every((w) => hay.includes(w));
+      })
+      .map((p) => {
+        const m = matchScore(p, me);
+        return { p, score: m.gives.length * 2 + m.takes.length };
+      })
+      .filter((x) => !onlyMatch || x.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .map((x) => x.p);
+  }, [oldPosts, q, format, onlyMatch, me]);
 
   return (
     <>
@@ -151,12 +177,15 @@ export function SsFeed({ userId, isAdmin, initialQuery }: { userId: string | nul
           {err && <p className="ss-msg bad">{err}</p>}
           {posts === null ? (
             <p className="ss-empty">{t.loading}</p>
-          ) : shown.length === 0 ? (
-            <p className="ss-empty">{posts.length ? t.noPosts : t.noPostsAll}</p>
+          ) : shown.length + shownOld.length === 0 ? (
+            <p className="ss-empty">{posts.length + oldPosts.length ? t.noPosts : t.noPostsAll}</p>
           ) : (
             <div className="ss-grid">
               {shown.map((p) => (
                 <PostCard key={p.id} post={p} me={me} userId={userId} />
+              ))}
+              {shownOld.map((p) => (
+                <LegacyPostCard key={p.id} post={p} me={me} userId={userId} />
               ))}
             </div>
           )}

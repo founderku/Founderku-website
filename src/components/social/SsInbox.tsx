@@ -18,6 +18,8 @@ export type RequestRow = SsRequest & {
 export const REQUEST_SELECT =
   "*, requester:ss_profiles!ss_requests_requester_id_fkey(user_id, handle, name, headline, city), owner:ss_profiles!ss_requests_owner_id_fkey(user_id, handle, name, headline, city), post:ss_posts(offer, want)";
 
+type Waiting = { id: string; message: string; created_at: string; post: { owner_name: string; offer: string[]; want: string[] } | null };
+
 export function statusClass(s: SsRequest["status"]) {
   return s === "accepted" ? "green" : s === "completed" ? "gray" : s === "pending" ? "" : "red";
 }
@@ -30,6 +32,7 @@ export function SsInbox({ userId, isAdmin }: { userId: string; isAdmin: boolean 
   const [busy, setBusy] = useState("");
   const [err, setErr] = useState("");
   const [reload, setReload] = useState(0);
+  const [waiting, setWaiting] = useState<Waiting[]>([]);
 
   useEffect(() => {
     createClient()
@@ -44,6 +47,12 @@ export function SsInbox({ userId, isAdmin }: { userId: string; isAdmin: boolean 
         // Pertama kali buka: pilih tab yang ada kabar barunya
         if (reload === 0 && !list.some((r) => r.owner_id === userId) && list.some((r) => r.requester_id === userId)) setTab("out");
       });
+    // Ajakan ke tawaran TukarSkill lama yang pemiliknya belum pindah
+    createClient()
+      .from("ss_legacy_interest")
+      .select("id, message, created_at, post:ss_legacy_posts(owner_name, offer, want)")
+      .order("created_at", { ascending: false })
+      .then(({ data }) => setWaiting((data ?? []) as unknown as Waiting[]));
   }, [userId, reload]);
 
   async function act(id: string, action: string) {
@@ -90,7 +99,7 @@ export function SsInbox({ userId, isAdmin }: { userId: string; isAdmin: boolean 
         {err && <p className="ss-msg bad">{err}</p>}
         {rows === null ? (
           <p className="ss-empty">{t.loading}</p>
-        ) : list.length === 0 ? (
+        ) : list.length === 0 && !(tab === "out" && waiting.length) ? (
           <p className="ss-empty">{t.noRequests}</p>
         ) : (
           list.map((r) => {
@@ -150,6 +159,23 @@ export function SsInbox({ userId, isAdmin }: { userId: string; isAdmin: boolean 
             );
           })
         )}
+        {tab === "out" &&
+          waiting.map((w) => (
+            <div key={w.id} className="ss-card">
+              <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "flex-start", flexWrap: "wrap" }}>
+                <span className="ss-who">
+                  <Avatar name={w.post?.owner_name ?? t.someone} />
+                  <span style={{ minWidth: 0 }}>
+                    <b>{w.post?.owner_name ?? t.someone}</b>
+                    <small>{fmtDate(w.created_at, lang, true)}</small>
+                  </span>
+                </span>
+                <span className="ss-badge gray">{t.waitingOwner}</span>
+              </div>
+              {w.post && <p className="ss-meta">{fill(t.forPost, { offer: w.post.offer.join(", "), want: w.post.want.join(", ") })}</p>}
+              <p className="ss-desc">{w.message}</p>
+            </div>
+          ))}
       </div>
     </section>
   );

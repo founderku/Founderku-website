@@ -13,13 +13,15 @@ import {
   niceError,
   sameSkill,
   useT,
+  fmtDate,
+  type SsLegacyPost,
   type SsPost,
   type SsProfile,
   type SsRequest,
   type SsText,
 } from "./ss";
 
-export type SsTab = "feed" | "inbox" | "profile" | "mod";
+export type SsTab = "feed" | "etalase" | "info" | "inbox" | "profile" | "mod";
 
 // Jumlah percakapan yang ada kabar baru (belum dibuka sejak terakhir berubah)
 export function unreadCount(rows: SsRequest[], userId: string) {
@@ -44,7 +46,9 @@ export function SsTabs({ active, userId, isAdmin = false }: { active: SsTab; use
   }, [userId]);
 
   const items: [SsTab, string, string][] = [
-    ["feed", "/social-space", t.tabFeed],
+    ["feed", "/social-space", t.tabSwap],
+    ["etalase", "/social-space/etalase", t.tabEtalase],
+    ["info", "/social-space/info", t.tabInfo],
     ...(userId
       ? ([
           ["inbox", "/social-space/permintaan", t.tabInbox],
@@ -170,7 +174,7 @@ export function ReportButton({
   targetId,
   userId,
 }: {
-  targetType: "profile" | "post" | "message";
+  targetType: "profile" | "post" | "message" | "legacy_post" | "page" | "info";
   targetId: string;
   userId: string | null;
 }) {
@@ -366,6 +370,98 @@ export function PostCard({
             </Link>
           )}
           {!mine && <ReportButton targetType="post" targetId={post.id} userId={userId} />}
+        </div>
+      )}
+      {msg && <p className={`ss-msg ${msg.ok ? "ok" : "bad"}`}>{msg.text}</p>}
+    </article>
+  );
+}
+
+// Kartu tawaran TukarSkill lama yang pemiliknya belum pindah. Ajakan
+// tukar disimpan dan diteruskan saat pemiliknya mengklaim profil.
+export function LegacyPostCard({ post, me, userId }: { post: SsLegacyPost; me: SsProfile | null; userId: string | null }) {
+  const { t, lang } = useT();
+  const [asking, setAsking] = useState(false);
+  const [text, setText] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
+  const { gives, takes } = matchScore(post, me);
+
+  async function ask() {
+    setBusy(true);
+    const { error } = await createClient().rpc("ss_legacy_interest_create", { p_post: post.id, p_message: text.trim() });
+    setBusy(false);
+    if (error) setMsg({ ok: false, text: niceError(error.message, t) });
+    else {
+      setMsg({ ok: true, text: t.legacySent });
+      setAsking(false);
+    }
+  }
+
+  return (
+    <article className="ss-card">
+      <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "flex-start" }}>
+        <span className="ss-who">
+          <Avatar name={post.owner_name} />
+          <span style={{ minWidth: 0 }}>
+            <b>{post.owner_name}</b>
+            <small>{post.owner_city || t.fromTsWaiting}</small>
+          </span>
+        </span>
+        {gives.length > 0 ? <span className="ss-badge">{t.forYou}</span> : <span className="ss-badge gray">{t.fromTsWaiting}</span>}
+      </div>
+      <div className="ss-lbl">{t.offers}</div>
+      <SkillChips skills={post.offer} hits={gives} />
+      <div className="ss-lbl">{t.wants}</div>
+      <SkillChips skills={post.want} hits={takes} />
+      <p className="ss-desc">{post.description}</p>
+      <div className="ss-meta">
+        <span>{formatLabel(post.format, t)}</span>
+        {post.duration && <span>{post.duration}</span>}
+        {post.posted_at && <span>{fill(t.legacyPosted, { date: fmtDate(post.posted_at, lang) })}</span>}
+      </div>
+      {asking ? (
+        <div style={{ marginTop: 14 }}>
+          <p className="ss-meta" style={{ marginTop: 0, marginBottom: 8 }}>{t.legacyNote}</p>
+          <label className="ss-field" style={{ marginBottom: 10 }}>
+            <span>{t.askMsg}</span>
+            <textarea className="ss-input" maxLength={SS_LIMITS.reqMsg} value={text} onChange={(e) => setText(e.target.value)} />
+          </label>
+          <div className="ss-actions" style={{ marginTop: 0 }}>
+            <button type="button" className="btn btn-solid btn-sm" disabled={busy || !text.trim()} onClick={ask}>
+              {t.send}
+            </button>
+            <button type="button" className="btn btn-line btn-sm" onClick={() => setAsking(false)}>
+              {t.cancel}
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="ss-actions">
+          {!userId ? (
+            <Link className="btn btn-solid btn-sm" href={`/masuk?next=${encodeURIComponent("/social-space")}`}>
+              {t.askSwap}
+            </Link>
+          ) : !me ? (
+            <Link className="btn btn-solid btn-sm" href="/social-space/profil">
+              {t.askSwap}
+            </Link>
+          ) : (
+            !msg?.ok && (
+              <button
+                type="button"
+                className="btn btn-solid btn-sm"
+                onClick={() => {
+                  setMsg(null);
+                  setText(fill(t.askMsgPh, { give: takes[0] ?? me.skills_offer[0] ?? "...", want: gives[0] ?? post.offer[0] }));
+                  setAsking(true);
+                }}
+              >
+                {t.askSwap}
+              </button>
+            )
+          )}
+          <ReportButton targetType="legacy_post" targetId={post.id} userId={userId} />
         </div>
       )}
       {msg && <p className={`ss-msg ${msg.ok ? "ok" : "bad"}`}>{msg.text}</p>}

@@ -7,11 +7,14 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { fmtDate, niceError, useT } from "./ss";
+import { fill, fmtDate, niceError, useT } from "./ss";
 import { SsTabs } from "./SsUi";
 
-type Overview = Record<"profiles" | "posts_open" | "requests" | "completed" | "legacy_total" | "legacy_claimed" | "reports_open", number>;
-type Report = { id: string; target_type: "profile" | "post" | "message"; target_id: string; reason: string; details: string; created_at: string };
+type Overview = Record<
+  "profiles" | "posts_open" | "requests" | "completed" | "legacy_total" | "legacy_claimed" | "reports_open" | "etalase" | "info_active" | "legacy_posts_waiting",
+  number
+> & { info_authors: string[] };
+type Report = { id: string; target_type: string; target_id: string; reason: string; details: string; created_at: string };
 
 export function SsModeration({ userId }: { userId: string }) {
   const { t, lang } = useT();
@@ -53,6 +56,11 @@ export function SsModeration({ userId }: { userId: string }) {
         for (const p of profs ?? []) handles[p.user_id] = p.handle;
       }
       const map: Record<string, string> = {};
+      const pageIds = list.filter((r) => r.target_type === "page").map((r) => r.target_id);
+      if (pageIds.length) {
+        const { data: pages } = await supabase.from("pages").select("id, slug").in("id", pageIds);
+        for (const p of pages ?? []) map[p.id] = `/l/${p.slug}`;
+      }
       for (const r of list) {
         const owner = r.target_type === "post" ? postOwner[r.target_id] : r.target_type === "profile" ? r.target_id : "";
         if (owner && handles[owner]) map[r.target_id] = `/social-space/u/${handles[owner]}`;
@@ -74,6 +82,9 @@ export function SsModeration({ userId }: { userId: string }) {
     [t.mRequests, ov?.requests],
     [t.mCompleted, ov?.completed],
     [t.mLegacy, ov ? ov.legacy_claimed : undefined],
+    [t.mLegacyPosts, ov?.legacy_posts_waiting],
+    [t.mEtalase, ov?.etalase],
+    [t.mInfo, ov?.info_active],
     [t.mReports, ov?.reports_open],
   ];
 
@@ -95,6 +106,7 @@ export function SsModeration({ userId }: { userId: string }) {
             </div>
           ))}
         </div>
+        <InfoAccess authors={ov?.info_authors ?? []} onChange={() => setReload((n) => n + 1)} />
         {reports === null ? (
           <p className="ss-empty">{t.loading}</p>
         ) : reports.length === 0 ? (
@@ -111,7 +123,7 @@ export function SsModeration({ userId }: { userId: string }) {
               <div className="ss-actions">
                 {links[r.target_id] && (
                   <Link className="btn btn-line btn-sm" href={links[r.target_id]} target="_blank">
-                    {t.viewProfile}
+                    {t.view}
                   </Link>
                 )}
                 {r.target_type !== "message" && (
@@ -128,5 +140,41 @@ export function SsModeration({ userId }: { userId: string }) {
         )}
       </div>
     </section>
+  );
+}
+
+// Beri atau cabut izin pasang info beasiswa, magang, dan lowongan
+function InfoAccess({ authors, onChange }: { authors: string[]; onChange: () => void }) {
+  const { t } = useT();
+  const [handle, setHandle] = useState("");
+  const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
+
+  async function run(allow: boolean) {
+    setMsg(null);
+    const { error } = await createClient().rpc("ss_admin_set_info_access", { p_handle: handle.trim().replace(/^@/, ""), p_allow: allow });
+    if (error) setMsg({ ok: false, text: niceError(error.message, t) });
+    else {
+      setMsg({ ok: true, text: t.saved });
+      setHandle("");
+      onChange();
+    }
+  }
+
+  return (
+    <div className="ss-card" style={{ marginBottom: 20 }}>
+      <b style={{ fontWeight: 500 }}>{t.mInfoAccess}</b>
+      <p className="ss-sub" style={{ marginTop: 4 }}>{t.mInfoAccessSub}</p>
+      <div className="ss-tools" style={{ marginTop: 10, marginBottom: 0 }}>
+        <input className="ss-input" value={handle} placeholder="nama-profil" onChange={(e) => setHandle(e.target.value.toLowerCase())} />
+        <button type="button" className="btn btn-solid btn-sm" disabled={!handle.trim()} onClick={() => run(true)}>
+          {t.mGrant}
+        </button>
+        <button type="button" className="btn btn-line btn-sm" disabled={!handle.trim()} onClick={() => run(false)}>
+          {t.mRevoke}
+        </button>
+      </div>
+      {authors.length > 0 && <p className="ss-meta">{fill(t.mAuthors, { list: authors.map((a) => "@" + a).join(", ") })}</p>}
+      {msg && <p className={`ss-msg ${msg.ok ? "ok" : "bad"}`}>{msg.text}</p>}
+    </div>
   );
 }

@@ -68,6 +68,61 @@ export type SsReview = {
   created_at: string;
 };
 
+export type SsLegacyPost = {
+  id: string;
+  owner_name: string;
+  owner_city: string;
+  offer: string[];
+  want: string[];
+  format: "online" | "offline" | "hybrid";
+  duration: string;
+  description: string;
+  posted_at: string | null;
+};
+
+export type SsEtalaseItem = {
+  id: string;
+  slug: string;
+  product_name: string;
+  tagline: string;
+  kind: "produk" | "jasa" | "lainnya";
+  original_price: number | null;
+  promo_price: number | null;
+  price_unit: string;
+  image_url: string | null;
+  created_at: string;
+  seller_name: string | null;
+  seller_handle: string | null;
+  seller_city: string | null;
+  has_pro: boolean;
+  rating: number | null;
+  reviews: number;
+};
+
+export type SsInfo = {
+  id: string;
+  author_id: string;
+  category: "beasiswa" | "magang" | "lowongan";
+  title: string;
+  organizer: string;
+  description: string;
+  link: string;
+  location: string;
+  deadline: string;
+  hidden: boolean;
+  created_at: string;
+};
+
+// Harga untuk kartu: "Tanya harga" kalau kosong, plus satuan (/jam dst)
+export function priceLabel(price: number | null, unit: string, ask: string) {
+  if (price === null || price === undefined || Number.isNaN(Number(price))) return ask;
+  return "Rp " + Number(price).toLocaleString("id-ID") + (unit ? " " + unit : "");
+}
+
+export function todayJakarta() {
+  return new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Jakarta" });
+}
+
 export const SS_LIMITS = { skills: 10, postSkills: 5, bio: 1000, headline: 120, desc: 1000, msg: 2000, reqMsg: 500, review: 500, report: 500 };
 
 const LOCALE: Record<Lang, string> = { id: "id-ID", en: "en-US", tr: "tr-TR" };
@@ -172,6 +227,65 @@ const id = {
   tabInbox: "Permintaan",
   tabProfile: "Profil saya",
   tabMod: "Moderasi",
+  tabSwap: "Tukar Skill",
+  tabEtalase: "Etalase",
+  tabInfo: "Info",
+  // Tawaran TukarSkill lama
+  fromTsWaiting: "Dari TukarSkill",
+  legacyPosted: "Diposting di TukarSkill {date}",
+  legacyNote: "Pemiliknya belum pindah ke Founderku. Ajakanmu disimpan dan otomatis sampai saat dia bergabung.",
+  legacySent: "Ajakan tersimpan. Akan masuk ke pemiliknya saat dia pindah ke Founderku.",
+  waitingOwner: "Menunggu pemilik bergabung",
+  // Etalase
+  etH: "Etalase.",
+  etSub: "Produk dan jasa dari sesama pengguna Founderku. Klik untuk lihat detail dan hubungi penjualnya langsung.",
+  etSearch: "Cari produk atau jasa",
+  etAll: "Semua",
+  kind: { produk: "Produk", jasa: "Jasa", lainnya: "Lainnya" } as Record<string, string>,
+  askPrice: "Tanya harga",
+  seller: "Penjual",
+  sellerPajangin: "Penjual Pajangin",
+  proBadge: "Pro",
+  view: "Lihat",
+  etEmpty: "Belum ada yang tampil di Etalase.",
+  etNone: "Tidak ada yang cocok dengan pencarianmu.",
+  etDisclaimer: "Transaksi dilakukan langsung dengan penjual. Founderku tidak memproses pembayaran. Hati-hati dan jangan transfer sebelum yakin.",
+  etJoin: "Punya produk atau jasa? Buat halaman di Pajangin, lalu aktifkan \"Tampilkan di Social Space\".",
+  etJoinCta: "Buka Pajangin",
+  mySpace: "Etalase saya",
+  // Info
+  infoH: "Info Beasiswa, Magang & Lowongan.",
+  infoSub: "Peluang pilihan yang dikurasi tim Founderku dan kontributor terpercaya. Info yang sudah lewat tenggat otomatis tersembunyi.",
+  infoCat: { beasiswa: "Beasiswa & Pertukaran Pelajar", magang: "Magang & Volunteer", lowongan: "Lowongan Kerja" } as Record<string, string>,
+  infoDeadline: "Tenggat {date}",
+  infoDaysLeft: "{n} hari lagi",
+  infoToday: "Hari terakhir",
+  infoOpen: "Buka info",
+  infoEmpty: "Belum ada info aktif di kategori ini.",
+  infoNew: "Pasang info",
+  infoFormH: "Pasang info baru",
+  iCategory: "Kategori",
+  iTitle: "Judul",
+  iOrganizer: "Penyelenggara",
+  iLocation: "Lokasi (opsional)",
+  iLink: "Tautan pendaftaran (https://)",
+  iDeadline: "Tenggat",
+  iDesc: "Keterangan",
+  iMine: "Info yang kamu pasang",
+  iExpired: "Lewat tenggat",
+  iDelete: "Hapus",
+  iDeleteConfirm: "Hapus info ini?",
+  errTitle: "Judul minimal 5 huruf.",
+  errDeadline: "Isi tanggal tenggat.",
+  // Moderasi tambahan
+  mEtalase: "Tampil di Etalase",
+  mInfo: "Info aktif",
+  mLegacyPosts: "Tawaran lama menunggu",
+  mInfoAccess: "Izin pasang info",
+  mInfoAccessSub: "Masukkan nama profil (handle) pengguna Social Space.",
+  mGrant: "Beri izin",
+  mRevoke: "Cabut",
+  mAuthors: "Punya izin: {list}",
   login: "Masuk",
   loginCta: "Masuk untuk ikut tukar skill",
   loginSub: "Gratis, cukup pakai akun Founderku.",
@@ -303,7 +417,7 @@ const id = {
   noReports: "Tidak ada laporan terbuka.",
   hide: "Sembunyikan",
   dismiss: "Abaikan",
-  target: { profile: "Profil", post: "Tawaran", message: "Pesan" } as Record<string, string>,
+  target: { profile: "Profil", post: "Tawaran", message: "Pesan", legacy_post: "Tawaran lama", page: "Etalase", info: "Info" } as Record<string, string>,
   // Error
   errHandle: "Nama profil hanya boleh huruf kecil, angka, dan tanda hubung (3 sampai 30 karakter).",
   errHandleTaken: "Nama profil itu sudah dipakai. Coba yang lain.",
@@ -327,6 +441,61 @@ const en: SsText = {
   tabInbox: "Requests",
   tabProfile: "My profile",
   tabMod: "Moderation",
+  tabSwap: "Skill Swap",
+  tabEtalase: "Showcase",
+  tabInfo: "Info",
+  fromTsWaiting: "From TukarSkill",
+  legacyPosted: "Posted on TukarSkill {date}",
+  legacyNote: "The owner has not moved to Founderku yet. Your request is saved and delivered automatically when they join.",
+  legacySent: "Request saved. It will reach the owner when they move to Founderku.",
+  waitingOwner: "Waiting for the owner to join",
+  etH: "Showcase.",
+  etSub: "Products and services from fellow Founderku users. Click to see details and contact the seller directly.",
+  etSearch: "Search products or services",
+  etAll: "All",
+  kind: { produk: "Product", jasa: "Service", lainnya: "Other" },
+  askPrice: "Ask for price",
+  seller: "Seller",
+  sellerPajangin: "Pajangin seller",
+  proBadge: "Pro",
+  view: "View",
+  etEmpty: "Nothing in the Showcase yet.",
+  etNone: "Nothing matches your search.",
+  etDisclaimer: "Transactions happen directly with the seller. Founderku does not process payments. Be careful and do not transfer money until you are sure.",
+  etJoin: "Have a product or service? Create a page on Pajangin, then turn on \"Show in Social Space\".",
+  etJoinCta: "Open Pajangin",
+  mySpace: "My showcase",
+  infoH: "Scholarships, Internships & Jobs.",
+  infoSub: "Selected opportunities curated by the Founderku team and trusted contributors. Expired listings are hidden automatically.",
+  infoCat: { beasiswa: "Scholarships & Exchange", magang: "Internships & Volunteering", lowongan: "Jobs" },
+  infoDeadline: "Deadline {date}",
+  infoDaysLeft: "{n} days left",
+  infoToday: "Last day",
+  infoOpen: "Open listing",
+  infoEmpty: "No active listings in this category yet.",
+  infoNew: "Post info",
+  infoFormH: "Post new info",
+  iCategory: "Category",
+  iTitle: "Title",
+  iOrganizer: "Organizer",
+  iLocation: "Location (optional)",
+  iLink: "Application link (https://)",
+  iDeadline: "Deadline",
+  iDesc: "Details",
+  iMine: "Listings you posted",
+  iExpired: "Expired",
+  iDelete: "Delete",
+  iDeleteConfirm: "Delete this listing?",
+  errTitle: "Title must be at least 5 characters.",
+  errDeadline: "Fill in the deadline.",
+  mEtalase: "In the Showcase",
+  mInfo: "Active info",
+  mLegacyPosts: "Old offers waiting",
+  mInfoAccess: "Info posting access",
+  mInfoAccessSub: "Enter the Social Space profile name (handle).",
+  mGrant: "Grant",
+  mRevoke: "Revoke",
+  mAuthors: "Has access: {list}",
   login: "Log in",
   loginCta: "Log in to start swapping skills",
   loginSub: "Free, just use your Founderku account.",
@@ -453,7 +622,7 @@ const en: SsText = {
   noReports: "No open reports.",
   hide: "Hide",
   dismiss: "Dismiss",
-  target: { profile: "Profile", post: "Offer", message: "Message" },
+  target: { profile: "Profile", post: "Offer", message: "Message", legacy_post: "Old offer", page: "Showcase", info: "Info" },
   errHandle: "Profile names may only use lowercase letters, numbers, and hyphens (3 to 30 characters).",
   errHandleTaken: "That profile name is taken. Try another one.",
   errName: "Name must be at least 2 letters.",
@@ -474,6 +643,61 @@ const tr: SsText = {
   tabInbox: "İstekler",
   tabProfile: "Profilim",
   tabMod: "Moderasyon",
+  tabSwap: "Beceri Takası",
+  tabEtalase: "Vitrin",
+  tabInfo: "Fırsatlar",
+  fromTsWaiting: "TukarSkill'den",
+  legacyPosted: "TukarSkill'de paylaşıldı {date}",
+  legacyNote: "Sahibi henüz Founderku'ya geçmedi. İsteğin kaydedilir ve katıldığında otomatik olarak iletilir.",
+  legacySent: "İstek kaydedildi. Sahibi Founderku'ya geçtiğinde ona ulaşacak.",
+  waitingOwner: "Sahibinin katılması bekleniyor",
+  etH: "Vitrin.",
+  etSub: "Founderku kullanıcılarının ürün ve hizmetleri. Ayrıntılar için tıkla ve satıcıyla doğrudan iletişime geç.",
+  etSearch: "Ürün veya hizmet ara",
+  etAll: "Tümü",
+  kind: { produk: "Ürün", jasa: "Hizmet", lainnya: "Diğer" },
+  askPrice: "Fiyat sor",
+  seller: "Satıcı",
+  sellerPajangin: "Pajangin satıcısı",
+  proBadge: "Pro",
+  view: "Gör",
+  etEmpty: "Vitrinde henüz bir şey yok.",
+  etNone: "Aramana uyan bir şey yok.",
+  etDisclaimer: "İşlemler doğrudan satıcıyla yapılır. Founderku ödeme işlemez. Dikkatli ol ve emin olmadan para gönderme.",
+  etJoin: "Ürünün veya hizmetin mi var? Pajangin'de sayfa oluştur ve \"Sosyal Alan'da göster\" seçeneğini aç.",
+  etJoinCta: "Pajangin'i aç",
+  mySpace: "Vitrinim",
+  infoH: "Burs, Staj ve İş İlanları.",
+  infoSub: "Founderku ekibi ve güvenilir katkıcılar tarafından seçilen fırsatlar. Süresi geçen ilanlar otomatik gizlenir.",
+  infoCat: { beasiswa: "Burs ve Değişim", magang: "Staj ve Gönüllülük", lowongan: "İş İlanları" },
+  infoDeadline: "Son tarih {date}",
+  infoDaysLeft: "{n} gün kaldı",
+  infoToday: "Son gün",
+  infoOpen: "İlanı aç",
+  infoEmpty: "Bu kategoride henüz aktif ilan yok.",
+  infoNew: "İlan ekle",
+  infoFormH: "Yeni ilan ekle",
+  iCategory: "Kategori",
+  iTitle: "Başlık",
+  iOrganizer: "Düzenleyen",
+  iLocation: "Konum (isteğe bağlı)",
+  iLink: "Başvuru bağlantısı (https://)",
+  iDeadline: "Son tarih",
+  iDesc: "Ayrıntılar",
+  iMine: "Eklediğin ilanlar",
+  iExpired: "Süresi geçti",
+  iDelete: "Sil",
+  iDeleteConfirm: "Bu ilan silinsin mi?",
+  errTitle: "Başlık en az 5 karakter olmalı.",
+  errDeadline: "Son tarihi gir.",
+  mEtalase: "Vitrinde",
+  mInfo: "Aktif ilan",
+  mLegacyPosts: "Bekleyen eski teklifler",
+  mInfoAccess: "İlan ekleme izni",
+  mInfoAccessSub: "Sosyal Alan profil adını (handle) gir.",
+  mGrant: "İzin ver",
+  mRevoke: "Geri al",
+  mAuthors: "İzni olanlar: {list}",
   login: "Giriş yap",
   loginCta: "Beceri takasına katılmak için giriş yap",
   loginSub: "Ücretsiz, Founderku hesabın yeterli.",
@@ -600,7 +824,7 @@ const tr: SsText = {
   noReports: "Açık bildirim yok.",
   hide: "Gizle",
   dismiss: "Yoksay",
-  target: { profile: "Profil", post: "Teklif", message: "Mesaj" },
+  target: { profile: "Profil", post: "Teklif", message: "Mesaj", legacy_post: "Eski teklif", page: "Vitrin", info: "İlan" },
   errHandle: "Profil adı yalnızca küçük harf, rakam ve tire içerebilir (3 ila 30 karakter).",
   errHandleTaken: "Bu profil adı alınmış. Başka bir tane dene.",
   errName: "Ad en az 2 harf olmalı.",

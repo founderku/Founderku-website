@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Reveal } from "@/components/ui/Reveal";
 import { OwnerPreviewBanner } from "@/components/OwnerPreviewBanner";
 import { toWhatsAppLink } from "@/lib/validators";
+import { pagePriceText, pageWaMessage } from "@/lib/pagePrice";
 import type { StoreStyleId } from "@/lib/types";
 
 export interface EtalaseData {
@@ -14,6 +15,7 @@ export interface EtalaseData {
   whatsappNumber: string;
   showWatermark: boolean;
   storeSlug: string | null;
+  priceUnit?: string | null;
 }
 
 function formatRupiah(value: number | null): string {
@@ -22,9 +24,7 @@ function formatRupiah(value: number | null): string {
 }
 
 function useWaLink(data: EtalaseData) {
-  const msg = `Halo! Saya mau pesan ${data.productName} (${formatRupiah(
-    data.promoPrice
-  )}) dari web. Apakah stok masih ada?`;
+  const msg = pageWaMessage(data.productName, data.promoPrice, data.priceUnit);
   return data.whatsappNumber ? toWhatsAppLink(data.whatsappNumber, msg) : "#";
 }
 
@@ -101,7 +101,7 @@ function Klasik({ data }: { data: EtalaseData }) {
               <p className="text-base text-text-soft mb-6">{data.tagline || "Tagline singkat produk kamu"}</p>
               <div className="flex items-baseline gap-3 mb-6">
                 {data.originalPrice ? <span className="text-base text-text-faint line-through">{formatRupiah(data.originalPrice)}</span> : null}
-                <span className="font-manrope font-extrabold text-3xl text-coral">{formatRupiah(data.promoPrice) || "Rp 0"}</span>
+                <span className="font-manrope font-extrabold text-3xl text-coral">{pagePriceText(data.promoPrice, data.priceUnit)}</span>
               </div>
               <hr className="border-border mb-6" />
               <ul className="text-[15px] space-y-3 mb-2">
@@ -162,7 +162,7 @@ function Hangat({ data }: { data: EtalaseData }) {
           </p>
           <div className="mt-8 flex items-baseline justify-center gap-3">
             {data.originalPrice ? <span className="text-base text-[#A6947F] line-through">{formatRupiah(data.originalPrice)}</span> : null}
-            <span className="font-manrope font-extrabold text-3xl text-[#8B5A2B]">{formatRupiah(data.promoPrice) || "Rp 0"}</span>
+            <span className="font-manrope font-extrabold text-3xl text-[#8B5A2B]">{pagePriceText(data.promoPrice, data.priceUnit)}</span>
           </div>
         </Reveal>
       </div>
@@ -239,7 +239,7 @@ function Minimalis({ data }: { data: EtalaseData }) {
         <p className="text-sm text-[#6B7A6B] mb-5">{data.tagline}</p>
         <div className="flex items-baseline justify-center gap-3 mb-6">
           {data.originalPrice ? <span className="text-sm text-[#A8B3A8] line-through">{formatRupiah(data.originalPrice)}</span> : null}
-          <span className="font-manrope font-bold text-2xl text-[#1F291F]">{formatRupiah(data.promoPrice) || "Rp 0"}</span>
+          <span className="font-manrope font-bold text-2xl text-[#1F291F]">{pagePriceText(data.promoPrice, data.priceUnit)}</span>
         </div>
 
         {data.highlights.filter((h) => h.trim()).length > 0 && (
@@ -304,7 +304,7 @@ function Elegan({ data }: { data: EtalaseData }) {
         <p className="text-sm text-[#8A6670] mb-5">{data.tagline}</p>
         <div className="flex items-baseline justify-center gap-3 mb-6">
           {data.originalPrice ? <span className="text-sm text-[#C9AAB2] line-through">{formatRupiah(data.originalPrice)}</span> : null}
-          <span className="font-manrope font-bold text-2xl text-[#9C6B7A]">{formatRupiah(data.promoPrice) || "Rp 0"}</span>
+          <span className="font-manrope font-bold text-2xl text-[#9C6B7A]">{pagePriceText(data.promoPrice, data.priceUnit)}</span>
         </div>
 
         {data.highlights.filter((h) => h.trim()).length > 0 && (
@@ -367,7 +367,7 @@ function Bold({ data }: { data: EtalaseData }) {
         <p className="text-sm text-white/60 mb-6">{data.tagline}</p>
         <div className="flex items-baseline justify-center gap-3 mb-8">
           {data.originalPrice ? <span className="text-sm text-white/40 line-through">{formatRupiah(data.originalPrice)}</span> : null}
-          <span className="font-manrope font-extrabold text-3xl">{formatRupiah(data.promoPrice) || "Rp 0"}</span>
+          <span className="font-manrope font-extrabold text-3xl">{pagePriceText(data.promoPrice, data.priceUnit)}</span>
         </div>
 
         {activeHighlights.length > 0 && (
