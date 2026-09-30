@@ -21,7 +21,7 @@ export default async function StylePage() {
 
   return (
     <FkShell>
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
 
       <div className="mb-6">
         <Link href="/pajangin" className="inline-flex items-center gap-2 group">
@@ -45,13 +45,15 @@ export default async function StylePage() {
         Edit Style Tokomu
       </h1>
       <p className="text-sm text-text-soft mb-8">
-        Pilih 1 gaya visual. Semua halaman produk kamu (termasuk halaman
-        toko) otomatis ikut gaya yang kamu pilih di sini.
+        Pilih 1 dari 8 style. Pratinjaunya memakai produkmu sendiri
+        (atau contoh kalau belum ada), dan semua halaman produk serta halaman
+        tokomu langsung ikut style yang kamu simpan.
       </p>
 
       <StyleSelector
         userId={user.id}
         currentStyle={profile?.store_style ?? "klasik"}
+        storeSlug={profile?.store_slug ?? null}
       />
       </div>
     </FkShell>

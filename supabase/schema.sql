@@ -63,7 +63,7 @@ create table public.profiles (
   pro_expires_at timestamptz,
   store_slug text unique,
   store_style text not null default 'klasik'
-    check (store_style in ('klasik', 'hangat', 'minimalis', 'elegan', 'bold')),
+    check (store_style in ('klasik', 'hangat', 'minimalis', 'elegan', 'bold', 'ceria', 'neon', 'segar')),
   is_admin boolean not null default false,
   created_at timestamptz not null default now()
 );

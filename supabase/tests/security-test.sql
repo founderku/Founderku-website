@@ -697,3 +697,13 @@ set role authenticated;
 set request.jwt.claim.sub = '11111111-1111-1111-1111-111111111111';
 select 'T159 ringkasan moderasi berisi data tahap 2: ' || case when j ? 'etalase' and j ? 'info_active' and j ? 'legacy_posts_waiting' and (j->'info_authors') ? 'lain-saja' then 'LULUS' else 'GAGAL (' || j::text || ')' end from (select public.ss_admin_overview() as j) x;
 reset role;
+-- ---------- Style toko baru (migration 015) ----------
+set role authenticated;
+set request.jwt.claim.sub = '22222222-2222-2222-2222-222222222222';
+update public.profiles set store_style = 'neon' where id = auth.uid();
+select 'T160 user pilih style baru (neon): ' || case when store_style = 'neon' then 'LULUS' else 'GAGAL' end from public.profiles where id = auth.uid();
+do $$ begin
+  update public.profiles set store_style = 'ngawur' where id = auth.uid();
+  raise notice 'T161 style tidak dikenal: GAGAL (lolos)';
+exception when check_violation then raise notice 'T161 style tidak dikenal: LULUS (ditolak)'; end $$;
+reset role;

@@ -6,7 +6,7 @@ import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { Pill } from "@/components/ui/Pill";
-import { ProductCard } from "@/components/ProductCard";
+import { PhonePreview } from "@/components/etalase/PhonePreview";
 import { KIND_LABEL, PageKindSelect, PriceExtras, SocialToggle, type PageKind } from "@/components/PageKindFields";
 import { isValidWhatsAppNumber } from "@/lib/validators";
 import { MAX_PHOTO_SIZE_MB, ALLOWED_PHOTO_TYPES } from "@/lib/constants";
@@ -44,6 +44,7 @@ export default function EditPagePage() {
   const [formError, setFormError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [storeStyle, setStoreStyle] = useState<StoreStyleId>("klasik");
+  const [storeSlug, setStoreSlug] = useState<string | null>(null);
 
   // Ambil data halaman yang mau diedit + style toko user, pastikan
   // halaman ini beneran punya user yang lagi login (jangan sampai
@@ -69,7 +70,7 @@ export default function EditPagePage() {
           .maybeSingle<PageRow>(),
         supabase
           .from("profiles")
-          .select("store_style")
+          .select("store_style, store_slug")
           .eq("id", user.id)
           .maybeSingle(),
       ]);
@@ -100,6 +101,7 @@ export default function EditPagePage() {
       setSlug(page.slug);
       setExistingImageUrl(page.image_url);
       if (profile?.store_style) setStoreStyle(profile.store_style);
+      setStoreSlug(profile?.store_slug ?? null);
       setLoadState("ready");
     }
     loadPage();
@@ -416,9 +418,9 @@ export default function EditPagePage() {
         <div className="md:sticky md:top-6 self-start">
           <p className="font-manrope font-semibold text-xs text-text-soft mb-3 flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-green-700 animate-pulse" />
-            Preview langsung (Golden Template)
+            Preview langsung, sama persis dengan halaman yang tayang
           </p>
-          <ProductCard
+          <PhonePreview
             style={storeStyle}
             data={{
               productName,
@@ -426,11 +428,12 @@ export default function EditPagePage() {
               originalPrice: !askPrice && promoPrice && originalPrice ? Number(originalPrice) : null,
               promoPrice: askPrice ? null : promoPrice ? Number(promoPrice) : originalPrice ? Number(originalPrice) : null,
               priceUnit: askPrice ? "" : priceUnit,
-              askPrice,
               highlights,
               imageUrl: photoPreviewUrl ?? existingImageUrl,
               whatsappNumber: whatsapp,
               showWatermark: true,
+              storeSlug,
+              kind,
             }}
           />
           <p className="text-[11px] text-text-faint text-center mt-3">
