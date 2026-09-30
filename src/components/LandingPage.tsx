@@ -12,30 +12,67 @@ function Mock({
   photo,
   rotate,
   className = "",
+  kind = "Produk",
+  cta = "Chat via WhatsApp",
 }: {
   name: string;
   price: string;
   photo: string;
   rotate: string;
   className?: string;
+  kind?: string;
+  cta?: string;
 }) {
   return (
     <Link href="/pajangin/dashboard" className={`pj-mock ${className}`} style={{ transform: `rotate(${rotate})` }}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={photo} alt={name} />
+      <span className="pj-tag">{kind}</span>
       <span className="pj-mock-body">
         <b>{name}</b>
         <span className="pj-price">{price}</span>
-        <span className="pj-wa">Chat via WhatsApp</span>
+        <span className="pj-wa">{cta}</span>
       </span>
     </Link>
   );
 }
 
 const steps = [
-  { title: "Isi form produkmu", body: "Nama, harga, 3 keunggulan, foto, sama nomor WhatsApp. Itu doang." },
+  { title: "Isi form produk atau jasamu", body: "Pilih jenisnya, lalu isi nama, harga, 3 keunggulan, foto, sama nomor WhatsApp. Itu doang." },
   { title: "Lihat preview real-time", body: "Setiap kali ngetik, preview di sebelah langsung berubah, jadi tahu persis hasilnya sebelum publish." },
   { title: "Publish, dapat link", body: "Langsung dapat link halaman jualan, siap dishare ke story, chat, atau bio." },
+];
+
+// Satu halaman Pajangin bisa untuk jenis jualan apa pun (kolom kind di
+// tabel pages: produk, jasa, lainnya), lengkap dengan satuan harga.
+const kinds = [
+  {
+    tag: "Produk",
+    title: "Jual produk",
+    body: "Barang yang bisa dipesan dan dikirim atau diambil.",
+    examples: ["Kue kering 500 gr", "Kaos sablon custom", "Kopi literan"],
+    price: "Rp 85.000",
+    unit: "/ toples",
+    cta: "Pesan via WhatsApp",
+  },
+  {
+    tag: "Jasa",
+    title: "Jual jasa",
+    body: "Keahlianmu jadi halaman sendiri, dengan harga per jam, per proyek, atau per sesi.",
+    examples: ["Desain logo", "Les privat", "Servis AC", "Fotografi"],
+    price: "Rp 350.000",
+    unit: "/ proyek",
+    cta: "Booking via WhatsApp",
+  },
+  {
+    tag: "Lainnya",
+    title: "Kelas, sewa, dan lainnya",
+    body: "Apa pun yang kamu tawarkan. Belum mau pasang harga? Pilih \"Tanya harga\".",
+    examples: ["Kelas membatik", "Sewa kamera", "Tiket workshop"],
+    price: "Tanya harga",
+    unit: "",
+    cta: "Chat via WhatsApp",
+  },
 ];
 
 const features = [
@@ -47,7 +84,11 @@ const features = [
 const faqs = [
   {
     q: "Pajangin itu apa sih?",
-    a: "Alat bikin halaman jualan digital dalam hitungan menit, khusus buat pedagang yang transaksinya lewat WhatsApp. Bukan toko online lengkap dengan keranjang belanja, tapi etalase rapi yang langsung nyambung ke chat.",
+    a: "Alat bikin halaman jualan digital dalam hitungan menit, untuk produk maupun jasa yang transaksinya lewat WhatsApp. Bukan toko online lengkap dengan keranjang belanja, tapi etalase rapi yang langsung nyambung ke chat.",
+  },
+  {
+    q: "Bisa buat jual jasa, bukan barang?",
+    a: "Bisa. Saat bikin halaman, pilih jenis Jasa, lalu isi harga beserta satuannya, misalnya per jam, per proyek, atau per sesi. Kalau harganya tergantung kebutuhan, pilih \"Tanya harga\". Tombol di halamanmu otomatis menyesuaikan, misalnya jadi \"Booking via WhatsApp\".",
   },
   {
     q: "Bedanya sama story Instagram apa?",
@@ -78,7 +119,7 @@ export function LandingPage({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
               Pajangin, dari Founderku
             </div>
             <h1 className="h1">
-              Toko kamu, versi digital<span className="o">.</span>
+              Produk atau jasamu, versi digital<span className="o">.</span>
             </h1>
             <div className="hero-btns">
               <Link className="btn btn-solid" href="/pajangin/dashboard" id="pjCta">
@@ -88,18 +129,58 @@ export function LandingPage({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
             </div>
           </div>
           <p>
-            Pajang produkmu di satu halaman yang rapi, terhubung langsung ke WhatsApp. Nggak perlu ribet bikin toko online:
-            cukup pajang, share, jualan. Jadi dalam hitungan menit.
+            Jual barang, jasa, kelas, atau sewa dari satu halaman yang rapi, terhubung langsung ke WhatsApp. Nggak perlu ribet
+            bikin website: cukup pajang, share, jualan. Jadi dalam hitungan menit.
           </p>
         </div>
         <div className="pj-stage" aria-label="Contoh halaman jualan">
           <span className="orb o-pajangin spin pj-orb" aria-hidden="true">
             <i></i>
           </span>
-          <Mock name="Kopi Susu Gula Aren" price="Rp 8.000" photo="/pajangin-assets/photos/p11.jpg" rotate="-6deg" className="pj-side" />
-          <Mock name="Kaos Polos Combed 30s" price="Rp 15.000" photo="/pajangin-assets/photos/p14.jpg" rotate="2deg" />
-          <Mock name="Tas Rajut Handmade" price="Rp 18.000" photo="/pajangin-assets/photos/p02.jpg" rotate="-3deg" className="pj-side" />
+          <Mock name="Mie Goreng Rumahan" price="Rp 15.000" photo="/pajangin-assets/photos/p11.jpg" rotate="-6deg" className="pj-side" />
+          <Mock name="Kelas Membatik Pemula" price="Rp 120.000 / orang" photo="/pajangin-assets/photos/p07.jpg" rotate="2deg" kind="Jasa" cta="Booking via WhatsApp" />
+          <Mock name="Kain Batik Tulis" price="Rp 450.000" photo="/pajangin-assets/photos/p02.jpg" rotate="-3deg" className="pj-side" />
         </div>
+      </section>
+
+      <section className="band" id="jenis">
+        <div className="sec-head">
+          <div>
+            <div className="eyebrow">Satu halaman, banyak cara jualan</div>
+            <h2 className="h2">
+              Bukan cuma buat produk<span className="o">.</span>
+            </h2>
+          </div>
+          <p>
+            Punya keahlian? Jadikan halaman jasa. Punya barang? Jadikan halaman produk. Pilih jenisnya saat bikin halaman,
+            sisanya menyesuaikan.
+          </p>
+        </div>
+        <div className="pj-kinds">
+          {kinds.map((k) => (
+            <div className="pj-kind" key={k.tag}>
+              <span className="pj-kind-tag">{k.tag}</span>
+              <h3>{k.title}</h3>
+              <p>{k.body}</p>
+              <ul>
+                {k.examples.map((e) => (
+                  <li key={e}>{e}</li>
+                ))}
+              </ul>
+              <div className="pj-kind-mini" aria-hidden="true">
+                <span className="pj-kind-price">
+                  {k.price}
+                  {k.unit && <small> {k.unit}</small>}
+                </span>
+                <span className="pj-kind-cta">{k.cta}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="pj-kinds-note">
+          Mau lebih banyak yang lihat? Aktifkan <Link href="/social-space">Tampilkan di Social Space</Link> supaya halamanmu
+          muncul di Etalase.
+        </p>
       </section>
 
       <section className="band" id="cara-kerja">
@@ -171,7 +252,7 @@ export function LandingPage({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
               Fokus jualan, bukan ngoprek website<span className="o">.</span>
             </h2>
           </div>
-          <p>Dibuat buat pedagang yang transaksinya lewat WhatsApp: kue rumahan, kopi, fashion, kerajinan, dan banyak lagi.</p>
+          <p>Dibuat buat yang transaksinya lewat WhatsApp: kue rumahan, fashion, kerajinan, sampai jasa desain, les, dan servis.</p>
         </div>
         <div className="grid-auto">
           {features.map((f) => (
@@ -222,7 +303,7 @@ export function LandingPage({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
         <div className="cta-row">
           <div>
             <h2 className="h2">
-              Mulai pajang produkmu hari ini<span className="o">.</span>
+              Mulai pajang produk atau jasamu hari ini<span className="o">.</span>
             </h2>
             <p>Pakai akun Founderku kamu, langsung jadi dalam hitungan menit.</p>
           </div>
