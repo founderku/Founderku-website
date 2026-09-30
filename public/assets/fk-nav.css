@@ -106,7 +106,7 @@ body:has(.sheet.show) .fkai-fab{display:none}
 .o-g5 i{background:conic-gradient(from 45deg,#8A85B8,#FFFFFF,#E85F3D,#8A85B8,#1A1730,#8A85B8)}
 
 /* ---------- Menu HP ---------- */
-.sheet{position:fixed;inset:0;z-index:70;background:var(--bg);transform:translateY(-100%);visibility:hidden;transition:transform .5s cubic-bezier(.2,.9,.25,1),visibility .5s;padding:16px 20px calc(16px + env(safe-area-inset-bottom,0px));overflow:auto;display:flex;flex-direction:column}
+.sheet{position:fixed;inset:0;z-index:70;background:var(--bg);color:var(--text);transform:translateY(-100%);visibility:hidden;transition:transform .5s cubic-bezier(.2,.9,.25,1),visibility .5s;padding:16px 20px calc(16px + env(safe-area-inset-bottom,0px));overflow:auto;display:flex;flex-direction:column}
 .sheet.show{transform:none;visibility:visible}
 .sheet-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;padding-top:env(safe-area-inset-top,0px)}
 .sheet details{border-bottom:1px solid var(--line)}
