@@ -56,7 +56,7 @@ export function SsInfo({ userId, isAdmin }: { userId: string | null; isAdmin: bo
         <div className="ss-head">
           <div>
             <h1 className="ss-h">{t.infoH}</h1>
-            <p className="ss-sub">{t.infoSub}</p>
+            <p className="ss-sub ss-headsub">{t.infoSub}</p>
           </div>
           {canPost && (
             <button type="button" className="btn btn-solid btn-sm" onClick={() => setShowForm((v) => !v)}>
@@ -67,7 +67,7 @@ export function SsInfo({ userId, isAdmin }: { userId: string | null; isAdmin: bo
 
         {canPost && showForm && userId && <InfoForm userId={userId} onDone={() => { setShowForm(false); setReload((n) => n + 1); }} />}
 
-        <div className="ss-tabs" role="group">
+        <div className="ss-tabs ss-chips-row" role="group">
           {["", ...CATS].map((k) => (
             <a
               key={k || "all"}

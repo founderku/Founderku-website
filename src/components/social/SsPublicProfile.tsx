@@ -67,7 +67,7 @@ export function SsPublicProfile({ handle, userId, isAdmin }: { handle: string; u
   return (
     <section className="band hero-band" style={{ borderTop: 0 }}>
       <div className="ss-wrap">
-        <SsTabs active={userId && me?.handle === handle ? "profile" : "etalase"} userId={userId} isAdmin={isAdmin} back="/social-space" />
+        <SsTabs active={userId && me?.handle === handle ? "profile" : "etalase"} userId={userId} isAdmin={isAdmin} />
         {p === undefined ? (
           <p className="ss-empty">{t.loading}</p>
         ) : p === null ? (

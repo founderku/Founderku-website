@@ -73,6 +73,15 @@
 .lang-menu button{border:0;background:none;color:var(--soft);font-size:13px;padding:8px 10px;border-radius:9px;text-align:left;cursor:pointer}
 .lang-menu button:hover,.lang-menu button[aria-current="true"]{background:var(--panel-2);color:var(--text)}
 .burger{display:none}
+.nav-back{flex-shrink:0;width:40px;height:40px;margin-right:-14px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line-2);background:var(--card);color:var(--text);text-decoration:none;transition:background .2s,transform .2s}
+.nav-back:hover{background:var(--panel-2);transform:translateX(-2px)}
+.nav-back svg{width:18px;height:18px}
+.sheet-prefs{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 2px;border-bottom:1px solid var(--line);font-size:14px;color:var(--soft)}
+.sheet-prefs div{display:flex;gap:4px;padding:4px;border-radius:999px;background:var(--panel-2)}
+.sheet-prefs button{border:0;background:none;color:var(--soft);font:inherit;font-size:13px;font-weight:600;min-width:40px;height:34px;border-radius:999px;cursor:pointer;display:grid;place-items:center}
+.sheet-prefs button[aria-current="true"]{background:var(--card);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.sheet-prefs button svg{width:16px;height:16px}
+body:has(.sheet.show) .fkai-fab{display:none}
 
 .tb{font-style:normal;font-size:10.5px;font-weight:500;padding:1px 7px;border-radius:999px;background:rgba(138,133,184,.2);color:#4F4A86;margin-left:6px;vertical-align:1px;white-space:nowrap}
 .sheet a.all{font-weight:500;color:var(--text)}
@@ -119,7 +128,7 @@
 :where(.nav,.sheet) img{max-width:100%}
 .nav{background:var(--bg)}
 @media (max-width:1200px){.menu{display:none}.burger{display:grid}.nav-right .hide-m{display:none}}
-@media (max-width:600px){.nav-in{gap:10px}.nav-right{gap:6px}.icon-btn{width:36px;height:36px}.logo{font-size:17px}.logo img{width:28px;height:28px}.btn{padding:11px 20px;font-size:15px}.btn-sm{padding:7px 14px;font-size:14px}}
+@media (max-width:600px){.nav-back{width:36px;height:36px;margin-right:-2px}.nav-right #lang,.nav-right #themeBtn{display:none}body .fkai-fab{width:50px;height:50px;padding:0;justify-content:center;border-radius:50%}body .fkai-fab span{display:none}.nav-in{gap:10px}.nav-right{gap:6px}.icon-btn{width:36px;height:36px}.logo{font-size:17px}.logo img{width:28px;height:28px}.btn{padding:11px 20px;font-size:15px}.btn-sm{padding:7px 14px;font-size:14px}}
 @media print{.nav,.sheet{display:none!important}}
 
 /* iPhone otomatis zoom kalau kolom isian di bawah 16px. Paksa 16px di layar sentuh supaya tidak zoom. */

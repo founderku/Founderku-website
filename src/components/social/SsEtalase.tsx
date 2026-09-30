@@ -78,7 +78,7 @@ export function SsEtalase({ userId, isAdmin, landing = false }: { userId: string
       <div className="ss-wrap">
         <SsTabs active="etalase" userId={userId} isAdmin={isAdmin} />
         {userId && <ClaimBanner userId={userId} />}
-        <div className="ss-head">
+        <div className="ss-head ss-et-head">
           <div>
             {landing ? <h2 className="ss-h">{t.etH}</h2> : <h1 className="ss-h">{t.etH}</h1>}
             <p className="ss-sub">{t.etSub}</p>
@@ -90,9 +90,17 @@ export function SsEtalase({ userId, isAdmin, landing = false }: { userId: string
           <div className="ss-sell-txt">
             <b>{t.sellH}</b>
             <ol>
-              <li>{t.sell1}</li>
-              <li>{t.sell2}</li>
-              <li>{t.sell3}</li>
+              {[
+                [t.sellS1, t.sell1],
+                [t.sellS2, t.sell2],
+                [t.sellS3, t.sell3],
+              ].map(([short, long], i) => (
+                <li key={i}>
+                  <i aria-hidden="true">{i + 1}</i>
+                  <span className="ss-sell-s">{short}</span>
+                  <span className="ss-sell-l">{long}</span>
+                </li>
+              ))}
             </ol>
           </div>
           <div className="ss-sell-cta">
@@ -106,11 +114,17 @@ export function SsEtalase({ userId, isAdmin, landing = false }: { userId: string
             )}
           </div>
         </div>
-        <div className="notice">{t.etDisclaimer}</div>
+        <p className="ss-safe">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M12 3 4.5 6v5.5c0 4.5 3.2 8.2 7.5 9.5 4.3-1.3 7.5-5 7.5-9.5V6L12 3Z" />
+            <path d="m9 12 2 2 4-4" />
+          </svg>
+          {t.etSafe}
+        </p>
 
         <div className="ss-tools">
           <input className="ss-input" type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder={t.etSearch} aria-label={t.etSearch} />
-          <div className="ss-tabs" style={{ margin: 0 }} role="group">
+          <div className="ss-tabs ss-chips-row" style={{ margin: 0 }} role="group">
             {["", "produk", "jasa", "lainnya"].map((k) => (
               <a
                 key={k || "all"}
@@ -146,13 +160,16 @@ export function SsEtalase({ userId, isAdmin, landing = false }: { userId: string
                   ) : (
                     <span>{it.product_name.slice(0, 1).toUpperCase()}</span>
                   )}
+                  <em className="ss-et-kind">{t.kind[it.kind] ?? it.kind}</em>
                 </a>
-                <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 12 }}>
+                <div className="ss-et-badges">
                   <span className="ss-badge gray">{t.kind[it.kind] ?? it.kind}</span>
                   {it.has_pro && <span className="ss-badge">{t.proBadge}</span>}
                 </div>
-                <h2 className="ss-et-name">{it.product_name}</h2>
-                {it.tagline && <p className="ss-desc" style={{ marginTop: 4 }}>{it.tagline}</p>}
+                <h2 className="ss-et-name">
+                  <a href={`/l/${it.slug}`}>{it.product_name}</a>
+                </h2>
+                {it.tagline && <p className="ss-desc ss-et-tag" style={{ marginTop: 4 }}>{it.tagline}</p>}
                 <p className="ss-et-price">
                   {it.original_price && it.promo_price !== null ? (
                     <s>{priceLabel(it.original_price, "", "")}</s>
@@ -178,7 +195,7 @@ export function SsEtalase({ userId, isAdmin, landing = false }: { userId: string
                   )}
                 </div>
                 <div className="ss-actions">
-                  <a className="btn btn-solid btn-sm" href={`/l/${it.slug}`}>
+                  <a className="btn btn-solid btn-sm ss-et-view" href={`/l/${it.slug}`}>
                     {t.view}
                   </a>
                   <ReportButton targetType="page" targetId={it.id} userId={userId} />
@@ -197,13 +214,14 @@ export function SsEtalase({ userId, isAdmin, landing = false }: { userId: string
                 <article key={s.key} className="ss-card ss-et ss-sample">
                   <span className="ss-et-img" style={{ background: `linear-gradient(135deg, ${s.hue[0]}, ${s.hue[1]})` }} aria-hidden="true">
                     <span>{s.name[lang].slice(0, 1).toUpperCase()}</span>
+                    <em className="ss-et-kind">{t.sampleBadge}</em>
                   </span>
-                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 12 }}>
+                  <div className="ss-et-badges">
                     <span className="ss-badge gray">{t.kind[s.kind] ?? s.kind}</span>
                     <span className="ss-badge ss-badge-sample">{t.sampleBadge}</span>
                   </div>
                   <h2 className="ss-et-name">{s.name[lang]}</h2>
-                  <p className="ss-desc" style={{ marginTop: 4 }}>{s.tagline[lang]}</p>
+                  <p className="ss-desc ss-et-tag" style={{ marginTop: 4 }}>{s.tagline[lang]}</p>
                   <p className="ss-et-price">{priceLabel(s.price, s.unit[lang], t.askPrice)}</p>
                   <div className="ss-meta">
                     <span>{s.seller}</span>
@@ -219,6 +237,18 @@ export function SsEtalase({ userId, isAdmin, landing = false }: { userId: string
             </div>
           </section>
         )}
+
+        {/* Tukar Skill: jalan masuk buat yang belum siap jual */}
+        <Link className="ss-swap" href="/social-space/tukar-skill">
+          <span className="orb o-notain spin" aria-hidden="true">
+            <i></i>
+          </span>
+          <span className="ss-swap-txt">
+            <b>{t.swapH}</b>
+            <small>{t.swapSub}</small>
+          </span>
+          <span className="ss-swap-go">{t.swapCta} →</span>
+        </Link>
       </div>
   );
 
@@ -231,7 +261,7 @@ export function SsEtalase({ userId, isAdmin, landing = false }: { userId: string
   }
   return (
     <>
-      <section className="band hero-band" style={{ borderTop: 0 }}>
+      <section className="band hero-band ss-hero" style={{ borderTop: 0 }}>
         <div className="hero-top">
           <div>
             <div className="eyebrow">{t.eyebrow}</div>

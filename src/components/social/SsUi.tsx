@@ -3,7 +3,6 @@
 // Komponen kecil yang dipakai berulang di halaman Social Space.
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useState, type KeyboardEvent } from "react";
 import { createClient } from "@/lib/supabase/client";
 import {
@@ -51,52 +50,21 @@ function NavIcon({ k }: { k: string }) {
   );
 }
 
-// Tombol kembali di halaman detail. Kalau sebelumnya pengguna sudah ada di
-// halaman Social Space lain, kembali ke halaman itu (posisi gulir ikut
-// kembali). Kalau dibuka langsung dari tautan, ke halaman induknya.
-function SsBack({ href }: { href: string }) {
-  const { t } = useT();
-  const router = useRouter();
-  return (
-    <a
-      className="ss-back"
-      href={href}
-      onClick={(e) => {
-        let prev = "";
-        try {
-          prev = sessionStorage.getItem("ss-prev") ?? "";
-        } catch {}
-        if (prev && window.history.length > 1) {
-          e.preventDefault();
-          router.back();
-        }
-      }}
-    >
-      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M15 5l-7 7 7 7" />
-      </svg>
-      {t.back}
-    </a>
-  );
-}
-
 export function SsTabs({
   active,
   userId,
   isAdmin = false,
-  back,
 }: {
   active: SsTab;
   userId: string | null;
   isAdmin?: boolean;
-  // Diisi di halaman detail: alamat induk untuk tombol kembali
-  back?: string;
 }) {
   const { t } = useT();
   const [unread, setUnread] = useState(0);
 
   useEffect(() => {
-    // Catat halaman Social Space sebelumnya untuk tombol kembali
+    // Catat halaman Social Space terakhir: halaman Pajangin memakainya
+    // untuk menampilkan tombol kembali ke Etalase
     try {
       const cur = location.pathname + location.search;
       const last = sessionStorage.getItem("ss-last");
@@ -120,7 +88,6 @@ export function SsTabs({
   const items: [SsTab, string, string][] = [
     ["etalase", "/social-space", t.tabEtalase],
     ["info", "/social-space/info", t.tabInfo],
-    ["feed", "/social-space/tukar-skill", t.tabSwap],
     ...(userId
       ? ([
           ["inbox", "/social-space/permintaan", t.tabInbox],
@@ -133,7 +100,6 @@ export function SsTabs({
   const bottom: [string, string, string][] = [
     ["etalase", "/social-space", t.tabEtalase],
     ["info", "/social-space/info", t.tabInfo],
-    ["feed", "/social-space/tukar-skill", t.bnSwap],
     ...(userId
       ? ([
           ["inbox", "/social-space/permintaan", t.bnInbox],
@@ -144,7 +110,6 @@ export function SsTabs({
   ];
   return (
     <>
-      {back && <SsBack href={back} />}
       <nav className="ss-tabs ss-top" aria-label={t.brand}>
         {items.map(([k, href, label]) => (
           <Link key={k} href={href} aria-current={k === active ? "page" : undefined}>

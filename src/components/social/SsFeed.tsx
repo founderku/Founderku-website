@@ -110,7 +110,7 @@ export function SsFeed({ userId, isAdmin, initialQuery }: { userId: string | nul
 
   return (
     <>
-      <section className="band hero-band" style={{ borderTop: 0 }}>
+      <section className="band hero-band ss-hero" style={{ borderTop: 0 }}>
         <div className="hero-top">
           <div>
             <div className="eyebrow">{t.eyebrow}</div>
@@ -124,7 +124,7 @@ export function SsFeed({ userId, isAdmin, initialQuery }: { userId: string | nul
 
       <section className="band flush">
         <div className="ss-wrap">
-          <SsTabs active="feed" userId={userId} isAdmin={isAdmin} />
+          <SsTabs active="etalase" userId={userId} isAdmin={isAdmin} />
 
           {!userId ? (
             <div className="ss-card" style={{ marginBottom: 20 }}>

@@ -107,7 +107,7 @@ export function SsChat({ userId, requestId, isAdmin }: { userId: string; request
   return (
     <section className="band hero-band" style={{ borderTop: 0 }}>
       <div className="ss-wrap">
-        <SsTabs active="inbox" userId={userId} isAdmin={isAdmin} back="/social-space/permintaan" />
+        <SsTabs active="inbox" userId={userId} isAdmin={isAdmin} />
         {req === undefined ? (
           <p className="ss-empty">{t.loading}</p>
         ) : req === null ? (

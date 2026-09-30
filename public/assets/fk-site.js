@@ -11,7 +11,7 @@
   var root=document.documentElement;
   var WA='6285710477257';
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var D={"id": {"footer.copy": "© 2026 PT Talenthra Karya Nusantara. NIB 0909250086011. Hak cipta dilindungi undang-undang.", "nav.tools": "Tools", "nav.studio": "Studio", "nav.learn": "Belajar", "nav.starter": "Starterpack", "nav.pricing": "Harga", "nav.login": "Masuk", "nav.signup": "Daftar", "nav.account": "Akun Saya", "nav.menu": "Buka menu", "nav.close": "Tutup menu", "nav.theme": "Ganti tema terang/gelap", "nav.lang": "Pilih bahasa", "mega.toolsFoot": "Semua tools, satu akun. Trial {days} hari.", "mega.seePricing": "Lihat harga", "mega.allTools": "Semua tools", "mega.studioFoot": "Rata-rata 4-6 minggu dari ide ke MVP.", "mega.cases": "Studi kasus", "svc.brand": "Branding", "svc.brandD": "Logo, warna, dan suara brand", "svc.web": "Website", "svc.webD": "Situs yang bikin orang percaya", "svc.mvp": "MVP", "svc.mvpD": "Produk yang bisa dicoba beneran", "svc.talk": "Ngobrol 30 menit", "svc.talkD": "Gratis, tanpa tekanan", "learn.blog": "Blog", "learn.blogD": "Cerita dan update dari Founderku", "learn.cases": "Studi Kasus", "learn.casesD": "Project yang udah kelar dan jalan", "learn.catalog": "Katalog Program", "learn.catalogD": "Program dan kesempatan buat founder", "svc.brandL": "Bikin orang percaya sejak lihat pertama.", "svc.webL": "Situs cepat, rapi, dan gampang diurus sendiri.", "svc.mvpL": "Produk fungsional yang bisa dicoba user atau investor.", "footer.tag": "Semua bisa jadi founder. Tools dan studio buat UMKM dan founder baru.", "footer.company": "Perusahaan", "footer.terms": "Syarat & Ketentuan", "footer.privacy": "Kebijakan Privasi", "sheet.signup": "Daftar, gratis {days} hari", "tool.beta": "Beta", "tool.soon": "Segera hadir", "tool.all": "Lihat semua tools", "learn.students": "Tools Mahasiswa", "learn.studentsD": "IPK-in, Proposalin, Kanvasin, dan Stuney.", "nav.community": "Social Space", "footer.community": "Social Space", "nav.new": "Baru", "gen.eyebrow": "Generator Nama Brand"}, "en": {"footer.copy": "© 2026 PT Talenthra Karya Nusantara. Business ID (NIB) 0909250086011. All rights reserved.", "nav.tools": "Tools", "nav.studio": "Studio", "nav.learn": "Learn", "nav.starter": "Starterpack", "nav.pricing": "Pricing", "nav.login": "Log in", "nav.signup": "Sign up", "nav.account": "My Account", "nav.menu": "Open menu", "nav.close": "Close menu", "nav.theme": "Switch light/dark theme", "nav.lang": "Choose language", "mega.toolsFoot": "Every tool, one account. {days}-day trial.", "mega.seePricing": "See pricing", "mega.allTools": "All tools", "mega.studioFoot": "Usually 4-6 weeks from idea to MVP.", "mega.cases": "Case studies", "svc.brand": "Branding", "svc.brandD": "Logo, colours, and brand voice", "svc.web": "Website", "svc.webD": "A site that earns trust", "svc.mvp": "MVP", "svc.mvpD": "A product people can actually try", "svc.talk": "30-minute chat", "svc.talkD": "Free, no pressure", "learn.blog": "Blog", "learn.blogD": "Stories and updates from Founderku", "learn.cases": "Case Studies", "learn.casesD": "Projects that shipped and run", "learn.catalog": "Program Catalog", "learn.catalogD": "Programs and opportunities for founders", "svc.brandL": "Earn trust at first glance.", "svc.webL": "A fast, tidy site you can manage yourself.", "svc.mvpL": "A working product users or investors can try.", "footer.tag": "Anyone can become a founder. Tools and a studio for small businesses and new founders.", "footer.company": "Company", "footer.terms": "Terms (Indonesian)", "footer.privacy": "Privacy (Indonesian)", "sheet.signup": "Sign up, {days} days free", "tool.beta": "Beta", "tool.soon": "Coming soon", "tool.all": "See all tools", "learn.students": "Student Tools", "learn.studentsD": "IPK-in, Proposalin, Kanvasin, and Stuney.", "nav.community": "Social Space", "footer.community": "Social Space", "nav.new": "New", "gen.eyebrow": "Brand Name Generator"}, "tr": {"footer.copy": "© 2026 PT Talenthra Karya Nusantara. İşletme No (NIB) 0909250086011. Tüm hakları saklıdır.", "nav.tools": "Araçlar", "nav.studio": "Stüdyo", "nav.learn": "Öğren", "nav.starter": "Starterpack", "nav.pricing": "Fiyatlar", "nav.login": "Giriş", "nav.signup": "Kaydol", "nav.account": "Hesabım", "nav.menu": "Menüyü aç", "nav.close": "Menüyü kapat", "nav.theme": "Açık/koyu tema", "nav.lang": "Dil seç", "mega.toolsFoot": "Tüm araçlar, tek hesap. {days} günlük deneme.", "mega.seePricing": "Fiyatları gör", "mega.allTools": "Tüm araçlar", "mega.studioFoot": "Fikirden MVP'ye genellikle 4-6 hafta.", "mega.cases": "Vaka çalışmaları", "svc.brand": "Markalaşma", "svc.brandD": "Logo, renkler ve marka dili", "svc.web": "Web sitesi", "svc.webD": "Güven veren bir site", "svc.mvp": "MVP", "svc.mvpD": "Gerçekten denenebilen bir ürün", "svc.talk": "30 dakikalık sohbet", "svc.talkD": "Ücretsiz, baskı yok", "learn.blog": "Blog", "learn.blogD": "Founderku'dan hikayeler ve güncellemeler", "learn.cases": "Vaka Çalışmaları", "learn.casesD": "Tamamlanıp yayında olan projeler", "learn.catalog": "Program Kataloğu", "learn.catalogD": "Kurucular için programlar ve fırsatlar", "svc.brandL": "İlk bakışta güven kazan.", "svc.webL": "Kendin yönetebileceğin hızlı ve düzenli bir site.", "svc.mvpL": "Kullanıcıların veya yatırımcıların deneyebileceği çalışan bir ürün.", "footer.tag": "Herkes kurucu olabilir. Küçük işletmeler ve yeni kurucular için araçlar ve stüdyo.", "footer.company": "Şirket", "footer.terms": "Koşullar (Endonezce)", "footer.privacy": "Gizlilik (Endonezce)", "sheet.signup": "Kaydol, {days} gün ücretsiz", "tool.beta": "Beta", "tool.soon": "Yakında", "tool.all": "Tüm araçları gör", "learn.students": "Öğrenci Araçları", "learn.studentsD": "IPK-in, Proposalin, Kanvasin ve Stuney.", "nav.community": "Sosyal Alan", "footer.community": "Sosyal Alan", "nav.new": "Yeni", "gen.eyebrow": "Marka Adı Üretici"}};
+  var D={"id": {"footer.copy": "© 2026 PT Talenthra Karya Nusantara. NIB 0909250086011. Hak cipta dilindungi undang-undang.", "nav.tools": "Tools", "nav.studio": "Studio", "nav.learn": "Belajar", "nav.starter": "Starterpack", "nav.pricing": "Harga", "nav.login": "Masuk", "nav.signup": "Daftar", "nav.account": "Akun Saya", "nav.menu": "Buka menu", "nav.close": "Tutup menu", "nav.theme": "Ganti tema terang/gelap", "nav.lang": "Pilih bahasa", "mega.toolsFoot": "Semua tools, satu akun. Trial {days} hari.", "mega.seePricing": "Lihat harga", "mega.allTools": "Semua tools", "mega.studioFoot": "Rata-rata 4-6 minggu dari ide ke MVP.", "mega.cases": "Studi kasus", "svc.brand": "Branding", "svc.brandD": "Logo, warna, dan suara brand", "svc.web": "Website", "svc.webD": "Situs yang bikin orang percaya", "svc.mvp": "MVP", "svc.mvpD": "Produk yang bisa dicoba beneran", "svc.talk": "Ngobrol 30 menit", "svc.talkD": "Gratis, tanpa tekanan", "learn.blog": "Blog", "learn.blogD": "Cerita dan update dari Founderku", "learn.cases": "Studi Kasus", "learn.casesD": "Project yang udah kelar dan jalan", "learn.catalog": "Katalog Program", "learn.catalogD": "Program dan kesempatan buat founder", "svc.brandL": "Bikin orang percaya sejak lihat pertama.", "svc.webL": "Situs cepat, rapi, dan gampang diurus sendiri.", "svc.mvpL": "Produk fungsional yang bisa dicoba user atau investor.", "footer.tag": "Semua bisa jadi founder. Tools dan studio buat UMKM dan founder baru.", "footer.company": "Perusahaan", "footer.terms": "Syarat & Ketentuan", "footer.privacy": "Kebijakan Privasi", "sheet.signup": "Daftar, gratis {days} hari", "tool.beta": "Beta", "tool.soon": "Segera hadir", "tool.all": "Lihat semua tools", "learn.students": "Tools Mahasiswa", "learn.studentsD": "IPK-in, Proposalin, Kanvasin, dan Stuney.", "nav.community": "Social Space", "footer.community": "Social Space", "nav.new": "Baru", "nav.back": "Kembali", "nav.prefs": "Bahasa & tema", "nav.dark": "Mode gelap", "gen.eyebrow": "Generator Nama Brand"}, "en": {"footer.copy": "© 2026 PT Talenthra Karya Nusantara. Business ID (NIB) 0909250086011. All rights reserved.", "nav.tools": "Tools", "nav.studio": "Studio", "nav.learn": "Learn", "nav.starter": "Starterpack", "nav.pricing": "Pricing", "nav.login": "Log in", "nav.signup": "Sign up", "nav.account": "My Account", "nav.menu": "Open menu", "nav.close": "Close menu", "nav.theme": "Switch light/dark theme", "nav.lang": "Choose language", "mega.toolsFoot": "Every tool, one account. {days}-day trial.", "mega.seePricing": "See pricing", "mega.allTools": "All tools", "mega.studioFoot": "Usually 4-6 weeks from idea to MVP.", "mega.cases": "Case studies", "svc.brand": "Branding", "svc.brandD": "Logo, colours, and brand voice", "svc.web": "Website", "svc.webD": "A site that earns trust", "svc.mvp": "MVP", "svc.mvpD": "A product people can actually try", "svc.talk": "30-minute chat", "svc.talkD": "Free, no pressure", "learn.blog": "Blog", "learn.blogD": "Stories and updates from Founderku", "learn.cases": "Case Studies", "learn.casesD": "Projects that shipped and run", "learn.catalog": "Program Catalog", "learn.catalogD": "Programs and opportunities for founders", "svc.brandL": "Earn trust at first glance.", "svc.webL": "A fast, tidy site you can manage yourself.", "svc.mvpL": "A working product users or investors can try.", "footer.tag": "Anyone can become a founder. Tools and a studio for small businesses and new founders.", "footer.company": "Company", "footer.terms": "Terms (Indonesian)", "footer.privacy": "Privacy (Indonesian)", "sheet.signup": "Sign up, {days} days free", "tool.beta": "Beta", "tool.soon": "Coming soon", "tool.all": "See all tools", "learn.students": "Student Tools", "learn.studentsD": "IPK-in, Proposalin, Kanvasin, and Stuney.", "nav.community": "Social Space", "footer.community": "Social Space", "nav.new": "New", "nav.back": "Back", "nav.prefs": "Language & theme", "nav.dark": "Dark mode", "gen.eyebrow": "Brand Name Generator"}, "tr": {"footer.copy": "© 2026 PT Talenthra Karya Nusantara. İşletme No (NIB) 0909250086011. Tüm hakları saklıdır.", "nav.tools": "Araçlar", "nav.studio": "Stüdyo", "nav.learn": "Öğren", "nav.starter": "Starterpack", "nav.pricing": "Fiyatlar", "nav.login": "Giriş", "nav.signup": "Kaydol", "nav.account": "Hesabım", "nav.menu": "Menüyü aç", "nav.close": "Menüyü kapat", "nav.theme": "Açık/koyu tema", "nav.lang": "Dil seç", "mega.toolsFoot": "Tüm araçlar, tek hesap. {days} günlük deneme.", "mega.seePricing": "Fiyatları gör", "mega.allTools": "Tüm araçlar", "mega.studioFoot": "Fikirden MVP'ye genellikle 4-6 hafta.", "mega.cases": "Vaka çalışmaları", "svc.brand": "Markalaşma", "svc.brandD": "Logo, renkler ve marka dili", "svc.web": "Web sitesi", "svc.webD": "Güven veren bir site", "svc.mvp": "MVP", "svc.mvpD": "Gerçekten denenebilen bir ürün", "svc.talk": "30 dakikalık sohbet", "svc.talkD": "Ücretsiz, baskı yok", "learn.blog": "Blog", "learn.blogD": "Founderku'dan hikayeler ve güncellemeler", "learn.cases": "Vaka Çalışmaları", "learn.casesD": "Tamamlanıp yayında olan projeler", "learn.catalog": "Program Kataloğu", "learn.catalogD": "Kurucular için programlar ve fırsatlar", "svc.brandL": "İlk bakışta güven kazan.", "svc.webL": "Kendin yönetebileceğin hızlı ve düzenli bir site.", "svc.mvpL": "Kullanıcıların veya yatırımcıların deneyebileceği çalışan bir ürün.", "footer.tag": "Herkes kurucu olabilir. Küçük işletmeler ve yeni kurucular için araçlar ve stüdyo.", "footer.company": "Şirket", "footer.terms": "Koşullar (Endonezce)", "footer.privacy": "Gizlilik (Endonezce)", "sheet.signup": "Kaydol, {days} gün ücretsiz", "tool.beta": "Beta", "tool.soon": "Yakında", "tool.all": "Tüm araçları gör", "learn.students": "Öğrenci Araçları", "learn.studentsD": "IPK-in, Proposalin, Kanvasin ve Stuney.", "nav.community": "Sosyal Alan", "footer.community": "Sosyal Alan", "nav.new": "Yeni", "nav.back": "Geri", "nav.prefs": "Dil ve tema", "nav.dark": "Koyu mod", "gen.eyebrow": "Marka Adı Üretici"}};
   var SHORT={
     pajangin:{id:'Halaman jualan + tombol WhatsApp, jadi dalam hitungan menit.',en:'A sales page with a WhatsApp button, ready in minutes.',tr:'WhatsApp butonlu satış sayfası, dakikalar içinde hazır.'},
     notain:{id:'Bikin invoice rapi buat pelanggan kamu.',en:'Make tidy invoices for your customers.',tr:'Müşterilerin için düzenli faturalar hazırla.'},
@@ -51,6 +51,7 @@
 
   var CHEV='<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 4.5L6 7.5l3-3"/></svg>';
   var LOGO='<a class="logo" href="/"><img src="/images/favicon.svg" alt="" width="28" height="28">Founderku</a>';
+  var BACK='<a class="nav-back" id="navBack" href="/" data-k-aria="nav.back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></a>';
   var X='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
 
   // ---------- Pasang kerangka ----------
@@ -63,6 +64,33 @@
     if(document.querySelector('script[data-fk-ai]'))return;
     var s=document.createElement('script');s.src='/assets/fk-ai.js';s.defer=true;s.setAttribute('data-fk-ai','1');document.body.appendChild(s);
   }
+  // ---------- Tombol kembali ----------
+  // Catat halaman sebelumnya di situs ini (per tab). Kalau ada, tombol
+  // kembali memakai riwayat browser (posisi gulir ikut kembali). Kalau
+  // halaman dibuka langsung dari luar, tombol ke halaman induknya.
+  function isHome(p){return p==='/'||p==='/index.html';}
+  function parentOf(p){
+    p=p.replace(/\/+$/,'');
+    if(/^\/tools\/[^/]+/.test(p))return '/tools.html';
+    if(/^\/blog-post/.test(p))return '/blog.html';
+    if(/^\/product/.test(p))return '/store.html';
+    var i=p.lastIndexOf('/');return i>0?p.slice(0,i):'/';
+  }
+  function trail(){
+    var curPath=location.pathname+location.search,prev='';
+    try{var last=sessionStorage.getItem('fk-last');if(last!==curPath){sessionStorage.setItem('fk-prev',last||'');sessionStorage.setItem('fk-last',curPath);}prev=sessionStorage.getItem('fk-prev')||'';}catch{}
+    return prev;
+  }
+  function wireBack(nav){
+    var b=nav.querySelector('#navBack');if(!b)return;
+    if(isHome(location.pathname)){b.remove();return;}
+    var prev=trail();
+    b.href=parentOf(location.pathname);
+    b.addEventListener('click',function(e){
+      var sameRef=document.referrer&&document.referrer.indexOf(location.origin+'/')===0;
+      if((prev||sameRef)&&history.length>1){e.preventDefault();history.back();}
+    });
+  }
   function mount(){
   loadAI();
   var nav=document.querySelector('[data-fk-nav]:not([data-fk-done])');
@@ -70,7 +98,7 @@
   if(nav){
     nav.setAttribute('data-fk-done','1');
     var oldSheet=document.getElementById('sheet'); if(oldSheet) oldSheet.remove();
-    nav.innerHTML='<div class="nav-in">'+LOGO+
+    nav.innerHTML='<div class="nav-in">'+BACK+LOGO+
       '<ul class="menu" id="menu">'+
         '<li><button type="button" aria-expanded="false"><span data-k="nav.tools"></span> '+CHEV+'</button><div class="mega" id="megaTools"><div class="foot"><span data-k="mega.toolsFoot"></span><span style="display:flex;gap:6px"><a class="btn btn-line btn-sm" href="/tools.html" data-k="mega.allTools"></a><a class="btn btn-solid btn-sm" href="/harga" data-k="mega.seePricing"></a></span></div></div></li>'+
         '<li><button type="button" aria-expanded="false"><span data-k="nav.studio"></span> '+CHEV+'</button><div class="mega">'+
@@ -107,6 +135,7 @@
       '<a href="/store.html"><span data-k="nav.starter"></span><span aria-hidden="true">→</span></a>'+
       '<a href="/social-space" data-track="tukarskill"><span><span data-k="nav.community"></span><span class="nb" data-k="nav.new"></span></span><span aria-hidden="true">→</span></a>'+
       '<a href="/harga"><span data-k="nav.pricing"></span><span aria-hidden="true">→</span></a></nav>'+
+      '<div class="sheet-prefs"><span data-k="nav.prefs"></span><div><button type="button" data-lang="id">ID</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="tr">TR</button><button type="button" class="sp-theme" id="sheetTheme" data-k-aria="nav.dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5Z"/></svg></button></div></div>'+
       '<div class="btns"><a class="btn btn-solid" id="sheetMain" href="/daftar" data-k="sheet.signup"></a><a class="btn btn-line" id="sheetLogin" href="/masuk" data-k="nav.login"></a></div>';
     document.body.appendChild(sheet);
   }
@@ -131,14 +160,17 @@
     });
     var langWrap=document.getElementById('lang');
     document.getElementById('langBtn').addEventListener('click',function(){var o=langWrap.classList.toggle('open');this.setAttribute('aria-expanded',String(o));});
-    langWrap.querySelectorAll('[data-lang]').forEach(function(b){b.addEventListener('click',function(){
+    [].slice.call(langWrap.querySelectorAll('[data-lang]')).concat([].slice.call(document.querySelectorAll('#sheet [data-lang]'))).forEach(function(b){b.addEventListener('click',function(){
       lang=b.dataset.lang;try{localStorage.setItem('fk-lang',lang);}catch{}langWrap.classList.remove('open');run();
       try{window.dispatchEvent(new CustomEvent('fk:lang',{detail:lang}));}catch{}
     });});
-    document.getElementById('themeBtn').addEventListener('click',function(){
+    var toggleTheme=function(){
       var dark=root.getAttribute('data-theme')==='dark'||(!root.getAttribute('data-theme')&&window.matchMedia('(prefers-color-scheme: dark)').matches);
       var next=dark?'light':'dark';root.setAttribute('data-theme',next);try{localStorage.setItem('fk-theme',next);}catch{}
-    });
+    };
+    document.getElementById('themeBtn').addEventListener('click',toggleTheme);
+    document.getElementById('sheetTheme').addEventListener('click',toggleTheme);
+    wireBack(nav);
     var sheetEl=document.getElementById('sheet'),burger=document.getElementById('burger');
     var closeSheet=function(){sheetEl.classList.remove('show');sheetEl.setAttribute('aria-hidden','true');burger.setAttribute('aria-expanded','false');};
     burger.addEventListener('click',function(){sheetEl.classList.add('show');sheetEl.setAttribute('aria-hidden','false');burger.setAttribute('aria-expanded','true');});
@@ -171,7 +203,7 @@
     document.querySelectorAll('[data-k]').forEach(function(el){var v=t(el.getAttribute('data-k'));if(v!=='')setText(el,v);});
     document.querySelectorAll('[data-k-aria]').forEach(function(el){el.setAttribute('aria-label',t(el.getAttribute('data-k-aria')));});
     var lb=document.getElementById('langBtn'); if(lb) lb.textContent=lang.toUpperCase();
-    document.querySelectorAll('.lang-menu [data-lang]').forEach(function(b){b.setAttribute('aria-current',String(b.dataset.lang===lang));});
+    document.querySelectorAll('.lang-menu [data-lang], .sheet-prefs [data-lang]').forEach(function(b){b.setAttribute('aria-current',String(b.dataset.lang===lang));});
     document.querySelectorAll('.wa-link').forEach(function(a){a.href=waHref();a.target='_blank';a.rel='noopener';});
     if(st.loggedIn){
       var m=document.getElementById('navMain'); if(m){m.href='/akun';m.textContent=t('nav.account');}

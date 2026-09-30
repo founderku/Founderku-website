@@ -151,7 +151,7 @@ export function SsProfileEditor({ userId, defaultName, isAdmin }: { userId: stri
         <div className="ss-side">
           <div className="ss-card">
             <h1 className="ss-h">{exists === false ? t.makeProfile : t.profileH}</h1>
-            <p className="ss-sub" style={{ marginBottom: 20 }}>{t.profileSub}</p>
+            <p className="ss-sub ss-headsub" style={{ marginBottom: 20 }}>{t.profileSub}</p>
             {exists === null ? (
               <p className="ss-empty">{t.loading}</p>
             ) : (
