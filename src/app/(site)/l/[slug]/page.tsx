@@ -4,6 +4,7 @@ import { createHmac } from "crypto";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { EtalasePage } from "@/components/etalase/EtalasePage";
+import { SocialSellerBar } from "@/components/etalase/SocialSellerBar";
 import type { PageRow, StoreProfile } from "@/lib/types";
 import { lockedPageIds } from "@/lib/access";
 import { TIER_LIMITS } from "@/lib/constants";
@@ -78,7 +79,21 @@ export default async function PublicPage({
     .rpc("increment_page_click", { page_slug: slug, visitor_hash: visitorHash })
     .then();
 
+  // Halaman yang tampil di Etalase Social Space: tunjukkan nama penjual
+  // dari profil Social Space publiknya (RLS hanya mengizinkan profil publik)
+  let seller: { handle: string; name: string } | null = null;
+  if (page.show_in_social && !isOwner) {
+    const { data: sp } = await supabase
+      .from("ss_profiles")
+      .select("handle, name, is_public, hidden")
+      .eq("user_id", page.user_id)
+      .maybeSingle();
+    if (sp && sp.is_public && !sp.hidden) seller = { handle: sp.handle, name: sp.name };
+  }
+
   return (
+    <>
+    {!isOwner && <SocialSellerBar seller={seller} />}
     <EtalasePage
       style={owner?.store_style ?? "klasik"}
       isOwner={isOwner}
@@ -96,5 +111,6 @@ export default async function PublicPage({
         kind: page.kind ?? "produk",
       }}
     />
+    </>
   );
 }

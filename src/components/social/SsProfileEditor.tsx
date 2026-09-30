@@ -21,9 +21,11 @@ import {
 } from "./ss";
 import { PostCard, SkillInput, SsTabs } from "./SsUi";
 
+type ShopRow = { id: string; slug: string; product_name: string; kind: string; status: string; show_in_social: boolean };
+
 type Form = Pick<
   SsProfile,
-  "handle" | "name" | "headline" | "bio" | "city" | "skills_offer" | "skills_want" | "website" | "instagram" | "linkedin" | "is_public"
+  "handle" | "name" | "headline" | "bio" | "city" | "skills_offer" | "skills_want" | "website" | "instagram" | "linkedin" | "experience" | "portfolio" | "is_public"
 >;
 
 export function SsProfileEditor({ userId, defaultName, isAdmin }: { userId: string; defaultName: string; isAdmin: boolean }) {
@@ -43,8 +45,11 @@ export function SsProfileEditor({ userId, defaultName, isAdmin }: { userId: stri
     website: "",
     instagram: "",
     linkedin: "",
+    experience: "",
+    portfolio: [],
     is_public: true,
   });
+  const [shop, setShop] = useState<ShopRow[]>([]);
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
 
@@ -71,6 +76,8 @@ export function SsProfileEditor({ userId, defaultName, isAdmin }: { userId: stri
             website: p.website,
             instagram: p.instagram,
             linkedin: p.linkedin,
+            experience: p.experience ?? "",
+            portfolio: (p.portfolio ?? []).map((x) => ({ title: x.title, url: x.url ?? "", note: x.note ?? "" })),
             is_public: p.is_public,
           });
         }
@@ -81,6 +88,12 @@ export function SsProfileEditor({ userId, defaultName, isAdmin }: { userId: stri
       .eq("user_id", userId)
       .order("created_at", { ascending: false })
       .then(({ data }) => setPosts((data ?? []) as SsPost[]));
+    supabase
+      .from("pages")
+      .select("id, slug, product_name, kind, status, show_in_social")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .then(({ data }) => setShop((data ?? []) as ShopRow[]));
   }, [userId]);
 
   const set = <K extends keyof Form>(k: K, v: Form[K]) => setF((x) => ({ ...x, [k]: v }));
@@ -97,10 +110,17 @@ export function SsProfileEditor({ userId, defaultName, isAdmin }: { userId: stri
       website: normalizeLink(f.website),
       instagram: normalizeLink(f.instagram),
       linkedin: normalizeLink(f.linkedin),
+      experience: f.experience.trim(),
+      // Baris kosong dibuang, isian kosong tidak ikut disimpan
+      portfolio: f.portfolio
+        .map((x) => ({ title: x.title.trim(), url: normalizeLink(x.url ?? ""), note: (x.note ?? "").trim() }))
+        .filter((x) => x.title || x.url || x.note)
+        .map((x) => ({ title: x.title, ...(x.url ? { url: x.url } : {}), ...(x.note ? { note: x.note } : {}) })),
     };
     if (!HANDLE_RE.test(data.handle)) return setMsg({ ok: false, text: t.errHandle });
     if (data.name.length < 2) return setMsg({ ok: false, text: t.errName });
     if ([data.website, data.instagram, data.linkedin].some((l) => l && !LINK_RE.test(l))) return setMsg({ ok: false, text: t.errLink });
+    if (data.portfolio.some((x) => x.title.length < 2 || (x.url && !LINK_RE.test(x.url)))) return setMsg({ ok: false, text: t.errPortfolio });
     setBusy(true);
     const supabase = createClient();
     const { error } = exists
@@ -174,6 +194,70 @@ export function SsProfileEditor({ userId, defaultName, isAdmin }: { userId: stri
                   <span>{t.fBio}</span>
                   <textarea className="ss-input" value={f.bio} maxLength={SS_LIMITS.bio} onChange={(e) => set("bio", e.target.value)} />
                 </label>
+                <div className="ss-seller">
+                  <b>{t.sellerH}</b>
+                  <small>{t.sellerSub}</small>
+                  <label className="ss-field" style={{ marginTop: 12 }}>
+                    <span>{t.fExp}</span>
+                    <textarea
+                      className="ss-input"
+                      value={f.experience}
+                      maxLength={SS_LIMITS.experience}
+                      placeholder={t.fExpPh}
+                      onChange={(e) => set("experience", e.target.value)}
+                    />
+                  </label>
+                  <div className="ss-field" style={{ marginBottom: 0 }}>
+                    <span>{t.fPortfolio}</span>
+                    <small>{fill(t.fPortfolioHint, { n: SS_LIMITS.portfolio })}</small>
+                    {f.portfolio.map((w, i) => (
+                      <div key={i} className="ss-pf-row">
+                        <input
+                          className="ss-input"
+                          value={w.title}
+                          maxLength={SS_LIMITS.pfTitle}
+                          placeholder={t.fPfTitle}
+                          aria-label={t.fPfTitle}
+                          onChange={(e) => set("portfolio", f.portfolio.map((x, j) => (j === i ? { ...x, title: e.target.value } : x)))}
+                        />
+                        <input
+                          className="ss-input"
+                          value={w.url ?? ""}
+                          maxLength={200}
+                          inputMode="url"
+                          placeholder={t.fPfUrl}
+                          aria-label={t.fPfUrl}
+                          onChange={(e) => set("portfolio", f.portfolio.map((x, j) => (j === i ? { ...x, url: e.target.value } : x)))}
+                        />
+                        <input
+                          className="ss-input"
+                          value={w.note ?? ""}
+                          maxLength={SS_LIMITS.pfNote}
+                          placeholder={t.fPfNote}
+                          aria-label={t.fPfNote}
+                          onChange={(e) => set("portfolio", f.portfolio.map((x, j) => (j === i ? { ...x, note: e.target.value } : x)))}
+                        />
+                        <button
+                          type="button"
+                          className="ss-link"
+                          onClick={() => set("portfolio", f.portfolio.filter((_, j) => j !== i))}
+                        >
+                          {t.fPfRemove}
+                        </button>
+                      </div>
+                    ))}
+                    {f.portfolio.length < SS_LIMITS.portfolio && (
+                      <button
+                        type="button"
+                        className="btn btn-line btn-sm"
+                        style={{ justifySelf: "start" }}
+                        onClick={() => set("portfolio", [...f.portfolio, { title: "", url: "", note: "" }])}
+                      >
+                        {t.fPfAdd}
+                      </button>
+                    )}
+                  </div>
+                </div>
                 <div className="ss-field">
                   <span>{t.fOffer}</span>
                   <SkillInput value={f.skills_offer} onChange={(v) => set("skills_offer", v)} max={SS_LIMITS.skills} placeholder={t.fSkillPh} />
@@ -219,6 +303,33 @@ export function SsProfileEditor({ userId, defaultName, isAdmin }: { userId: stri
           </div>
 
           <div>
+            <div className="ss-card" style={{ marginBottom: 24 }}>
+              <b style={{ fontWeight: 500, fontSize: 18 }}>{t.myShopH}</b>
+              {shop.length === 0 ? (
+                <p className="ss-sub">{t.myShopNone}</p>
+              ) : (
+                <ul className="ss-myshop">
+                  {shop.map((pg) => (
+                    <li key={pg.id}>
+                      <a href={`/l/${pg.slug}`}>{pg.product_name}</a>
+                      <span className={`ss-badge ${pg.show_in_social && pg.status === "active" && f.is_public && exists ? "green" : "gray"}`}>
+                        {pg.show_in_social && pg.status === "active" && f.is_public && exists ? t.tabEtalase : t.myShopHidden}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              <div className="ss-actions">
+                <Link className="btn btn-solid btn-sm" href="/pajangin/dashboard/new">
+                  {t.myShopNew}
+                </Link>
+                {shop.length > 0 && (
+                  <Link className="btn btn-line btn-sm" href="/pajangin/dashboard">
+                    {t.myShopManage}
+                  </Link>
+                )}
+              </div>
+            </div>
             <div className="ss-head" style={{ marginBottom: 12 }}>
               <b style={{ fontWeight: 500, fontSize: 18 }}>{t.yours}</b>
               {exists && (

@@ -67,7 +67,7 @@ export function SsPublicProfile({ handle, userId, isAdmin }: { handle: string; u
   return (
     <section className="band hero-band" style={{ borderTop: 0 }}>
       <div className="ss-wrap">
-        <SsTabs active={userId && me?.handle === handle ? "profile" : "feed"} userId={userId} isAdmin={isAdmin} />
+        <SsTabs active={userId && me?.handle === handle ? "profile" : "etalase"} userId={userId} isAdmin={isAdmin} back="/social-space" />
         {p === undefined ? (
           <p className="ss-empty">{t.loading}</p>
         ) : p === null ? (
@@ -99,6 +99,12 @@ export function SsPublicProfile({ handle, userId, isAdmin }: { handle: string; u
                   <>
                     <div className="ss-lbl" style={{ marginTop: 18 }}>{t.about}</div>
                     <p className="ss-desc" style={{ marginTop: 0 }}>{p.bio}</p>
+                  </>
+                )}
+                {p.experience && (
+                  <>
+                    <div className="ss-lbl">{t.expH}</div>
+                    <p className="ss-desc" style={{ marginTop: 0 }}>{p.experience}</p>
                   </>
                 )}
                 {p.skills_offer.length > 0 && (
@@ -138,7 +144,7 @@ export function SsPublicProfile({ handle, userId, isAdmin }: { handle: string; u
 
               {shop.length > 0 && (
                 <>
-                  <h2 style={{ fontSize: 22, margin: "28px 0 12px" }}>{t.mySpace}</h2>
+                  <h2 style={{ fontSize: 22, margin: "28px 0 12px" }}>{t.shopH}</h2>
                   <div className="ss-grid">
                     {shop.map((it) => (
                       <a key={it.id} className="ss-card ss-et" href={`/l/${it.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
@@ -155,6 +161,25 @@ export function SsPublicProfile({ handle, userId, isAdmin }: { handle: string; u
                       </a>
                     ))}
                   </div>
+                </>
+              )}
+              {(p.portfolio ?? []).length > 0 && (
+                <>
+                  <h2 style={{ fontSize: 22, margin: "28px 0 12px" }}>{t.pfH}</h2>
+                  <ul className="ss-pf">
+                    {p.portfolio.map((w, i) => (
+                      <li key={i}>
+                        {w.url && /^https:\/\//.test(w.url) ? (
+                          <a href={w.url} target="_blank" rel="noopener noreferrer nofollow ugc">
+                            <b>{w.title}</b> ↗
+                          </a>
+                        ) : (
+                          <b>{w.title}</b>
+                        )}
+                        {w.note && <small>{w.note}</small>}
+                      </li>
+                    ))}
+                  </ul>
                 </>
               )}
               <h2 style={{ fontSize: 22, margin: "28px 0 12px" }}>{t.openPosts}</h2>

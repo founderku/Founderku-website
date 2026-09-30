@@ -629,6 +629,48 @@ reset role;
 select 'T146 orang lain ubah tombol Etalase halaman orang: ' || case when not show_in_social then 'LULUS (tidak berubah)' else 'GAGAL' end from public.pages where slug = 'kelas-canva';
 set request.jwt.claim.sub = '';
 set role anon;
+select 'T162 halaman tanpa profil penjual tidak tampil di Etalase: ' || case when count(*) = 0 then 'LULUS' else 'GAGAL (' || count(*) || ')' end from public.ss_etalase();
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '66666666-6666-6666-6666-666666666666';
+insert into public.ss_profiles (user_id, handle, name, is_public) values (auth.uid(), 'penjual-logo', 'Penjual Logo', false);
+reset role;
+set request.jwt.claim.sub = '';
+set role anon;
+select 'T163 profil penjual privat tetap tidak tampil di Etalase: ' || case when count(*) = 0 then 'LULUS' else 'GAGAL (' || count(*) || ')' end from public.ss_etalase();
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '66666666-6666-6666-6666-666666666666';
+update public.ss_profiles set is_public = true,
+  experience = '5 tahun desain logo untuk UMKM kuliner.',
+  portfolio = '[{"title": "Logo Kopi Senja", "url": "https://contoh.com/kopi", "note": "Logo dan kemasan"}, {"title": "Brand Warung Bu Tini"}]'::jsonb
+  where user_id = auth.uid();
+select 'T164 penjual simpan pengalaman dan portofolio: ' || case when jsonb_array_length(portfolio) = 2 and experience like '5 tahun%' then 'LULUS' else 'GAGAL' end from public.ss_profiles where user_id = auth.uid();
+do $$ begin
+  update public.ss_profiles set portfolio = '[{"title": "Link jahat", "url": "javascript:alert(1)"}]'::jsonb where user_id = auth.uid();
+  raise notice 'T165 portofolio dengan tautan bukan https: GAGAL (lolos)';
+exception when check_violation then raise notice 'T165 portofolio dengan tautan bukan https: LULUS (ditolak)'; end $$;
+do $$ begin
+  update public.ss_profiles set portfolio = (select jsonb_agg(jsonb_build_object('title', 'Karya ' || g)) from generate_series(1, 9) g) where user_id = auth.uid();
+  raise notice 'T166 portofolio lebih dari 8 karya: GAGAL (lolos)';
+exception when check_violation then raise notice 'T166 portofolio lebih dari 8 karya: LULUS (ditolak)'; end $$;
+do $$ begin
+  update public.ss_profiles set portfolio = '[{"title": "Ok", "admin": true}]'::jsonb where user_id = auth.uid();
+  raise notice 'T167 portofolio dengan isian asing: GAGAL (lolos)';
+exception when check_violation then raise notice 'T167 portofolio dengan isian asing: LULUS (ditolak)'; end $$;
+do $$ begin
+  update public.ss_profiles set experience = repeat('x', 1501) where user_id = auth.uid();
+  raise notice 'T168 pengalaman lebih dari 1500 huruf: GAGAL (lolos)';
+exception when check_violation then raise notice 'T168 pengalaman lebih dari 1500 huruf: LULUS (ditolak)'; end $$;
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '33333333-3333-3333-3333-333333333333';
+update public.ss_profiles set experience = 'dibajak', portfolio = '[]'::jsonb where handle = 'penjual-logo';
+reset role;
+select 'T169 orang lain ubah portofolio penjual: ' || case when experience like '5 tahun%' and jsonb_array_length(portfolio) = 2 then 'LULUS (tidak berubah)' else 'GAGAL' end from public.ss_profiles where handle = 'penjual-logo';
+set request.jwt.claim.sub = '';
+set role anon;
+select 'T170 Etalase menampilkan nama penjual dari profil: ' || case when min(seller_name) = 'Penjual Logo' and min(seller_handle) = 'penjual-logo' then 'LULUS' else 'GAGAL' end from public.ss_etalase();
 select 'T147 Etalase hanya halaman yang diaktifkan (jasa, harga, satuan): ' || case when count(*) = 1 and min(kind) = 'jasa' and min(price_unit) = '/proyek' and min(product_name) = 'Jasa Desain Logo' then 'LULUS' else 'GAGAL (' || count(*) || ')' end from public.ss_etalase();
 select 'T148 Etalase tidak membocorkan email atau WhatsApp: ' || case when not exists (select 1 from public.ss_etalase() e where e::text like '%@%' or e::text like '%628%') then 'LULUS' else 'GAGAL' end;
 reset role;

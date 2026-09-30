@@ -561,6 +561,49 @@ body:has(.fk-page)::before { display: none; }
 .fk-page .ss-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
 .fk-page .ss-tabs a { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--line-2); background: var(--card); color: var(--soft); font-size: 14.5px; text-decoration: none; }
 .fk-page .ss-tabs a[aria-current="page"] { background: var(--btn); color: var(--btn-text); border-color: transparent; }
+/* Etalase: kotak cara jual dan penjual di kartu */
+.fk-page .ss-sell { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; margin-bottom: 14px; padding: 18px 20px; border-radius: 22px; border: 1px solid rgba(242, 169, 62, 0.45); background: linear-gradient(135deg, rgba(242, 169, 62, 0.14), rgba(138, 133, 184, 0.12)); }
+.fk-page .ss-sell-txt { flex: 1 1 420px; min-width: 0; }
+.fk-page .ss-sell-txt b { font-weight: 600; font-size: 17px; }
+.fk-page .ss-sell ol { margin: 8px 0 0; padding-left: 20px; color: var(--soft); font-size: 14.5px; display: grid; gap: 3px; }
+.fk-page .ss-sell-cta { display: flex; flex-wrap: wrap; gap: 8px; }
+.fk-page .ss-et-seller { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+.fk-page .ss-et-seller .ss-av { width: 34px; height: 34px; font-size: 13px; }
+@media (max-width: 760px) { .fk-page .ss-sell { padding: 16px; } .fk-page .ss-sell-cta { width: 100%; } }
+/* Profil penjual: pengalaman, portofolio, jualan */
+.fk-page .ss-seller { margin: 4px 0 18px; padding: 16px; border-radius: 18px; border: 1px solid rgba(242, 169, 62, 0.45); background: rgba(242, 169, 62, 0.07); }
+.fk-page .ss-seller > b { display: block; font-weight: 600; font-size: 16px; }
+.fk-page .ss-seller > small { display: block; color: var(--faint); font-size: 13px; margin-top: 2px; }
+.fk-page .ss-pf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 10px; border-radius: 14px; background: var(--panel-2); }
+.fk-page .ss-pf-row .ss-input:last-of-type { grid-column: 1 / -1; }
+.fk-page .ss-pf-row .ss-link { justify-self: start; }
+@media (max-width: 560px) { .fk-page .ss-pf-row { grid-template-columns: 1fr; } }
+.fk-page .ss-myshop { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 8px; }
+.fk-page .ss-myshop li { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 14.5px; }
+.fk-page .ss-myshop a { color: var(--text); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fk-page .ss-pf { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.fk-page .ss-pf li { padding: 12px 14px; border-radius: 14px; background: var(--panel-2); }
+.fk-page .ss-pf b { font-weight: 500; }
+.fk-page .ss-pf a { color: var(--text); text-decoration: none; }
+.fk-page .ss-pf a:hover b { text-decoration: underline; }
+.fk-page .ss-pf small { display: block; color: var(--soft); font-size: 13.5px; margin-top: 2px; }
+/* Tombol kembali di halaman detail Social Space */
+.fk-page .ss-back { display: inline-flex; align-items: center; gap: 6px; margin: 0 0 14px -6px; padding: 8px 12px 8px 8px; border-radius: 999px; color: var(--soft); font-size: 15px; text-decoration: none; }
+.fk-page .ss-back:hover { color: var(--text); background: var(--panel-2); }
+/* Bar navigasi bawah Social Space, hanya di HP */
+.fk-page .ss-bnav { display: none; }
+@media (max-width: 760px) {
+  .fk-page .ss-top { display: none; }
+  .fk-page .ss-bnav { position: fixed; left: 10px; right: 10px; bottom: calc(10px + env(safe-area-inset-bottom)); z-index: 880; display: flex; justify-content: space-around; gap: 2px; padding: 6px; border-radius: 24px; border: 1px solid var(--line-2); background: color-mix(in srgb, var(--card) 86%, transparent); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); box-shadow: 0 18px 40px -18px rgba(14, 12, 26, 0.55); }
+  .fk-page .ss-bnav a { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 7px 2px 6px; border-radius: 18px; color: var(--faint); font-size: 11.5px; line-height: 1.2; text-decoration: none; white-space: nowrap; }
+  .fk-page .ss-bnav a[aria-current="page"] { color: var(--text); background: var(--panel-2); font-weight: 500; }
+  .fk-page .ss-bnav a[aria-current="page"] svg { color: var(--orange); }
+  .fk-page .ss-bnav-ic { position: relative; display: grid; place-items: center; }
+  .fk-page .ss-bnav .ss-dot { position: absolute; top: -6px; left: 14px; min-width: 17px; height: 17px; padding: 0 4px; font-size: 10.5px; line-height: 17px; }
+  /* Ruang supaya isi paling bawah tidak ketutup bar, dan tombol Tanya AI naik */
+  .fk-page:has(.ss-bnav) .frame { padding-bottom: calc(84px + env(safe-area-inset-bottom)); }
+  body:has(.ss-bnav) .fkai-fab { bottom: calc(88px + env(safe-area-inset-bottom)); }
+}
 .fk-page .ss-dot { min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px; background: var(--coral); color: #ffffff; font-size: 12px; line-height: 20px; text-align: center; }
 .fk-page .ss-card { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: clamp(16px, 2.4vw, 24px); }
 .fk-page .ss-card + .ss-card { margin-top: 14px; }
