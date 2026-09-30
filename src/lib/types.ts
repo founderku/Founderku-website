@@ -42,6 +42,7 @@ export interface PageRow {
   kind?: "produk" | "jasa" | "lainnya";
   price_unit?: string;
   show_in_social?: boolean;
+  social_hidden?: boolean;
   status: "active" | "locked" | "taken_down";
   click_count: number;
   created_at: string;

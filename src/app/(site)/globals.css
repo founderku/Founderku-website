@@ -682,7 +682,8 @@ body:has(.fk-page)::before { display: none; }
 .fk-page .ss-et { display: flex; flex-direction: column; }
 .fk-page .ss-et .ss-actions { margin-top: auto; padding-top: 16px; }
 .fk-page .ss-et-img { display: grid; place-items: center; aspect-ratio: 4 / 3; border-radius: 16px; overflow: hidden; background: linear-gradient(135deg, var(--orange), var(--coral)); color: #ffffff; font-size: 40px; text-decoration: none; }
-.fk-page .ss-et-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* Foto selalu memenuhi kotak (posisi absolut, tidak ikut ukuran asli foto) */
+.fk-page .ss-et-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .fk-page .ss-samples { margin-top: 34px; }
 .fk-page .ss-samples-h { font-size: 20px; font-weight: 500; letter-spacing: -0.015em; margin: 0; }
 .fk-page .ss-sample { border-style: dashed; }

@@ -34,13 +34,15 @@ export default async function DashboardPage({
     "/pajangin/dashboard"
   );
 
-  const [{ data: pages }] = await Promise.all([
+  const [{ data: pages }, { data: seller }] = await Promise.all([
     supabase
       .from("pages")
       .select("*, takedowns(reason, created_at)")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false })
       .returns<PageRowWithTakedown[]>(),
+    // Profil penjual Social Space: syarat tampil di Etalase
+    supabase.from("ss_profiles").select("handle, is_public").eq("user_id", user.id).maybeSingle(),
   ]);
 
   // Pro = trial ATAU langganan Founderku Pro masih aktif
@@ -52,6 +54,8 @@ export default async function DashboardPage({
   // (gak tayang ke publik) sampai upgrade lagi. Gak dihapus.
   const locked = lockedPageIds(pages ?? [], isPro, TIER_LIMITS.free.maxPages);
   const totalClicks = (pages ?? []).reduce((sum, p) => sum + p.click_count, 0);
+  const sellerReady = !!seller?.is_public;
+  const inEtalase = activePages.filter((p) => p.status === "active" && p.show_in_social && !p.social_hidden && !locked.has(p.id)).length;
 
   return (
     <FkShell>
@@ -121,6 +125,45 @@ export default async function DashboardPage({
         <Card className="col-span-2 flex items-center">
           <PlanBadge isPro={isPro} onTrial={access.onTrial} daysLeft={access.daysLeft} />
         </Card>
+      </div>
+
+      {/* Jembatan ke Social Space: halaman Pajangin bisa tampil di Etalase */}
+      <div
+        className="mb-6 sm:mb-8 rounded-[24px] p-[1.5px]"
+        style={{ background: "linear-gradient(135deg, #F2A93E, #E85F3D, #8A85B8)" }}
+      >
+        <div className="rounded-[22.5px] p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4" style={{ background: "var(--app-card-strong, #fff)" }}>
+          <span
+            aria-hidden="true"
+            className="shrink-0 w-12 h-12 rounded-2xl grid place-items-center text-white"
+            style={{ background: "linear-gradient(135deg, #8A85B8, #E85F3D)" }}
+          >
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M4 9.5 5.2 5h13.6L20 9.5M4 9.5V19h16V9.5M4 9.5c0 1.4 1.1 2.5 2.7 2.5s2.6-1.1 2.6-2.5c0 1.4 1.1 2.5 2.7 2.5s2.7-1.1 2.7-2.5c0 1.4 1 2.5 2.6 2.5S20 10.9 20 9.5M10 19v-4h4v4" />
+            </svg>
+          </span>
+          <div className="flex-1 min-w-0">
+            <h2 className="font-manrope font-extrabold text-base mb-1">
+              Social Space{" "}
+              <span className="align-middle ml-1 text-[10.5px] font-bold px-2 py-0.5 rounded-full bg-amber text-ink">Baru</span>
+            </h2>
+            <p className="text-xs text-text-soft">
+              {inEtalase > 0 && sellerReady
+                ? `${inEtalase} halamanmu tampil di Etalase dan bisa ditemukan semua pengguna Founderku.`
+                : !sellerReady
+                ? "Jual lebih luas di Etalase Social Space. Lengkapi profil penjual, lalu nyalakan \"Tampilkan di Social Space\" di halamanmu."
+                : "Profil penjualmu siap. Nyalakan \"Tampilkan di Social Space\" di halaman supaya muncul di Etalase."}
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Link href="/social-space">
+              <Pill variant="solid-amber" className="whitespace-nowrap">Lihat Etalase</Pill>
+            </Link>
+            <Link href="/social-space/profil">
+              <Pill variant="outline" className="whitespace-nowrap">{sellerReady ? "Profil penjual" : "Buat profil penjual"}</Pill>
+            </Link>
+          </div>
+        </div>
       </div>
 
       <Card className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
