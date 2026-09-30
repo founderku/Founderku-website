@@ -9,6 +9,7 @@ import { useEffect, useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { niceError, priceLabel, useT, type SsEtalaseItem, type SsProfile } from "./ss";
 import { LegacyCard } from "./SsFeed";
+import { ETALASE_SAMPLES } from "./etalaseSamples";
 import { ReportButton, SsTabs, Stars } from "./SsUi";
 
 type Legacy = { full_name: string; headline: string; city: string; skills_offer: string[]; skills_want: string[] };
@@ -38,7 +39,7 @@ function ClaimBanner({ userId }: { userId: string }) {
 }
 
 export function SsEtalase({ userId, isAdmin, landing = false }: { userId: string | null; isAdmin: boolean; landing?: boolean }) {
-  const { t } = useT();
+  const { t, lang } = useT();
   const [items, setItems] = useState<SsEtalaseItem[] | null>(null);
   const [q, setQ] = useState("");
   const [kind, setKind] = useState("");
@@ -64,6 +65,14 @@ export function SsEtalase({ userId, isAdmin, landing = false }: { userId: string
         return words.every((w) => hay.includes(w));
       });
   }, [items, q, kind]);
+
+  // Contoh berlabel hanya muncul saat penjual sungguhan masih sedikit dan
+  // tidak sedang mencari, lalu otomatis hilang begitu Etalase ramai.
+  const SAMPLE_UNTIL = 6;
+  const samples =
+    items !== null && !q.trim() && items.length < SAMPLE_UNTIL
+      ? ETALASE_SAMPLES.filter((s) => !kind || s.kind === kind)
+      : [];
 
   const body = (
       <div className="ss-wrap">
@@ -102,7 +111,7 @@ export function SsEtalase({ userId, isAdmin, landing = false }: { userId: string
         {err && <p className="ss-msg bad">{err}</p>}
         {items === null ? (
           <p className="ss-empty">{t.loading}</p>
-        ) : shown.length === 0 ? (
+        ) : shown.length === 0 && items.length === 0 && !q.trim() ? null : shown.length === 0 ? (
           <div className="ss-empty">
             <p>{items.length ? t.etNone : t.etEmpty}</p>
             <p className="ss-sub" style={{ margin: "8px auto 0" }}>{t.etJoin}</p>
@@ -153,6 +162,38 @@ export function SsEtalase({ userId, isAdmin, landing = false }: { userId: string
               </article>
             ))}
           </div>
+        )}
+
+        {samples.length > 0 && (
+          <section className="ss-samples" aria-labelledby="ss-samples-h">
+            <h3 id="ss-samples-h" className="ss-samples-h">{t.etSampleH}</h3>
+            <p className="ss-sub" style={{ marginTop: 4 }}>{t.etSampleNote}</p>
+            <div className="ss-grid" style={{ marginTop: 14 }}>
+              {samples.map((s) => (
+                <article key={s.key} className="ss-card ss-et ss-sample">
+                  <span className="ss-et-img" style={{ background: `linear-gradient(135deg, ${s.hue[0]}, ${s.hue[1]})` }} aria-hidden="true">
+                    <span>{s.name[lang].slice(0, 1).toUpperCase()}</span>
+                  </span>
+                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 12 }}>
+                    <span className="ss-badge gray">{t.kind[s.kind] ?? s.kind}</span>
+                    <span className="ss-badge ss-badge-sample">{t.sampleBadge}</span>
+                  </div>
+                  <h2 className="ss-et-name">{s.name[lang]}</h2>
+                  <p className="ss-desc" style={{ marginTop: 4 }}>{s.tagline[lang]}</p>
+                  <p className="ss-et-price">{priceLabel(s.price, s.unit[lang], t.askPrice)}</p>
+                  <div className="ss-meta">
+                    <span>{s.seller}</span>
+                    <span>{s.city}</span>
+                  </div>
+                  <div className="ss-actions">
+                    <Link className="btn btn-line btn-sm" href={userId ? "/pajangin/dashboard/new" : "/pajangin"}>
+                      {t.sampleCta}
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
         )}
       </div>
   );
