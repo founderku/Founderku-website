@@ -10,7 +10,7 @@ import { createClient } from "@/lib/supabase/client";
 import { niceError, priceLabel, useT, type SsEtalaseItem, type SsProfile } from "./ss";
 import { LegacyCard } from "./SsFeed";
 import { ETALASE_SAMPLES } from "./etalaseSamples";
-import { ReportButton, SsTabs, Stars } from "./SsUi";
+import { Avatar, ReportButton, SsTabs, Stars } from "./SsUi";
 
 type Legacy = { full_name: string; headline: string; city: string; skills_offer: string[]; skills_want: string[] };
 
@@ -83,9 +83,28 @@ export function SsEtalase({ userId, isAdmin, landing = false }: { userId: string
             {landing ? <h2 className="ss-h">{t.etH}</h2> : <h1 className="ss-h">{t.etH}</h1>}
             <p className="ss-sub">{t.etSub}</p>
           </div>
-          <Link className="btn btn-line btn-sm" href={userId ? "/pajangin/dashboard" : "/pajangin"}>
-            {t.etJoinCta}
-          </Link>
+        </div>
+
+        {/* Cara jual: Etalase diisi dari halaman Pajangin */}
+        <div className="ss-sell">
+          <div className="ss-sell-txt">
+            <b>{t.sellH}</b>
+            <ol>
+              <li>{t.sell1}</li>
+              <li>{t.sell2}</li>
+              <li>{t.sell3}</li>
+            </ol>
+          </div>
+          <div className="ss-sell-cta">
+            <Link className="btn btn-solid btn-sm" href={userId ? "/pajangin/dashboard/new" : "/pajangin"}>
+              {t.sellCta}
+            </Link>
+            {userId && (
+              <Link className="btn btn-line btn-sm" href="/social-space/profil">
+                {t.sellProfile}
+              </Link>
+            )}
+          </div>
         </div>
         <div className="notice">{t.etDisclaimer}</div>
 
@@ -140,12 +159,17 @@ export function SsEtalase({ userId, isAdmin, landing = false }: { userId: string
                   ) : null}{" "}
                   {priceLabel(it.promo_price, it.price_unit, t.askPrice)}
                 </p>
+                {it.seller_handle && it.seller_name ? (
+                  <Link className="ss-who ss-et-seller" href={`/social-space/u/${it.seller_handle}`}>
+                    <Avatar name={it.seller_name} />
+                    <span style={{ minWidth: 0 }}>
+                      <small>{t.soldBy}</small>
+                      <b>{it.seller_name}</b>
+                    </span>
+                  </Link>
+                ) : null}
                 <div className="ss-meta">
-                  {it.seller_handle ? (
-                    <Link href={`/social-space/u/${it.seller_handle}`}>{it.seller_name}</Link>
-                  ) : (
-                    <span>{t.sellerPajangin}</span>
-                  )}
+                  {!it.seller_handle && <span>{t.sellerPajangin}</span>}
                   {it.seller_city && <span>{it.seller_city}</span>}
                   {it.reviews > 0 && it.rating !== null && (
                     <span>

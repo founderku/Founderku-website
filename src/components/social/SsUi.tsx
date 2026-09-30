@@ -3,6 +3,7 @@
 // Komponen kecil yang dipakai berulang di halaman Social Space.
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState, type KeyboardEvent } from "react";
 import { createClient } from "@/lib/supabase/client";
 import {
@@ -31,9 +32,80 @@ export function unreadCount(rows: SsRequest[], userId: string) {
   }).length;
 }
 
-export function SsTabs({ active, userId, isAdmin = false }: { active: SsTab; userId: string | null; isAdmin?: boolean }) {
+// Ikon kecil untuk bar navigasi bawah di HP
+const NAV_ICON: Record<string, string> = {
+  etalase: "M4 9.5 5.2 5h13.6L20 9.5M4 9.5V19h16V9.5M4 9.5c0 1.4 1.1 2.5 2.7 2.5s2.6-1.1 2.6-2.5c0 1.4 1.1 2.5 2.7 2.5s2.7-1.1 2.7-2.5c0 1.4 1 2.5 2.6 2.5S20 10.9 20 9.5M10 19v-4h4v4",
+  info: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0-10v6m0-9.5v.5",
+  feed: "M7 7h11l-3-3M17 17H6l3 3",
+  inbox: "M4 5h16v11H9l-5 4V5Z",
+  profile: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 8c.8-3.5 3.6-5.5 7-5.5s6.2 2 7 5.5",
+  mod: "M12 3 4.5 6v5.5c0 4.5 3.2 8.2 7.5 9.5 4.3-1.3 7.5-5 7.5-9.5V6L12 3Z",
+  login: "M10 5H5v14h5M14 8l4 4-4 4M18 12H9",
+};
+
+function NavIcon({ k }: { k: string }) {
+  return (
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d={NAV_ICON[k]} />
+    </svg>
+  );
+}
+
+// Tombol kembali di halaman detail. Kalau sebelumnya pengguna sudah ada di
+// halaman Social Space lain, kembali ke halaman itu (posisi gulir ikut
+// kembali). Kalau dibuka langsung dari tautan, ke halaman induknya.
+function SsBack({ href }: { href: string }) {
+  const { t } = useT();
+  const router = useRouter();
+  return (
+    <a
+      className="ss-back"
+      href={href}
+      onClick={(e) => {
+        let prev = "";
+        try {
+          prev = sessionStorage.getItem("ss-prev") ?? "";
+        } catch {}
+        if (prev && window.history.length > 1) {
+          e.preventDefault();
+          router.back();
+        }
+      }}
+    >
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M15 5l-7 7 7 7" />
+      </svg>
+      {t.back}
+    </a>
+  );
+}
+
+export function SsTabs({
+  active,
+  userId,
+  isAdmin = false,
+  back,
+}: {
+  active: SsTab;
+  userId: string | null;
+  isAdmin?: boolean;
+  // Diisi di halaman detail: alamat induk untuk tombol kembali
+  back?: string;
+}) {
   const { t } = useT();
   const [unread, setUnread] = useState(0);
+
+  useEffect(() => {
+    // Catat halaman Social Space sebelumnya untuk tombol kembali
+    try {
+      const cur = location.pathname + location.search;
+      const last = sessionStorage.getItem("ss-last");
+      if (last !== cur) {
+        sessionStorage.setItem("ss-prev", last ?? "");
+        sessionStorage.setItem("ss-last", cur);
+      }
+    } catch {}
+  }, []);
 
   useEffect(() => {
     if (!userId) return;
@@ -57,15 +129,42 @@ export function SsTabs({ active, userId, isAdmin = false }: { active: SsTab; use
       : []),
     ...(isAdmin ? ([["mod", "/social-space/moderasi", t.tabMod]] as [SsTab, string, string][]) : []),
   ];
+  // Bar bawah di HP: label lebih pendek, dan tombol Masuk untuk pengunjung
+  const bottom: [string, string, string][] = [
+    ["etalase", "/social-space", t.tabEtalase],
+    ["info", "/social-space/info", t.tabInfo],
+    ["feed", "/social-space/tukar-skill", t.bnSwap],
+    ...(userId
+      ? ([
+          ["inbox", "/social-space/permintaan", t.bnInbox],
+          ["profile", "/social-space/profil", t.bnProfile],
+        ] as [string, string, string][])
+      : ([["login", "/masuk?next=%2Fsocial-space", t.bnLogin]] as [string, string, string][])),
+    ...(isAdmin ? ([["mod", "/social-space/moderasi", t.tabMod]] as [string, string, string][]) : []),
+  ];
   return (
-    <nav className="ss-tabs" aria-label={t.brand}>
-      {items.map(([k, href, label]) => (
-        <Link key={k} href={href} aria-current={k === active ? "page" : undefined}>
-          {label}
-          {k === "inbox" && unread > 0 && <span className="ss-dot">{unread}</span>}
-        </Link>
-      ))}
-    </nav>
+    <>
+      {back && <SsBack href={back} />}
+      <nav className="ss-tabs ss-top" aria-label={t.brand}>
+        {items.map(([k, href, label]) => (
+          <Link key={k} href={href} aria-current={k === active ? "page" : undefined}>
+            {label}
+            {k === "inbox" && unread > 0 && <span className="ss-dot">{unread}</span>}
+          </Link>
+        ))}
+      </nav>
+      <nav className="ss-bnav" aria-label={t.brand}>
+        {bottom.map(([k, href, label]) => (
+          <Link key={k} href={href} aria-current={k === active ? "page" : undefined}>
+            <span className="ss-bnav-ic">
+              <NavIcon k={k} />
+              {k === "inbox" && unread > 0 && <span className="ss-dot">{unread}</span>}
+            </span>
+            {label}
+          </Link>
+        ))}
+      </nav>
+    </>
   );
 }
 

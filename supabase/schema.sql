@@ -960,6 +960,30 @@ as $$
   select u is not null and (u = '' or (char_length(u) <= 200 and u ~ '^https://[^\s"<>]+$'));
 $$;
 
+create function public.ss_portfolio_ok(p jsonb)
+returns boolean
+language sql
+immutable
+set search_path = public
+as $$
+  -- Maksimal 8 karya. Tiap karya: judul 2-80 huruf, tautan https (boleh
+  -- kosong), catatan maksimal 200 huruf, tanpa isian lain.
+  select case when p is null or jsonb_typeof(p) <> 'array' then false
+    else jsonb_array_length(p) <= 8
+     and not exists (
+       select 1 from jsonb_array_elements(p) e
+        where jsonb_typeof(e) <> 'object'
+           or jsonb_typeof(e->'title') is distinct from 'string'
+           or char_length(btrim(e->>'title')) not between 2 and 80
+           or (e ? 'url' and jsonb_typeof(e->'url') <> 'string')
+           or (e ? 'note' and jsonb_typeof(e->'note') <> 'string')
+           or not public.ss_link_ok(coalesce(e->>'url', ''))
+           or char_length(coalesce(e->>'note', '')) > 200
+           or exists (select 1 from jsonb_object_keys(e) k where k not in ('title', 'url', 'note'))
+     )
+  end;
+$$;
+
 create function public.ss_touch()
 returns trigger
 language plpgsql
@@ -984,6 +1008,8 @@ create table public.ss_profiles (
   website text not null default '' check (public.ss_link_ok(website)),
   instagram text not null default '' check (public.ss_link_ok(instagram)),
   linkedin text not null default '' check (public.ss_link_ok(linkedin)),
+  experience text not null default '' check (char_length(experience) <= 1500),
+  portfolio jsonb not null default '[]'::jsonb check (public.ss_portfolio_ok(portfolio)),
   is_public boolean not null default true,
   -- Diisi sistem saja (tidak bisa diubah dari browser)
   from_tukarskill boolean not null default false,
@@ -1284,10 +1310,10 @@ grant select on public.ss_profiles, public.ss_posts, public.ss_reviews to anon, 
 grant select on public.ss_requests, public.ss_messages, public.ss_reports to authenticated;
 
 grant insert (user_id, handle, name, headline, bio, city, skills_offer, skills_want,
-              website, instagram, linkedin, is_public)
+              website, instagram, linkedin, experience, portfolio, is_public)
   on public.ss_profiles to authenticated;
 grant update (handle, name, headline, bio, city, skills_offer, skills_want,
-              website, instagram, linkedin, is_public)
+              website, instagram, linkedin, experience, portfolio, is_public)
   on public.ss_profiles to authenticated;
 grant delete on public.ss_profiles to authenticated;
 
@@ -1549,7 +1575,7 @@ grant execute on function public.ss_request_create(uuid, text), public.ss_reques
   public.ss_admin_overview(), public.ss_admin_moderate(uuid, text) to authenticated;
 -- Pembantu validasi dipakai di aturan CHECK (boleh dijalankan siapa saja, tanpa efek)
 grant execute on function public.ss_skills_ok(text[]), public.ss_clean_skills(text[]),
-  public.ss_link_ok(text), public.ss_is_partner(uuid), public.ss_requested_post(uuid) to anon, authenticated;
+  public.ss_link_ok(text), public.ss_portfolio_ok(jsonb), public.ss_is_partner(uuid), public.ss_requested_post(uuid) to anon, authenticated;
 
 -- ============================================================
 -- SOCIAL SPACE TAHAP 2 (tawaran TukarSkill lama, Etalase, Info)
@@ -1757,17 +1783,15 @@ as $$
   )
   select l.id, l.slug, l.product_name, coalesce(l.tagline, ''), l.kind,
          l.original_price, l.promo_price, l.price_unit, l.image_url, l.created_at,
-         case when sp.is_public and not sp.hidden then sp.name else null end,
-         case when sp.is_public and not sp.hidden then sp.handle else null end,
-         case when sp.is_public and not sp.hidden then sp.city else null end,
+         sp.name, sp.handle, sp.city,
          l.pro,
          (select round(avg(r.rating), 1) from ss_reviews r where r.reviewee_id = l.user_id),
          (select count(*)::int from ss_reviews r where r.reviewee_id = l.user_id)
     from live l
-    left join ss_profiles sp on sp.user_id = l.user_id
+    -- Wajib punya profil penjual publik: pembeli selalu tahu siapa penjualnya
+    join ss_profiles sp on sp.user_id = l.user_id and sp.is_public and not sp.hidden
    where l.status = 'active' and l.show_in_social and not l.social_hidden
      and (l.pro or l.urut <= 2)
-     and coalesce(sp.hidden, false) = false
    order by l.pro desc, l.created_at desc
    limit 500;
 $$;
