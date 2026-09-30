@@ -96,11 +96,11 @@ export default async function DashboardPage({
       <h1 className="font-manrope font-extrabold text-3xl tracking-tight mb-1">
         Halaman Saya
       </h1>
-      <p className="text-sm text-text-soft mb-8">
+      <p className="text-sm text-text-soft mb-6 sm:mb-8">
         Ringkasan semua halaman jualan yang sudah kamu buat.
       </p>
 
-      <div className="flex flex-col sm:flex-row gap-3.5 mb-8">
+      <div className="grid grid-cols-2 sm:flex sm:flex-row gap-3 sm:gap-3.5 mb-6 sm:mb-8">
         <Card className="flex-1">
           <div className="font-manrope font-extrabold text-2xl">
             {activePages.length}
@@ -118,7 +118,7 @@ export default async function DashboardPage({
             Total klik semua halaman
           </div>
         </Card>
-        <Card className="flex items-center">
+        <Card className="col-span-2 flex items-center">
           <PlanBadge isPro={isPro} onTrial={access.onTrial} daysLeft={access.daysLeft} />
         </Card>
       </div>
@@ -129,7 +129,7 @@ export default async function DashboardPage({
             Edit Style Tokomu
           </h2>
           <p className="text-xs text-text-soft">
-            Ganti gaya visual halaman produk kamu - 5 pilihan tersedia.
+            Ganti gaya visual halaman produk kamu - 8 pilihan tersedia.
           </p>
         </div>
         <Link href="/pajangin/dashboard/style">

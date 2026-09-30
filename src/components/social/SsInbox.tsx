@@ -75,7 +75,7 @@ export function SsInbox({ userId, isAdmin }: { userId: string; isAdmin: boolean 
         <div className="ss-head">
           <div>
             <h1 className="ss-h">{t.inboxH}</h1>
-            <p className="ss-sub">{t.inboxSub}</p>
+            <p className="ss-sub ss-headsub">{t.inboxSub}</p>
           </div>
         </div>
         <div className="ss-tabs" role="tablist">

@@ -88,7 +88,7 @@ export function SsPostEditor({ userId, postId, isAdmin }: { userId: string; post
   return (
     <section className="band hero-band" style={{ borderTop: 0 }}>
       <div className="ss-wrap">
-        <SsTabs active="profile" userId={userId} isAdmin={isAdmin} back="/social-space/profil" />
+        <SsTabs active="profile" userId={userId} isAdmin={isAdmin} />
         <div className="ss-narrow ss-card">
           <h1 className="ss-h">{postId ? t.postEditH : t.postNewH}</h1>
           <p className="ss-sub" style={{ marginBottom: 20 }}>{t.postSub}</p>

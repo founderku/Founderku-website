@@ -587,9 +587,25 @@ body:has(.fk-page)::before { display: none; }
 .fk-page .ss-pf a { color: var(--text); text-decoration: none; }
 .fk-page .ss-pf a:hover b { text-decoration: underline; }
 .fk-page .ss-pf small { display: block; color: var(--soft); font-size: 13.5px; margin-top: 2px; }
-/* Tombol kembali di halaman detail Social Space */
-.fk-page .ss-back { display: inline-flex; align-items: center; gap: 6px; margin: 0 0 14px -6px; padding: 8px 12px 8px 8px; border-radius: 999px; color: var(--soft); font-size: 15px; text-decoration: none; }
-.fk-page .ss-back:hover { color: var(--text); background: var(--panel-2); }
+/* Etalase: langkah jual, catatan aman, pintu Tukar Skill */
+.fk-page .ss-sell ol { list-style: none; padding: 0; }
+.fk-page .ss-sell li { display: flex; gap: 8px; align-items: baseline; }
+.fk-page .ss-sell li i { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; display: inline-grid; place-items: center; font-style: normal; font-size: 11.5px; font-weight: 600; background: linear-gradient(135deg, var(--orange), var(--coral)); color: #1a1730; transform: translateY(3px); }
+.fk-page .ss-sell-s { display: none; }
+.fk-page .ss-safe { display: flex; gap: 10px; align-items: flex-start; margin: 0 0 18px; padding: 10px 14px; border-radius: 14px; background: var(--panel-2); color: var(--soft); font-size: 13.5px; line-height: 1.45; }
+.fk-page .ss-safe svg { flex-shrink: 0; color: #2c8a57; margin-top: 1px; }
+.fk-page .ss-et-img { position: relative; }
+.fk-page .ss-et-kind { display: none; }
+.fk-page .ss-et-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+.fk-page .ss-et-name a { color: inherit; text-decoration: none; }
+.fk-page .ss-et-name a:hover { text-decoration: underline; }
+.fk-page .ss-swap { display: flex; align-items: center; gap: 14px; margin-top: 30px; padding: 16px 18px; border-radius: 22px; border: 1px solid var(--line-2); background: var(--card); color: var(--text); text-decoration: none; transition: transform 0.2s, border-color 0.2s; }
+.fk-page .ss-swap:hover { transform: translateY(-2px); border-color: var(--orange); }
+.fk-page .ss-swap .orb { width: 44px; height: 44px; }
+.fk-page .ss-swap-txt { flex: 1; min-width: 0; }
+.fk-page .ss-swap-txt b { display: block; font-weight: 600; font-size: 16.5px; }
+.fk-page .ss-swap-txt small { display: block; color: var(--soft); font-size: 14px; margin-top: 2px; }
+.fk-page .ss-swap-go { font-size: 14.5px; font-weight: 500; white-space: nowrap; color: var(--coral); }
 /* Bar navigasi bawah Social Space, hanya di HP */
 .fk-page .ss-bnav { display: none; }
 @media (max-width: 760px) {
@@ -603,6 +619,7 @@ body:has(.fk-page)::before { display: none; }
   /* Ruang supaya isi paling bawah tidak ketutup bar, dan tombol Tanya AI naik */
   .fk-page:has(.ss-bnav) .frame { padding-bottom: calc(84px + env(safe-area-inset-bottom)); }
   body:has(.ss-bnav) .fkai-fab { bottom: calc(88px + env(safe-area-inset-bottom)); }
+
 }
 .fk-page .ss-dot { min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px; background: var(--coral); color: #ffffff; font-size: 12px; line-height: 20px; text-align: center; }
 .fk-page .ss-card { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: clamp(16px, 2.4vw, 24px); }
@@ -687,3 +704,93 @@ body:has(.fk-page)::before { display: none; }
 
 /* iPhone otomatis zoom kalau kolom isian di bawah 16px. Paksa 16px di layar sentuh supaya tidak zoom. */
 @media (pointer:coarse){:is(input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=color]),select,textarea):not(.text-lg,.text-xl,.text-2xl,.text-3xl){font-size:16px!important}}
+
+/* Social Space di HP (di akhir file supaya menang dari aturan umum di atas) */
+@media (max-width: 760px) {
+  /* ---- Social Space di HP: ringkas, lebih banyak gambar, lebih sedikit huruf ---- */
+  .fk-page .ss-hero .hero-top p { display: none; }
+  .fk-page .ss-et-head { display: none; }
+  .fk-page .ss-headsub { display: none; }
+  .fk-page .ss-head { margin-bottom: 14px; }
+  .fk-page .ss-sub { font-size: 14.5px; }
+  /* Kotak cara jual jadi 3 chip langkah + tombol */
+  .fk-page .ss-sell { padding: 14px; gap: 12px; border-radius: 20px; }
+  .fk-page .ss-sell-txt { flex-basis: 100%; }
+  .fk-page .ss-sell-txt b { font-size: 15.5px; }
+  .fk-page .ss-sell ol { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 10px; }
+  .fk-page .ss-sell li { flex-direction: column; align-items: flex-start; gap: 6px; padding: 9px 9px 10px; border-radius: 14px; background: var(--card); font-size: 12px; line-height: 1.25; color: var(--text); }
+  .fk-page .ss-sell li i { transform: none; width: 22px; height: 22px; }
+  .fk-page .ss-sell-s { display: inline; }
+  .fk-page .ss-sell-l { display: none; }
+  .fk-page .ss-sell-cta .btn { flex: 1; justify-content: center; }
+  .fk-page .ss-safe { font-size: 12.5px; padding: 9px 12px; margin-bottom: 14px; }
+  /* Cari + filter satu baris geser */
+  .fk-page .ss-tools { gap: 8px; margin-bottom: 14px; }
+  .fk-page .ss-tools .ss-input { flex-basis: 100%; }
+  .fk-page .ss-chips-row { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; max-width: 100%; }
+  .fk-page .ss-chips-row::-webkit-scrollbar { display: none; }
+  .fk-page .ss-chips-row a { padding: 7px 14px; font-size: 13.5px; white-space: nowrap; }
+  /* Kartu Etalase 2 kolom ala marketplace */
+  .fk-page .ss-grid:has(> .ss-et) { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .fk-page .ss-et { padding: 8px; border-radius: 18px; }
+  .fk-page .ss-et .ss-et-img { aspect-ratio: 1 / 1; border-radius: 13px; font-size: 32px; }
+  .fk-page .ss-sample .ss-et-img { aspect-ratio: 1 / 1; }
+  .fk-page .ss-sample:nth-child(n + 5) { display: flex; }
+  .fk-page .ss-sample:nth-child(n + 7) { display: none; }
+  .fk-page .ss-et-kind { display: block; position: absolute; left: 7px; top: 7px; padding: 2px 9px; border-radius: 999px; background: rgba(14, 12, 26, 0.55); color: #fff; font-size: 11px; font-style: normal; font-weight: 500; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+  .fk-page .ss-et-badges, .fk-page .ss-et-tag, .fk-page .ss-et-view { display: none; }
+  .fk-page .ss-et-name { font-size: 14.5px; line-height: 1.3; margin-top: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .fk-page .ss-et-price { font-size: 14px; margin-top: 4px; }
+  .fk-page .ss-et-price s { display: none; }
+  .fk-page .ss-et-seller { margin-top: 8px; padding-top: 8px; gap: 7px; }
+  .fk-page .ss-et-seller .ss-av { width: 24px; height: 24px; font-size: 10px; }
+  .fk-page .ss-et-seller small { display: none; }
+  .fk-page .ss-et-seller b { font-size: 12.5px; }
+  .fk-page .ss-et .ss-meta { font-size: 11.5px; margin-top: 4px; gap: 2px 8px; }
+  .fk-page .ss-et .ss-actions { padding-top: 6px; margin-top: auto; }
+  .fk-page .ss-et .ss-actions .ss-link { font-size: 11.5px; }
+  .fk-page .ss-et .ss-actions .btn-line { padding: 6px 10px; font-size: 12px; width: 100%; justify-content: center; }
+  .fk-page .ss-samples { margin-top: 24px; }
+  .fk-page .ss-samples-h { font-size: 17px; }
+  .fk-page .ss-samples .ss-sub { font-size: 12.5px; }
+  .fk-page .ss-swap { margin-top: 20px; padding: 12px 14px; gap: 12px; }
+  .fk-page .ss-swap .orb { width: 38px; height: 38px; }
+  .fk-page .ss-swap-txt b { font-size: 15px; }
+  .fk-page .ss-swap-txt small { font-size: 12.5px; }
+  .fk-page .ss-swap-go { font-size: 0; }
+  .fk-page .ss-swap-go::after { content: "→"; font-size: 20px; }
+}
+
+/* Akun Saya: pintasan dan grid tools */
+.fk-app .fk-shortcuts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.fk-app .fk-shortcut { display: flex; flex-direction: column; gap: 2px; padding: 14px; border-radius: 20px; border: 1px solid var(--app-border); background: var(--app-card); color: var(--app-text, inherit); text-decoration: none; transition: transform 0.2s, border-color 0.2s; }
+.fk-app .fk-shortcut:hover { transform: translateY(-2px); border-color: rgba(242, 169, 62, 0.6); }
+.fk-app .fk-shortcut svg { color: #e15c3e; margin-bottom: 6px; }
+.fk-app .fk-shortcut b { font-weight: 600; font-size: 14.5px; line-height: 1.25; }
+.fk-app .fk-shortcut small { font-size: 12px; color: var(--app-soft); }
+@media (max-width: 600px) {
+  .fk-app .fk-app-card { padding: 18px; border-radius: 22px; }
+  .fk-app .fk-shortcuts { gap: 8px; }
+  .fk-app .fk-shortcut { padding: 12px 10px; border-radius: 18px; }
+  .fk-app .fk-shortcut b { font-size: 13px; }
+  .fk-app .fk-shortcut small { display: none; }
+  /* Tools jadi grid ikon ala layar HP: 4 kolom, tanpa deskripsi */
+  .fk-app .fk-tools-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px 6px; }
+  .fk-app .fk-tool-tile { flex-direction: column; gap: 7px; padding: 4px 0; border: 0; background: transparent; box-shadow: none; text-align: center; }
+  .fk-app .fk-tool-tile:hover { transform: none; box-shadow: none; }
+  .fk-app .fk-tool-tile > span:first-child > span { width: 52px !important; height: 52px !important; border-radius: 16px; }
+  .fk-app .fk-tool-tile > div { width: 100%; }
+  .fk-app .fk-tool-name { font-size: 11.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .fk-app .fk-tool-desc, .fk-app .fk-tool-arrow { display: none; }
+}
+
+/* Masuk & daftar di HP: formulir langsung terlihat, penjelasan panjang disembunyikan */
+@media (max-width: 760px) {
+  .fk-page .auth-grid { display: flex; flex-direction: column; align-items: stretch; gap: 0; }
+  .fk-page .auth-intro { display: contents; }
+  .fk-page .auth-intro .eyebrow { order: 0; }
+  .fk-page .auth-intro .h1 { order: 1; font-size: clamp(30px, 8.5vw, 36px); margin-bottom: 18px; }
+  .fk-page .auth-card { order: 2; padding: 20px; border-radius: 22px; }
+  .fk-page .auth-sub, .fk-page .auth-points { display: none; }
+  .fk-page .auth-trust { order: 3; margin-top: 22px; }
+}

@@ -195,29 +195,46 @@ export default async function AkunPage({
           )}
         </section>
 
+        {/* ---------- Pintasan ---------- */}
+        <nav className="fk-rise fk-shortcuts mb-6" style={rise(2)} aria-label="Pintasan">
+          {[
+            ["/pajangin/dashboard", "Halaman jualanku", "Pajangin", "M4 9.5 5.2 5h13.6L20 9.5M4 9.5V19h16V9.5M4 9.5c0 1.4 1.1 2.5 2.7 2.5s2.6-1.1 2.6-2.5c0 1.4 1.1 2.5 2.7 2.5s2.7-1.1 2.7-2.5c0 1.4 1 2.5 2.6 2.5S20 10.9 20 9.5"],
+            ["/social-space", "Social Space", "Etalase & info", "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm-9-9h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3Z"],
+            ["/social-space/profil", "Profil penjual", "Pengalaman & porto", "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm-7 8c.8-3.5 3.6-5.5 7-5.5s6.2 2 7 5.5"],
+          ].map(([href, label, sub, d]) => (
+            <Link key={href} href={href} className="fk-shortcut">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d={d} />
+              </svg>
+              <b>{label}</b>
+              <small>{sub}</small>
+            </Link>
+          ))}
+        </nav>
+
         {/* ---------- Tools ---------- */}
         <section className="fk-rise fk-app-card p-6 sm:p-7 mb-6" style={rise(2)}>
           <p className="font-manrope text-xs font-bold uppercase tracking-widest text-text-faint mb-4">
             Tools Kamu
           </p>
-          <div className="grid sm:grid-cols-2 gap-3">
+          <div className="fk-tools-grid grid sm:grid-cols-2 gap-3">
             {tools.map((tool, i) => {
               // Tool baru di /tools/<id> otomatis dianggap bagian aplikasi
               const internal =
                 INTERNAL_TOOL_URLS[tool.id] ?? (tool.linkUrl?.startsWith("/tools/") ? tool.linkUrl : undefined);
               const className =
-                "fk-rise group flex items-center gap-3.5 rounded-2xl border border-border bg-white p-3.5 transition-all duration-300 hover:-translate-y-1 hover:border-amber/60 hover:shadow-[0_14px_30px_-18px_rgba(225,92,62,0.55)]";
+                "fk-rise fk-tool-tile group flex items-center gap-3.5 rounded-2xl border border-border bg-white p-3.5 transition-all duration-300 hover:-translate-y-1 hover:border-amber/60 hover:shadow-[0_14px_30px_-18px_rgba(225,92,62,0.55)]";
               const inner = (
                 <>
                   <span className="transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
                     <ToolIcon id={tool.id} name={tool.name} />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <div className="font-manrope font-extrabold text-sm">{tool.name}</div>
-                    <div className="text-xs text-text-soft leading-snug mt-0.5">{toolDesc(tool)}</div>
+                    <div className="fk-tool-name font-manrope font-extrabold text-sm">{tool.name}</div>
+                    <div className="fk-tool-desc text-xs text-text-soft leading-snug mt-0.5">{toolDesc(tool)}</div>
                   </div>
                   <span
-                    className="text-text-faint transition-transform duration-300 group-hover:translate-x-1"
+                    className="fk-tool-arrow text-text-faint transition-transform duration-300 group-hover:translate-x-1"
                     aria-hidden="true"
                   >
                     {internal ? "→" : "↗"}
