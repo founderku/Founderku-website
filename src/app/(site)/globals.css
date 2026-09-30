@@ -516,6 +516,27 @@ body:has(.fk-page)::before { display: none; }
 .fk-page .pj-mock-body b { font-size: 14px; font-weight: 600; }
 .fk-page .pj-price { color: #e85f3d; font-weight: 600; font-size: 15px; }
 .fk-page .pj-wa { margin-top: 8px; text-align: center; font-size: 12px; font-weight: 500; padding: 9px; border-radius: 999px; background: #1a1730; color: #ffffff; }
+.fk-page .pj-tag { position: absolute; top: 10px; left: 10px; padding: 3px 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.92); color: #1a1730; font-size: 11.5px; font-weight: 500; }
+/* Bagian "Bukan cuma buat produk": 3 jenis halaman Pajangin */
+.fk-page .pj-kinds { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.fk-page .pj-kind { display: flex; flex-direction: column; gap: 10px; padding: 22px; border-radius: 24px; background: var(--card); border: 1px solid var(--line); }
+.fk-page .pj-kind h3 { font-size: 21px; font-weight: 500; letter-spacing: -0.02em; margin: 0; }
+.fk-page .pj-kind p { color: var(--soft); font-size: 14.5px; line-height: 1.5; margin: 0; }
+.fk-page .pj-kind ul { list-style: none; padding: 0; margin: 2px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.fk-page .pj-kind li { padding: 5px 11px; border-radius: 999px; background: var(--panel-2); font-size: 12.5px; }
+.fk-page .pj-kind-tag { align-self: flex-start; padding: 3px 11px; border-radius: 999px; font-size: 12px; font-weight: 500; background: rgba(242, 169, 62, 0.16); color: var(--pill-text); }
+.fk-page .pj-kind-mini { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 12px 12px 16px; border-radius: 16px; background: var(--panel); border: 1px solid var(--line); }
+.fk-page .pj-kind-price { font-size: 17px; font-weight: 500; color: #e85f3d; white-space: nowrap; }
+.fk-page .pj-kind-price small { font-size: 12px; color: var(--soft); font-weight: 400; }
+.fk-page .pj-kind-cta { padding: 8px 12px; border-radius: 999px; background: #25d366; color: #ffffff; font-size: 12px; font-weight: 500; white-space: nowrap; }
+.fk-page .pj-kind:nth-child(2) { background: var(--btn); color: var(--btn-text); border-color: transparent; }
+.fk-page .pj-kind:nth-child(2) p, .fk-page .pj-kind:nth-child(2) .pj-kind-price small { color: inherit; opacity: 0.72; }
+.fk-page .pj-kind:nth-child(2) li { background: color-mix(in srgb, currentColor 12%, transparent); }
+.fk-page .pj-kind:nth-child(2) .pj-kind-mini { background: color-mix(in srgb, currentColor 8%, transparent); border-color: color-mix(in srgb, currentColor 14%, transparent); }
+.fk-page .pj-kind:nth-child(2) .pj-kind-tag { background: #f2a93e; color: #1a1730; }
+.fk-page .pj-kinds-note { margin-top: 14px; font-size: 14px; color: var(--soft); }
+.fk-page .pj-kinds-note a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 920px) { .fk-page .pj-kinds { grid-template-columns: 1fr; } }
 .fk-page .pj-stack { position: relative; height: 230px; max-width: 260px; margin: 0 auto; width: 100%; }
 .fk-page .pj-stack img { display: block; }
 .fk-page .pj-s1, .fk-page .pj-s2 { position: absolute; width: 70%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 16px; top: 18px; box-shadow: 0 16px 30px -18px rgba(14, 12, 26, 0.5); opacity: 0.75; }
