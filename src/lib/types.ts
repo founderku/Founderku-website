@@ -39,6 +39,7 @@ export interface PageRow {
   highlights: string[] | null;
   image_url: string | null;
   whatsapp_number: string;
+  contact_email?: string;
   kind?: "produk" | "jasa" | "lainnya";
   price_unit?: string;
   show_in_social?: boolean;

@@ -752,3 +752,23 @@ do $$ begin
   raise notice 'T161 style tidak dikenal: GAGAL (lolos)';
 exception when check_violation then raise notice 'T161 style tidak dikenal: LULUS (ditolak)'; end $$;
 reset role;
+-- ---------- Kontak email di halaman Pajangin (migration 019) ----------
+set role authenticated;
+set request.jwt.claim.sub = '22222222-2222-2222-2222-222222222222';
+update public.pages set whatsapp_number = '', contact_email = 'jualan@umkm.id' where slug = 'produk-1';
+select 'T171 penjual ganti kontak ke email: ' || case when whatsapp_number = '' and contact_email = 'jualan@umkm.id' then 'LULUS' else 'GAGAL' end from public.pages where slug = 'produk-1';
+do $$ begin
+  update public.pages set whatsapp_number = '', contact_email = '' where slug = 'produk-1';
+  raise notice 'T172 halaman tanpa kontak sama sekali: GAGAL (lolos)';
+exception when check_violation then raise notice 'T172 halaman tanpa kontak sama sekali: LULUS (ditolak)'; end $$;
+do $$ begin
+  update public.pages set whatsapp_number = '', contact_email = 'a@b.co?bcc=korban@x.com' where slug = 'produk-1';
+  raise notice 'T173 email berisi sisipan (bcc): GAGAL (lolos)';
+exception when check_violation then raise notice 'T173 email berisi sisipan (bcc): LULUS (ditolak)'; end $$;
+do $$ begin
+  update public.pages set whatsapp_number = '', contact_email = 'bukan-email' where slug = 'produk-1';
+  raise notice 'T174 email asal-asalan: GAGAL (lolos)';
+exception when check_violation then raise notice 'T174 email asal-asalan: LULUS (ditolak)'; end $$;
+update public.pages set whatsapp_number = '628', contact_email = '' where slug = 'produk-1';
+select 'T175 kembali ke WhatsApp: ' || case when whatsapp_number = '628' and contact_email = '' then 'LULUS' else 'GAGAL' end from public.pages where slug = 'produk-1';
+reset role;

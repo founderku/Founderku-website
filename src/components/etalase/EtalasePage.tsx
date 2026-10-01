@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { OwnerPreviewBanner } from "@/components/OwnerPreviewBanner";
-import { toWhatsAppLink } from "@/lib/validators";
+import { jalurKontak, linkKontak } from "@/lib/kontak";
 import { pageWaMessage } from "@/lib/pagePrice";
 import { storeTitle, styleOf } from "@/lib/storeStyles";
 import type { StoreStyleId } from "@/lib/types";
 import { ETALASE_FONTS } from "./fonts";
 import s from "./etalase.module.css";
-import { KIND_TEXT, Photo, STEPS, WaIcon, discountOf, kindOf, rupiah } from "./parts";
+import { KIND_TEXT, KontakIcon, Photo, STEPS, discountOf, kindOf, rupiah, viaKontak } from "./parts";
 import { ShareButton } from "./ShareButton";
 
 export interface EtalaseData {
@@ -17,6 +17,8 @@ export interface EtalaseData {
   highlights: string[];
   imageUrl: string | null;
   whatsappNumber: string;
+  // Dipakai kalau penjual memilih email (nomor WhatsApp kosong)
+  contactEmail?: string | null;
   showWatermark: boolean;
   storeSlug: string | null;
   priceUnit?: string | null;
@@ -55,10 +57,10 @@ export function EtalasePage({
   const disc = hasPrice ? discountOf(data.originalPrice, data.promoPrice) : null;
   const unit = hasPrice ? (data.priceUnit ?? "").trim() : "";
   const priceText = hasPrice ? rupiah(Number(data.promoPrice)) : "Tanya harga";
-  const waLink = data.whatsappNumber
-    ? toWhatsAppLink(data.whatsappNumber, pageWaMessage(name, data.promoPrice, data.priceUnit))
-    : "#";
-  const ctaText = hasPrice ? kt.cta : "Tanya harga via WhatsApp";
+  const jalur = jalurKontak(data.whatsappNumber, data.contactEmail);
+  const waLink =
+    linkKontak(data.whatsappNumber, data.contactEmail, pageWaMessage(name, data.promoPrice, data.priceUnit), `Tanya ${name}`) ?? "#";
+  const ctaText = viaKontak(hasPrice ? kt.cta : "Tanya harga via WhatsApp", jalur);
   const store = storeTitle(data.storeSlug);
   const eyebrow = store ? `${kt.label} · ${store}` : kt.label;
 
@@ -112,11 +114,11 @@ export function EtalasePage({
           ))}
         </ul>
       )}
-      <a href={waLink} target="_blank" rel="noopener noreferrer" className={s.cta}>
-        <WaIcon />
+      <a href={waLink} target={jalur === "email" ? undefined : "_blank"} rel="noopener noreferrer" className={s.cta}>
+        <KontakIcon jalur={jalur} />
         {ctaText}
       </a>
-      <p className={s.note}>Transaksi langsung dengan penjual lewat WhatsApp.</p>
+      <p className={s.note}>{viaKontak("Transaksi langsung dengan penjual lewat WhatsApp.", jalur)}</p>
       {data.storeSlug && (
         <Link href={`/toko/${data.storeSlug}`} className={s.storeLink}>
           Lihat semua dari {store}
@@ -219,7 +221,7 @@ export function EtalasePage({
                 <span className={s.stepNum}>{i + 1}</span>
                 <span className={s.stepText}>
                   <strong>{t}</strong>
-                  <span>{d}</span>
+                  <span>{viaKontak(d, jalur)}</span>
                 </span>
               </li>
             ))}
@@ -246,8 +248,8 @@ export function EtalasePage({
               {unit ? ` ${unit}` : ""}
             </span>
           </span>
-          <a href={waLink} target="_blank" rel="noopener noreferrer" className={s.stickyCta}>
-            <WaIcon />
+          <a href={waLink} target={jalur === "email" ? undefined : "_blank"} rel="noopener noreferrer" className={s.stickyCta}>
+            <KontakIcon jalur={jalur} />
             {hasPrice ? kt.short : "Tanya"}
           </a>
         </div>

@@ -1967,3 +1967,23 @@ revoke execute on function public.ss_legacy_interest_create(uuid, text), public.
 grant execute on function public.ss_legacy_interest_create(uuid, text), public.ss_admin_set_info_access(text, boolean)
   to authenticated;
 grant execute on function public.ss_etalase(), public.ss_can_post_info() to anon, authenticated;
+
+-- ============================================================
+-- Kontak email di halaman Pajangin (migration 019)
+-- ============================================================
+alter table public.pages add column if not exists contact_email text not null default '';
+
+alter table public.pages drop constraint if exists pages_contact_email_ok;
+alter table public.pages add constraint pages_contact_email_ok check (
+  contact_email = ''
+  or (char_length(contact_email) <= 120
+      and contact_email ~ '^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$')
+);
+
+alter table public.pages drop constraint if exists pages_punya_kontak;
+alter table public.pages add constraint pages_punya_kontak check (
+  btrim(whatsapp_number) <> '' or contact_email <> ''
+);
+
+grant insert (contact_email) on public.pages to authenticated;
+grant update (contact_email) on public.pages to authenticated;
