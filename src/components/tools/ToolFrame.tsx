@@ -10,6 +10,7 @@ import {
 } from "@/lib/tools/cloud";
 import { FkNavMount } from "@/components/shell/FkNavMount";
 import styles from "./ToolFrame.module.css";
+import { PaketTool, PilihProyek, TandaCetak, pakaiProyek } from "./ProKit";
 
 // Paling lama nunggu data dari akun sebelum tool tetap ditampilkan
 const BATAS_TUNGGU_MS = 4000;
@@ -102,6 +103,12 @@ export function ToolFrame({
           </a>
           <span className={styles.garis} aria-hidden="true">/</span>
           <span className={styles.nama}>{toolName}</span>
+          {pakaiProyek(toolId) && siap && (
+            <>
+              <span className={styles.garis} aria-hidden="true">/</span>
+              <PilihProyek toolId={toolId} />
+            </>
+          )}
         </nav>
         <div className={styles.status} role="status" aria-live="polite">
           {status === "memuat" && <span className={styles.redup}>Menyiapkan...</span>}
@@ -139,7 +146,11 @@ export function ToolFrame({
         </div>
       </div>
       {siap ? (
-        children
+        <>
+          <TandaCetak />
+          <PaketTool toolId={toolId} toolName={toolName} />
+          {children}
+        </>
       ) : (
         <div className={`${styles.tunggu} ${themed ? styles.tungguThemed : ""}`} aria-busy="true">
           <span className={styles.putar} aria-hidden="true" />

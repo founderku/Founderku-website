@@ -678,7 +678,8 @@ create trigger tool_data_touch
   before insert or update on public.tool_data
   for each row execute function public.tool_data_touch();
 
--- Batas per akun: maksimal 100 kunci dan total 5 MB data tools.
+-- Batas per akun: maksimal 300 kunci dan total 10 MB data tools
+-- (dinaikkan di migration 017 karena tools kini bisa punya banyak proyek).
 -- Dikunci per akun (advisory lock) supaya dua simpanan bersamaan tidak
 -- bisa sama-sama lolos melewati batas.
 create function public.tool_data_limit()
@@ -698,12 +699,12 @@ begin
     where user_id = new.user_id
       and not (tg_op = 'UPDATE' and user_id = old.user_id and key = old.key)
       and key <> new.key;
-  if jumlah >= 100 then
-    raise exception 'Batas data tools tercapai (maksimal 100 simpanan per akun)'
+  if jumlah >= 300 then
+    raise exception 'Batas data tools tercapai (maksimal 300 simpanan per akun)'
       using errcode = 'check_violation';
   end if;
-  if ukuran + octet_length(new.value::text) > 5000000 then
-    raise exception 'Batas ukuran data tools tercapai (maksimal 5 MB per akun)'
+  if ukuran + octet_length(new.value::text) > 10000000 then
+    raise exception 'Batas ukuran data tools tercapai (maksimal 10 MB per akun)'
       using errcode = 'check_violation';
   end if;
   return new;

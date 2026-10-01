@@ -1,5 +1,6 @@
 import "server-only";
 import toolsData from "@public/data/tools.json";
+import plans from "@public/data/plans.json";
 import { PRICING, formatRupiah, periodSuffix } from "@/lib/pricing";
 import { allPosts, pick as pickText } from "@/lib/blog";
 
@@ -12,7 +13,8 @@ import { allPosts, pick as pickText } from "@/lib/blog";
 export type Lang = "id" | "en" | "tr";
 
 // Jatah pertanyaan per hari (tanggal WIB). Trial & Pro dapat lebih banyak.
-export const AI_LIMIT = { free: 5, pro: 30 } as const;
+// Angkanya dari public/data/plans.json supaya sama dengan penjelasan Gratis vs Pro.
+export const AI_LIMIT = { free: plans.aiLimit.free, pro: plans.aiLimit.pro };
 
 // Batas isi supaya kuota Gemini tidak habis oleh pesan raksasa
 export const MAX_PESAN = 8; // riwayat yang dikirim ke AI (hemat token)
@@ -114,7 +116,10 @@ export function rapikanJawaban(t: string): string {
 
 export type HasilAI = { ok: true; text: string } | { ok: false; alasan: "sibuk" | "diblokir" | "gagal" };
 
-async function tanyaGemini(pesan: PesanChat[], sistem: string): Promise<HasilAI> {
+// json: minta jawaban berupa JSON (dipakai "Isi draf dengan AI" di tools)
+export type OpsiAI = { maksToken?: number; json?: boolean };
+
+async function tanyaGemini(pesan: PesanChat[], sistem: string, opsi: OpsiAI = {}): Promise<HasilAI> {
   const base = process.env.GEMINI_API_BASE || "https://generativelanguage.googleapis.com";
   // "gemini-flash-lite-latest" selalu menunjuk Flash-Lite terbaru. Bisa
   // diganti lewat env GEMINI_MODEL dengan nama model yang tampil di AI Studio.
@@ -128,7 +133,11 @@ async function tanyaGemini(pesan: PesanChat[], sistem: string): Promise<HasilAI>
       body: JSON.stringify({
         systemInstruction: { parts: [{ text: sistem }] },
         contents: pesan.map((m) => ({ role: m.role, parts: [{ text: m.text }] })),
-        generationConfig: { temperature: 0.6, maxOutputTokens: 800 },
+        generationConfig: {
+          temperature: 0.6,
+          maxOutputTokens: opsi.maksToken ?? 800,
+          ...(opsi.json ? { responseMimeType: "application/json" } : {}),
+        },
       }),
       signal: ctrl.signal,
       cache: "no-store",
@@ -152,7 +161,7 @@ async function tanyaGemini(pesan: PesanChat[], sistem: string): Promise<HasilAI>
 }
 
 // Groq: format API seperti OpenAI (chat/completions)
-async function tanyaGroq(pesan: PesanChat[], sistem: string): Promise<HasilAI> {
+async function tanyaGroq(pesan: PesanChat[], sistem: string, opsi: OpsiAI = {}): Promise<HasilAI> {
   const base = process.env.GROQ_API_BASE || "https://api.groq.com";
   const model = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
   const ctrl = new AbortController();
@@ -168,8 +177,9 @@ async function tanyaGroq(pesan: PesanChat[], sistem: string): Promise<HasilAI> {
           ...pesan.map((m) => ({ role: m.role === "model" ? "assistant" : "user", content: m.text })),
         ],
         temperature: 0.6,
-        max_completion_tokens: 800,
+        max_completion_tokens: opsi.maksToken ?? 800,
         reasoning_effort: "low",
+        ...(opsi.json ? { response_format: { type: "json_object" } } : {}),
       }),
       signal: ctrl.signal,
       cache: "no-store",
@@ -189,14 +199,14 @@ async function tanyaGroq(pesan: PesanChat[], sistem: string): Promise<HasilAI> {
 
 // Coba Gemini dulu; kalau penuh atau gagal (bukan karena diblokir filter
 // keamanan), otomatis pindah ke Groq. User tidak perlu tahu bedanya.
-export async function tanyaAI(pesan: PesanChat[], sistem: string): Promise<HasilAI> {
+export async function tanyaAI(pesan: PesanChat[], sistem: string, opsi: OpsiAI = {}): Promise<HasilAI> {
   let hasil: HasilAI | null = null;
   if (process.env.GEMINI_API_KEY) {
-    hasil = await tanyaGemini(pesan, sistem);
+    hasil = await tanyaGemini(pesan, sistem, opsi);
     if (hasil.ok || hasil.alasan === "diblokir") return hasil;
   }
   if (process.env.GROQ_API_KEY) {
-    const cadangan = await tanyaGroq(pesan, sistem);
+    const cadangan = await tanyaGroq(pesan, sistem, opsi);
     if (cadangan.ok || !hasil) return cadangan;
     // Dua-duanya gagal: laporkan "sibuk" kalau salah satunya penuh
     return { ok: false, alasan: hasil.alasan === "sibuk" || cadangan.alasan === "sibuk" ? "sibuk" : cadangan.alasan };

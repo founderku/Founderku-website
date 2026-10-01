@@ -10,6 +10,7 @@
 import { useId, useState } from "react";
 import { nf, parseAngka } from "@/lib/tools/format";
 import s from "./kit.module.css";
+import { TombolAI, TombolLogo } from "../ProKit";
 
 type Anak = { children?: React.ReactNode };
 
@@ -256,9 +257,19 @@ export function Button({
 }
 
 // Tombol standar di kanan atas: isi contoh, kosongkan, cetak PDF
-export function StdActions({ onContoh, onReset }: { onContoh?: () => void; onReset?: () => void }) {
+export function StdActions({
+  onContoh,
+  onReset,
+  ai,
+}: {
+  onContoh?: () => void;
+  onReset?: () => void;
+  // Tombol "Isi dengan AI" (fitur Pro), hanya untuk tools yang punya spek di lib/aiIsi.ts
+  ai?: Omit<React.ComponentProps<typeof TombolAI>, "className">;
+}) {
   return (
     <>
+      {ai && <TombolAI {...ai} className={`${s.btn} ${s.line} ${s.small}`} />}
       {onContoh && (
         <Button small onClick={onContoh}>
           Isi contoh
@@ -275,6 +286,7 @@ export function StdActions({ onContoh, onReset }: { onContoh?: () => void; onRes
           Kosongkan
         </Button>
       )}
+      <TombolLogo className={`${s.btn} ${s.line} ${s.small}`} />
       <Button small variant="solid" onClick={() => window.print()}>
         Cetak / PDF
       </Button>

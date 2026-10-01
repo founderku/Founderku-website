@@ -173,3 +173,12 @@
     padding: 0;
   }
 }
+
+.logoBtn {
+  padding: 7px 14px;
+  border: 1px solid #d6d3dd;
+  border-radius: 999px;
+  background: transparent;
+  font-size: 13px;
+  cursor: pointer;
+}

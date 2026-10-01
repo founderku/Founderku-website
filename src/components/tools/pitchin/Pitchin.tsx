@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useToolState } from "@/lib/tools/useToolState";
+import { isiYangKosong } from "@/components/tools/ProKit";
 import { SLIDES } from "@/lib/tools/pitchin/slides";
 import {
   Card,
@@ -108,7 +109,23 @@ export default function Pitchin() {
       eyebrow="Founderku Tools · Pendanaan"
       title="Pitchin"
       desc="Susun pitch deck 10 slide dengan panduan tiap slide. Isi poin-poinnya, lihat pratinjaunya, lalu cetak jadi PDF satu slide per halaman."
-      actions={<StdActions onContoh={() => reset(CONTOH)} onReset={() => reset()} />}
+      actions={
+        <StdActions
+          onContoh={() => reset(CONTOH)}
+          onReset={() => reset()}
+          ai={{
+            toolId: "pitchin",
+            contohIde: "Contoh: aplikasi kasir di HP untuk warung kopi. Sudah dipakai 40 warung di Bekasi, butuh dana untuk tim sales.",
+            onIsi: (isi) =>
+              setD((x) => ({
+                ...x,
+                nama: x.nama.trim() ? x.nama : String(isi.nama ?? ""),
+                tagline: x.tagline.trim() ? x.tagline : String(isi.tagline ?? ""),
+                isi: isiYangKosong(x.isi, isi.isi),
+              })),
+          }}
+        />
+      }
       printHead={false}
     >
       <div className="no-print">

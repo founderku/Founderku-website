@@ -1,6 +1,7 @@
 "use client";
 
 import { useToolState } from "@/lib/tools/useToolState";
+import { isiYangKosong } from "@/components/tools/ProKit";
 import { BLOK, NAMA_MODEL, butir, kelengkapan, saran, type Model } from "@/lib/tools/kanvasin/calc";
 import {
   Badge,
@@ -55,7 +56,23 @@ export default function Kanvasin() {
       eyebrow="Founderku Tools · Mahasiswa & Karier"
       title="Kanvasin"
       desc="Susun Business Model Canvas atau Lean Canvas dengan pertanyaan panduan di tiap blok. Cocok untuk tugas kuliah kewirausahaan, PKM, dan lomba bisnis. Hasilnya bisa dicetak satu halaman."
-      actions={<StdActions onContoh={() => reset(CONTOH)} onReset={() => reset()} />}
+      actions={
+        <StdActions
+          onContoh={() => reset(CONTOH)}
+          onReset={() => reset()}
+          ai={{
+            toolId: "kanvasin",
+            konteks: { model: d.model },
+            contohIde: "Contoh: kedai kopi kecil dekat kampus, buka sampai malam, harga ramah mahasiswa.",
+            onIsi: (isi) =>
+              setD((x) => ({
+                ...x,
+                nama: x.nama.trim() ? x.nama : String(isi.nama ?? ""),
+                [x.model]: isiYangKosong(x[x.model], isi.kotak),
+              })),
+          }}
+        />
+      }
       printHead={false}
     >
       <div className="no-print">

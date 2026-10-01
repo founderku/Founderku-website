@@ -1,12 +1,16 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState, type SetStateAction } from "react";
 import { catatPerubahan } from "./cloud";
+import { daftarkanNamaData, dengarProyek, kunciData, proyekAktif } from "./proyek";
 import type { ToolId } from "./registry";
 
 // Penyimpanan standar untuk tools baru: isi tool disimpan di browser
 // (localStorage) dengan kunci "<idtool>-<nama>", lalu otomatis ikut
 // tersimpan ke akun lewat cloud.ts kalau user login dengan trial/Pro.
+//
+// Tool bisa punya banyak proyek (proyek.ts): kunci data mengikuti proyek
+// yang sedang dibuka, dan isi tool otomatis berganti saat proyek dipindah.
 //
 // Tool dibungkus ToolFrame, yang baru menampilkan tool SETELAH data dari
 // akun selesai diambil. Jadi saat komponen ini pertama jalan, localStorage
@@ -29,40 +33,56 @@ function baca<T>(key: string, awal: T): T {
   }
 }
 
+// simpan: false saat isi baru dibaca (buka tool / pindah proyek), supaya
+// tidak langsung ditulis ulang
+type Kotak<T> = { key: string; state: T; simpan: boolean };
+
 export function useToolState<T>(toolId: ToolId, nama: string, awal: T) {
-  const key = `${toolId}-${nama}`;
-  const [state, setState] = useState<T>(() => baca(key, awal));
-  const lewati = useRef(true); // jangan tulis ulang saat baru dibuka
+  daftarkanNamaData(toolId, nama);
+  const [proyek, setProyek] = useState(() => proyekAktif(toolId));
+  const key = kunciData(toolId, nama, proyek);
+  const [kotak, setKotak] = useState<Kotak<T>>(() => ({ key, state: baca(key, awal), simpan: false }));
+
+  useEffect(() => dengarProyek(toolId, () => setProyek(proyekAktif(toolId))), [toolId]);
+
+  // Proyek berganti: muat isi proyek itu (pola "state turunan" React)
+  if (kotak.key !== key) setKotak({ key, state: baca(key, awal), simpan: false });
 
   useEffect(() => {
-    if (lewati.current) {
-      lewati.current = false;
-      return;
-    }
+    if (!kotak.simpan) return;
     try {
-      window.localStorage.setItem(key, JSON.stringify(state));
-      catatPerubahan(key);
+      window.localStorage.setItem(kotak.key, JSON.stringify(kotak.state));
+      catatPerubahan(kotak.key);
     } catch {
       // penyimpanan penuh / diblokir: tool tetap jalan selama halaman terbuka
     }
-  }, [key, state]);
+  }, [kotak]);
+
+  const setState = useCallback((v: SetStateAction<T>) => {
+    setKotak((k) => ({
+      ...k,
+      state: typeof v === "function" ? (v as (prev: T) => T)(k.state) : v,
+      simpan: true,
+    }));
+  }, []);
 
   // Kosongkan: hapus dari browser (dan dari akun), kembali ke nilai awal
   const reset = useCallback(
     (nilai?: T) => {
-      try {
-        window.localStorage.removeItem(key);
-        catatPerubahan(key);
-      } catch {
-        // abaikan
-      }
-      lewati.current = nilai === undefined;
-      setState(nilai ?? awal);
+      setKotak((k) => {
+        try {
+          window.localStorage.removeItem(k.key);
+          catatPerubahan(k.key);
+        } catch {
+          // abaikan
+        }
+        return { key: k.key, state: nilai ?? awal, simpan: nilai !== undefined };
+      });
     },
     // awal sengaja tidak dipantau: nilai bawaan tool tidak berubah
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [key],
+    [],
   );
 
-  return [state, setState, reset] as const;
+  return [kotak.state, setState, reset] as const;
 }

@@ -1,6 +1,6 @@
 // Daftar id tools yang datanya bisa "disimpan ke akun" (tabel tool_data).
 // Tool baru cukup ditambahkan di sini: database menerima kunci berformat
-// "<idtool>-<nama>" apa pun (dibatasi 100 simpanan / 5 MB per akun), jadi
+// "<idtool>-<nama>" apa pun (dibatasi 300 simpanan / 10 MB per akun), jadi
 // tidak perlu ubah database lagi.
 // Id harus huruf kecil/angka, 3-24 karakter, diawali huruf.
 export const TOOL_IDS = [
@@ -30,6 +30,8 @@ export const TOOL_IDS = [
   "ipkin",
   "proposalin",
   "kanvasin",
+  // Bukan tool: simpanan bersama semua tools (logo usaha untuk PDF Pro)
+  "brand",
 ] as const;
 
 export type ToolId = (typeof TOOL_IDS)[number];

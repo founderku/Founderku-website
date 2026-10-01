@@ -1,0 +1,173 @@
+{
+ "_catatan": "Sumber tunggal penjelasan Gratis vs Pro di tiap tool, halaman Tools, beranda, dan Harga. Hanya tulis fitur yang benar-benar ada di kode. Tanpa nominal harga (harga hanya di pricing.json).",
+ "proyekTools": [
+  "validasiin",
+  "runwayin",
+  "unitin",
+  "sahamin",
+  "pitchin",
+  "wawancarain",
+  "pasarin",
+  "fiturin",
+  "proyeksiin",
+  "investorin",
+  "laporin",
+  "bagiin",
+  "hargain",
+  "kompetitorin",
+  "personain",
+  "targetin",
+  "valuasiin",
+  "stuney",
+  "ipkin",
+  "proposalin",
+  "kanvasin"
+ ],
+ "pdfTools": [
+  "validasiin",
+  "runwayin",
+  "unitin",
+  "sahamin",
+  "pitchin",
+  "wawancarain",
+  "pasarin",
+  "fiturin",
+  "proyeksiin",
+  "investorin",
+  "laporin",
+  "bagiin",
+  "hargain",
+  "kompetitorin",
+  "personain",
+  "targetin",
+  "valuasiin",
+  "stuney",
+  "ipkin",
+  "proposalin",
+  "kanvasin",
+  "notain",
+  "kontrakin"
+ ],
+ "aiTools": [
+  "validasiin",
+  "personain",
+  "kompetitorin",
+  "pitchin",
+  "kanvasin"
+ ],
+ "baris": {
+  "inti": {
+   "free": {
+    "id": "Semua hitungan dan fitur inti, tanpa batas waktu",
+    "en": "All calculations and core features, no time limit",
+    "tr": "Tüm hesaplamalar ve temel özellikler, süre sınırı yok"
+   }
+  },
+  "simpan": {
+   "free": {
+    "id": "Data tersimpan di browser ini",
+    "en": "Data saved in this browser",
+    "tr": "Veriler bu tarayıcıda saklanır"
+   },
+   "pro": {
+    "id": "Tersimpan di akun, bisa dibuka dari HP atau laptop mana pun",
+    "en": "Saved to your account, open it on any phone or laptop",
+    "tr": "Hesabına kaydedilir, her telefon veya bilgisayardan açılır"
+   }
+  },
+  "proyek": {
+   "free": {
+    "id": "1 proyek",
+    "en": "1 project",
+    "tr": "1 proje"
+   },
+   "pro": {
+    "id": "Proyek tanpa batas (misal beberapa ide atau skenario)",
+    "en": "Unlimited projects (e.g. several ideas or scenarios)",
+    "tr": "Sınırsız proje (örneğin birkaç fikir veya senaryo)"
+   }
+  },
+  "pdf": {
+   "free": {
+    "id": "Cetak / PDF dengan catatan kecil \"Dibuat dengan Founderku\"",
+    "en": "Print / PDF with a small \"Made with Founderku\" note",
+    "tr": "Küçük \"Founderku ile yapıldı\" notuyla yazdır / PDF"
+   },
+   "pro": {
+    "id": "PDF bersih + logo usahamu sendiri",
+    "en": "Clean PDF + your own business logo",
+    "tr": "Temiz PDF + kendi işletme logon"
+   }
+  },
+  "ai": {
+   "pro": {
+    "id": "Isi draf dengan AI dari ide singkatmu",
+    "en": "Fill a first draft with AI from your short idea",
+    "tr": "Kısa fikrinden yapay zekâ ile ilk taslak"
+   }
+  }
+ },
+ "pajangin": {
+  "free": [
+   {
+    "id": "2 halaman jualan aktif",
+    "en": "2 active sales pages",
+    "tr": "2 aktif satış sayfası"
+   },
+   {
+    "id": "Semua 8 style, foto, harga, tombol WhatsApp",
+    "en": "All 8 styles, photos, prices, WhatsApp button",
+    "tr": "8 stilin tamamı, fotoğraf, fiyat, WhatsApp butonu"
+   },
+   {
+    "id": "Halaman Toko dan tampil di Etalase Social Space",
+    "en": "Store page and listing in the Social Space Showcase",
+    "tr": "Mağaza sayfası ve Sosyal Alan Vitrini'nde yer alma"
+   },
+   {
+    "id": "Ada watermark Pajangin",
+    "en": "Pajangin watermark shown",
+    "tr": "Pajangin filigranı görünür"
+   }
+  ],
+  "pro": [
+   {
+    "id": "Halaman jualan tanpa batas",
+    "en": "Unlimited sales pages",
+    "tr": "Sınırsız satış sayfası"
+   },
+   {
+    "id": "Tanpa watermark",
+    "en": "No watermark",
+    "tr": "Filigran yok"
+   },
+   {
+    "id": "Tampil lebih dulu di Etalase Social Space",
+    "en": "Shown first in the Social Space Showcase",
+    "tr": "Sosyal Alan Vitrini'nde önce gösterilir"
+   }
+  ]
+ },
+ "asisten": {
+  "free": {
+   "id": "Tanya AI: {n} pertanyaan per hari",
+   "en": "Ask AI: {n} questions per day",
+   "tr": "Yapay zekâya sor: günde {n} soru"
+  },
+  "pro": {
+   "id": "Tanya AI: {n} pertanyaan per hari",
+   "en": "Ask AI: {n} questions per day",
+   "tr": "Yapay zekâya sor: günde {n} soru"
+  }
+ },
+ "aiLimit": {
+  "free": 5,
+  "pro": 30
+ },
+ "pendek": {
+  "simpan": "simpan di akun",
+  "proyek": "proyek tanpa batas",
+  "pdf": "PDF bersih + logo",
+  "ai": "isi dengan AI"
+ }
+}

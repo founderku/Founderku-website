@@ -106,6 +106,33 @@ export function bersihkanSaatLogout() {
   if (bacaMeta().owner) hapusDataToolLokal();
 }
 
+// ---- Paket akun (dipakai fitur Pro di tools: PDF bersih, logo, proyek, AI) ----
+// Ini hanya untuk tampilan. Batas yang penting tetap dikunci di server:
+// simpan ke akun (policy tool_data) dan AI (dicek di /api/ai/isi).
+
+export type Paket = "memuat" | "tamu" | "free" | "pro";
+let paket: Paket = "memuat";
+const pendengarPaket = new Set<(p: Paket) => void>();
+
+function setPaket(p: Paket) {
+  paket = p;
+  pendengarPaket.forEach((f) => f(p));
+}
+
+export function dengarPaket(f: (p: Paket) => void) {
+  pendengarPaket.add(f);
+  f(paket);
+  return () => {
+    pendengarPaket.delete(f);
+  };
+}
+
+// Kunci bersama semua tools (misal logo usaha). Ikut disinkron di tool mana pun.
+const BERSAMA = "brand-";
+function milikTool(key: string, toolId: ToolId) {
+  return key.startsWith(toolId + "-") || key.startsWith(BERSAMA);
+}
+
 // ---- Status yang ditampilkan di bar atas tool ----
 
 let status: StatusSinkron = "memuat";
@@ -296,16 +323,19 @@ export async function siapkanSinkron(toolId: ToolId, masihDitunggu: () => boolea
   } = await supabase.auth.getSession();
   if (!session) {
     setStatus("tamu");
+    setPaket("tamu");
     return;
   }
   const userId = session.user.id;
 
   const [proRes, dataRes] = await Promise.all([
     supabase.rpc("current_user_has_pro"),
-    supabase.from("tool_data").select("key, value").like("key", `${toolId}-%`),
+    supabase.from("tool_data").select("key, value").or(`key.like.${toolId}-%,key.like.${BERSAMA}%`),
   ]);
+  if (!proRes.error) setPaket(proRes.data === true ? "pro" : "free");
   if (proRes.error || dataRes.error || !masihDitunggu()) {
     // Gagal cek akun (misal offline): tool tetap jalan pakai data browser
+    if (proRes.error) setPaket("free");
     setStatus("gagal");
     return;
   }
@@ -335,7 +365,7 @@ export async function siapkanSinkron(toolId: ToolId, masihDitunggu: () => boolea
   // Kunci tool ini: yang ada di akun, atau yang pernah disinkron
   const kunciTerkait = new Set<string>([
     ...dariAkun.keys(),
-    ...synced.filter((k) => k.startsWith(toolId + "-")),
+    ...synced.filter((k) => milikTool(k, toolId)),
   ]);
   for (const key of kunciTerkait) {
     if (dirty.includes(key)) continue; // perubahan lokal yang belum terkirim menang
@@ -352,7 +382,7 @@ export async function siapkanSinkron(toolId: ToolId, masihDitunggu: () => boolea
   }
   // Kunci lokal tool ini yang belum pernah ada di akun: perlu dikirim
   for (const key of semuaKunciToolLokal()) {
-    if (key.startsWith(toolId + "-") && !dariAkun.has(key) && !synced.includes(key)) {
+    if (milikTool(key, toolId) && !dariAkun.has(key) && !synced.includes(key)) {
       dirty = tambah(dirty, key);
     }
   }
