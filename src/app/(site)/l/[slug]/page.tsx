@@ -106,6 +106,7 @@ export default async function PublicPage({
         highlights: page.highlights ?? [],
         imageUrl: page.image_url,
         whatsappNumber: page.whatsapp_number,
+        contactEmail: page.contact_email,
         showWatermark: !owner?.has_pro,
         storeSlug: owner?.store_slug ?? null,
         kind: page.kind ?? "produk",

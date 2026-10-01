@@ -7,11 +7,20 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { Pill } from "@/components/ui/Pill";
 import { PhonePreview } from "@/components/etalase/PhonePreview";
-import { KIND_LABEL, PageKindSelect, PriceExtras, SocialToggle, type PageKind } from "@/components/PageKindFields";
+import {
+  KIND_LABEL,
+  KontakFields,
+  PageKindSelect,
+  PriceExtras,
+  SocialToggle,
+  cekKontak,
+  kolomKontak,
+  type PageKind,
+} from "@/components/PageKindFields";
+import type { JalurKontak } from "@/lib/kontak";
 import {
   isValidSlugFormat,
   isSlugBlocked,
-  isValidWhatsAppNumber,
   slugify,
   suggestSlugAlternative,
 } from "@/lib/validators";
@@ -31,6 +40,8 @@ export default function NewPagePage() {
   const [askPrice, setAskPrice] = useState(false);
   const [showInSocial, setShowInSocial] = useState(false);
   const [whatsapp, setWhatsapp] = useState("");
+  const [kontakEmail, setKontakEmail] = useState("");
+  const [jalur, setJalur] = useState<JalurKontak>("wa");
   const [slug, setSlug] = useState("");
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreviewUrl, setPhotoPreviewUrl] = useState<string | null>(null);
@@ -169,8 +180,8 @@ export default function NewPagePage() {
     if (!askPrice && !originalPrice) return setFormError("Harga normal wajib diisi, atau centang \"Tanya harga\".");
     if (!askPrice && promoPrice && Number(promoPrice) >= Number(originalPrice))
       return setFormError("Harga promo harus lebih kecil dari harga normal (atau kosongkan kalau tidak ada promo).");
-    if (!isValidWhatsAppNumber(whatsapp))
-      return setFormError("Format nomor WhatsApp tidak valid.");
+    const salahKontak = cekKontak(jalur, whatsapp, kontakEmail);
+    if (salahKontak) return setFormError(salahKontak);
     if (slugStatus !== "ready")
       return setFormError("Tunggu sebentar, sistem masih nyiapin alamat halaman kamu.");
 
@@ -200,7 +211,11 @@ export default function NewPagePage() {
 
       if (uploadError) {
         setSubmitting(false);
-        setFormError("Gagal unggah foto: " + uploadError.message);
+        setFormError(
+          /row-level security|policy/i.test(uploadError.message)
+            ? "Kuota foto akunmu sudah penuh (60 foto). Hapus halaman yang tidak dipakai, lalu coba lagi."
+            : "Gagal unggah foto: " + uploadError.message,
+        );
         return;
       }
 
@@ -223,7 +238,7 @@ export default function NewPagePage() {
       price_unit: askPrice ? "" : priceUnit.trim(),
       show_in_social: showInSocial,
       highlights: highlights.filter((h) => h.trim().length > 0),
-      whatsapp_number: whatsapp,
+      ...kolomKontak(jalur, whatsapp, kontakEmail),
       image_url: imageUrl,
     });
 
@@ -381,17 +396,14 @@ export default function NewPagePage() {
             {photoError && <p className="text-xs text-coral mt-1">{photoError}</p>}
           </Field>
 
-          <Field label="Nomor WhatsApp">
-            <input
-              className="w-full border border-border rounded-xl px-3.5 py-2.5 text-sm"
-              placeholder="0812xxxxxxxx"
-              value={whatsapp}
-              onChange={(e) => setWhatsapp(e.target.value)}
-            />
-            <p className="text-[11px] text-text-faint mt-1">
-              Format akan divalidasi otomatis sebelum publish.
-            </p>
-          </Field>
+          <KontakFields
+            jalur={jalur}
+            onJalur={setJalur}
+            whatsapp={whatsapp}
+            onWhatsapp={setWhatsapp}
+            email={kontakEmail}
+            onEmail={setKontakEmail}
+          />
 
           {productName.trim().length > 0 && (
             <p className="text-xs text-text-faint -mt-1">
@@ -431,7 +443,8 @@ export default function NewPagePage() {
               priceUnit: askPrice ? "" : priceUnit,
               highlights,
               imageUrl: photoPreviewUrl,
-              whatsappNumber: whatsapp,
+              whatsappNumber: jalur === "wa" ? whatsapp : "",
+              contactEmail: jalur === "email" ? kontakEmail : "",
               showWatermark: true,
               storeSlug,
               kind,

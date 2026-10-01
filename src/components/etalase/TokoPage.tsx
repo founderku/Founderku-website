@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { OwnerPreviewBanner } from "@/components/OwnerPreviewBanner";
-import { toWhatsAppLink } from "@/lib/validators";
+import { jalurKontak, linkKontak } from "@/lib/kontak";
 import { pagePriceText, pageWaMessage } from "@/lib/pagePrice";
 import { storeTitle, styleOf } from "@/lib/storeStyles";
 import type { PageRow, StoreStyleId } from "@/lib/types";
 import { ETALASE_FONTS } from "./fonts";
 import s from "./etalase.module.css";
-import { KIND_TEXT, Photo, WaIcon, discountOf, kindOf, rupiah, type PageKind } from "./parts";
+import { KIND_TEXT, KontakIcon, Photo, discountOf, kindOf, rupiah, type PageKind } from "./parts";
 import { ShareButton } from "./ShareButton";
 
 export interface TokoData {
@@ -18,9 +18,10 @@ export interface TokoData {
 function Tile({ p }: { p: PageRow }) {
   const hasPrice = p.promo_price !== null && p.promo_price !== undefined;
   const disc = hasPrice ? discountOf(p.original_price, p.promo_price) : null;
-  const wa = p.whatsapp_number
-    ? toWhatsAppLink(p.whatsapp_number, pageWaMessage(p.product_name, p.promo_price, p.price_unit))
-    : "#";
+  const jalur = jalurKontak(p.whatsapp_number, p.contact_email);
+  const wa =
+    linkKontak(p.whatsapp_number, p.contact_email, pageWaMessage(p.product_name, p.promo_price, p.price_unit), `Tanya ${p.product_name}`) ??
+    "#";
   return (
     <article className={s.tile}>
       <Link href={`/l/${p.slug}`} aria-label={p.product_name}>
@@ -39,8 +40,14 @@ function Tile({ p }: { p: PageRow }) {
           <Link href={`/l/${p.slug}`} className={s.tileBtn}>
             Lihat
           </Link>
-          <a href={wa} target="_blank" rel="noopener noreferrer" className={s.tileWa} aria-label={`Chat penjual soal ${p.product_name}`}>
-            <WaIcon />
+          <a
+            href={wa}
+            target={jalur === "email" ? undefined : "_blank"}
+            rel="noopener noreferrer"
+            className={s.tileWa}
+            aria-label={`Hubungi penjual soal ${p.product_name}`}
+          >
+            <KontakIcon jalur={jalur} />
           </a>
         </div>
       </div>
@@ -67,10 +74,14 @@ export function TokoPage({
     .map((k) => ({ kind: k, items: data.products.filter((p) => kindOf(p.kind) === k) }))
     .filter((g) => g.items.length > 0);
   const heroPhoto = theme.hero === "cover" ? data.products.find((p) => p.image_url)?.image_url ?? null : null;
-  const contact = data.products.find((p) => p.whatsapp_number)?.whatsapp_number;
+  // Kontak toko: WhatsApp dari halaman mana pun, kalau tidak ada baru email
+  const contact =
+    data.products.find((p) => jalurKontak(p.whatsapp_number, null)) ??
+    data.products.find((p) => jalurKontak(null, p.contact_email));
+  const contactJalur = contact ? jalurKontak(contact.whatsapp_number, contact.contact_email) : null;
   const promoCount = data.products.filter((p) => discountOf(p.original_price, p.promo_price)).length;
   const contactLink = contact
-    ? toWhatsAppLink(contact, `Halo! Saya lihat toko ${title} dari web. Boleh tanya-tanya?`)
+    ? linkKontak(contact.whatsapp_number, contact.contact_email, `Halo! Saya lihat toko ${title} dari web. Boleh tanya-tanya?`, `Tanya toko ${title}`)
     : null;
 
   const page = (
@@ -98,8 +109,8 @@ export function TokoPage({
             {promoCount > 0 && <span>{promoCount} lagi promo</span>}
           </div>
           {contactLink && (
-            <a href={contactLink} target="_blank" rel="noopener noreferrer" className={s.cta}>
-              <WaIcon />
+            <a href={contactLink} target={contactJalur === "email" ? undefined : "_blank"} rel="noopener noreferrer" className={s.cta}>
+              <KontakIcon jalur={contactJalur} />
               Chat penjual
             </a>
           )}

@@ -5,6 +5,8 @@
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { isValidEmail, type JalurKontak } from "@/lib/kontak";
+import { isValidWhatsAppNumber } from "@/lib/validators";
 
 export type PageKind = "produk" | "jasa" | "lainnya";
 
@@ -178,4 +180,96 @@ export function SocialToggle({ value, onChange }: { value: boolean; onChange: (v
       </div>
     </div>
   );
+}
+
+// Cara pembeli menghubungi: WhatsApp atau email (untuk penjual yang
+// tidak mau nomor WhatsApp-nya tampil publik)
+export function KontakFields({
+  jalur,
+  onJalur,
+  whatsapp,
+  onWhatsapp,
+  email,
+  onEmail,
+}: {
+  jalur: JalurKontak;
+  onJalur: (v: JalurKontak) => void;
+  whatsapp: string;
+  onWhatsapp: (v: string) => void;
+  email: string;
+  onEmail: (v: string) => void;
+}) {
+  return (
+    <div>
+      <label className="block text-xs font-manrope font-bold uppercase tracking-wide text-text-soft mb-1.5">
+        Pembeli menghubungi kamu lewat
+      </label>
+      <div className="flex gap-2 mb-2" role="group" aria-label="Cara pembeli menghubungi">
+        {(
+          [
+            ["wa", "WhatsApp"],
+            ["email", "Email"],
+          ] as [JalurKontak, string][]
+        ).map(([k, t]) => (
+          <button
+            key={k}
+            type="button"
+            aria-pressed={jalur === k}
+            onClick={() => onJalur(k)}
+            className={`flex-1 border rounded-xl px-3 py-2.5 text-sm font-manrope font-bold transition-colors ${
+              jalur === k ? "bg-ink text-white border-transparent" : "border-border text-text-soft"
+            }`}
+          >
+            {t}
+          </button>
+        ))}
+      </div>
+      {jalur === "wa" ? (
+        <>
+          <input
+            className="w-full border border-border rounded-xl px-3.5 py-2.5 text-sm"
+            placeholder="0812xxxxxxxx"
+            inputMode="tel"
+            aria-label="Nomor WhatsApp"
+            value={whatsapp}
+            onChange={(e) => onWhatsapp(e.target.value)}
+          />
+          <p className="text-[11px] text-text-faint mt-1">
+            Nomor ini tampil di tombol pesan. Tidak mau nomormu terlihat publik? Pilih Email.
+          </p>
+        </>
+      ) : (
+        <>
+          <input
+            type="email"
+            className="w-full border border-border rounded-xl px-3.5 py-2.5 text-sm"
+            placeholder="nama@email.com"
+            inputMode="email"
+            autoComplete="email"
+            aria-label="Email untuk pembeli"
+            maxLength={120}
+            value={email}
+            onChange={(e) => onEmail(e.target.value)}
+          />
+          <p className="text-[11px] text-text-faint mt-1">
+            Pembeli akan mengirim email ke alamat ini. Alamatnya terlihat di halamanmu, jadi pakai email khusus jualan
+            kalau perlu.
+          </p>
+        </>
+      )}
+    </div>
+  );
+}
+
+// Cek isian kontak sebelum simpan. Kembalikan pesan error atau null.
+export function cekKontak(jalur: JalurKontak, whatsapp: string, email: string): string | null {
+  if (jalur === "wa") return isValidWhatsAppNumber(whatsapp) ? null : "Format nomor WhatsApp tidak valid.";
+  return isValidEmail(email) ? null : "Format email tidak valid. Contoh: nama@email.com";
+}
+
+// Isian kolom kontak untuk tabel pages: hanya jalur yang dipilih yang disimpan
+export function kolomKontak(jalur: JalurKontak, whatsapp: string, email: string) {
+  return jalur === "wa"
+    ? { whatsapp_number: whatsapp.trim(), contact_email: "" }
+    : { whatsapp_number: "", contact_email: email.trim() };
 }

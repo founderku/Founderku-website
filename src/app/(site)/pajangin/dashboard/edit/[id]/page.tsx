@@ -5,10 +5,20 @@ import { FkShell } from "@/components/shell/FkShell";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { hapusFotoLama } from "@/lib/photos";
 import { Pill } from "@/components/ui/Pill";
 import { PhonePreview } from "@/components/etalase/PhonePreview";
-import { KIND_LABEL, PageKindSelect, PriceExtras, SocialToggle, type PageKind } from "@/components/PageKindFields";
-import { isValidWhatsAppNumber } from "@/lib/validators";
+import {
+  KIND_LABEL,
+  KontakFields,
+  PageKindSelect,
+  PriceExtras,
+  SocialToggle,
+  cekKontak,
+  kolomKontak,
+  type PageKind,
+} from "@/components/PageKindFields";
+import type { JalurKontak } from "@/lib/kontak";
 import { MAX_PHOTO_SIZE_MB, ALLOWED_PHOTO_TYPES } from "@/lib/constants";
 import { compressImage } from "@/lib/compressImage";
 import type { StoreStyleId, PageRow } from "@/lib/types";
@@ -32,6 +42,8 @@ export default function EditPagePage() {
   const [askPrice, setAskPrice] = useState(false);
   const [showInSocial, setShowInSocial] = useState(false);
   const [whatsapp, setWhatsapp] = useState("");
+  const [kontakEmail, setKontakEmail] = useState("");
+  const [jalur, setJalur] = useState<JalurKontak>("wa");
   const [slug, setSlug] = useState("");
   const [existingImageUrl, setExistingImageUrl] = useState<string | null>(
     null
@@ -97,7 +109,9 @@ export default function EditPagePage() {
       setShowInSocial(!!page.show_in_social);
       const h = page.highlights ?? [];
       setHighlights([h[0] ?? "", h[1] ?? "", h[2] ?? ""]);
-      setWhatsapp(page.whatsapp_number);
+      setWhatsapp(page.whatsapp_number ?? "");
+      setKontakEmail(page.contact_email ?? "");
+      setJalur(!page.whatsapp_number && page.contact_email ? "email" : "wa");
       setSlug(page.slug);
       setExistingImageUrl(page.image_url);
       if (profile?.store_style) setStoreStyle(profile.store_style);
@@ -147,8 +161,8 @@ export default function EditPagePage() {
     if (!askPrice && !originalPrice) return setFormError("Harga normal wajib diisi, atau centang \"Tanya harga\".");
     if (!askPrice && promoPrice && Number(promoPrice) >= Number(originalPrice))
       return setFormError("Harga promo harus lebih kecil dari harga normal (atau kosongkan kalau tidak ada promo).");
-    if (!isValidWhatsAppNumber(whatsapp))
-      return setFormError("Format nomor WhatsApp tidak valid.");
+    const salahKontak = cekKontak(jalur, whatsapp, kontakEmail);
+    if (salahKontak) return setFormError(salahKontak);
 
     setSubmitting(true);
     const supabase = createClient();
@@ -177,7 +191,11 @@ export default function EditPagePage() {
 
       if (uploadError) {
         setSubmitting(false);
-        setFormError("Gagal unggah foto: " + uploadError.message);
+        setFormError(
+          /row-level security|policy/i.test(uploadError.message)
+            ? "Kuota foto akunmu sudah penuh (60 foto). Hapus halaman yang tidak dipakai, lalu coba lagi."
+            : "Gagal unggah foto: " + uploadError.message,
+        );
         return;
       }
 
@@ -200,7 +218,7 @@ export default function EditPagePage() {
         price_unit: askPrice ? "" : priceUnit.trim(),
         show_in_social: showInSocial,
         highlights: highlights.filter((h) => h.trim().length > 0),
-        whatsapp_number: whatsapp,
+        ...kolomKontak(jalur, whatsapp, kontakEmail),
         ...(imageUrl ? { image_url: imageUrl } : {}),
       })
       .eq("id", pageId)
@@ -211,6 +229,9 @@ export default function EditPagePage() {
       setFormError("Gagal menyimpan perubahan: " + error.message);
       return;
     }
+
+    // Foto lama diganti: buang file lamanya supaya kuota foto akun tidak habis
+    if (imageUrl && existingImageUrl !== imageUrl) await hapusFotoLama(supabase, existingImageUrl, user.id);
 
     router.push("/pajangin/dashboard");
   }
@@ -243,6 +264,7 @@ export default function EditPagePage() {
       setFormError("Gagal menghapus halaman: " + error.message);
       return;
     }
+    await hapusFotoLama(supabase, existingImageUrl, user.id);
 
     router.push("/pajangin/dashboard");
   }
@@ -384,14 +406,14 @@ export default function EditPagePage() {
             {photoError && <p className="text-xs text-coral mt-1">{photoError}</p>}
           </Field>
 
-          <Field label="Nomor WhatsApp">
-            <input
-              className="w-full border border-border rounded-xl px-3.5 py-2.5 text-sm"
-              placeholder="0812xxxxxxxx"
-              value={whatsapp}
-              onChange={(e) => setWhatsapp(e.target.value)}
-            />
-          </Field>
+          <KontakFields
+            jalur={jalur}
+            onJalur={setJalur}
+            whatsapp={whatsapp}
+            onWhatsapp={setWhatsapp}
+            email={kontakEmail}
+            onEmail={setKontakEmail}
+          />
 
           <SocialToggle value={showInSocial} onChange={setShowInSocial} />
 
@@ -430,7 +452,8 @@ export default function EditPagePage() {
               priceUnit: askPrice ? "" : priceUnit,
               highlights,
               imageUrl: photoPreviewUrl ?? existingImageUrl,
-              whatsappNumber: whatsapp,
+              whatsappNumber: jalur === "wa" ? whatsapp : "",
+              contactEmail: jalur === "email" ? kontakEmail : "",
               showWatermark: true,
               storeSlug,
               kind,
