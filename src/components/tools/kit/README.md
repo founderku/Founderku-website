@@ -9,7 +9,7 @@ HP, simpan ke akun, dan cetak PDF-nya seragam. Contoh lengkap: Runwayin
 1. **Daftarkan id** di `src/lib/tools/registry.ts` (huruf kecil/angka,
    3 sampai 24 karakter, diawali huruf). Database tidak perlu diubah:
    tabel `tool_data` menerima kunci `<idtool>-<nama>` apa pun, dibatasi
-   100 simpanan dan 5 MB per akun.
+   300 simpanan dan 10 MB per akun.
 2. **Rumus** di `src/lib/tools/<id>/calc.ts`: fungsi murni (tanpa React),
    supaya bisa dites dengan angka contoh sebelum ada tampilannya.
 3. **Tampilan** di `src/components/tools/<id>/<Nama>.tsx`:

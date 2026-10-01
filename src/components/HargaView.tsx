@@ -7,6 +7,20 @@
 
 import { useEffect, useState } from "react";
 import { PRICING, formatRupiah, type Lang } from "@/lib/pricing";
+import plans from "@public/data/plans.json";
+
+// Daftar paket Gratis dari sumber yang sama dengan penjelasan di tiap tool
+function gratisDariPlans(lang: Lang): string[] {
+  const p = (x: Record<string, string>) => x[lang] || x.id;
+  const b = plans.baris;
+  return [
+    p(b.inti.free),
+    `${p(b.proyek.free)} · ${p(b.simpan.free)}`,
+    p(b.pdf.free),
+    `${p(plans.pajangin.free[0])} · ${p(plans.pajangin.free[3])}`,
+    p(plans.asisten.free).replace("{n}", String(plans.aiLimit.free)),
+  ];
+}
 
 type Props = {
   loggedIn: boolean;
@@ -227,7 +241,7 @@ export function HargaView({ loggedIn, hasPro, onTrial, activeUntil, failed }: Pr
             <div className="price">Rp 0</div>
             <p className="d">{t.freeDesc}</p>
             <ul>
-              {t.free.map((f) => (
+              {gratisDariPlans(lang).map((f) => (
                 <li key={f}>{f}</li>
               ))}
             </ul>

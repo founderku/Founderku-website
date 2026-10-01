@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useToolState } from "@/lib/tools/useToolState";
+import { isiYangKosong } from "@/components/tools/ProKit";
 import {
   Button,
   Card,
@@ -95,7 +96,27 @@ export default function Personain() {
       eyebrow="Founderku Tools · Validasi & Riset"
       title="Personain"
       desc="Gambarkan pelanggan idealmu (persona): siapa dia, apa tujuannya, masalahnya, dan apa yang bikin dia mau membeli. Hasilnya kartu persona siap dicetak untuk tim."
-      actions={<StdActions onContoh={() => { reset(CONTOH); setAktif(0); }} onReset={() => { reset(); setAktif(0); }} />}
+      actions={
+        <StdActions
+          onContoh={() => { reset(CONTOH); setAktif(0); }}
+          onReset={() => { reset(); setAktif(0); }}
+          ai={{
+            toolId: "personain",
+            contohIde: "Contoh: aplikasi kasir di HP untuk warung kopi kecil. Pelanggannya pemilik warung yang belum pernah pakai aplikasi kasir.",
+            onIsi: (isi) => {
+              const dariAI = isi.persona as Record<string, unknown> | undefined;
+              const kosong = kolom.every((c) => !p[c].trim());
+              if (!kosong && d.persona.length < 3) {
+                // Persona yang sedang dibuka sudah terisi: tambah persona baru
+                setD((x) => ({ persona: [...x.persona, { ...baru(), ...isiYangKosong({ ...baru() }, dariAI) }] }));
+                setAktif(d.persona.length);
+              } else {
+                setD((x) => ({ persona: x.persona.map((q, j) => (j === idx ? { ...q, ...isiYangKosong({ ...q }, dariAI) } : q)) }));
+              }
+            },
+          }}
+        />
+      }
     >
       <div className={`${ps.pilih} no-print`}>
           {d.persona.map((q, i) => (

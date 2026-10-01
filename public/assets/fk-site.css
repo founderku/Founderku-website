@@ -380,6 +380,15 @@ a.cd:hover .go::after,.cd .go:hover::after{transform:translateX(3px)}
 .article .content .note{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--orange);border-radius:16px;padding:16px 20px;margin:4px 0 24px}
 .article .content .note p{margin:0;font-size:16.5px;line-height:1.7;color:var(--text);font-weight:500}
 .article .content .note p+p{margin-top:6px}
+/* Gratis vs Pro di halaman Tools */
+.plan-cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+.plan-cmp > div{padding:18px 20px;border-radius:20px;border:1px solid var(--line);background:var(--card);font-size:14.5px}
+.plan-cmp b{font-weight:600}
+.plan-cmp ul{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:7px;color:var(--soft)}
+.plan-cmp li::before{content:"\2713  ";color:#35C46A;font-weight:700}
+.plan-cmp .pro{border-color:rgba(242,169,62,.6);background:linear-gradient(135deg,rgba(242,169,62,.1),rgba(232,95,61,.06))}
+.plan-cmp .pro li::before{color:var(--coral)}
+@media (max-width:600px){.plan-cmp{grid-template-columns:1fr}.plan-cmp > div{padding:14px 16px;font-size:13.5px}}
 .tool-cta{display:flex;align-items:center;gap:16px;margin:32px 0;padding:18px 20px;border-radius:22px;border:1px solid var(--line-2);background:var(--card);box-shadow:var(--shadow);text-decoration:none;color:var(--text);transition:transform .2s ease,border-color .2s}
 .tool-cta:hover{transform:translateY(-2px);border-color:var(--orange)}
 .tool-cta .tc-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}

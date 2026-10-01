@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     return kosong();
   }
   // Hanya id tool yang memang ada, plus klik keluar ke komunitas TukarSkill
-  if (typeof tool !== "string" || !([...TOOL_IDS, ...TUJUAN_LUAR] as readonly string[]).includes(tool)) return kosong();
+  if (typeof tool !== "string" || tool === "brand" || !([...TOOL_IDS, ...TUJUAN_LUAR] as readonly string[]).includes(tool)) return kosong();
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) return kosong();
 
   try {

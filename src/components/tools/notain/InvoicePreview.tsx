@@ -10,6 +10,7 @@ import {
 } from '@/lib/tools/notain/calculations';
 import { InfoPenjual } from '@/lib/tools/notain/storage';
 import styles from './InvoicePreview.module.css';
+import { TombolLogo } from '../ProKit';
 
 interface Props {
   infoPenjual: InfoPenjual;
@@ -109,6 +110,9 @@ export default function InvoicePreview({
 
       {catatan && <div className={styles.catatanBlock}>{catatan}</div>}
 
+      <div className="no-print" style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 18 }}>
+        <TombolLogo className={styles.logoBtn} />
+      </div>
       <button type="button" className={`${styles.printBtn} no-print`} onClick={() => window.print()}>
         Cetak / Simpan sebagai PDF
       </button>

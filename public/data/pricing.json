@@ -13,35 +13,61 @@
       "tr": "Tüm Founderku araçlarına erişim (Pajangin ve diğerleri)"
     },
     {
-      "id": "Pajangin: halaman jualan tanpa batas",
-      "en": "Pajangin: unlimited sales pages",
-      "tr": "Pajangin: sınırsız satış sayfası"
+      "id": "Proyek tanpa batas di tools, tersimpan di akun dan bisa dibuka dari perangkat mana saja",
+      "en": "Unlimited projects in tools, saved to your account and available on any device",
+      "tr": "Araçlarda sınırsız proje, hesabına kaydedilir ve her cihazdan açılır"
     },
     {
-      "id": "Data tools tersimpan di akun, bisa dibuka dari perangkat mana saja",
-      "en": "Tool data saved to your account, open it from any device",
-      "tr": "Araç verileri hesabına kaydedilir, her cihazdan açabilirsin"
+      "id": "PDF bersih tanpa catatan Founderku, plus logo usahamu sendiri",
+      "en": "Clean PDFs without the Founderku note, plus your own business logo",
+      "tr": "Founderku notu olmadan temiz PDF, artı kendi işletme logon"
     },
     {
-      "id": "Pajangin: tanpa watermark",
-      "en": "Pajangin: no watermark",
-      "tr": "Pajangin: filigran yok"
+      "id": "Isi draf dengan AI di Validasiin, Personain, Kompetitorin, Pitchin, dan Kanvasin",
+      "en": "Fill drafts with AI in Validasiin, Personain, Kompetitorin, Pitchin, and Kanvasin",
+      "tr": "Validasiin, Personain, Kompetitorin, Pitchin ve Kanvasin'de yapay zekâ ile taslak"
+    },
+    {
+      "id": "Pajangin: halaman jualan tanpa batas, tanpa watermark, tampil lebih dulu di Etalase",
+      "en": "Pajangin: unlimited sales pages, no watermark, shown first in the Showcase",
+      "tr": "Pajangin: sınırsız satış sayfası, filigran yok, Vitrin'de önce gösterilir"
+    },
+    {
+      "id": "Jatah Tanya AI lebih banyak setiap hari",
+      "en": "More Ask AI questions every day",
+      "tr": "Her gün daha fazla yapay zekâ sorusu"
     }
   ],
   "prices": [
     {
       "id": "monthly",
-      "label": { "id": "Bulanan", "en": "Monthly", "tr": "Aylık" },
+      "label": {
+        "id": "Bulanan",
+        "en": "Monthly",
+        "tr": "Aylık"
+      },
       "amount": 39000,
       "days": 30,
-      "note": { "id": "", "en": "", "tr": "" }
+      "note": {
+        "id": "",
+        "en": "",
+        "tr": ""
+      }
     },
     {
       "id": "yearly",
-      "label": { "id": "Tahunan", "en": "Yearly", "tr": "Yıllık" },
+      "label": {
+        "id": "Tahunan",
+        "en": "Yearly",
+        "tr": "Yıllık"
+      },
       "amount": 299000,
       "days": 365,
-      "note": { "id": "Hemat 36%", "en": "Save 36%", "tr": "%36 tasarruf" }
+      "note": {
+        "id": "Hemat 36%",
+        "en": "Save 36%",
+        "tr": "%36 tasarruf"
+      }
     }
   ]
 }

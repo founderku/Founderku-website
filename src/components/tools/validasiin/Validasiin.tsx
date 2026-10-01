@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { useToolState } from "@/lib/tools/useToolState";
+import { isiYangKosong } from "@/components/tools/ProKit";
 import { AREAS, hitungSkor } from "@/lib/tools/validasiin/calc";
 import { nf } from "@/lib/tools/format";
 import {
@@ -84,7 +85,23 @@ export default function Validasiin() {
       eyebrow="Founderku Tools · Validasi & Riset"
       title="Validasiin"
       desc="Rangkum ide startup kamu dalam satu halaman (Lean Canvas), lalu cek seberapa siap ide itu diuji ke pasar. Hasilnya bisa dicetak untuk diskusi dengan tim atau mentor."
-      actions={<StdActions onContoh={() => reset(CONTOH)} onReset={() => reset()} />}
+      actions={
+        <StdActions
+          onContoh={() => reset(CONTOH)}
+          onReset={() => reset()}
+          ai={{
+            toolId: "validasiin",
+            contohIde: "Contoh: aplikasi kasir di HP untuk warung kopi kecil, supaya pemilik tahu untung harian tanpa catat manual.",
+            onIsi: (isi) =>
+              setD((x) => ({
+                ...x,
+                nama: x.nama.trim() ? x.nama : String(isi.nama ?? ""),
+                kalimat: x.kalimat.trim() ? x.kalimat : String(isi.kalimat ?? ""),
+                canvas: isiYangKosong(x.canvas, isi.canvas),
+              })),
+          }}
+        />
+      }
     >
       <Split
         aside={

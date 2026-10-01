@@ -189,3 +189,301 @@
   color: var(--faint);
   background: var(--bg);
 }
+/* ---- Fitur Pro di hasil cetak (lihat ProKit.tsx) ---- */
+.cetakLogo,
+.cetakKaki {
+  display: none;
+}
+@media print {
+  .cetakLogo {
+    display: block;
+    margin: 0 0 14px;
+  }
+  .cetakLogo img {
+    max-height: 56px;
+    max-width: 220px;
+    object-fit: contain;
+  }
+  /* Muncul di bawah setiap halaman PDF untuk akun Free */
+  .cetakKaki {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    font-family: Poppins, system-ui, sans-serif;
+    font-size: 9pt;
+    color: #8c879c;
+  }
+}
+
+/* Tombol & jendela kecil Logo usaha */
+.logoWrap {
+  position: relative;
+  display: inline-flex;
+}
+.logoPop {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  z-index: 40;
+  width: min(280px, 80vw);
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid var(--line, rgba(26, 23, 48, 0.12));
+  background: var(--card, #fff);
+  color: var(--text, #1a1730);
+  box-shadow: 0 18px 40px -18px rgba(14, 12, 26, 0.45);
+  font-family: Poppins, system-ui, sans-serif;
+  font-size: 13.5px;
+  text-align: left;
+}
+.logoPop b {
+  font-weight: 600;
+}
+.logoPop small {
+  color: var(--soft, rgba(26, 23, 48, 0.68));
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+.logoPop a {
+  justify-self: start;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: #f2a93e;
+  color: #1a1730;
+  font-weight: 600;
+  text-decoration: none;
+}
+.logoPrev {
+  max-height: 56px;
+  max-width: 100%;
+  object-fit: contain;
+  justify-self: start;
+  padding: 6px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid rgba(26, 23, 48, 0.1);
+}
+.logoAksi {
+  display: flex;
+  gap: 8px;
+}
+.logoAksi button {
+  border: 1px solid var(--line-2, rgba(26, 23, 48, 0.18));
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+/* Pemilih proyek di bar atas */
+.proyekBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 46vw;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line-2, rgba(26, 23, 48, 0.18));
+  background: var(--card, #fff);
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.proyekNama {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.proyekPop {
+  left: 0;
+  right: auto;
+}
+.proyekList {
+  display: grid;
+  gap: 2px;
+  max-height: 220px;
+  overflow: auto;
+}
+.proyekList button {
+  text-align: left;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 13.5px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.proyekList button:hover,
+.proyekList button[aria-current="true"] {
+  background: var(--panel-2, rgba(26, 23, 48, 0.06));
+  font-weight: 600;
+}
+.proyekBaru {
+  justify-self: start;
+  border: 0;
+  background: transparent;
+  color: #e85f3d;
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 4px 2px;
+  cursor: pointer;
+}
+.proyekPop small a {
+  color: #e85f3d;
+  font-weight: 600;
+}
+
+/* Isi dengan AI */
+.aiPop {
+  width: min(340px, 86vw);
+}
+.aiInput {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line-2, rgba(26, 23, 48, 0.18));
+  background: var(--bg, #fff);
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+  resize: vertical;
+}
+.logoAksi button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Penjelasan Gratis vs Pro di bawah bar */
+.paket {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 8px clamp(16px, 3vw, 40px) 0;
+  box-sizing: border-box;
+  font-family: Poppins, system-ui, sans-serif;
+}
+.paketRingkas {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 14px;
+  border-radius: 14px;
+  border: 1px dashed var(--line-2, rgba(26, 23, 48, 0.18));
+  background: var(--panel, rgba(26, 23, 48, 0.035));
+  color: var(--soft, rgba(26, 23, 48, 0.68));
+  font: inherit;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+.paketRingkas b {
+  color: var(--text, #1a1730);
+  font-weight: 600;
+}
+.paketRingkas > span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.paketPro {
+  color: #e85f3d !important;
+}
+.paketIsi {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 8px;
+}
+.paketIsi > div {
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--line, rgba(26, 23, 48, 0.1));
+  background: var(--card, #fff);
+  color: var(--text, #1a1730);
+  font-size: 13.5px;
+}
+.paketIsi b {
+  font-weight: 600;
+}
+.paketIsi ul {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+  color: var(--soft, rgba(26, 23, 48, 0.68));
+}
+.paketIsi li::before {
+  content: "✓ ";
+  color: #35c46a;
+  font-weight: 700;
+}
+.paketKolomPro {
+  border-color: rgba(242, 169, 62, 0.6) !important;
+  background: linear-gradient(135deg, rgba(242, 169, 62, 0.1), rgba(232, 95, 61, 0.06)) !important;
+}
+.paketKolomPro li::before {
+  color: #e85f3d;
+}
+.paketKolomPro a {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: #1a1730;
+  color: #fff;
+  font-weight: 600;
+  font-size: 13px;
+  text-decoration: none;
+}
+@media (max-width: 600px) {
+  .paketIsi {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Jendela kecil tidak boleh keluar layar: AI dibuka ke kanan dari tombolnya,
+   dan di HP semua jendela kecil jadi panel di bawah layar */
+.aiPop {
+  left: 0;
+  right: auto;
+}
+@media (max-width: 600px) {
+  .logoPop {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    top: auto;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    width: auto;
+    max-height: 70vh;
+    overflow: auto;
+    z-index: 950;
+  }
+}
+/* Tombol di dalam pembungkus ikut lebar sel (grid tombol di HP) */
+.logoWrap {
+  min-width: 0;
+}
+.logoWrap > button {
+  width: 100%;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -2,6 +2,7 @@
 
 import { DraftKontrak, susunPasal } from '@/lib/tools/kontrakin/document';
 import styles from './DocumentPreview.module.css';
+import { TombolLogo } from '../ProKit';
 
 interface Props {
   draft: DraftKontrak;
@@ -100,6 +101,9 @@ export default function DocumentPreview({ draft }: Props) {
         </>
       )}
 
+      <div className="no-print" style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 18 }}>
+        <TombolLogo className={styles.logoBtn} />
+      </div>
       <button
         type="button"
         className={`${styles.printBtn} no-print`}

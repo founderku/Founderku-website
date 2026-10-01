@@ -55,6 +55,39 @@ const CONTOH: DataKompetitor = {
   ],
 };
 
+// Hasil "Isi dengan AI": kalau tool masih kosong, isi semuanya. Kalau
+// sudah ada isian, hanya kriteria dan pesaing yang masih kosong yang diisi.
+function isiKompetitor(x: DataKompetitor, isi: Record<string, unknown>): DataKompetitor {
+  const kriteriaAI = (Array.isArray(isi.kriteria) ? isi.kriteria : []).filter((k): k is string => typeof k === "string");
+  const ubahProduk = (lama: Pesaing, baruAI: unknown, panjang: number): Pesaing => {
+    const b = (baruAI ?? {}) as Partial<Pesaing>;
+    const punya = Array.from({ length: panjang }, (_, i) => (Array.isArray(b.punya) ? !!b.punya[i] : !!lama.punya[i]));
+    return {
+      nama: lama.nama.trim() && lama.nama !== "Produk kami" ? lama.nama : typeof b.nama === "string" ? b.nama : lama.nama,
+      harga: lama.harga.trim() ? lama.harga : typeof b.harga === "string" ? b.harga : "",
+      x: typeof b.x === "number" ? b.x : lama.x,
+      y: typeof b.y === "number" ? b.y : lama.y,
+      punya,
+    };
+  };
+  const pesaingAI = Array.isArray(isi.pesaing) ? isi.pesaing : [];
+  const masihKosong = x.kriteria.every((k) => !k.trim()) && x.pesaing.every((q) => !q.nama.trim());
+  if (masihKosong && kriteriaAI.length) {
+    return {
+      ...x,
+      kriteria: kriteriaAI,
+      kita: ubahProduk(x.kita, isi.kita, kriteriaAI.length),
+      pesaing: pesaingAI.map((q) => ubahProduk(kosong(), q, kriteriaAI.length)),
+    };
+  }
+  // Sudah ada isian: isi slot kriteria kosong dan pesaing tanpa nama saja
+  let ai = 0;
+  const kriteria = x.kriteria.map((k) => (k.trim() ? k : (kriteriaAI[ai++] ?? k)));
+  let pi = 0;
+  const pesaing = x.pesaing.map((q) => (q.nama.trim() ? q : pesaingAI[pi] ? ubahProduk(q, { ...(pesaingAI[pi++] as object), punya: undefined }, x.kriteria.length) : q));
+  return { ...x, kriteria, pesaing };
+}
+
 // Peta posisi: titik tiap produk di dua sumbu (1-10)
 function Peta({ d }: { d: DataKompetitor }) {
   const S = 300;
@@ -121,7 +154,17 @@ export default function Kompetitorin() {
       eyebrow="Founderku Tools · Validasi & Riset"
       title="Kompetitorin"
       desc="Bandingkan produkmu dengan pesaing: tabel fitur, peta posisi, dan otomatis terlihat mana pembedamu dan mana celah yang perlu ditutup."
-      actions={<StdActions onContoh={() => reset(CONTOH)} onReset={() => reset()} />}
+      actions={
+        <StdActions
+          onContoh={() => reset(CONTOH)}
+          onReset={() => reset()}
+          ai={{
+            toolId: "kompetitorin",
+            contohIde: "Contoh: aplikasi kasir di HP untuk warung kopi, langganan bulanan murah, laporan untung lewat WhatsApp.",
+            onIsi: (isi) => setD((x) => isiKompetitor(x, isi)),
+          }}
+        />
+      }
     >
       <Split
         aside={
