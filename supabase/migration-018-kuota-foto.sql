@@ -1,24 +1,14 @@
 -- ============================================================
--- STORAGE: bucket foto produk Pajangin (product-photos)
+-- Migration 018: batas foto produk per akun + hapus foto sendiri
 --
--- File ini melengkapi schema.sql (yang cuma mengurus schema public).
--- Sudah dipasang di project Supabase asli. Kalau bikin project baru,
--- jalankan SETELAH schema.sql.
+-- 1. Tiap akun maksimal 60 file di bucket product-photos, supaya tidak
+--    ada yang bisa memenuhi kuota storage lewat unggahan langsung.
+-- 2. User boleh menghapus foto di foldernya sendiri. Dipakai editor
+--    Pajangin untuk membuang foto lama saat diganti atau halaman dihapus.
+-- Data yang sudah ada tidak berubah. Boleh dijalankan ulang.
+-- Jalankan di Supabase: SQL Editor > New query > tempel > Run.
 -- ============================================================
 
--- Bucket publik: foto bisa dibuka lewat alamatnya (untuk halaman jualan),
--- tapi dibatasi 2 MB dan cuma JPEG/PNG.
-insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
-values ('product-photos', 'product-photos', true, 2097152, array['image/jpeg','image/png'])
-on conflict (id) do update
-  set public = excluded.public,
-      file_size_limit = excluded.file_size_limit,
-      allowed_mime_types = excluded.allowed_mime_types;
-
--- Upload: cuma user login, cuma ke folder miliknya sendiri
--- (nama file: <id akun>/<acak>.jpg), lihat policy di bawah.
-
--- Batas 60 file per akun dan hapus foto sendiri (migration 018)
 -- Jumlah foto milik akun yang sedang login (tanpa parameter, jadi tidak
 -- bisa dipakai mengintip akun lain)
 create or replace function public.jumlah_foto_saya()
@@ -61,9 +51,3 @@ create policy "User hapus foto produk sendiri"
     bucket_id = 'product-photos'
     and (storage.foldername(name))[1] = auth.uid()::text
   );
-
--- Tidak ada policy SELECT untuk folder orang lain: bucket publik tetap bisa
--- dibuka lewat alamat foto, tapi daftar file orang lain tidak bisa diintip.
--- Tidak ada policy UPDATE: foto tidak bisa ditimpa, dan hapus hanya
--- untuk folder milik sendiri.
--- Hapus akun menghapus fotonya lewat server (service_role).

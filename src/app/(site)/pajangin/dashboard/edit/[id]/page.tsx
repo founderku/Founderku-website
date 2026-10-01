@@ -5,6 +5,7 @@ import { FkShell } from "@/components/shell/FkShell";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { hapusFotoLama } from "@/lib/photos";
 import { Pill } from "@/components/ui/Pill";
 import { PhonePreview } from "@/components/etalase/PhonePreview";
 import { KIND_LABEL, PageKindSelect, PriceExtras, SocialToggle, type PageKind } from "@/components/PageKindFields";
@@ -177,7 +178,11 @@ export default function EditPagePage() {
 
       if (uploadError) {
         setSubmitting(false);
-        setFormError("Gagal unggah foto: " + uploadError.message);
+        setFormError(
+          /row-level security|policy/i.test(uploadError.message)
+            ? "Kuota foto akunmu sudah penuh (60 foto). Hapus halaman yang tidak dipakai, lalu coba lagi."
+            : "Gagal unggah foto: " + uploadError.message,
+        );
         return;
       }
 
@@ -212,6 +217,9 @@ export default function EditPagePage() {
       return;
     }
 
+    // Foto lama diganti: buang file lamanya supaya kuota foto akun tidak habis
+    if (imageUrl && existingImageUrl !== imageUrl) await hapusFotoLama(supabase, existingImageUrl, user.id);
+
     router.push("/pajangin/dashboard");
   }
 
@@ -243,6 +251,7 @@ export default function EditPagePage() {
       setFormError("Gagal menghapus halaman: " + error.message);
       return;
     }
+    await hapusFotoLama(supabase, existingImageUrl, user.id);
 
     router.push("/pajangin/dashboard");
   }

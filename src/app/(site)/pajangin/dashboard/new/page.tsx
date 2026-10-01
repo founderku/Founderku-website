@@ -200,7 +200,11 @@ export default function NewPagePage() {
 
       if (uploadError) {
         setSubmitting(false);
-        setFormError("Gagal unggah foto: " + uploadError.message);
+        setFormError(
+          /row-level security|policy/i.test(uploadError.message)
+            ? "Kuota foto akunmu sudah penuh (60 foto). Hapus halaman yang tidak dipakai, lalu coba lagi."
+            : "Gagal unggah foto: " + uploadError.message,
+        );
         return;
       }
 
